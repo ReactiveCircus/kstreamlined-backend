@@ -1,0 +1,19 @@
+complexity:
+  TooManyFunctions:
+    excludes: ["**/test/**"]
+  LongMethod:
+    excludes: ["**/test/**"]
+  LargeClass:
+    excludes: ["**/test/**"]
+  LongParameterList:
+    active: false
+
+formatting:
+  MaximumLineLength:
+    active: false
+
+style:
+  MaxLineLength:
+    active: false
+  ForbiddenComment:
+    allowedPatterns: 'TODO'
