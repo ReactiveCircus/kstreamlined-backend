@@ -1,4 +1,86 @@
 type Query {
-  "TODO"
-  feeds(filter: String! = ""): [String]!
+  "Returns list of entries from the selected sources in the provided filters."
+  feedEntries(filters: [FeedSource!] = null): [FeedEntry!]!
+}
+
+enum FeedSource {
+  "News from the Kotlin Blog."
+  KOTLIN_BLOG
+  "Kotlin by JetBrains YouTube channel."
+  KOTLIN_YOUTUBE_CHANNEL
+  "Bimonthly podcast on Kotlin."
+  TALKING_KOTLIN_PODCAST
+  "Weekly Kotlin newsletter."
+  KOTLIN_WEEKLY
+}
+
+interface FeedEntry {
+  "Unique id of the feed entry."
+  id: String!
+  "Title of the feed entry."
+  title: String!
+  "Publish date of the feed entry in ISO 8601 format."
+  publishDate: String!
+  "Url of the content."
+  contentUrl: String!
+}
+
+type KotlinBlog implements FeedEntry {
+  "Unique id of the feed entry."
+  id: String!
+  "Title of the feed entry."
+  title: String!
+  "Publish date of the feed entry in ISO 8601 format."
+  publishDate: String!
+  "Url of the content."
+  contentUrl: String!
+  "Url of the feature image."
+  featuredImageUrl: String!
+  "Description of the blog post."
+  description: String!
+}
+
+type KotlinYouTube implements FeedEntry {
+  "Unique id of the feed entry."
+  id: String!
+  "Title of the feed entry."
+  title: String!
+  "Publish date of the feed entry in ISO 8601 format."
+  publishDate: String!
+  "Url of the content."
+  contentUrl: String!
+  "Url of the video thumbnail."
+  thumbnailUrl: String!
+  "Description of the video."
+  description: String!
+}
+
+type TalkingKotlin implements FeedEntry {
+  "Unique id of the feed entry."
+  id: String!
+  "Title of the feed entry."
+  title: String!
+  "Publish date of the feed entry in ISO 8601 format."
+  publishDate: String!
+  "Url of the content."
+  contentUrl: String!
+  "Url of the podcast logo."
+  podcastLogoUrl: String!
+  "Description of the episode."
+  description: String!
+  "Tags of the episode."
+  tags: [String!]!
+}
+
+type KotlinWeekly implements FeedEntry {
+  "Unique id of the feed entry."
+  id: String!
+  "Title of the feed entry."
+  title: String!
+  "Publish date of the feed entry in ISO 8601 format."
+  publishDate: String!
+  "Url of the content."
+  contentUrl: String!
+  "Url of the newsletter logo."
+  newsletterLogoUrl: String!
 }
