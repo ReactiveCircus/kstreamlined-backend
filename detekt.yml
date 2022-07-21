@@ -15,5 +15,5 @@ formatting:
 style:
   MaxLineLength:
     active: false
-  ForbiddenComment:
-    allowedPatterns: 'TODO'
+  UseCheckOrError:
+    active: false
