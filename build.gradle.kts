@@ -29,11 +29,11 @@ tasks.withType<GenerateJavaTask> {
 dependencies {
     implementation(libs.spring.boot.starter)
     implementation(libs.dgs.starter)
-    implementation(libs.kotlinx.serialization)
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.contentNegotiation)
-    implementation(libs.ktor.serialization)
+    implementation(libs.ktor.serialization.xml)
+    implementation(libs.apacheCommonsText)
 
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(kotlin("test"))

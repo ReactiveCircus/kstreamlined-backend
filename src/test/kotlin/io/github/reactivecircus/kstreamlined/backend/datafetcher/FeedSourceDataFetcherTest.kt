@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.feedsource
+package io.github.reactivecircus.kstreamlined.backend.datafetcher
 
 import com.netflix.graphql.dgs.DgsQueryExecutor
 import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration
