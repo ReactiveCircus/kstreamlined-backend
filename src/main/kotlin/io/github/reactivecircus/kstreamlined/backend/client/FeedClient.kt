@@ -1,7 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.client
 
-import io.github.reactivecircus.kstreamlined.backend.client.dto.kotlinblog.KotlinBlogItem
-import io.github.reactivecircus.kstreamlined.backend.client.dto.kotlinblog.KotlinBlogRss
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogRss
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
@@ -21,10 +21,9 @@ class RealFeedClient(
 ) : FeedClient {
 
     private val httpClient = HttpClient(engine) {
+        expectSuccess = true
         install(ContentNegotiation) {
-            xml(
-                contentType = ContentType.Application.Rss,
-            )
+            xml(contentType = ContentType.Application.Rss)
         }
     }
 

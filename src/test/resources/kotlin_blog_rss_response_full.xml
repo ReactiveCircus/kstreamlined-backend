@@ -1,0 +1,2535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+>
+
+    <channel>
+        <title>The Kotlin Blog : Kotlin Programming Language by JetBrains | The JetBrains Blog</title>
+        <atom:link href="https://blog.jetbrains.com/kotlin/feed/" rel="self" type="application/rss+xml"/>
+        <link>https://blog.jetbrains.com</link>
+        <description>Developer Tools for Professionals and Teams</description>
+        <lastBuildDate>Fri, 15 Jul 2022 10:56:15 +0000</lastBuildDate>
+        <language>en-US</language>
+        <sy:updatePeriod>
+            hourly
+        </sy:updatePeriod>
+        <sy:updateFrequency>
+            1
+        </sy:updateFrequency>
+
+
+        <image>
+            <url>https://blog.jetbrains.com/wp-content/uploads/2020/07/favicon-32x32-1.png</url>
+            <title>The Kotlin Blog : Kotlin Programming Language by JetBrains | The JetBrains Blog</title>
+            <link>https://blog.jetbrains.com</link>
+            <width>32</width>
+            <height>32</height>
+        </image>
+        <item>
+            <title>A New Approach to Incremental Compilation in Kotlin</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/07/a-new-approach-to-incremental-compilation-in-kotlin/</link>
+
+            <dc:creator><![CDATA[Andrey Uskov]]></dc:creator>
+            <pubDate>Fri, 15 Jul 2022 10:56:13 +0000</pubDate>
+            <featuredImage>
+                https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_Twitter-Blog.png
+            </featuredImage>
+            <category><![CDATA[news]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=264203</guid>
+
+            <description>
+                <![CDATA[In Kotlin 1.7.0, we&#8217;ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the Gradle build cache. Support for compilation avoidance has also been improved. All of these advancements decrease [&#8230;]]]></description>
+            <content:encoded><![CDATA[<p>In Kotlin 1.7.0, we&#8217;ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the <a href="https://docs.gradle.org/current/userguide/build_cache.html">Gradle build cache</a>. Support for compilation avoidance has also been improved. All of these advancements decrease the number of necessary full-module and file recompilations, making the overall compilation time faster.</p>
+
+
+
+<p>The new scheme for incremental compilation is currently <a href="https://kotlinlang.org/docs/components-stability.html">Experimental</a> and supports only the JVM backend in the Gradle build system.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="TRY THE NEW APPROACH" href="https://blog.jetbrains.com/kotlin/2022/07/a-new-approach-to-incremental-compilation-in-kotlin/#how-to">TRY THE NEW APPROACH</a></p>
+
+
+
+<h2>Benchmarks</h2>
+
+
+
+<p>We expect you&#8217;ll see the most significant improvements from the new approach if you use the Gradle build cache or frequently make changes in non-Kotlin Gradle modules. Here are some benchmark results measured for the Kotlin project on the kotlin-gradle-plugin module:</p>
+
+
+
+<figure class="wp-block-image size-full"><img width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_3.png" alt="" class="wp-image-264932"/></figure>
+
+
+
+<h2 id="how-to">How to enable it</h2>
+
+
+
+<p>To use this new approach to incremental compilation, set the following option in your <code>gradle.properties</code> file:</p>
+
+
+
+<p><code>kotlin.incremental.useClasspathSnapshot=true</code></p>
+
+
+
+<p>We think it&#8217;s critical for incremental compilation to be stable and reliable. That&#8217;s why we&#8217;d appreciate your reports about any issues or strange behavior you encounter when using this compilation scheme.</p>
+
+
+
+<p>Sometimes problems with incremental compilation become visible several rounds after the failure occurs, so you may want to use <a href="https://blog.jetbrains.com/kotlin/2022/06/introducing-kotlin-build-reports/">build reports</a> to track the history of changes and compilations. Doing so may also help you provide reproducible bug reports.</p>
+
+
+
+<h2>Under the hood</h2>
+
+
+
+<h3>Compilation avoidance and incremental compilation</h3>
+
+
+
+<p>You can skip this section if you are familiar with the <a href="https://blog.jetbrains.com/kotlin/2020/09/the-dark-secrets-of-fast-compilation-for-kotlin/">secrets of fast compilation for Kotlin</a>, <a href="https://docs.gradle.org/current/userguide/java_plugin.html#sec:incremental_compile">incremental Java compilation in Gradle</a>, and <a href="https://docs.gradle.org/current/userguide/java_plugin.html#sec:java_compile_avoidance">compilation avoidance in Gradle</a>.</p>
+
+
+
+<p>One of the central aspects of fast compilation is the Application Binary Interface (ABI). Two classes have the same ABI if they are interchangeable when used as a compilation classpath.</p>
+
+
+
+<p>Take a look at these sample Java classes:</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_4.png" alt="" class="wp-image-264944"/></figure>
+
+
+
+<p>These classes have identical ABIs. The <code>private1()</code> and <code>private2()</code> methods are both invisible from other classes during compilation. Method bodies also don’t affect the compilation of other classes. Thus, these versions of JavaClass are interchangeable during compilation.</p>
+
+
+
+<p>Gradle can track changes in the Java ABI. That’s why the state of pure Java compilation tasks will remain up-to-date if changes in their dependencies don’t affect the ABI. This feature is known as compilation avoidance – it was<a href="https://blog.gradle.org/incremental-compiler-avoidance"> introduced in Gradle 3.4</a> and delivered a dramatic performance improvement.</p>
+
+
+
+<p>Since the Kotlin ABI contains more information (for example, bodies of inline functions), we can’t rely on the ABI comparison currently implemented in Gradle. This makes it necessary to start the Kotlin compiler following every change in dependencies.</p>
+
+
+
+<p>Another way to make compilation faster is to recompile only affected files. This concept is known as <em>incremental compilation</em>. Let&#8217;s say that the compilation classpath has some ABI changes. What is the best way to handle this? Usually, ABI changes in the classpath affect only a subset of files in the module. The Kotlin compiler saves dependencies between the classes being compiled. Thus, during the subsequent compilation, it&#8217;s possible to find and recompile only the classes impacted by changes in the ABI.</p>
+
+
+
+<p>If the ABI of recompiled classes has also changed, it&#8217;s possible to find classes affected by new changes in the ABI and repeat the compilation. This operation is a bit more complicated. Some files or classes should always be compiled together (for example, multi-file classes or <a href="https://youtrack.jetbrains.com/issue/KT-42433">sealed interfaces </a>and their inheritors). We should also track constants calculated at compile time, but this topic is beyond our current focus.</p>
+
+
+
+<h3>Tracking changes in cross-module dependencies</h3>
+
+
+
+<p>To explain how we track ABI changes in cross-module dependencies, consider the following sample. Here, Module B depends on Module A. The first full build is invoked in Revision 1. After applying Revision 2, the compilation of Module B is invoked. This operation is repeated in Revision 3.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://lh4.googleusercontent.com/BsDyB6Se5JKwE90wOiOqLc1MNYDNYbEtwr6JMNbHsYIZshNtRcM-QuASgsbf0QtWyHEPf0aWc2qptin4srDRJoTARfsV-zKMeqynwz0woRyT0IUHZF5Plo6jvwnVdTvO1hUwSINTuKhYSDfagb4" alt=""/></figure>
+
+
+
+<h3>History files</h3>
+
+
+
+<p>First, let’s consider our current, default approach. The Kotlin compiler can save changes in the ABI and produce class files. These are the `build-history.bin` files that you may have noticed in your build directory.&nbsp;</p>
+
+
+
+<p>In Revision 1, the following operations are performed:</p>
+
+
+
+<ul><li>Module A is fully built, as there is no previous state.</li><li>Information is saved into the history file for Module A.</li><li>Module B is fully built, as there is no previous state.</li><li>All dependencies between compiled classes are saved in Module B.</li></ul>
+
+
+
+<p>Of course, there are some other phases. For example, history files are saved for Module B, but we’re leaving these phases out for the sake of clarity.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_6.png" alt="" class="wp-image-264955"/></figure>
+
+
+
+<p>Operations in Revision 2:</p>
+
+
+
+<ul><li>Module A is incrementally built.</li><li>The information that the ABI has no changes in Module A is saved into the history file of Module A. Note that method bodies do not affect the ABI.</li><li>Changes in dependencies for Module B are collected. It&#8217;s possible that the ABI hasn&#8217;t changed, too</li><li>The compilation task for Module B is finished, as there are no files to recompile.</li></ul>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_7.png" alt="" class="wp-image-264966"/></figure>
+
+
+
+<p>Operations in Revision 3:</p>
+
+
+
+<ul><li>Module A is incrementally built.</li><li>Changes in <code>A.doA</code> are added to the corresponding history file.</li><li>Changes in dependencies for module B are analyzed, which finds a changed method: <code>A.doA</code>.</li><li>Class B is marked for recompilation, as stated in the internally stored dependency map.</li></ul>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_8.png" alt="" class="wp-image-264977"/></figure>
+
+
+
+<p><strong>Benefits</strong></p>
+
+
+
+<ul><li>It&#8217;s quite effective – there is no need to save the compilation classpath or to compare classpaths.</li></ul>
+
+
+
+<p><strong>Drawbacks</strong></p>
+
+
+
+<ul><li>In Revision 2, Gradle didn&#8217;t handle the up-to-date state of inputs. We spent some time starting the Kotlin compiler.</li><li>Making revisions relocatable is quite expensive. That&#8217;s why incremental compilation is not compatible with the Gradle build cache.</li><li>This approach is not applicable if Module A doesn&#8217;t produce history files (in the case of an external library, for example).</li></ul>
+
+
+
+<p>If you use build reports, you may have already encountered these reasons for rebuilds: <code>DEP_CHANGE_HISTORY_IS_NOT_FOUND</code> and <code>DEP_CHANGE_HISTORY_NO_KNOWN_BUILDS</code>. They are related to these drawbacks.</p>
+
+
+
+<h3>Tracking the compilation classpath</h3>
+
+
+
+<p>Now, our alternative approach requires storing the ABI of the compilation classpath on every call of the Kotlin compiler. This approach also requires comparing crosspaths on every compilation. These operations are quite heavy, and we need aggressive optimizations to achieve acceptable performance:</p>
+
+
+
+<p><strong>Possible optimizations</strong></p>
+
+
+
+<p>(a) Preserve only those parts of the classpath ABI that were actually used during compilation.</p>
+
+
+
+<p>(b) Extract only the parts of the ABI that can be used by the compiler from the classpath.</p>
+
+
+
+<p>(c) Produce the ABI on the producer side along with the class files.</p>
+
+
+
+<p>(d) Cache extracted ABIs.</p>
+
+
+
+<p>Some of these options are incompatible with each other. For example, options <strong>(b)</strong> and <strong>(c)</strong> could not be implemented at the same time. In some cases, the optimal approach depends on the features provided by the build system. It also strongly depends on the use case:</p>
+
+
+
+<ul><li>If you add a dependency on a large library and use only one class in one module, it&#8217;s more efficient to use option <strong>(b)</strong> (left picture below).</li><li>If you add a similar dependency in many modules and use almost all classes from the dependency in many of them, it’s more efficient to use option <strong>(d)</strong> and cache the calculated ABI of the common dependency.</li></ul>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_6-copy.png" alt="" class="wp-image-264988"/></figure>
+
+
+
+<p>Our estimates on several open-source projects proved that the most efficient approach is to perform a single ABI extraction for every dependency and cache the execution result.</p>
+
+
+
+<p>In our new approach, we use <a href="https://docs.gradle.org/current/userguide/artifact_transforms.html">Gradle artifact transformation</a> for ABI extraction. This makes the result cacheable and fully relocatable. If you use a remote build cache, the heavy work of extracting ABI from library dependencies most likely won’t be performed on your machine. This artifact will be just downloaded.</p>
+
+
+
+<p>Now look at how the three revisions from the previous sample are compiled in the new approach.</p>
+
+
+
+<p>In Revision 1, a full build of both modules will be performed because there is no previous state. Nothing changes here. Unlike in the previous scheme, we also store a snapshot of the compilation classpath for Module B.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_7-copy.png" alt="" class="wp-image-264999"/></figure>
+
+
+
+<p>In Revision 2, the Kotlin compiler produces a different bytecode for Module A, but artifact transformation yields the same result. Gradle marks all inputs of Module B as ‘UP-TO-DATE’. No additional operations are required. The build chain is interrupted, and we get the result faster.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_8-copy.png" alt="" class="wp-image-265010"/></figure>
+
+
+
+<p>In Revision 3, Module A produces a different output, the artifact transformation produces a different ABI, and thus the compilation of Module B is triggered. During the compilation of Module B, the following steps are required:</p>
+
+
+
+<ul><li>The previously-stored classpath snapshot is compared with the new one and a list of changed ABIs is produced. The only difference is the <code>A.doA</code> method.</li><li><code>class B</code> is marked for recompilation, as stated in the internally stored dependency map.</li><li>A snapshot of the compilation classpath for Module B is stored.</li><li><code>class B</code> in Module B is recompiled, as its types depend on the changed <code>A.doA</code>.</li></ul>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_6-copy-2.png" alt="" class="wp-image-265021"/></figure>
+
+
+
+<h2>Next steps</h2>
+
+
+
+<p>We are going to stabilize this approach, and we plan to implement support for other backends (JS, for instance) and build systems.</p>
+
+
+
+<h2>Leave your feedback</h2>
+
+
+
+<p>You are welcome to try new incremental compilation in your projects. If you have any feedback or encounter any issues, please report them in our issue <a href="https://youtrack.jetbrains.com/issues/KT">tracker</a>. Thank you!</p>
+
+
+
+<h2>Words of appreciation</h2>
+
+
+
+<p>We are very grateful to our external contributors for their tremendous help: <a href="https://github.com/gavra0">Ivan Gavrilovic</a>, <a href="https://github.com/hungvietnguyen">Hung Nguyen</a>, <a href="https://github.com/melix">Cédric Champeau</a>, and others.</p>]]></content:encoded>
+
+
+        </item>
+        <item>
+            <title>Kotlin News: KotlinConf, Build Reports, DataFrame Preview, and More</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/07/kotlin-news-june/</link>
+
+            <dc:creator><![CDATA[Ekaterina Petrova]]></dc:creator>
+            <pubDate>Fri, 15 Jul 2022 10:32:08 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/07/Monthly-digest-4-Summer-2022-01.png
+            </featuredImage>
+            <category><![CDATA[news]]></category>
+            <category><![CDATA[kotlin-news]]></category>
+            <category><![CDATA[newsletter]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=265263</guid>
+
+            <description>
+                <![CDATA[Kotlin Developer Survey is Open Share your opinions about the language itself, IDEs, libraries, build tools, and subsystems. Your answers will help the Kotlin team make the language and tools even better and more convenient. Give your feedback KotlinConf is Back! KotlinConf is making a glorious comeback! It will take place in Amsterdam on April [&#8230;]]]></description>
+            <content:encoded><![CDATA[<h2><strong>Kotlin Developer Survey is Open</strong></h2>
+
+
+
+<figure class="wp-block-image"><img src="https://lh6.googleusercontent.com/puzXjE4WqXMa66ThdIFhgteGa4iVaJKUBGudyZ3WZkMh6uY-6F2ccP43NZVIu8dqyLCXBPhAvmBIKc8jOraReC2mNB0Ky2g49ARRWt-QgrAXA1gwdrbGNJDmZEjN69yzEa5fV1JbKB1rYvpLciKj1Q" alt=""/></figure>
+
+
+
+<p>Share your opinions about the language itself, IDEs, libraries, build tools, and subsystems. Your answers will help the Kotlin team make the language and tools even better and more convenient.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Give your feedback" href="https://surveys.jetbrains.com/s3/kotlin-developer-survey-news" target="_blank" rel="noopener">Give your feedback</a></p>
+
+
+
+<h2><strong>KotlinConf is Back!</strong></h2>
+
+
+
+<figure class="wp-block-image"><img src="https://lh4.googleusercontent.com/UvGGNj0-4U024OsPr3XQO7Qoci7hdl7VfWJI0Lo9fIsFOm2TFPIFMhAvblj7IBODNwQqifYM6U5Bn2ooJC75G0UXNswYY2Yns3cdO9E0P4LWaLHpYGvn5H0TFugvZ9potRR9jmapi-tFo297M9RroA" alt=""/></figure>
+
+
+
+<p>KotlinConf is making a glorious comeback! It will take place in Amsterdam on April 12–14, 2023. &#x1f337;Workshops, talks, and fun are guaranteed! Get your tickets before they run out and join the Kotlin community at the event of the year!</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Secure your spot" href="https://kotlinconf.com/" target="_blank" rel="noopener">Secure your spot</a></p>
+
+
+
+<h2><strong>Introducing Kotlin Build Reports</strong></h2>
+
+
+
+<figure class="wp-block-image"><img src="https://lh3.googleusercontent.com/eTaEdZTjIhHyyXyIx-0Zs2phWEEvS42SBWWLebIspdZhO89NARAwlYq_aN17jwiCdakoMYD-hwKLHXK7_lLwO5LlG14boYi_1qJZHdGP1G1aqLo6iL5sJJwpyUx-Q6eMZ9F7tChKYvCUU4vFNJIvwg" alt=""/></figure>
+
+
+
+<p>Starting with Kotlin 1.7.0, you can create build reports for Kotlin compiler tasks. Reports allow you to see the durations of different compilation phases and investigate cases where incremental compilation could not be used. This functionality is still experimental, so the list of metrics may change.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Learn more" href="https://blog.jetbrains.com/kotlin/2022/06/introducing-kotlin-build-reports/" target="_blank" rel="noopener">Learn more</a></p>
+
+
+
+<h2><strong>Unflow Case Study</strong></h2>
+
+
+
+<figure class="wp-block-image"><img src="https://lh5.googleusercontent.com/Hwzq_e3yqsoMuG28rBd7x8QVuuFotKuhPRTW9ZTRR7thBOJgxuUZodZ0mQ54LQiI0blMQPssozJXqzNyZFp_lBAHgpgRTTEwkPeBSXOAYPMbB9L9kPIYJK1fgB9lKl4SZ4QcBC4IFwg8KrgHHelh4Q" alt=""/></figure>
+
+
+
+<p>Unflow is a next-generation CMS that allows you to create screens, flows, and features for mobile apps without a single line of code. Using Kotlin Multiplatform Mobile to build their cross-platform SDK saved the Uniflow team 2 months of build time and allowed their small operation to deliver an exceptionally high-quality product without compromising on performance or native capabilities.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Read the story" href="https://www.unflow.com/post/kotlin-multiplatform-mobile" target="_blank" rel="noopener">Read the story</a></p>
+
+
+
+<h2><strong>Kotlin DataFrame Preview</strong></h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/07/Monthly-digest-4-Summer-2022-06.png" alt="" class="wp-image-265293"/></figure>
+
+
+
+<p>The Kotlin team has developed a Kotlin library for data frames, and its preview version is now available. It provides a readable and powerful DSL for data wrangling and i/o via CSV, JSON, Excel, and Apache Arrow, as well as interop with Kotlin data classes and hierarchical data schemas.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Learn more" href="https://blog.jetbrains.com/kotlin/2022/06/kotlin-dataframe-library-preview/" target="_blank" rel="noopener">Learn more</a></p>
+
+
+
+<h2><strong>Turbocharging Kotlin: Arrow Analysis, Optics, &amp; Meta | Talking Kotlin</strong></h2>
+
+
+
+<figure class="wp-block-image"><img src="https://lh5.googleusercontent.com/3wsG5AOZ4GwLOb05dKj3KBpq9i7n1VrdfIUATxEVvwFxdVYh760FvjRWw84dcUnPHJeerFkF2nxV8lSExsEz5177EHQz_7VNcy2dBCTC8yhBBK83dQgyqF2mKU_gpXsz53f4Eq8n9JfQ8Pz37TNlmw" alt=""/></figure>
+
+
+
+<p>In this episode of Talking Kotlin, we chat with Arrow maintainers to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Watch on Youtube" href="https://www.youtube.com/watch?v=tX4nLqcW2JA" target="_blank" rel="noopener">Watch on Youtube</a></p>]]></content:encoded>
+
+
+        </item>
+        <item>
+            <title>Kotlin DataFrame Preview</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/06/kotlin-dataframe-library-preview/</link>
+
+            <dc:creator><![CDATA[Roman Belov]]></dc:creator>
+            <pubDate>Thu, 30 Jun 2022 17:46:44 +0000</pubDate>
+            <featuredImage>
+                https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-Dataframe-Preview_Blog-Twitter.png
+            </featuredImage>
+            <category><![CDATA[data-science]]></category>
+            <category><![CDATA[datascience]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=260693</guid>
+
+            <description>
+                <![CDATA[TL;DR: We at the Kotlin team have developed a Kotlin library for data frames. Today we’re releasing its first public preview version. It provides a readable and powerful DSL for data wrangling and i/o via CSV, JSON, Excel, and Apache Arrow, as well as interop with Kotlin data classes and hierarchical data schemas. The library [&#8230;]]]></description>
+            <content:encoded><![CDATA[<p><strong>TL;DR:</strong> We at the Kotlin team have developed a Kotlin library for data frames. Today we’re releasing its first public preview version. It provides a readable and powerful DSL for data wrangling and i/o via CSV, JSON, Excel, and Apache Arrow, as well as interop with Kotlin data classes and hierarchical data schemas. The library is ready for you to try, and we’re keen to get your feedback.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Kotlin DataFrame on GitHub" href="https://github.com/Kotlin/dataframe">Kotlin DataFrame on GitHub</a></p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<p>Today we’re unveiling a new member of the collection of Kotlin libraries for data science. We’ve previously written about <a href="https://github.com/jetbrains/kotlindl">KotlinDL</a> for deep learning and <a href="https://github.com/kotlin/multik">Multik</a> for tensors. Now we’d like to introduce <a href="https://github.com/Kotlin/dataframe">Kotlin DataFrame</a>, a library for working with data frames.</p>
+
+
+
+<h2>Overview</h2>
+
+
+
+<p>One blog post is not enough to cover every aspect of the library, so we started a series of videos about Kotlin DataFrame. Below you’ll find the first video, which covers basic operations and the process of working with plain (non-hierarchical) tables. More videos are in the works, so please let us know whether you like this format and what we can improve.</p>
+
+
+
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<iframe loading="lazy" title="Kotlin DataFrame Overview | Data Science with Kotlin" width="500" height="281" src="https://www.youtube.com/embed/qGou8F2asNw?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div><figcaption>  </figcaption></figure>
+
+
+
+<h2>What does it look like?</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1636" height="2495" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/NzHau0XdPjY.png" alt="" class="wp-image-260740"/><figcaption>A simple example using the DataFrame library in <a href="https://datalore.jetbrains.com/" target="_blank" rel="noreferrer noopener">Datalore</a></figcaption></figure>
+
+
+
+<h2>What is a data frame?</h2>
+
+
+
+<p>So what is a data frame? A data frame is a convenient abstraction for working with structured data. Essentially, it’s a 2-dimensional table with labeled columns of potentially different types. You can think of it as a spreadsheet or SQL table, or a dictionary of collections. If you’ve ever worked with Excel or CSV files, you are already more or less familiar with the concept of data frames.</p>
+
+
+
+<p>But what makes this abstraction so convenient is not the table itself, but rather the set of operations defined in on it. And <a href="https://github.com/Kotlin/dataframe">Kotlin DataFrame</a> is an idiomatic Kotlin DSL-based language for defining such operations. The process of working with data frames is often called data wrangling. This involves transforming and mapping data from a &#8220;raw&#8221; data format onto another format that is more appropriate for analytics and visualization. The goal of data wrangling is to ensure that data is useful and of high quality. Data analysts typically spend the majority of their time wrangling data, rather than analyzing. And that’s why it is so important to make this process easy, smooth, and enjoyable.</p>
+
+
+
+<h2>I’m not a data scientist, why should I care?</h2>
+
+
+
+<p>First of all, who knows? Maybe you will<em> </em>become a data scientist one day. :-)</p>
+
+
+
+<p>Analyzing data is not restricted to the field of data science. We often do it in our roles as software developers. For example, we analyze what’s actually inside collections when debugging, dig into memory dumps or databases, work with REST APIs, and receive JSON files with data in them. Having a typesafe and easy DSL for these sorts of tasks would be really beneficial.</p>
+
+
+
+<h2>Why a new library?</h2>
+
+
+
+<p>Why are we developing a new library if several JVM-based data frames already exist?</p>
+
+
+
+<p>Kotlin DataFrame was inspired by the <a href="https://github.com/holgerbrandl/krangl/">Krangl</a> library and started as a wrapper on top of it. Over time, however, we had to rewrite more and more of the library, and we ended up changing almost all of it. While rewriting it, we’ve followed these guiding principles:</p>
+
+
+
+<ul><li><strong>Idiomatic</strong> – The API should be natural for Kotlin developers and consistent with the Kotlin standard library.</li><li><strong>Hierarchical</strong> – Data frames should be able to read and present data from different sources, including not only plain CSV but also JSON, e.g. directly from REST APIs. That’s why data frames have been designed hierarchically and allow the nesting of columns and cells.</li></ul>
+
+
+
+<figure class="wp-block-image"><img src="https://lh4.googleusercontent.com/kKJSfWmRummevYryXhIhukO4Rie4NpvLUg1NydH_yabX87XeGEby5_gkRdTiqjMo_snmNao1PeM0Ld2ROeO00JHaDv7pJAsbbhBt4cGpvFrOPI6qVPRhujlH36quZK8RPj-RivUjDfRXfp-OBw" alt=""/></figure>
+
+
+
+<ul><li><strong>Generic</strong> – Data frames should be able to store not just a limited set of value types, but any Kotlin object, providing null-safety support for all of them.</li><li><strong>Interoperable</strong> – We need to add seamless integration with Kotlin collections, converting any object structure in application memory to a data frame, and vice versa.</li></ul>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+data class Person(val name: String, val age: Int)
+val persons = listOf(Person(&quot;Alice&quot;, 15), Person(&quot;Bob&quot;, 20), Person(&quot;Charlie&quot;, 22))
+// Convert collection to DataFrame
+val df = persons.convertToDataFrame()
+// Convert DataFrame to Kotlin collection
+val persons1 = df.toListOf&lt;Person&gt;()
+</pre>
+
+
+
+<ul><li><strong>Typesafe and practical </strong>– Data frames are highly dynamic objects. Their labels depend on the input source, and new columns can also be added or removed during data wrangling. To make it possible to access them in a safe and convenient way, we’ve developed a mechanism for the on-the-fly generation of extension properties that correspond to the columns of a data frame. In interactive notebooks like Jupyter or Datalore, this generation runs after the execution of each cell. Currently, we’re working on a compiler plugin that infers and transforms the data frame schema while typing.<br>The generated properties ensure you’ll never misspell column names or mess up their types. And of course, nullability is also preserved.<br></li></ul>
+
+
+
+<figure class="wp-block-image"><img src="https://lh6.googleusercontent.com/I4ufQf6u0V4V9JwjEvujTjz9DU2LaQGA0o4c-6NoshsA_v6hQkGKhDKSBat51oq_RTtjbtf8kJNGhb6oTSH3fcpnBe6IZqMpk8n10Qu9ry4GniOpJfGeBL-CcfYXH5QGXAp8ri1tIzgSybIdDg" alt=""/><figcaption>Properties correspond names, types and nullability of the columns</figcaption></figure>
+
+
+
+<ul><li><a href="https://kotlin.github.io/dataframe/schemas.html#custom-data-schemas"><strong>Polymorphic</strong></a> – If all the columns of one data frame are presented in some other data frame, then the former can be a supertype for the latter. This means we can define a function for a data frame with an expected set of columns and later safely execute it for any data frame that contains them<br></li></ul>
+
+
+
+<figure class="wp-block-image"><img src="https://lh5.googleusercontent.com/n7HP4tLlVpU1ozMgS-eKNhEvepyDmWffBnjZHsjmt6ye5XI9Py3YcW2RxchcH7nqcOcE9T0IdKCsgDOlPv19b4J5XEHq633bhmA0n1wDOlSNSsDtgcSQ3z5CmrDd8Ps5vqCdZHLyoSNz8qyQAw" alt=""/></figure>
+
+
+
+<h2>Where to start?</h2>
+
+
+
+<ul><li><a href="https://kotlin.github.io/dataframe/overview.html">Documentation</a> (check it out; it’s really helpful)</li><li><a href="https://kotlin.github.io/dataframe/installation.html">Installation</a> (Jupyter, Datalore, Gradle)</li><li><a href="https://github.com/Kotlin/dataframe/">Repository</a></li><li><a href="https://github.com/Kotlin/dataframe/tree/master/examples">Samples</a><ul><li>Titanic (<a href="https://github.com/Kotlin/dataframe/blob/master/examples/jupyter-notebooks/titanic/Titanic.ipynb">Jupyter</a>, <a href="https://datalore.jetbrains.com/view/notebook/B5YeMMONSAR78FgKQ9yJyW">Datalore</a>, <a href="https://github.com/Kotlin/dataframe/tree/master/examples/idea-examples/titanic">IntelliJ IDEA</a>)</li><li>Movies database (<a href="https://github.com/Kotlin/dataframe/blob/master/examples/jupyter-notebooks/movies/movies.ipynb">Jupyter</a>, <a href="https://datalore.jetbrains.com/view/notebook/89IMYb1zbHZxHfwAta6eKP">Datalore</a>, <a href="https://github.com/Kotlin/dataframe/tree/master/examples/idea-examples/movies">IntelliJ IDEA</a>)</li><li>Puzzles (<a href="https://github.com/Kotlin/dataframe/blob/master/examples/jupyter-notebooks/puzzles/40%20puzzles.ipynb">Jupyter</a>, <a href="https://datalore.jetbrains.com/view/notebook/CVp3br3CDXjUGaxxqfJjFF">Datalore</a>)</li><li>Netflix (<a href="https://github.com/Kotlin/dataframe/blob/master/examples/jupyter-notebooks/netflix/netflix.ipynb">Jupyter</a>, <a href="https://datalore.jetbrains.com/view/notebook/wB6Vq1oKU3GniCi1i05l2X">Datalore</a>)</li><li>Wine (<a href="https://github.com/Kotlin/dataframe/blob/master/examples/jupyter-notebooks/wine/WineNetWIthKotlinDL.ipynb">Jupyter</a>, <a href="https://datalore.jetbrains.com/view/notebook/aK9vYHH8pCA8H1KbKB5WsI">Datalore</a>)</li><li>Analyzing the Github API (<a href="https://github.com/Kotlin/dataframe/blob/master/examples/jupyter-notebooks/github/github.ipynb">Jupyter</a>, <a href="https://datalore.jetbrains.com/view/notebook/wGlYql3ObFCloN0YpWR1Xw">Datalore</a>)</li></ul></li><li>You’re also welcome to join the <a href="https://app.slack.com/client/T09229ZC6/C4W52CFEZ">#datascience channel</a> in Kotlin Slack (get an invite <a href="http://slack.kotlinlang.org/">here</a>). In this channel, you can ask questions, participate in discussions, and get notifications about the new releases</li></ul>
+
+
+
+<p><em>Let&#8217;s Kotlin!</em></p>]]></content:encoded>
+
+
+        </item>
+        <item>
+            <title>Introducing Kotlin Build Reports</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/06/introducing-kotlin-build-reports/</link>
+
+            <dc:creator><![CDATA[Andrey Uskov]]></dc:creator>
+            <pubDate>Tue, 21 Jun 2022 12:01:45 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-Build-Reports_1.png
+            </featuredImage>
+            <category><![CDATA[news]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=256438</guid>
+
+            <description>
+                <![CDATA[Starting with Kotlin 1.7.0, you can create build reports for Kotlin compiler tasks. Reports contain durations of different compilation phases and reasons why incremental compilation could not be used. This functionality is still Experimental, so the list of metrics may change. TRY BUILD REPORTS Build reports are useful when you want to investigate issues with [&#8230;]]]></description>
+            <content:encoded><![CDATA[<p>Starting with Kotlin 1.7.0, you can create <strong>build reports</strong> for Kotlin compiler tasks. Reports contain durations of different compilation phases and reasons why incremental compilation could not be used. This functionality is still <a href="https://kotlinlang.org/docs/components-stability.html#stability-levels-explained">Experimental</a>, so the list of metrics may change.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="TRY BUILD REPORTS" href="https://blog.jetbrains.com/kotlin/2022/06/introducing-kotlin-build-reports/#enable_build_reports">TRY BUILD REPORTS</a></p>
+
+
+
+<p>Build reports are useful when you want to investigate issues with compiler tasks. For example, when a Gradle build takes too much time, and it’s quite difficult to understand the root cause of poor performance. Another example is when the compilation time of the same projects differs: sometimes it takes seconds, and sometimes minutes.</p>
+
+
+
+<p>Kotlin build reports help examine problems more efficiently than <a href="https://scans.gradle.com/">Gradle build scans</a>. Many engineers use them to investigate build performance, but the unit of granularity in Gradle scans is a single Gradle task.</p>
+
+
+
+<h2 id="enable_build_reports">How to enable build reports</h2>
+
+
+
+<p>To enable build reports, declare the output location in <code>gradle.properties&nbsp;</code> where to save build reports:</p>
+
+
+
+<p><code>kotlin.build.report.output=file</code></p>
+
+
+
+<p>The following values (and their combinations)&nbsp; are available:</p>
+
+
+
+<ul><li><code>file</code> saves build reports in a local file. By default, it’s <code>${project_folder}/build/reports/kotlin-build/${project_name}-timestamp.txt</code>.</li><li><code>build_scan</code> saves build reports in the custom values section of the build scan. Note that the Gradle Enterprise plugin limits the number of custom values and their length. This can result in some values being lost when dealing with large projects.</li></ul>
+
+
+
+<ul><li><code>http</code> posts build reports using an HTTP(S) request. The POST method sends metrics in JSON format. Data may change from version to version; see the current version of the sent data in the <a href="https://github.com/JetBrains/kotlin/blob/master/libraries/tools/kotlin-gradle-plugin/src/common/kotlin/org/jetbrains/kotlin/gradle/plugin/statistics/CompileStatisticsData.kt">Kotlin repository</a>.</li></ul>
+
+
+
+<p>If you don’t have an HTTP endpoint, use one of the samples below:</p>
+
+
+
+<ol><li><strong>HTTP endpoint based on the ELK stack. </strong>Install an instance of<a href="https://www.elastic.co/elastic-stack/"> Elasticsearch</a> and use the following config for Logstash:</li></ol>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+input {
+    http {}
+}
+filter {
+   date {
+        match =&gt; [ &quot;timestamp&quot;, &quot;yyyy-MM-dd'T'HH:mm:ss&quot; ]
+        timezone =&gt; &quot;UTC&quot;
+        target =&gt; &quot;@timestamp&quot;
+    }
+    mutate { remove_field =&gt; [ &quot;http&quot;, &quot;url&quot; ] }
+}
+output {
+    elasticsearch {
+        index =&gt; &quot;kotlin_reports&quot;
+    }
+}
+</pre>
+
+
+
+<ol start="2"><li><strong>Kotlin-based</strong><a href="https://github.com/ausatiy/kotlin-build-report-sample"><strong> </strong><strong>HTTP endpoint</strong></a>. It saves information about the compilation duration and the reasons for non-incremental compilation if it was recompiled into a CSV file.</li></ol>
+
+
+
+<p>&nbsp;To further set up build reports, use the following options for your <code>gradle.properties</code>:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+# Required outputs. Any combinations are allowed
+kotlin.build.report.output=file,http,build_scan
+
+# Optional. Output directory for file-based reports. Default: build/reports/kotlin-build/
+kotlin.build.report.file.output_dir=kotlin-reports
+
+# Mandatory if http output is used. Where to post HTTP(S)-based reports
+kotlin.build.report.http.url=http://127.0.0.1:8080
+
+# Optional. User and password if the HTTP endpoint requires authentication
+kotlin.build.report.http.user=someUser
+kotlin.build.report.http.password=somePassword
+
+# Optional. Label for marking your build report (e.g. debug parameters)
+kotlin.build.report.label=some_label
+</pre>
+
+
+
+<h2>How to read build reports</h2>
+
+
+
+<p>The optimization process is quite creative. It’s often difficult to provide a ready cookbook, and you have to investigate each case separately. But sometimes, you can achieve good results with the following pipeline:</p>
+
+
+
+<p>1. Understand why builds are not incremental and fix underlying problems.</p>
+
+
+
+<p>2. If incremental compilation takes too much time, a good approach is to reorganize source files. For example, don’t pack all classes in one file, don’t declare all top-level functions in one file, and so on.</p>
+
+
+
+<p>Let’s take a look at a generated build report. This task took almost 40 seconds to execute:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+Task ':kotlin-gradle-plugin:compileCommonKotlin' finished in 39,73 s
+Compilation log for task ':kotlin-gradle-plugin:compileCommonKotlin':
+  Non-incremental compilation will be performed: UNKNOWN_CHANGES_IN_GRADLE_INPUTS
+Time metrics:
+  Total Gradle task time: 39,73 s
+  Task action: 0,09 s
+    Calculate output size: 0,01 s
+    Run compilation: 39,32 s
+      Incremental compilation in daemon: 39,27 s
+        Update caches: 0,40 s
+        Sources compilation round: 38,57 s
+  Compiler initialization time: 1,02 s
+  Compiler code analysis: 26,36 s
+  Compiler code generation: 10,87 s
+Size metrics:
+  Total size of the cache directory: 6,2 MB
+    ABI snapshot size: 49 B
+  Total compiler iteration: 1
+Build attributes:
+  REBUILD_REASON: Unknown Gradle changes
+</pre>
+
+
+
+<p>The Total Gradle task time shows the time from task execution to listeners’ notification. Task action indicates only the task that schedules compilation jobs in Gradle workers. The compilation itself is performed in Gradle workers. You can see its compilation time in the Run compilation section.</p>
+
+
+
+<p>We see that this module was built non-incrementally because Gradle couldn’t calculate the difference between the inputs. It usually happens with clean builds or when some changes in build scripts have been performed. Since the incremental compilation wasn’t available, almost all the time was spent on code analysis.</p>
+
+
+
+<p>The most common reasons why compilation couldn’t be incremental are:</p>
+
+
+
+<ul><li><code>DEP_CHANGE_HISTORY_NO_KNOWN_BUILDS</code> – this means that one of the dependent modules wasn’t previously compiled, or its history file was housekept.</li><li><code>DEP_CHANGE_HISTORY_IS_NOT_FOUND</code> –&nbsp;this means that one of the changed dependencies isn’t a source module or a non-Kotlin module.</li><li><code>OUT_OF_PROCESS_EXECUTION, IN_PROCESS_EXECUTION</code> – this means that the incremental compilation could be performed in the Kotlin daemon. Any other mode forces a non-incremental build.</li></ul>
+
+
+
+<p>More details on the incremental compilation in Kotlin are coming in future posts. Stay tuned!</p>
+
+
+
+<h2>How we use build reports in JetBrains</h2>
+
+
+
+<h3>Decreasing compilation time</h3>
+
+
+
+<p>Consider this build report for the project <a href="https://www.jetbrains.com/space/">Space</a>. We had a module with large generated source files. While compilation was incremental, the Kotlin compiler still had to reanalyze large source files on every change.</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+Compile iteration:
+    &lt;a large generated source file&gt;
+Time metrics:
+  Total Gradle task time: 108,98 s
+  Task action: 0,20 s
+    Backup output: 0,18 s
+    Connect to Kotlin daemon: 0,01 s
+    Calculate output size: 0,01 s
+    Run compilation: 108,23 s
+      Incremental compilation in daemon: 108,19 s
+        Calculate initial dirty sources set: 0,23 s
+          Analyze dependency changes: 0,03 s
+          Detect removed classes: 0,19 s
+        Update caches: 0,28 s
+        Sources compilation round: 107,49 s
+  Compiler initialization time: 0,12 s
+  Compiler code analysis: 80,26 s
+  Compiler code generation: 25,04 s
+Size metrics:
+  Total size of the cache directory: 3,2 MB
+    ABI snapshot size: 643 B
+  Total compiler iteration: 1
+</pre>
+
+
+
+<p></p>
+
+
+
+<p>In this case, it&#8217;s recommended to reorganize sources – split large files, place separate classes in different files, refactor large classes, and so on.</p>
+
+
+
+<h3>Tracking performance regression</h3>
+
+
+
+<p>The Kotlin team uses build reports to track compilation for several projects. We asked developers to enable an HTTP endpoint for build reports to see the overall build performance in one place. For example, you can quickly check for performance regressions after Kotlin or Gradle version updates and find long-running compilations.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-Build-Reports_3-1.png" alt="" class="wp-image-256585"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-Build-Reports_4-1.png" alt="" class="wp-image-256640"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-Build-Reports_5-1.png" alt="" class="wp-image-256629"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-Build-Reports_6-1.png" alt="" class="wp-image-256618"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-Build-Reports_7-1.png" alt="" class="wp-image-256607"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1920" height="1080" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-Build-Reports_8-1.png" alt="" class="wp-image-256596"/></figure>
+
+
+
+<h2>Leave your feedback</h2>
+
+
+
+<p>You are welcome to try build reports in your infrastructure. If you have any feedback, encounter any issues, or want to suggest improvements, please don’t hesitate to report them in our issue <a href="https://youtrack.jetbrains.com/issues/KT">tracker</a>. Thank you!</p>]]></content:encoded>
+
+
+            <language>
+                <code><![CDATA[zh-hans]]></code>
+                <url>https://blog.jetbrains.com/zh-hans/kotlin/2022/06/introducing-kotlin-build-reports/</url>
+            </language>
+            <language>
+                <code><![CDATA[ko]]></code>
+                <url>https://blog.jetbrains.com/ko/kotlin/2022/06/introducing-kotlin-build-reports/</url>
+            </language>
+        </item>
+        <item>
+            <title>Kotlin News: The Release of 1.7.0, Roadmap Updates, Multiplatform Survey Results, and More</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/06/kotlin-news-may-june/</link>
+
+            <dc:creator><![CDATA[Alina Grebenkina]]></dc:creator>
+            <pubDate>Thu, 16 Jun 2022 10:07:03 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/06/Monthly-digest-3-Summer-2022-01.png
+            </featuredImage>
+            <category><![CDATA[news]]></category>
+            <category><![CDATA[kotlin-news]]></category>
+            <category><![CDATA[newsletter]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=255102</guid>
+
+            <description>
+                <![CDATA[Kotlin 1.7.0 has been released This release: Pushes the Kotlin K2 compiler for the JVM to Alpha. Brings performance improvements for the Kotlin/JVM compiler. Introduces a new approach to incremental compilation in Gradle. Promotes OptIn annotations and builder inference to stable. Update to Kotlin 1.7.0 Stay up to date with our monthly digest, which features [&#8230;]]]></description>
+            <content:encoded><![CDATA[<h2><strong>Kotlin 1.7.0 has been released</strong></h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Monthly-digest-3-Summer-2022-02.png" alt="" class="wp-image-256731"/></figure>
+
+
+
+<p>This release:</p>
+
+
+
+<ul><li>Pushes the Kotlin K2 compiler for the JVM to Alpha.</li><li>Brings performance improvements for the Kotlin/JVM compiler.</li><li>Introduces a new approach to incremental compilation in Gradle.</li><li>Promotes OptIn annotations and builder inference to stable.</li></ul>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Update to Kotlin 1.7.0" href="https://blog.jetbrains.com/kotlin/2022/06/kotlin-1-7-0-released/#how-to-install" target="_blank" rel="noopener">Update to Kotlin 1.7.0</a></p>
+
+
+
+<div style="background-color: #f1f6fe; margin-bottom: 2px; padding: 5px; margin-right: 0%; text-align: left; min-height: px;">
+<p>Stay up to date with our monthly digest, which features all the most important news about the Kotlin ecosystem! <a href="https://info.jetbrains.com/kotlin-communication-center-page.html" target="_blank" rel="noreferrer noopener"><em>Subscribe here.</em></a></p>
+</div>
+<p></p>
+
+
+
+<h2><strong>Kotlin 2022–2023 roadmap update</strong></h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Monthly-digest-3-Summer-2022-03.png" alt="" class="wp-image-256742"/></figure>
+
+
+
+<p>Learn more about what improvements to expect from the Kotlin team over the next 12 months! There are 50 tickets that we are currently working on, and our focus is on improvements for multiplatform developers, library developers, and anyone who wants to save time.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Read the blog post" href="https://blog.jetbrains.com/kotlin/2022/06/what-to-expect-from-the-kotlin-team-in-202223/" target="_blank" rel="noopener">Read the blog post</a></p>
+
+
+
+<h2><strong>Server-side with Kotlin webinar series</strong></h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Monthly-digest-3-Summer-2022-04.png" alt="" class="wp-image-256753"/></figure>
+
+
+
+<p>Check out the latest episodes in our server-side with Kotlin webinar series:</p>
+
+
+
+<ul><li><em>Event Streaming with Apache pulsar and Kotlin</em></li><li><em>Property-based testing in Kotlin and Java with jqwik</em></li><li><em>Kotlin + jOOQ</em></li><li><em>Building applications with Kotlin and Arrow.kt in style</em></li></ul>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Go to the Kotlin YouTube channel" href="https://www.youtube.com/playlist?list=PLlFc5cFwUnmx-dpq9nkdaVJX0GnrM1Mp1" target="_blank" rel="noopener">Go to the Kotlin YouTube channel</a></p>
+
+
+
+<h2><strong>Kotlin Multiplatform Mobile roadmap update</strong></h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Monthly-digest-3-Summer-2022-08.png" alt="" class="wp-image-256790"/></figure>
+
+
+
+<p>Check out this update on the development of Kotlin Multiplatform Mobile, which continues to move steadily towards Beta status.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Learn more" href="https://blog.jetbrains.com/kotlin/2022/05/kotlin-multiplatform-mobile-beta-roadmap-update" target="_blank" rel="noopener">Learn more</a></p>
+
+
+
+<h2><strong>Baidu case study</strong></h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Monthly-digest-3-Summer-2022-05.png" alt="" class="wp-image-256764"/></figure>
+
+
+
+<p>Baidu, a leading artificial intelligence company and the world’s largest Chinese-language search engine, shared their story of using Kotlin Multiplatform Mobile technology to unify the business logic of multiple modules in their Wonder app. This allowed them to cover multiple core business scenarios while retaining the excellent user experience of the native UI.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Read the story" href="https://kotlinlang.org/lp/mobile/case-studies/baidu/" target="_blank" rel="noopener">Read the story</a></p>
+
+
+
+<h2><strong>Results of the Kotlin Multiplatform Survey Q3-Q4 2021</strong></h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Monthly-digest-3-Summer-2022-06-1.png" alt="" class="wp-image-256801"/></figure>
+
+
+
+<p><em>76.5% of those who play around with Kotlin Multiplatform are considering using it for their production projects.</em></p>
+
+
+
+<p>Check out the key survey highlights about developers’ experience with Kotlin Multiplatform, as well as its key benefits, use cases, and more in the blog post.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Check out the results" href="https://blog.jetbrains.com/kotlin/2022/06/multiplatform-survey-q3-q4-2021/" target="_blank" rel="noopener">Check out the results</a></p>
+
+
+
+<h2><strong>Help us make Kotlin better</strong></h2>
+
+
+
+<figure class="wp-block-image"><img src="https://lh3.googleusercontent.com/Ln_ct8uPX8OSjk7X8V6TpgkAiAxOKJTbYi970wHXTkZa7h2kEgWuPD1iamhGpuY4mKZPdeiOY2jXO6hjGdb3y84fe-OeQeZglnIP_oDjvBi7pJYbZJ0ZNzGKKrmNQjJDq12pOTZHLmS09OeTCQ" alt=""/></figure>
+
+
+
+<h3>Kotlin Multiplatform User Survey: Q2 2022</h3>
+
+
+
+<p>Do you use Kotlin Multiplatform in your projects? The Kotlin Multiplatform User Survey is now open. Don’t miss this chance to shape the future of the technology. Share your feedback with us!<a href="https://surveys.jetbrains.com/s3/a3df37f64f8a">&nbsp;</a></p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Share your Kotlin Multiplatform experience" href="https://surveys.jetbrains.com/s3/a3df37f64f8a" target="_blank" rel="noopener">Share your Kotlin Multiplatform experience</a></p>
+
+
+
+<h3>New Kotlin Users Survey</h3>
+
+
+
+<p>Each month, new developers start their journeys with Kotlin. Some just want to try it out, while others have specific goals in mind. Let us know how your Kotlin journey began so we can improve the experience.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Tell us how you started" href="https://surveys.jetbrains.com/s3/kotlin-usage-survey" target="_blank" rel="noopener">Tell us how you started</a></p>
+
+
+
+<h3>JVM Developers Application Type Research</h3>
+
+
+
+<p>Calling all non-server-side Kotlin JVM developers! We are looking for new ways to make your experience more convenient, and we would appreciate your feedback.<a href="https://surveys.jetbrains.com/s3/jvm-kotlin-developers-survey">&nbsp;</a></p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Tell us how you benefit from Kotlin" href="https://surveys.jetbrains.com/s3/jvm-kotlin-developers-survey" target="_blank" rel="noopener">Tell us how you benefit from Kotlin</a></p>]]></content:encoded>
+
+
+        </item>
+        <item>
+            <title>Kotlin 1.7.0 Released</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/06/kotlin-1-7-0-released/</link>
+
+            <dc:creator><![CDATA[Andrey Polyakov]]></dc:creator>
+            <pubDate>Thu, 09 Jun 2022 15:18:10 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-1.7.0_Blog-featured-post.png
+            </featuredImage>
+            <category><![CDATA[releases]]></category>
+            <category><![CDATA[sendtoall]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=254774</guid>
+
+            <description>
+                <![CDATA[Kotlin 1.7.0 has been released. It unveils the Alpha version of the new Kotlin/JVM K2 compiler, stabilizes language features, and brings performance improvements for the JVM, JS, and Native platforms. Here is a list of the major updates in this version: The new Kotlin К2 compiler is in Alpha now, and it offers serious performance [&#8230;]]]></description>
+            <content:encoded><![CDATA[<p>Kotlin 1.7.0 has been released. It unveils the Alpha version of the new Kotlin/JVM K2 compiler, stabilizes language features, and brings performance improvements for the JVM, JS, and Native platforms.</p>
+
+
+
+<p>Here is a list of the major updates in this version:</p>
+
+
+
+<ul><li><a href="https://kotlinlang.org/docs/whatsnew17.html#new-kotlin-k2-compiler-for-the-jvm-in-alpha">The new Kotlin К2 compiler is in Alpha</a> now, and it offers serious performance improvements. It is available only for the JVM, and none of the compiler plugins, including kapt, work with it yet.</li><li><a href="https://kotlinlang.org/docs/whatsnew17.html#a-new-approach-to-incremental-compilation">A new approach to the incremental compilation in Gradle</a>. Incremental compilation is now also supported for changes made inside dependent non-Kotlin modules and is compatible with Gradle.</li><li>We’ve stabilized <a href="https://kotlinlang.org/docs/whatsnew17.html#stable-opt-in-requirements">opt-in requirement annotations</a>, <a href="https://kotlinlang.org/docs/whatsnew17.html#stable-definitely-non-nullable-types">definitely non-nullable types</a>, and <a href="https://kotlinlang.org/docs/whatsnew17.html#stable-builder-inference">builder inference</a>.</li><li>There’s now an <a href="https://kotlinlang.org/docs/whatsnew17.html#underscore-operator-for-type-arguments">underscore operator for type args</a>. You can use it to automatically infer a type of argument when other types are specified.</li><li>This release <a href="https://kotlinlang.org/docs/whatsnew17.html#allow-implementation-by-delegation-to-an-inlined-value-of-an-inline-class">allows implementation by delegation to an inlined value of an inline class</a>. You can now create lightweight wrappers that do not allocate memory in most cases.</li></ul>
+
+
+
+<p>Read the complete list of changes in <a href="https://kotlinlang.org/docs/whatsnew17.html">What’s new in Kotlin 1.7.0</a>.</p>
+
+
+
+<span id="more-254774"></span>
+
+
+
+<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><div class="wp-block-embed__wrapper">
+<iframe loading="lazy" title="What&#039;s New in Kotlin 1.7 / Kotlin 1.7의 새로운 기능" width="500" height="281" src="https://www.youtube.com/embed/54WEfLKtCGk?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div></figure>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h1 id="how-to-install">How to install Kotlin 1.7.0</h1>
+
+
+
+<p>If you already use <a href="https://www.jetbrains.com/idea/download/">IntelliJ IDEA</a> or Android Studio Chipmunk (212), your IDE will suggest updating Kotlin to 1.7.0 automatically. You can also update manually for these IDEs by following <a href="https://kotlinlang.org/docs/releases.html#update-to-a-new-release">these instructions</a>.</p>
+
+
+
+<p>For Intellij IDEA 2022.2, and Android Studio Dolphin (213) or Android Studio Electric Eel (221), the Kotlin plugin 1.7.0 will be delivered with upcoming Intellij IDEA and Android Studios updates.</p>
+
+
+
+<p>Make sure that you have also updated the kotlinx libraries to <a href="https://kotlinlang.org/releases.html#release-details">compatible versions</a> and specified version 1.7.0 of Kotlin in the build scripts of your existing projects.</p>
+
+
+
+<p>If you need the command-line compiler, download it from the <a href="https://github.com/JetBrains/kotlin/releases/tag/v1.7.0">GitHub release page</a>.</p>
+
+
+
+<h3 id="if-you-run-into-any-problems">If you run into any problems</h3>
+
+
+
+<ul><li>Find help on <a href="http://kotlinlang.slack.com/">Slack</a> (<a href="https://surveys.jetbrains.com/s3/kotlin-slack-sign-up">get an invite</a>).</li><li>Report issues to our issue tracker, <a href="https://youtrack.jetbrains.com/issues/KT">YouTrack</a>.</li></ul>
+
+
+
+<div style="background-color: #f1f6fe; margin-bottom: 2px; padding: 5px; margin-right: 0%; text-align: left; min-height: px;">
+<p>Stay up to date with the latest Kotlin features! Subscribe to receive Kotlin updates by filling out the form to the right of this post.</p>
+</div>
+
+
+
+<h1 id="what-else-to-read-and-watch">What else to read and watch</h1>
+
+
+
+<ul><li><a href="https://kotlinlang.org/docs/roadmap.html">Updated Kotlin roadmap</a></li><li><a href="https://kotlinlang.org/docs/whatsnew17.html">What’s new in Kotlin 1.7.0 documentation</a></li><li><a href="https://youtu.be/54WEfLKtCGk">What’s new in Kotlin 1.7.0 on YouTube</a></li><li><a href="https://kotlinlang.org/docs/compatibility-guide-17.html">Compatibility guide for Kotlin 1.7</a></li></ul>
+
+
+
+<h1 id="top-issue-reporters-from-youtrack">Top issue reporters from YouTrack&nbsp;</h1>
+
+
+
+<p><a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20hfhbd">Philip Wedemann</a> (28 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20lblb636">AndroidDeveloperLB</a> (20 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20kotlinisland">Morgan Bartholomew</a> (12 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20tlioylc.1">meng wang</a> (10 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20Carlos_Ballesteros_Velasco">Carlos Ballesteros Velasco</a> (10 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20gavra">Ivan Gavrilovic</a> (9 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20stevenschaefer">Steven Schäfer</a> (9 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20him188">Tianyi Guan</a> (9 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20vanniktech">Niklas Baudy</a> (9 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20Holger.Brandl">holger brandl</a> (9 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20Mike_Hearn">Mike Hearn</a> (8 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20eygraber">Eliezer Graber</a> (8 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20zzdvwmiifztr2cyaouskro6">Waldemar Kornewald</a> (8 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20krzema12">Piotr Krzemiński</a> (8 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20yboyar">Yigit Boyar</a> (7 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20JavierSegoviaCordoba">Javier Segovia Córdoba</a> (7 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20Oliver_O">Oliver O.</a> (7 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20vivek.modi456">vivek modi</a> (7 issues), <a href="https://youtrack.jetbrains.com/issues/?q=project:KT,%20KTIJ%20created:%202021-11-16%20..%20*%20created%20by:%20philip.dukhov">Philip Dukhov</a> (7 issues).</p>
+
+
+
+<h1 id="external-contributors">External contributors</h1>
+
+
+
+<p>We’d like to thank all of our contributors whose pull requests were included in this release: <a href="https://github.com/jsjeon">Jinseong Jeon</a>, <a href="https://github.com/tgeng">Tianyu Geng</a>, <a href="https://github.com/pyos">pyos</a>, <a href="https://github.com/hungvietnguyen">Hung Nguyen</a>, <a href="https://github.com/punzki">Mark Punzalan</a>, <a href="https://github.com/madsager">Mads Ager</a>, <a href="https://github.com/sfs">Steven Schäfer</a>, <a href="https://github.com/irenedea">Irene Dea</a>, <a href="https://github.com/gavra0">Ivan Gavrilovic</a>, <a href="https://github.com/scaventz">Xin Wang</a>, <a href="https://github.com/kandersen">Kristoffer Andersen</a>, <a href="https://github.com/k163377">wrongwrong</a>, <a href="https://github.com/natario1">Mattia Iavarone</a>, <a href="https://github.com/mpetrov">Martin Petrov</a>, <a href="https://github.com/liutikas">Aurimas</a>, <a href="https://github.com/Snipx">Alexey Subach</a>, <a href="https://github.com/Udinic">Udi Cohen</a>, <a href="https://github.com/Quantum64">Quantum64</a>, <a href="https://github.com/darioseidl">Dario Seidl</a>, <a href="https://github.com/dsaff">David Saff</a>, <a href="https://github.com/dmekhanikov">Denis Mekhanikov</a>, <a href="https://github.com/egorGit">Egor</a>, <a href="https://github.com/GlenKPeterson">Glen K. Peterson</a>, <a href="https://github.com/igfoo">Ian Lynagh</a>, <a href="https://github.com/CommanderTvis">Iaroslav Postovalov</a>, <a href="https://github.com/jprinet">Jerome Prinet</a>, <a href="https://github.com/neetopia">Jiaxiang Chen</a>, <a href="https://github.com/josephw">Joseph Walton</a>, <a href="https://github.com/kevin1e100">Kevin Bierhoff</a>, <a href="https://github.com/3flex">Matthew Haughton</a>, <a href="https://github.com/DRSchlaubi">Michael Rittmeister</a>, <a href="https://github.com/mkj-gram">Morten Krogh-Jespersen</a>, <a href="https://github.com/nikolaykasyanov">Nikolay Kasyanov</a>, <a href="https://github.com/krzema12">Piotr Krzeminski</a>, <a href="https://github.com/770grappenmaker">770grappenmaker</a>, <a href="https://github.com/rickclephas">Rick Clephas</a>, <a href="https://github.com/rnett">Ryan Nett</a>, <a href="https://github.com/Soarex16">Shumaf Lovpache</a>, <a href="https://github.com/Starlight220">Starlight220</a>, <a href="https://github.com/yigit">Yigit Boyar</a>, <a href="https://github.com/ZacSweers">Zac Sweers</a>, <a href="https://github.com/aragos">aragos</a>, <a href="https://github.com/baratynskiy">baratynskiy</a>, <a href="https://github.com/ov7a">ov7a</a>, <a href="https://github.com/git-sgmoore">sgmoore</a>, <a href="https://github.com/soywiz">soywiz</a>, <a href="https://github.com/tdn120">tdn120</a>.</p>]]></content:encoded>
+
+
+            <language>
+                <code><![CDATA[zh-hans]]></code>
+                <url>https://blog.jetbrains.com/zh-hans/kotlin/2022/06/kotlin-1-7-0-released/</url>
+            </language>
+            <language>
+                <code><![CDATA[pt-br]]></code>
+                <url>https://blog.jetbrains.com/pt-br/kotlin/2022/06/kotlin-1-7-0-released/</url>
+            </language>
+            <language>
+                <code><![CDATA[ko]]></code>
+                <url>https://blog.jetbrains.com/ko/kotlin/2022/06/kotlin-1-7-0-released/</url>
+            </language>
+            <language>
+                <code><![CDATA[ja]]></code>
+                <url>https://blog.jetbrains.com/ja/kotlin/2022/06/kotlin-1-7-0-released/</url>
+            </language>
+            <language>
+                <code><![CDATA[fr]]></code>
+                <url>https://blog.jetbrains.com/fr/kotlin/2022/06/kotlin-1-7-0-released/</url>
+            </language>
+            <language>
+                <code><![CDATA[es]]></code>
+                <url>https://blog.jetbrains.com/es/kotlin/2022/06/kotlin-1-7-0-released/</url>
+            </language>
+        </item>
+        <item>
+            <title>The State of Kotlin Multiplatform Survey Q3-Q4 2021</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/06/multiplatform-survey-q3-q4-2021/</link>
+
+            <dc:creator><![CDATA[Daria Voronina]]></dc:creator>
+            <pubDate>Wed, 08 Jun 2022 19:25:55 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/06/Survey-Q122-Results-2_1.png
+            </featuredImage>
+            <category><![CDATA[mobile]]></category>
+            <category><![CDATA[kotlin-multiplatform]]></category>
+            <category><![CDATA[kotlin-multiplatform-mobile]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=252506</guid>
+
+            <description>
+                <![CDATA[The most effective way to learn about our users’ needs and wants is to ask them. This is why we pay so much attention to our community’s feedback – it helps us understand our users and provide them with the best solutions. We’d like to thank everyone who takes part in our surveys and share [&#8230;]]]></description>
+            <content:encoded><![CDATA[<p>The most effective way to learn about our users’ needs and wants is to ask them. This is why we pay so much attention to our community’s feedback – it helps us understand our users and provide them with the best solutions.</p>
+
+
+
+<p>We’d like to thank everyone who takes part in our surveys and share the results of our previous questionnaire with you. This time around, we asked backend, frontend, mobile, and full-stack developers, as well as team and tech leads, about their experience with Kotlin Multiplatform, its key benefits, use cases, adoption time, and parts of code they were able to share between platforms.</p>
+
+
+
+<p>Before we jump into the survey highlights, we want to let you know that we&#8217;ve just launched a new Kotlin Multiplatform User Survey for you to participate in. Take this opportunity to share your feedback with us and contribute to community knowledge. Complete the survey and get a chance to win special prizes!</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="TAKE THE SURVEY" href="https://surveys.jetbrains.com/s3/6406ef27ad07">TAKE THE SURVEY</a></p>
+
+
+
+<span id="more-252506"></span>
+
+
+
+<h2>Key survey highlights</h2>
+
+
+
+<p>As in <a href="https://blog.jetbrains.com/kotlin/2021/10/multiplatform-survey-q1-q2-2021/" target="_blank" rel="noreferrer noopener" title="https://blog.jetbrains.com/kotlin/2021/10/multiplatform-survey-q1-q2-2021/">previous surveys</a>, most of the respondents were mobile engineers (64.1%), including Android and iOS developers and those who use cross-platform technologies most of the time. The answers we collected helped us gain essential insights into Kotlin Multiplatform usage and understand our users’ pain points.</p>
+
+
+
+<p>Below are the key findings of the Q3-Q4 2021 survey.</p>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1921" height="1631" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Survey-Q122-Results-2_4.png" alt="60% of developers already use or have tried Kotlin Multiplatform in production" class="wp-image-260673"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1921" height="1769" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Survey-Q1_22-Results-2_6.png" alt="76.5% of those who play around with Kotlin Multiplatform are considering using it for their production projects" class="wp-image-252541"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1921" height="1769" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Survey-Q1_22-Results-2_3.png" alt="45% of developers have participated in more than one Kotlin Multiplatform project" class="wp-image-252508"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1921" height="1902" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Survey-Q1_22-Results-2_5.png" alt="Between platforms, 76% of developers share data models, and 66% share networking" class="wp-image-252530"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1921" height="1901" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Survey-Q1_22-Results-2_7.png" alt="32% of those who have the Web Frontend target in their Multiplatform projects use Kotlin/JS" class="wp-image-252552"/></figure>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1921" height="1901" src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Survey-Q1_22-Results-2_8.png" alt="Almost half (48%) of Kotlin Multiplatform developers use Android Studio with the Multiplatform Mobile plugin installed" class="wp-image-252563"/><figcaption>Kotlin Multiplatform Survey Results Q3-Q4 2021</figcaption></figure>
+
+
+
+<p>We’ve shared the survey highlights that we believe are most interesting, but if you want more information, you can get the complete questionnaire results.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="GET SURVEY RESULTS" href="https://info.jetbrains.com/kotlin-multiplatform-survey-results.html?utm_source=kotlin-blog&amp;utm_medium=cta&amp;utm_campaign=survey-results">GET SURVEY RESULTS</a></p>
+
+
+
+<p>Your answers give us valuable insights that help us develop Kotlin Multiplatform and make it an indispensable tool in your arsenal.</p>
+
+
+
+<h2>Read more</h2>
+
+
+
+<ul><li><a href="https://blog.jetbrains.com/kotlin/2021/10/multiplatform-survey-q1-q2-2021/" target="_blank" rel="noreferrer noopener" title="https://blog.jetbrains.com/kotlin/2021/10/multiplatform-survey-q1-q2-2021/">Results of the Kotlin Multiplatform Survey Q1-Q2 2021</a></li><li><a href="https://kotlinlang.org/docs/multiplatform-mobile-getting-started.html" target="_blank" rel="noreferrer noopener" title="https://kotlinlang.org/docs/multiplatform-mobile-getting-started.html">Get started with Kotlin Multiplatform Mobile</a></li><li><a href="https://kotlinlang.org/docs/multiplatform.html" target="_blank" rel="noreferrer noopener" title="https://kotlinlang.org/docs/multiplatform.html">Multiplatform programming with Kotlin</a></li></ul>
+
+
+
+<p></p>]]></content:encoded>
+
+
+            <language>
+                <code><![CDATA[zh-hans]]></code>
+                <url>https://blog.jetbrains.com/zh-hans/kotlin/2022/06/multiplatform-survey-q3-q4-2021/</url>
+            </language>
+            <language>
+                <code><![CDATA[ko]]></code>
+                <url>https://blog.jetbrains.com/ko/kotlin/2022/06/multiplatform-survey-q3-q4-2021/</url>
+            </language>
+            <language>
+                <code><![CDATA[fr]]></code>
+                <url>https://blog.jetbrains.com/fr/kotlin/2022/06/multiplatform-survey-q3-q4-2021/</url>
+            </language>
+        </item>
+        <item>
+            <title>KotlinDL 0.4 Is Out With Pose Detection API, EfficientDet for Object Detection, and EfficientNet for
+                Image Recognition
+            </title>
+            <link>
+                https://blog.jetbrains.com/kotlin/2022/06/kotlindl-0-4-is-out-with-pose-detection-api-efficientdet-for-object-detection-and-efficientnet-for-image-recognition/
+            </link>
+
+            <dc:creator><![CDATA[Roman Belov]]></dc:creator>
+            <pubDate>Mon, 06 Jun 2022 18:07:20 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/06/kotlindl04.png</featuredImage>
+            <category><![CDATA[data-science]]></category>
+            <category><![CDATA[datascience]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=253933</guid>
+
+            <description>
+                <![CDATA[Version 0.4 of our deep learning library, KotlinDL, is out! KotlinDL 0.4 is now available on Maven Central with a variety of new features – check out all of the changes that are coming to the new release! We’re currently introducing new models in ModelHub (including the EfficientNet and EfficientDet model families), the experimental high-level [&#8230;]]]></description>
+            <content:encoded><![CDATA[<p>Version 0.4 of our deep learning library, <a href="https://github.com/JetBrains/KotlinDL">KotlinDL</a>, is out!</p>
+
+
+
+<p>KotlinDL 0.4 is now available on <a href="https://search.maven.org/artifact/org.jetbrains.kotlinx/kotlin-deeplearning-api">Maven Central</a> with a variety of new features – check out all of the <a href="https://github.com/JetBrains/KotlinDL/blob/release_0.4/CHANGELOG.md">changes</a> that are coming to the new release! We’re currently introducing new models in ModelHub (including the EfficientNet and EfficientDet model families), the experimental high-level Kotlin API for Pose Detection, new layers and preprocessors contributed by the community members, and many other changes.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="KotlinDL on GitHub" href="https://github.com/Kotlin/KotlinDL">KotlinDL on GitHub</a></p>
+
+
+
+<p>In this post, we’ll walk you through the changes to the Kotlin Deep Learning library in the 0.4 release:</p>
+
+
+
+<ol><li><a href="#Pose-Detection">Pose Detection</a></li><li><a href="#NoTop-models">NoTop models in the ModelHub</a></li><li><a href="#New-models">New models: EfficientDet and EfficientNet</a></li><li><a href="#Multiple-callbacks">Multiple callbacks</a></li><li><a href="#Image-Preprocessing-DSL">Breaking changes in the Image Preprocessing DSL</a></li><li><a href="#new-layers">4 new layers and 2 new activation functions</a></li><li><a href="#feedback">Learn more and share your feedback</a></li></ol>
+
+
+
+<figure class="wp-block-video"><video autoplay controls muted src="https://blog.jetbrains.com/wp-content/uploads/2022/06/Comp-1_3_2.mp4"></video></figure>
+
+
+
+<span id="more-253933"></span>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="Pose-Detection">Pose Detection</h2>
+
+
+
+<p>Pose detection is using an ML model to detect the pose of a person from an image or a video by detecting the spatial locations of key body joints (keypoints).</p>
+
+
+
+<p>We’re excited to launch the MoveNet family of pose detection modes with our new pose detection API in KotlinDL. MoveNet is a fast and accurate model that detects 17 keypoints on the body. The model is offered on ONNXModelHub with two variants, MoveNetSinglePoseLighting and MoveNetSinglePoseThunder. MoveNetSinglePoseLighting is intended for latency-critical applications, while MoveNetSinglePoseThunder is intended for applications that require high accuracy.</p>
+
+
+
+<p>If you need to detect a few poses on a given image or video frame, try MoveNetMultiPoseLighting. This model is able to detect multiple people in the image frame at the same time, while still achieving real-time speed.</p>
+
+
+
+<p>There are two ways to detect poses within the KotlinDL: parsing the model output manually or using our LightAPI for Pose Detection (the recommended way).</p>
+
+
+
+<p>Just load the model:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+val modelHub = ONNXModelHub(cacheDirectory = File(&quot;cache/pretrainedModels&quot;))
+val model = ONNXModels.PoseDetection.MoveNetSinglePoseLighting.pretrainedModel(modelHub)
+
+</pre>
+
+
+
+<p>Run the predictions and print out the pose landmarks and edges connecting the detected pose landmarks:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+model.use { poseDetectionModel -&gt;
+       val imageFile = …
+       val detectedPose = poseDetectionModel.detectPose(imageFile = imageFile)
+
+       detectedPose.poseLandmarks.forEach {
+           println(&quot;Found ${it.poseLandmarkLabel} with probability ${it.probability}&quot;)
+       }
+
+       detectedPose.edges.forEach {
+           println(&quot;The ${it.poseEdgeLabel} starts at ${it.start.poseLandmarkLabel} and ends with ${it.end.poseLandmarkLabel}&quot;)
+       }
+}
+
+</pre>
+
+
+
+<p>Some visualization examples, where we drew landmarks and edges on the given images, are below.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://lh4.googleusercontent.com/dXhBiV0gN4OqupWoSE8kjSfk-uEptYRc7Igrk4GxwRiqHkv9TMOgZ06flCn2Aj5mE0KeDTH_JfnHqRNXRCPBmUx7upXzEqy_Hh2FWFeLwwxrDfo0lO48pP1S3pHqefNh6-OPyVUP4ngFyNV7LA" alt=""/></figure>
+
+
+
+<p>The complete example can be found <a href="https://github.com/Kotlin/kotlindl/blob/release_0.4/examples/src/main/kotlin/examples/onnx/posedetection/singlepose/PoseDetectionMoveNetLightAPI.kt">here</a>.</p>
+
+
+
+<p>If you want to run the MoveNet model to detect multiple poses on the given image, you need to make some minor changes to your code.</p>
+
+
+
+<p>First, load the model:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+val modelHub = ONNXModelHub(cacheDirectory = File(&quot;cache/pretrainedModels&quot;))
+val model = ONNXModels.PoseDetection.MoveNetSinglePoseLighting.pretrainedModel(modelHub)
+
+</pre>
+
+
+
+<p>Secondly, run the model and get the MultiPoseDetectionResult object, which contains the list of pairs &lt;DetectedObject, DetectedPose>. As a result, we have access not only to the landmarks’ coordinates and labels, but also to the coordinates of the bounding box for the whole person.</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+model.use { poseDetectionModel -&gt;
+       val imageFile = …
+       val detectedPoses = poseDetectionModel.detectPoses(imageFile = imageFile, confidence = 0.0f)
+
+       detectedPoses.multiplePoses.forEach { detectedPose -&gt;
+           println(&quot;Found ${detectedPose.first.classLabel} with probability ${detectedPose.first.probability}&quot;)
+           detectedPose.second.poseLandmarks.forEach {
+               println(&quot;Found ${it.poseLandmarkLabel} with probability ${it.probability}&quot;)
+           }
+
+           detectedPose.second.edges.forEach {
+               println(&quot;The ${it.poseEdgeLabel} starts at ${it.start.poseLandmarkLabel} and ends with ${it.end.poseLandmarkLabel}&quot;)
+           }
+       }
+}
+
+</pre>
+
+
+
+<p>Some visualization examples, where we drew the bounding boxes, landmarks, and edges on the images are below.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://lh4.googleusercontent.com/gz4kZVhJ46-ZhFtgSeDpy6RWJXxAxHJhxQCF13lpDjuUrqd0XZaY8YXZuCOzciozSBZTZ6Mb79qf2kzqEj-0IYhoFsZTaw4f1WrbDcsIt4RFqUfKrBY6P8XLnQgq5BOle6yOEFEKsa2fCZUfcQ" alt=""/></figure>
+
+
+
+<p>The complete example can be found <a href="https://github.com/Kotlin/kotlindl/blob/release_0.4/examples/src/main/kotlin/examples/onnx/posedetection/multipose/multiPoseDetectionMoveNetLightAPI.kt">here</a>.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="NoTop-models">NoTop models in the ModelHub</h2>
+
+
+
+<p>Running predictions on ready-made models is good, but what about fine-tuning them for your tasks?</p>
+
+
+
+<p>The classic approach to Transfer Learning is to freeze all layers except the last few and then train the top few layers (the fully connected layers at the top of the network) on a new piece of data, often changing the number of model outputs.</p>
+
+
+
+<p>Before the 0.4 release, KotlinDL users needed to remove the last layers manually, but with the 0.4 release, TensorFlowModelHub provides an option to download “noTop” models&nbsp; – equivalent to earlier available models, but without weights and configurations for the last few layers.</p>
+
+
+
+<p>The following “noTop” models are now available:</p>
+
+
+
+<ul><li>VGG&#8217;16</li><li>VGG&#8217;19</li><li>ResNet50</li><li>ResNet101</li><li>ResNet152</li><li>ResNet50V2</li><li>ResNet101V2</li><li>ResNet152V2</li><li>MobileNet</li><li>MobileNetV2</li><li>NasNetMobile</li><li>NasNetLarge</li><li>DenseNet121</li><li>DenseNet169</li><li>DenseNet201</li><li>Xception</li><li>Inception</li></ul>
+
+
+
+<p>In the example below, we load the ResNet50 model from our TensorFlowModelHub and fine-tune it to classify cats and dogs (using the embedded Dogs-vs-Cats dataset):</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+val modelHub = TFModelHub(cacheDirectory = File(&quot;cache/pretrainedModels&quot;))
+
+val modelType = TFModels.CV.ResNet50(noTop = true, inputShape = intArrayOf(IMAGE_SIZE, IMAGE_SIZE, NUM_CHANNELS))
+
+val noTopModel = modelHub.loadModel(modelType)
+
+</pre>
+
+
+
+<p>The <em>topModel</em> is the simplest neural network and can be trained quickly, as it has few parameters.</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+
+val topModel = Sequential.of(
+   GlobalAvgPool2D(
+       name = &quot;top_avg_pool&quot;,
+   ),
+   Dense(
+       name = &quot;top_dense&quot;,
+       kernelInitializer = GlorotUniform(),
+       biasInitializer = GlorotUniform(),
+       outputSize = 200,
+       activation = Activations.Relu
+   ),
+   Dense(
+       name = &quot;pred&quot;,
+       kernelInitializer = GlorotUniform(),
+       biasInitializer = GlorotUniform(),
+       outputSize = NUM_CLASSES,
+       activation = Activations.Linear
+   ),
+   noInput = true
+)
+
+</pre>
+
+
+
+<p>The new helper function could join two models together: noTop and topModel: <code>val model = Functional.of(pretrainedModel = noTopModel, topModel = topModel)</code></p>
+
+
+
+<p>After that, load weights for the frozen layers from the noTop model, and the weights for the unfrozen layers from the topModel will be initialized during the fit method call.</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+model.use {
+   it.compile(
+       optimizer = Adam(),
+       loss = Losses.SOFT_MAX_CROSS_ENTROPY_WITH_LOGITS,
+       metric = Metrics.ACCURACY
+   )
+
+   it.loadWeightsForFrozenLayers(hdfFile)
+
+   it.fit(
+       dataset = train,
+       batchSize = TRAINING_BATCH_SIZE,
+       epochs = EPOCHS
+   )
+
+   val accuracy = it.evaluate(dataset = test, batchSize = TEST_BATCH_SIZE).metrics[Metrics.ACCURACY]
+
+   println(&quot;Accuracy: $accuracy&quot;)
+}
+
+</pre>
+
+
+
+<p>The complete example can be found <a href="https://github.com/Kotlin/kotlindl/blob/release_0.4/examples/src/main/kotlin/examples/transferlearning/modelhub/resnet/Example_6_ResNet50_prediction_additional_training_noTop_with_helper.kt">here</a>.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="New-models">New models: EfficientDet and EfficientNet</h2>
+
+
+
+<p>Until v0.4, our ModelHub contained only one model (SSD) suitable for solving the Object Detection problem. Starting with this release, we’re gradually expanding the library’s capabilities for solving the Object Detection problem. We’d like to introduce to you a new family of object detectors, called <a href="https://arxiv.org/abs/1911.09070">EfficientDet</a>, which consistently achieve much better efficiency than prior object detectors across a wide spectrum of resource constraints.</p>
+
+
+
+<p>All models from this family have the same internal architecture which scales for different inputs (image resolution). The final user has a choice of models: from the smallest EfficientDet-D0, model with 3.9 million parameters and 10.2 ms latency on the V100 up to the EfficientDet-D7, with 52 million parameters and 122 ms latency on the V100.</p>
+
+
+
+<p>Internally, EfficientDet models use another famous model, EfficientNet, as a backbone. It extracts features from input images and passes them to the next component of the Object Detection model).</p>
+
+
+
+<figure class="wp-block-image"><img src="https://lh3.googleusercontent.com/iW3IioH7dPllnYwGgzoTqo-qpAbTiT2Wc_jefbst9u6kh-b4QgZCgfRITxaeVEkOzwXWezL4tyhvEAJE3V-YkK4N1L6isywk2cLM-mcr8I1gvurKQJnasEktZSgXRViydgh7be2gHcJXy3awIA" alt=""/><figcaption>EfficientDet Architecture</figcaption></figure>
+
+
+
+<p>An example of EfficientDet-D2 usage can be found <a href="https://github.com/Kotlin/kotlindl/blob/release_0.4/examples/src/main/kotlin/examples/onnx/objectdetection/efficientdet/EfficientDetD2LightAPI.kt">here</a>.</p>
+
+
+
+<p>The EfficientNet model family is also available in the ONNXModelHub. There are 8 different types of models and each model is presented in two variants: full and “noTop” for fine-tuning.</p>
+
+
+
+<figure class="wp-block-image"><img src="https://lh6.googleusercontent.com/IJDYkqEC89wcetck_je4tGjNclKWNyvE5bz2c3qOWWBRH9BSqE-dYzLmSpvnutshMtxJ2UqO9ceo_FRE0Y1O-p7GYk2D-_4IcU6Ks0ThyFaDi8vWDFXwJslkBq1uT1q3G2R62NUxlL_x5ybb9w" alt=""/></figure>
+
+
+
+<p>These models achieve better accuracy on the ImageNet dataset with 10x fewer parameters than ResNet or NasNet. If you need fast and accurate image recognition, EfficientNet is a good choice.</p>
+
+
+
+<p>An example of EfficientNet0 usage can be found <a href="https://github.com/Kotlin/kotlindl/blob/release_0.4/examples/src/main/kotlin/examples/onnx/cv/efficicentnet/lightAPI/EfficientNetB0LightAPI.kt">here</a>.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="Multiple-callbacks">Multiple callbacks</h2>
+
+
+
+<p>Earlier, Callback support for KotlinDL was pretty simple and not fully compatible with Keras. As a result, users faced difficulties in implementing their neural networks, building the custom validation process, and monitoring the neural network’s training.</p>
+
+
+
+<p>The callback object was passed during compilation and was unique for each stage in the model’s lifecycle. However, model compilation can be located in very different places in the code than fit/predict/evaluate, meaning that users may need to create different callbacks for different purposes.</p>
+
+
+
+<p>Let’s assume that we need to define EarlyStopping and  TerminateOnNaN for training to handle exceptional cases, and also add two custom callbacks for the prediction and evaluation phases:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+val earlyStopping = EarlyStopping(
+   monitor = EpochTrainingEvent::valLossValue,
+   minDelta = 0.0,
+   patience = 2,
+   verbose = true,
+   mode = EarlyStoppingMode.AUTO,
+   baseline = 0.1,
+   restoreBestWeights = false
+)
+val terminateOnNaN = TerminateOnNaN()
+
+
+class EvaluateCallback : Callback() {
+   override fun onTestBatchEnd(batch: Int, batchSize: Int, event: BatchEvent?, logs: History) {
+       println(&quot;Test batch $batch ends with loss ${event!!.lossValue}..&quot;)
+   }
+
+   override fun onTestEnd(logs: History) {
+       println(&quot;Train ends with last loss ${logs.lastBatchEvent().lossValue}&quot;)
+   }
+}
+
+class PredictCallback : Callback() {
+   override fun onPredictBatchBegin(batch: Int, batchSize: Int) {
+       println(&quot;Prediction batch $batch begins.&quot;)
+   }
+
+   override fun onPredictBatchEnd(batch: Int, batchSize: Int) {
+       println(&quot;Prediction batch $batch ends.&quot;)
+   }
+}
+
+</pre>
+
+
+
+<p>Let’s pass these callbacks to the model methods:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+model.use {
+   it.compile(
+       optimizer = Adam(clipGradient = ClipGradientByValue(0.1f)),
+       loss = Losses.SOFT_MAX_CROSS_ENTROPY_WITH_LOGITS,
+       metric = Metrics.ACCURACY
+   )
+
+   it.logSummary()
+
+   it.fit(
+       dataset = train,
+       epochs = EPOCHS,
+       batchSize = TRAINING_BATCH_SIZE,
+       callbacks = listOf(earlyStopping, terminateOnNaN)
+   )
+
+   val accuracy = it.evaluate(
+       dataset = test,
+       batchSize = TEST_BATCH_SIZE,
+       callback = EvaluateCallback()
+   ).metrics[Metrics.ACCURACY]
+
+
+   val predictions = it.predict(
+       dataset = test,
+       batchSize = TEST_BATCH_SIZE,
+       callback = PredictCallback()
+   )
+}
+
+</pre>
+
+
+
+<p>Found below in the logs:</p>
+
+
+
+<figure class="wp-block-image"><img src="https://lh4.googleusercontent.com/cdjbb2XL69MrpZIX0Po42oGEPdQLDvcKU2ZzF0hb03iVsD0cVTtVqE1DNHSeojKg3I_8jdlgTwmnGUavtU2DkiwmAU8pgCeRSl7OSxazOPyvBKjBlYphsE2cAcgchb3xo19OOxTwQe_nezueMg" alt=""/></figure>
+
+
+
+<p>The complete example can be found <a href="https://github.com/Kotlin/kotlindl/blob/release_0.4/examples/src/main/kotlin/examples/cnn/mnist/advanced/LeNetWithMultipleCallbacks.kt">here</a>.</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="new-layers">4 new layers and 2 new activation functions</h2>
+
+
+
+<p>Many contributors to this release have added layers to Kotlin for performing non-trivial logic. With these added layers, you can start working with autoencoders and load the GAN models:</p>
+
+
+
+<ul><li>Dot layer&nbsp; (by <a href="https://github.com/therealansh">Ansh Tyagi</a>)</li><li>Conv1DTranspose, Conv2DTranspose, and Conv3DTranspose layers (by <a href="https://github.com/juliabeliaeva">Julia Beliaeva</a>)</li></ul>
+
+
+
+<p>There are also two new activation functions:</p>
+
+
+
+<ul><li>Sparsemax activation function (by <a href="https://github.com/cagriyildirimR">Cagri Yildirim</a>)</li><li>Soft shrink activation function (by <a href="https://github.com/michalharakal">Michal Harakal</a>)</li></ul>
+
+
+
+<p>These activation functions are not available in the TensorFlow core package, but we decided to add them after seeing how they’ve been widely used in recent papers.</p>
+
+
+
+<p>We’d be delighted to look at your pull requests if you’d like to contribute a layer, activation function, callback, or initializer from a recent paper!</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="Image-Preprocessing-DSL">Breaking changes in the Image Preprocessing DSL</h2>
+
+
+
+<p>There are a few major changes in the Image Preprocessing DSL:</p>
+
+
+
+<ul><li>CustomPreprocessor was removed.</li><li>The loading section was moved from image preprocessing to the Dataset API</li><li>A few new Preprocessors were added:<ul><li>Padding</li><li>CenterCrop</li><li>Convert</li><li>Grayscale</li><li>Normalizing</li></ul></li></ul>
+
+
+
+<p>Here is an example of some of the new operations:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+val preprocessing = preprocess {
+ transformImage {
+   centerCrop {
+     size = 214
+   }
+   pad {
+     top = 10
+     bottom = 10
+     left = 10
+     right = 10
+     mode = PaddingMode.Fill(Color.BLACK)
+   }
+   convert {
+     colorMode = ColorMode.BGR
+   }
+ }
+ transformTensor {
+   normalize {
+     mean = floatArrayOf(103.939f, 116.779f, 123.68f)
+     std = floatArrayOf(57.375f, 57.12f, 58.395f)
+   }
+ }
+}
+
+</pre>
+
+
+
+<p>Because of the removal of the loading section, the same preprocessing instance could now be used in several datasets:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+val trainDataset = OnHeapDataset.create(File(datasetPath, &quot;train&quot;), labelGenerator, preprocessing)
+val valDataset = OnHeapDataset.create(File(datasetPath, &quot;val&quot;), labelGenerator, preprocessing)
+
+</pre>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2>Standing on the shoulders of giants</h2>
+
+
+
+<p>We’d like to express our deep gratitude to <a href="https://github.com/zaleslaw">Alexey Zinoviev</a> for his great work developing the framework from minimum viable product to the current state, efforts towards creating a community, skillful release management, and competent marketing support.</p>
+
+
+
+<p>His passion for democratizing AI and his continuous work to improve the ability of Kotlin and Java developers to use ML/DL models deserves great respect and inspires us to continue our work.</p>
+
+
+
+<p>We’d also like to express our gratitude to <a href="https://github.com/knok16">Veniamin Viflyantsev</a>, who’s invested a lot of time and effort into changing the architecture of the api module. Many of his changes are now part of this release.</p>
+
+
+
+<p>Our team has expanded! <a href="https://github.com/juliabeliaeva">Julia Beliaeva</a> (author of the new version of Image Preprocessing DSL) and <a href="https://github.com/ermolenkodev">Nikita Ermolenko</a> have joined us on a permanent basisWe wish them good luck and look forward to new releases!</p>
+
+
+
+<hr class="wp-block-separator"/>
+
+
+
+<h2 id="feedback">Learn more and share your feedback</h2>
+
+
+
+<p>We hope you enjoyed this brief overview of the new features in KotlinDL 0.4! For more information, including the up-to-date <a href="https://github.com/Kotlin/kotlindl/blob/release_0.4/README.md">Readme file</a>, visit the project’s home on <a href="https://github.com/Kotlin/kotlindl">GitHub</a>. Be sure to check out the KotlinDL <a href="https://github.com/Kotlin/kotlindl/blob/release_0.4/docs/quick_start_guide.md">guide</a>, which contains detailed information about the library’s basic and advanced features and covers many of the topics mentioned in this blog post in more detail.</p>
+
+
+
+<p>If you’ve previously used KotlinDL, use the <a href="https://github.com/Kotlin/kotlindl/blob/release_0.4/CHANGELOG.md">changelog</a> to find out what has changed and how to upgrade your projects to the stable release.</p>
+
+
+
+<p>We’d be very thankful if you’d report any bugs you find to our issue tracker. We’ll try to fix all of the critical issues in the 0.4.1 release.</p>
+
+
+
+<p>You’re also welcome to join the <a href="https://app.slack.com/client/T09229ZC6/C01DZU7PW73">#kotlindl channel</a> in Kotlin Slack (get an invite <a href="http://slack.kotlinlang.org/?_ga=2.28360636.1631899419.1619088615-984759609.1618823233">here</a>). In this channel, you can ask questions, participate in discussions, and get notifications about the new preview releases and models in ModelHub.</p>]]></content:encoded>
+
+
+        </item>
+        <item>
+            <title>What to Expect From the Kotlin Team in 2022–23: Key Projects and Productivity Features</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/06/what-to-expect-from-the-kotlin-team-in-202223/</link>
+
+            <dc:creator><![CDATA[Egor Tolstoy]]></dc:creator>
+            <pubDate>Mon, 06 Jun 2022 14:44:57 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/06/Road-Map-2022-23_Blog-Twitter.png
+            </featuredImage>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=253749</guid>
+
+            <description>
+                <![CDATA[Kotlin is commonly used for writing server-side, multiplatform, and Android apps, but there are tons of lesser known use cases. Among them are Minecraft plugin development, writing software for robots, or even creating PowerPoint presentations using Compose for Desktop. The number of use cases to address and potential improvements to implement is huge, and it’s [&#8230;]]]></description>
+            <content:encoded><![CDATA[<p>Kotlin is commonly used for writing server-side, multiplatform, and Android apps, but there are tons of lesser known use cases. Among them are Minecraft plugin development, writing software for robots, or even creating PowerPoint presentations using Compose for Desktop. The number of use cases to address and potential improvements to implement is huge, and it’s important for us to focus on the things that would be most beneficial for you. Every year we select a number of key projects and work hard to deliver them. For 2022–2023, our key projects are:</p>
+
+
+
+<ul><li>Improve the quality and stability of Kotlin releases</li><li>Release the Beta version of the K2 compiler</li><li>Release the Stable version of Kotlin Multiplatform Mobile</li><li>Release the Alpha version of the Kotlin IntelliJ IDEA plugin with K2 support plugin</li><li>Release the Stable version of the Kotlin/JS IR backend</li></ul>
+
+
+
+<p>These key projects, together with our other plans, constitute <a href="https://kotl.in/roadmap">about 50 roadmap tickets</a>. Some of them will affect your experience directly, while others might go unnoticed. To help you navigate through the Kotlin roadmap, we’ve divided the improvements into a few categories. We’d greatly appreciate it if you vote for the most important tickets and leave your feedback!</p>
+
+
+
+<p>Please note that this is just a selection, not the <a href="https://kotl.in/roadmap">whole roadmap</a>.</p>
+
+
+
+<h2>If you want to save more time</h2>
+
+
+
+<p>Consider these improvements:</p>
+
+
+
+<ul><li><a href="https://youtrack.jetbrains.com/issue/KT-52604/Release-K2-Beta"><strong>With the K2 compiler in Beta</strong></a>, you will be able to build a wide range of projects about twice as fast.</li><li><a href="https://youtrack.jetbrains.com/issue/KTIJ-18195/Prototype-the-IDE-plugin-with-the-new-compiler-frontend"><strong>The Kotlin IntelliJ IDEA plugin with K2 support in Alpha</strong></a><strong> </strong>will improve the performance of code completion, highlighting, and navigation in your IDE.</li><li><a href="https://youtrack.jetbrains.com/issue/KT-15613/Introduce-special-syntax-for-until-operator"><strong>The new `..&lt;` operator</strong></a> will help you make up to 20–30% fewer errors while reading code that contains ranges.</li><li>The <a href="https://youtrack.jetbrains.com/issue/KT-52603/Make-compilation-avoidance-support-Stable-for-Gradle"><strong>stabilization of compilation avoidance support in Gradle</strong></a> will decrease build times, especially for cross-module incremental compilation.</li></ul>
+
+
+
+<h2>If you write multiplatform mobile apps</h2>
+
+
+
+<p>The following improvements particularly deserve your attention:</p>
+
+
+
+<ul><li><a href="https://youtrack.jetbrains.com/issue/KT-52597/Support-Multiplatform-in-the-K2-platform"><strong>Multiplatform support for the K2 compiler</strong></a> will allow you to build multiplatform projects significantly faster.</li><li><a href="https://youtrack.jetbrains.com/issue/KT-52595/Promote-new-memory-manager-to-Beta-and-enable-it-by-default"><strong>Promoting the new memory manager to Beta</strong></a>, along with the <a href="https://youtrack.jetbrains.com/issue/KT-49529"><strong>optimization of</strong> <strong>kotlinx-coroutines</strong></a>,<strong> </strong>will give you better runtime performance by default.</li><li><a href="https://youtrack.jetbrains.com/issue/KT-42297/Improve-exporting-Kotlin-code-to-Objective-C"><strong>Further experiments with exporting Kotlin code to Objective-C</strong></a> may give you the ability to generate a separate namespace for each Kotlin module when exporting multiple modules to your iOS code.</li><li><a href="https://youtrack.jetbrains.com/issue/KT-42315/Improve-kotlinx-datetime-library"><strong>Parsing and formatting support in kotlinx-datetime</strong></a> will provide you with a fully featured multiplatform datetime library for your projects.</li></ul>
+
+
+
+<h2>If you’re a library developer</h2>
+
+
+
+<p>Be sure to check out these improvements:</p>
+
+
+
+<ul><li>The stabilization of the <a href="https://youtrack.jetbrains.com/issue/KT-49508/Stabilize-the-K2-Compiler-Plugin-API"><strong>Compiler Plugin API</strong></a> will give you a solid foundation for building your tools.</li><li><a href="https://youtrack.jetbrains.com/issue/KT-11968/Research-and-prototype-namespace-based-solution-for-statics-and-static-extensions"><strong>Namespaces support</strong></a> will help you build cleaner APIs by grouping declarations together under a common prefix.</li><li><a href="https://youtrack.jetbrains.com/issue/KT-48998/Release-Dokka-as-Stable"><strong>The Dokka Stable release</strong></a> will improve your onboarding experience and improve Dokka&#8217;s API and layouts.</li></ul>
+
+
+
+<p>—</p>
+
+
+
+<p>Pick the new features you’re most eagerly anticipating and share them in the comments section of this blogpost or on Twitter!</p>
+
+
+
+<h2>Learn more</h2>
+
+
+
+<ul><li><a href="https://kotl.in/h4nimn">Kotlin roadmap</a></li><li>#kotlin-roadmap channel in the public Slack (<a href="https://surveys.jetbrains.com/s3/kotlin-slack-sign-up">get an invite</a>)</li><li><a href="https://youtube.com/kotlin">Kotlin YouTube channel</a></li></ul>]]></content:encoded>
+
+
+            <language>
+                <code><![CDATA[zh-hans]]></code>
+                <url>https://blog.jetbrains.com/zh-hans/kotlin/2022/06/what-to-expect-from-the-kotlin-team-in-202223/
+                </url>
+            </language>
+            <language>
+                <code><![CDATA[pt-br]]></code>
+                <url>https://blog.jetbrains.com/pt-br/kotlin/2022/06/what-to-expect-from-the-kotlin-team-in-202223/
+                </url>
+            </language>
+            <language>
+                <code><![CDATA[ko]]></code>
+                <url>https://blog.jetbrains.com/ko/kotlin/2022/06/what-to-expect-from-the-kotlin-team-in-202223/</url>
+            </language>
+            <language>
+                <code><![CDATA[es]]></code>
+                <url>https://blog.jetbrains.com/es/kotlin/2022/06/what-to-expect-from-the-kotlin-team-in-202223/</url>
+            </language>
+        </item>
+        <item>
+            <title>Kotlin Multiplatform Mobile Beta Roadmap Update</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/05/kotlin-multiplatform-mobile-beta-roadmap-update/</link>
+
+            <dc:creator><![CDATA[Ekaterina Petrova]]></dc:creator>
+            <pubDate>Tue, 31 May 2022 12:57:41 +0000</pubDate>
+            <featuredImage>
+                https://blog.jetbrains.com/wp-content/uploads/2022/05/Mobile-Beta-Roadmap-Update_Blog-Twitter.png
+            </featuredImage>
+            <category><![CDATA[mobile]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=251449</guid>
+
+            <description>
+                <![CDATA[We would like to bring you an update on the development of Kotlin Multiplatform Mobile, a technology that allows developers to share code between mobile platforms and combines the benefits of both cross-platform and native development approaches. Kotlin Multiplatform Mobile is continuing to move steadily along the road to Beta status. One of the biggest [&#8230;]]]></description>
+            <content:encoded><![CDATA[<p>We would like to bring you an update on the development of <a href="https://kotlinlang.org/lp/mobile/" target="_blank" rel="noreferrer noopener">Kotlin Multiplatform Mobile</a>, a technology that allows developers to share code between mobile platforms and combines the benefits of both cross-platform and native development approaches.</p>
+
+
+
+<p>Kotlin Multiplatform Mobile is continuing to move steadily along the road to Beta status. One of the biggest achievements on this path is the new Kotlin/Native memory manager. Stabilization of the memory manager is still in progress. Because Kotlin Multiplatform Mobile Beta relies on the new memory manager in Kotlin/Native, <strong>we have postponed Kotlin Multiplatform Mobile Beta until the memory model becomes the default, which we expect to be the case no later than autumn 2022.&nbsp;</strong></p>
+
+
+
+<p>The new Kotlin/Native memory manager reached the Alpha stability level in Kotlin 1.6.20. It lifts restrictions on object sharing between threads and provides leak-free concurrent programming primitives that are safe and don’t require any special management or annotations.</p>
+
+
+
+<p>Kotlin 1.7.0 brings further performance improvements, including a more efficient garbage collector scheduler and optimized debug binaries. To see the full list of the latest Kotlin/Native memory manager improvements, check out the <a href="https://youtrack.jetbrains.com/issue/KT-49520/Promote-new-memory-manager-to-Alpha" target="_blank" rel="noreferrer noopener">relevant roadmap ticket</a>.</p>
+
+
+
+<p>User feedback is essential for stabilization. We encourage you to try the new memory model (<a href="https://github.com/JetBrains/kotlin/blob/master/kotlin-native/NEW_MM.md" target="_blank" rel="noreferrer noopener">migration instructions</a>) and share your use cases and any issues you encounter with the team.</p>
+
+
+
+<p>Improving the new memory manager is not the only way in which we’re advancing Kotlin Multiplatform Mobile. Here are some of the other new features that are already improving the mobile cross-platform developer experience with Kotlin and moving us closer to reaching Beta status:</p>
+
+
+
+<ul><li><a href="https://github.com/Kotlin/kdoctor" target="_blank" rel="noreferrer noopener">KDoctor</a> is a command-line tool that helps set up the environment for Kotlin Multiplatform Mobile app development and drastically improves the onboarding experience.</li><li>The new experimental DSL simplifies the management of Kotlin/Native binary output.</li><li>The UX for using native libraries in Kotlin Multiplatform Projects has been improved.</li></ul>
+
+
+
+<p>Check out the <a href="https://youtrack.jetbrains.com/issue/KT-52596/Promote-Kotlin-Multiplatform-Mobile-to-Beta" target="_blank" rel="noreferrer noopener">Promote Kotlin Multiplatform Mobile to Beta roadmap ticket</a> to learn about these and other features that Kotlin Multiplatform Mobile Beta will bring.</p>
+
+
+
+<p>We are also happy to share some exciting news from the community, which continues to help the Kotlin Multiplatform Mobile ecosystem evolve:</p>
+
+
+
+<ul><li>The new Beta version of the <a href="https://github.com/touchlab/xcode-kotlin" target="_blank" rel="noreferrer noopener">Xcode-Kotlin</a> plugin brings a smoother development and integration experience for iOS developers using shared Kotlin code. The plugin can now be installed and configured with just 2 commands!</li><li>The new version of <a href="https://medium.com/icerock/how-to-use-kotlin-multiplatform-viewmodel-in-swiftui-and-jetpack-compose-8158e98c091d" target="_blank" rel="noreferrer noopener">MOKO MVVM</a>, which provides architecture components of Model-View-ViewModel for UI applications, offers full support for Jetpack Compose and SwiftUI.</li><li>Baidu, a leading artificial intelligence company and the world’s largest Chinese-language search engine, <a href="https://kotlinlang.org/lp/mobile/case-studies/baidu/" target="_blank" rel="noreferrer noopener">shared their story</a> of using Kotlin Multiplatform Mobile technology to unify the business logic of multiple modules in their Wonder app, which allowed them to cover multiple core business scenarios while retaining the excellent user experience of the native UI.</li></ul>
+
+
+
+<p>Both the Kotlin team and the Kotlin community are actively investing in the development of the Multiplatform Mobile technology and ecosystem. All these efforts have already resulted in a growing number of teams using Kotlin Multiplatform Mobile to improve the way they develop mobile applications. JetBrains will continue to invest in this technology and support the community around it.</p>
+
+
+
+<h2>Read More</h2>
+
+
+
+<ul><li><a href="https://kotlinlang.org/docs/kmm-getting-started.html?_ga=2.182799074.510896856.1653984789-1678781235.1650445153&amp;_gl=1*1lvls8h*_ga*MTY3ODc4MTIzNS4xNjUwNDQ1MTUz*_ga_9J976DJZ68*MTY1Mzk5ODA3OC4zMS4xLjE2NTM5OTk0MDUuMA.." target="_blank" rel="noreferrer noopener">Get Started with Kotlin Multiplatform Mobile</a></li><li><a href="https://blog.jetbrains.com/kotlin/2021/08/try-the-new-kotlin-native-memory-manager-development-preview/" target="_blank" rel="noreferrer noopener">Try the New Kotlin/Native Memory Manager Development Preview</a></li><li><a href="https://blog.jetbrains.com/kotlin/2021/10/kmm-beta-roadmap-video-highlights/" target="_blank" rel="noreferrer noopener">Kotlin Multiplatform Mobile Beta Roadmap Video Highlights</a></li></ul>]]></content:encoded>
+
+
+            <language>
+                <code><![CDATA[zh-hans]]></code>
+                <url>
+                    https://blog.jetbrains.com/zh-hans/kotlin/2022/05/kotlin-multiplatform-mobile-beta-roadmap-update/
+                </url>
+            </language>
+            <language>
+                <code><![CDATA[ko]]></code>
+                <url>https://blog.jetbrains.com/ko/kotlin/2022/05/kotlin-multiplatform-mobile-beta-roadmap-update/</url>
+            </language>
+        </item>
+        <item>
+            <title>Kotlin Digest Spring: 1.7.0-Beta, Ktor 2.0, Surveys, Videos, and More</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/05/kotlin-digest-spring/</link>
+
+            <dc:creator><![CDATA[Ksenia Shneyveys]]></dc:creator>
+            <pubDate>Thu, 05 May 2022 14:52:20 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/05/Monthly-digest-2-Spring-2022-01-1.png
+            </featuredImage>
+            <category><![CDATA[news]]></category>
+            <category><![CDATA[kotlin-news]]></category>
+            <category><![CDATA[newsletter]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=244629</guid>
+
+            <description>
+                <![CDATA[Try Kotlin 1.7.0-Beta The first preview of the 1.7.0 release is out. Try Kotlin 1.7.0-Beta, evaluate upcoming features, and share your feedback with us. This preview includes: Changes to builder inference. The return of the min() and max() collection functions. Stabilizing of definitely non-nullable types. Updates for the new Kotlin/Native Memory Manager. Read more in [&#8230;]]]></description>
+            <content:encoded><![CDATA[<h2>Try Kotlin 1.7.0-Beta</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/05/Monthly-digest-2-Spring-2022-08.png" alt="" class="wp-image-244963"/></figure>
+
+
+
+<p>The first preview of the 1.7.0 release is out. Try Kotlin 1.7.0-Beta, evaluate upcoming features, and share your feedback with us. This preview includes:</p>
+
+
+
+<ul><li>Changes to builder inference.</li><li>The return of the min() and max() collection functions.</li><li>Stabilizing of definitely non-nullable types.</li><li>Updates for the new Kotlin/Native Memory Manager.</li></ul>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Read more in the blog post" href="https://blog.jetbrains.com/kotlin/2022/05/kotlin-1-7-0-beta/">Read more in the blog post</a></p>
+
+
+
+<h2>Kotlin 1.6.20 is out&nbsp;</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/05/Monthly-digest-2-Spring-2022-02.png" alt="" class="wp-image-244674"/></figure>
+
+
+
+<p>Kotlin 1.6.20 has been released! Its highlights include:</p>
+
+
+
+<ul><li>Prototype of context receivers on the JVM</li><li>Definitely non-nullable types</li><li>Performance improvements for JVM, Native, and JS development</li><li>Hierarchical structure support for multiplatform projects</li></ul>
+
+
+
+<p>Read the release blog post for an overview of all the improvements and a <a href="https://blog.jetbrains.com/kotlin/2022/04/kotlin-1-6-20-released/#complete-list-of-improvements" target="_blank" rel="noreferrer noopener">complete list of the other evolutionary changes</a>.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Update to Kotlin 1.6.20" href="https://blog.jetbrains.com/kotlin/2022/04/kotlin-1-6-20-released/#how-to-install">Update to Kotlin 1.6.20</a></p>
+
+
+
+<h2>Ktor 2.0 released</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/05/Monthly-digest-2-Spring-2022-03-1.png" alt="" class="wp-image-244691"/></figure>
+
+
+
+<p>The latest version of Ktor offers significant new functionality:</p>
+
+
+
+<ul><li>Ktor Server<ul><li>Simplified extensibility API that makes the creation of plugins much easier</li><li>Kotlin/Native support</li><li>Random port support</li></ul></li><li>Ktor Client<ul><li>Simplified APIs for dealing with common HTTP requests</li><li>Built-in support for retries</li><li>Content negotiation&nbsp;</li></ul></li></ul>
+
+
+
+<p>Read about its other improvements in <a href="https://blog.jetbrains.com/ktor/2022/04/11/ktor-2-0-released/" target="_blank" rel="noreferrer noopener">this blog post</a>, and for a complete list of everything in 2.0, check out the <a href="https://ktor.io/changelog/2.0/" target="_blank" rel="noreferrer noopener">change log</a>.&nbsp;</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Create Your First Ktor 2.0 App Today!" href="https://ktor.io/create/">Create Your First Ktor 2.0 App Today!</a></p>
+
+
+
+<h2>Help us make Kotlin better</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/05/Monthly-digest-2-Spring-2022-04-1.png" alt="" class="wp-image-244705"/></figure>
+
+
+
+<p>We want to learn about you and how we can make your Kotlin experience more convenient. To this end, we’ve prepared a couple of surveys, and we would really appreciate your responses:</p>
+
+
+
+<ul><li>Are you participating in any of the Kotlin Early Access Programs?</li></ul>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Take the EAP Survey" href="https://surveys.jetbrains.com/s3/kotlin-eaps-survey">Take the EAP Survey</a></p>
+
+
+
+<p></p>
+
+
+
+<ul><li>Are you a Kotlin desktop developer?</li></ul>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Take the Kotlin Desktop Developers Survey" href="https://surveys.jetbrains.com/s3/tw-kotlin-desktop-developers-survey">Take the Kotlin Desktop Developers Survey</a></p>
+
+
+
+<p></p>
+
+
+
+<ul><li>We’re looking for interview participants who would be willing to tell us about how they realized that Kotlin was the right language for them.</li></ul>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Fill Out the Screener Survey" href="https://surveys.jetbrains.com/s3/tw-kotlin-for-server-side-developers-survey">Fill Out the Screener Survey</a></p>
+
+
+
+<h2>AppCode 2022.1 is now available</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/05/Monthly-digest-2-Spring-2022-05-1.png" alt="" class="wp-image-244719"/></figure>
+
+
+
+<p>AppCode 2022.1 is here with support for async sequences, postfix #if member expressions, isolation control specifiers for Swift actors, and more. We invite you to <a href="https://www.jetbrains.com/objc/download/" target="_blank" rel="noreferrer noopener">start your free 30-day trial</a> to check out the new features and see what you think!</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Read the Full Story" href="https://blog.jetbrains.com/appcode/2022/04/appcode-2022-1/">Read the Full Story</a></p>
+
+
+
+<h2>New videos</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/05/Monthly-digest-2-Spring-2022-06.png" alt="" class="wp-image-244730"/></figure>
+
+
+
+<ul><li>Let us tell you all about Kotlin&#8217;s latest and greatest features in this <a href="https://www.youtube.com/watch?v=8F19ds109-o" target="_blank" rel="noreferrer noopener"><em>What&#8217;s New in Kotlin 1.6.20</em></a> video.</li><li>Check out the <a href="https://www.youtube.com/watch?v=GISPalIVdQY" target="_blank" rel="noreferrer noopener"><em>Context Receivers Are Coming to Kotlin 1.6.20!</em></a> video and give them a try.&nbsp;</li><li>Watch the <a href="https://www.youtube.com/watch?v=kKPBWIKrSOU" target="_blank" rel="noreferrer noopener">new episode of Talking Kotlin</a> on how Adobe handles 70 billion events per day with the help of Kotlin and Ktor.&nbsp;</li><li>Take your Kotlin skills to the next level with our <a href="https://www.youtube.com/playlist?list=PLlFc5cFwUnmyDrc-mwwAL9cYFkSHoHHz7" target="_blank" rel="noreferrer noopener">Kotlin Tips playlist</a>.</li></ul>
+
+
+
+<h2>Upcoming webinars</h2>
+
+
+
+<figure class="wp-block-image size-full"><img loading="lazy" width="1200" height="460" src="https://blog.jetbrains.com/wp-content/uploads/2022/05/Monthly-digest-2-Spring-2022-07-1.png" alt="" class="wp-image-244752"/></figure>
+
+
+
+<p>Join us on May 10, 2022, for the <em>Event Streaming with Apache Pulsar and Kotlin</em> webinar. Learn how to enhance event-driven microservices with advanced capabilities, such as on-the-fly serialization or parallel processing.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Register Now" href="https://info.jetbrains.com/kotlin-webinar-may10-2022.html">Register Now</a></p>
+
+
+
+<p>And join us again on May 16, 2022, for the <em>Property-Based Testing in Kotlin and Java With jqwik</em> webinar, where you&#8217;ll learn what PBT is all about and see how to use jqwik.net with Kotlin and IntelliJ IDEA.</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Save the Date" href="https://info.jetbrains.com/kotlin-webinar-may16-2022.html">Save the Date</a></p>
+
+
+
+<p>Have fun using Kotlin!</p>
+
+
+
+<div style="background-color: #f1f6fe; margin-bottom: 2px; padding: 5px; margin-right: 0%; text-align: left; min-height: px;">
+<p>Stay up to date with our monthly digest, which features all the most important news about the Kotlin ecosystem! <a href="https://info.jetbrains.com/kotlin-communication-center-page.html" target="_blank" rel="noreferrer noopener"><em>Subscribe here.</em></a></p>
+</div>
+<p></p>]]></content:encoded>
+
+
+        </item>
+        <item>
+            <title>Kotlin 1.7.0-Beta Released</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/05/kotlin-1-7-0-beta/</link>
+
+            <dc:creator><![CDATA[Danil Pavlov]]></dc:creator>
+            <pubDate>Wed, 04 May 2022 15:09:45 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/05/Kotlin-1.7.0-Beta_Blog-Twitter-1.png
+            </featuredImage>
+            <category><![CDATA[eap]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=244498</guid>
+
+            <description>
+                <![CDATA[The first preview of the 1.7.0 release is out. Introducing Kotlin 1.7.0-Beta! Some highlights from this preview: Changes to builder inference. The return of the min() and max() collection functions. Stabilizing of definitely non-nullable types. Updates for the new Kotlin/Native Memory Manager. Install 1.7.0-Beta to try out these features and report any issues you find [&#8230;]]]></description>
+            <content:encoded><![CDATA[<p>The first preview of the 1.7.0 release is out. Introducing Kotlin 1.7.0-Beta! Some highlights from this preview:</p>
+
+
+
+<ul><li>Changes to builder inference.</li><li>The return of the min() and max() collection functions.</li><li>Stabilizing of definitely non-nullable types.</li><li>Updates for the new Kotlin/Native Memory Manager.</li></ul>
+
+
+
+<p>Install 1.7.0-Beta to try out these features and <a href="https://kotl.in/issue">report any issues</a> you find to help us improve Kotlin 1.7.0.</p>
+
+
+
+<p>We&#8217;ll tell you about other exciting features in future posts. Stay tuned!</p>
+
+
+
+<p align="center"><a class="ek-link jb-download-button" title="Install Kotlin 1.7.0-Beta" href="https://blog.jetbrains.com/kotlin/2022/05/kotlin-1-7-0-beta/#try-new-features">Install Kotlin 1.7.0-Beta</a></p>
+
+
+
+<p>Starting from 1.7.0, we’re updating our cadence terminology by changing “Milestone” to “Beta”. There are a few reasons behind this decision:</p>
+
+
+
+<ul><li>We want the Kotlin builds terminology to be more aligned with <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle#Beta">the standard terminology</a> of the software release cycle. To put it more precisely, “Beta” means we’re done adding new features to that specific version and are working on stabilization. Though the final changes will be implemented, including changes based on your feedback.</li><li>Some time ago, M-release compilers were producing &#8220;pre-release&#8221; code, which made these versions harder to test. This is no longer the case. We want to avoid any confusion and emphasize that trying out Kotlin Beta versions is a simple process and highly encouraged by the Kotlin team.&nbsp;</li><li>Last but not least, the term “Beta” itself is a call for feedback from the community. We use it to let you know we want you to share feedback with us.</li></ul>
+
+
+
+<p>Please evaluate Kotlin 1.7.0-Beta and share your feedback with us on <a href="https://kotl.in/issue">YouTrack</a> and <a href="https://kotlinlang.slack.com/archives/C0KLZSCHF">Slack</a> (for new Slack members: <a href="https://surveys.jetbrains.com/s3/kotlin-slack-sign-up">apply to be invited</a>).</p>
+
+
+
+<h2>Changes to builder inference</h2>
+
+
+
+<p>Builder inference is a special kind of type inference that is useful when calling generic builder functions. It helps the compiler infer the type arguments of a call using the type information about other calls inside its lambda argument.</p>
+
+
+
+<p>Kotlin 1.7.0-Beta includes further changes to builder inference. It brings us closer to builder inference stabilization and completion of one of the items on our <a href="https://youtrack.jetbrains.com/issue/KT-45618/Stabilize-builder-inference">roadmap</a>.</p>
+
+
+
+<p>With this release, builder inference is automatically activated if a regular type inference cannot get enough information about a type without specifying the <code>-Xenable-builder-inference</code> compiler option, which we <a href="https://kotlinlang.org/docs/whatsnew16.html#changes-to-builder-inference">introduced in version 1.6.0</a>.</p>
+
+
+
+<p>This means that now you can write your own builders that use builder type inference without applying any additional annotations or options. <a href="https://kotlinlang.org/docs/using-builders-with-builder-inference.html">Learn how to write custom generic builders</a>.</p>
+
+
+
+<h2>The return of the min() and max() collection functions</h2>
+
+
+
+<p>In <a href="https://kotlinlang.org/docs/whatsnew14.html#collections">Kotlin 1.4</a>, we renamed the <code>min()</code> and <code>max()</code> collection functions to <code>minOrNull()</code> and <code>maxOrNull()</code>. These new names better reflect their behavior – returning <code>null</code> if the receiver collection is empty. It also helped to align the functions&#8217; behavior with naming conventions used throughout the Kotlin collections API.</p>
+
+
+
+<p>The same was true of <code>minBy()</code>, <code>maxBy()</code>, <code>minWith()</code>, and <code>maxWith()</code>, which all got their <code>*OrNull()</code> synonyms in Kotlin 1.4. Older functions affected by this change were gradually deprecated.</p>
+
+
+
+<p>Kotlin 1.7.0-Beta reintroduces the original function names, but with a non-nullable return type. The renewed <code>min()</code>, <code>max()</code>, <code>minBy()</code>, <code>maxBy()</code>, <code>minWith()</code>, and <code>maxWith()</code> now strictly return the collection element or throw an exception.</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+fun main() {
+    val numbers = listOf&lt;Int&gt;()
+    println(numbers.maxOrNull()) // &quot;null&quot;
+    println(numbers.max()) // &quot;Exception in… Collection is empty.&quot;
+}
+</pre>
+
+
+
+<p>See <a href="https://youtrack.jetbrains.com/issue/KT-38854">this YouTrack issue</a> for details.</p>
+
+
+
+<h2>Stabilizing of definitely non-nullable types</h2>
+
+
+
+<p>Kotlin 1.7.0 will have stable definitely non-nullable types, which were <a href="https://kotlinlang.org/docs/whatsnew1620.html#definitely-non-nullable-types">introduced in Kotlin 1.6.20</a>.</p>
+
+
+
+<p>These types have been added to provide better interoperability when extending generic Java classes and interfaces.</p>
+
+
+
+<p>Since Kotlin 1.6.20, you’ve been able to mark a generic type parameter as definitely non-nullable on the use site with the new syntax <code>T &amp; Any</code>. The syntactic form comes from a notation of <a href="https://en.wikipedia.org/wiki/Intersection_type">intersection types</a> and is now limited to a type parameter with nullable upper bounds on the left side of <code>&amp;</code> and non-nullable <code>Any</code> on the right side:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+fun &lt;T&gt; elvisLike(x: T, y: T &amp; Any): T &amp; Any = x ?: y
+
+fun main() {
+    elvisLike&lt;String&gt;(&quot;&quot;, &quot;&quot;).length // OK
+    elvisLike&lt;String&gt;(&quot;&quot;, null).length // Error: 'null' cannot be a value of a non-null type
+
+    elvisLike&lt;String?&gt;(null, &quot;&quot;).length // OK
+    elvisLike&lt;String?&gt;(null, null).length // Error: 'null' cannot be a value of a non-null type
+}
+</pre>
+
+
+
+<p>Definitely non-nullable types are enabled by default in this Beta release. No additional steps are required.</p>
+
+
+
+<p>Learn more about definitely non-nullable types in <a href="https://github.com/Kotlin/KEEP/blob/c72601cf35c1e95a541bb4b230edb474a6d1d1a8/proposals/definitely-non-nullable-types.md">the KEEP</a>.</p>
+
+
+
+<h2>Matching with Regex at a particular position</h2>
+
+
+
+<p>The <code>Regex.matchAt()</code> and <code>Regex.matchesAt()</code> functions, <a href="https://kotlinlang.org/docs/whatsnew1530.html#matching-with-regex-at-a-particular-position">introduced in 1.5.30</a>, are now Stable. They provide a way to check whether a regular expression has an exact match at a particular position in a <code>String</code> or <code>CharSequence</code>.</p>
+
+
+
+<ul><li><code>matchesAt()</code> checks for a match and returns a boolean result:</li></ul>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+fun main(){
+    val releaseText = &quot;Kotlin 1.7.0 is on its way!&quot;
+    // regular expression: one digit, dot, one digit, dot, one or more digits
+    val versionRegex = &quot;\\d[.]\\d[.]\\d+&quot;.toRegex()
+
+    println(versionRegex.matchesAt(releaseText, 0)) // &quot;false&quot;
+    println(versionRegex.matchesAt(releaseText, 7)) // &quot;true&quot;
+}
+</pre>
+
+
+
+<ul><li><code>matchAt()</code> returns the match if it’s found, or <code>null</code> if it isn’t:</li></ul>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+fun main(){
+    val releaseText = &quot;Kotlin 1.7.0 is on its way!&quot;
+    val versionRegex = &quot;\\d[.]\\d[.]\\d+&quot;.toRegex()
+
+    println(versionRegex.matchAt(releaseText, 0)) // &quot;null&quot;
+    println(versionRegex.matchAt(releaseText, 7)?.value) // &quot;1.7.0&quot;
+}
+</pre>
+
+
+
+<p>We&#8217;d be grateful for your feedback in <a href="https://youtrack.jetbrains.com/issue/KT-34021">this YouTrack issue</a>.</p>
+
+
+
+<h2>New Kotlin/Native Memory Manager</h2>
+
+
+
+<p>We continue to gather feedback and improve the new Kotlin/Native memory manager. Currently, you can try the Alpha version in your projects. Kotlin 1.7.0-Beta brings further performance improvements that will make the developer experience better.</p>
+
+
+
+<p>The new memory manager eliminates the differences between the JVM and Native platforms. It provides a consistent developer experience in multiplatform projects. For example, you&#8217;ll have a much easier time creating new cross-platform mobile applications that work on both Android and iOS.</p>
+
+
+
+<p>The new Kotlin/Native memory manager lifts restrictions on object-sharing between threads. It also provides leak-free concurrent programming primitives that are safe and don&#8217;t require any special management or annotations.</p>
+
+
+
+<p>The new memory manager will become the default one in future versions, so we encourage you to try it now. <a href="https://blog.jetbrains.com/kotlin/2021/08/try-the-new-kotlin-native-memory-manager-development-preview/">Learn more</a> about the new memory manager and explore demo projects, or jump right to the <a href="https://github.com/JetBrains/kotlin/blob/master/kotlin-native/NEW_MM.md">migration instructions</a> to try it yourself.</p>
+
+
+
+<p>Try using the new memory manager on your projects to see how it works and share your feedback in our issue tracker, <a href="https://youtrack.jetbrains.com/issue/KT-48525">YouTrack</a>.</p>
+
+
+
+<h2>Support for named capturing groups in JS and Native</h2>
+
+
+
+<p>Since Kotlin 1.7.0-Beta, named capturing groups are supported not only on the JVM (1.8 and later) but on JS and Native as well.</p>
+
+
+
+<p>To give a name to a capturing group, use the <code>(?&lt;name&gt;group)</code> syntax in your regular expression. To get the text matched by a group, call the newly introduced <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/get.html"><code>MatchGroupCollection.get()</code></a> function and pass the group name.</p>
+
+
+
+<h3>Retrieve matched group value by name</h3>
+
+
+
+<p>Consider this example for matching city coordinates. To get a collection of groups matched by the regular expression, use <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-match-result/groups.html"><code>groups</code></a>. Compare retrieving a group&#8217;s contents by its number (index) and by its name using <code>value</code>:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+fun main() {
+    val regex = &quot;\\b(?&lt;city&gt;[A-Za-z\\s]+),\\s(?&lt;state&gt;[A-Z]{2}):\\s(?&lt;areaCode&gt;[0-9]{3})\\b&quot;.toRegex()
+    val input = &quot;Coordinates: Austin, TX: 123&quot;
+
+    val match = regex.find(input)!!
+    println(match.groups[&quot;city&quot;]?.value) // &quot;Austin&quot; — by name
+    println(match.groups[2]?.value) // &quot;TX&quot; — by number
+}
+</pre>
+
+
+
+<h3>Named backreferencing</h3>
+
+
+
+<p>You can now also use group names when backreferencing groups. Backreferences match the same text as previously matched by a capturing group. For this, use the <code>\k&lt;name&gt;</code>&nbsp; syntax in your regular expression:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+fun backRef() {
+    val regex = &quot;(?&lt;title&gt;\\w+), yes \\k&lt;title&gt;&quot;.toRegex()
+    val match = regex.find(&quot;Do you copy? Sir, yes Sir!&quot;)!!
+    println(match.value) // &quot;Sir, yes Sir&quot;
+    println(match.groups[&quot;title&quot;]?.value) // &quot;Sir&quot;
+}
+</pre>
+
+
+
+<h3>Named groups in replacement expressions</h3>
+
+
+
+<p>Finally, named group references can be used with replacement expressions. Consider the <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/replace.html"><code>replace()</code></a> function that substitutes all occurrences of the regular expression in the input with a replacement expression, and the <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-regex/replace-first.html"><code>replaceFirst()</code></a> function that swaps the first match only.</p>
+
+
+
+<p>Occurrences of <code>${name}</code> in the replacement string are substituted with the subsequences corresponding to the captured groups with the specified name. Compare replacements in group reference by name and by index:</p>
+
+
+
+<pre class="kotlin-code" data-highlight-only="true" theme="idea" indent="4" style="visibility: hidden; padding: 36px 0;">
+fun dateReplace() {
+    val dateRegex = Regex(&quot;(?&lt;dd&gt;\\d{2})-(?&lt;mm&gt;\\d{2})-(?&lt;yyyy&gt;\\d{4})&quot;)
+    val input = &quot;Date of birth: 27-04-2022&quot;
+    println(dateRegex.replace(input, &quot;\${yyyy}-\${mm}-\${dd}&quot;)) // &quot;Date of birth: 2022-04-27&quot;  — by name
+    println(dateRegex.replace(input, &quot;\$3-\$2-\$1&quot;)) // &quot;Date of birth: 2022-04-27&quot; — by number
+}
+</pre>
+
+
+
+<h2 id="try-new-features">Try new features and provide feedback&nbsp;</h2>
+
+
+
+<p>These new features are available in the 1.7.0 preview release, Kotlin 1.7.0-Beta. You can easily install it in your <a href="https://www.jetbrains.com/idea/download/">IntelliJ IDEA</a> or <a href="https://developer.android.com/studio/preview">Android Studio</a> IDE. </p>
+
+
+
+<div style="background-color: #f1f6fe; margin-bottom: 2px; padding: 5px; margin-right: 0%; text-align: left; min-height: px;">
+<p>Due to Android Studios plugins renaming (Beta), plug-in installation is available on top of 1.6.20+ versions.</p>
+</div>
+
+
+
+<p>Install Kotlin 1.7.0-Beta in any of the following ways:</p>
+
+
+
+<ul><li>If you use the <em>Early Access Preview</em> update channel, the IDE will suggest automatically updating to 1.7.0-Beta as soon as it becomes available.</li><li>If you use the <em>Stable</em> update channel, you can change the channel to <em>Early Access Preview</em> at any time by selecting <strong>Tools</strong> | <strong>Kotlin</strong> | <strong>Configure Kotlin Plugin Updates</strong> in your IDE. You’ll then be able to install the latest preview release. Check out <a href="https://kotlinlang.org/docs/install-eap-plugin.html">these instructions</a> for details.</li></ul>
+
+
+
+<p>You can always download the latest versions of these IDEs to get extensive support for Kotlin:</p>
+
+
+
+<ul><li><a href="https://www.jetbrains.com/idea/download/">IntelliJ IDEA</a> for developing Kotlin applications for a variety of platforms.</li><li><a href="https://developer.android.com/studio/preview">Android Studio</a> for developing Android and cross-platform mobile applications.</li></ul>
+
+
+
+<p>Once you’ve installed 1.7.0-Beta, don’t forget to <a href="https://kotlinlang.org/docs/configure-build-for-eap.html">change the Kotlin version</a> to 1.7.0-Beta in your build scripts.</p>
+
+
+
+<h3>If you run into any problems:</h3>
+
+
+
+<ul><li>Report issues to <a href="https://kotl.in/issue">our issue tracker, YouTrack</a>.</li><li>Find help in the <a href="https://app.slack.com/client/T09229ZC6/C0KLZSCHF">#eap channel in Kotlin Slack</a> (<a href="https://surveys.jetbrains.com/s3/kotlin-slack-sign-up">get an invite</a>).</li><li>Roll back to the latest stable version. <a href="https://kotlinlang.org/docs/install-eap-plugin.html#if-you-run-into-any-problems">Learn how</a>.</li></ul>
+
+
+
+<h3>Read more</h3>
+
+
+
+<ul><li><a href="https://kotlinlang.org/docs/eap.html">Participate in the Early Access Preview</a></li><li><a href="https://kotlinlang.org/docs/roadmap.html">Kotlin roadmap</a></li></ul>]]></content:encoded>
+
+
+            <language>
+                <code><![CDATA[zh-hans]]></code>
+                <url>https://blog.jetbrains.com/zh-hans/kotlin/2022/05/kotlin-1-7-0-beta/</url>
+            </language>
+            <language>
+                <code><![CDATA[pt-br]]></code>
+                <url>https://blog.jetbrains.com/pt-br/kotlin/2022/05/kotlin-1-7-0-beta/</url>
+            </language>
+            <language>
+                <code><![CDATA[ko]]></code>
+                <url>https://blog.jetbrains.com/ko/kotlin/2022/05/kotlin-1-7-0-beta/</url>
+            </language>
+            <language>
+                <code><![CDATA[ja]]></code>
+                <url>https://blog.jetbrains.com/ja/kotlin/2022/05/kotlin-1-7-0-beta/</url>
+            </language>
+            <language>
+                <code><![CDATA[fr]]></code>
+                <url>https://blog.jetbrains.com/fr/kotlin/2022/05/kotlin-1-7-0-beta/</url>
+            </language>
+            <language>
+                <code><![CDATA[es]]></code>
+                <url>https://blog.jetbrains.com/es/kotlin/2022/05/kotlin-1-7-0-beta/</url>
+            </language>
+        </item>
+    </channel>
+</rss>

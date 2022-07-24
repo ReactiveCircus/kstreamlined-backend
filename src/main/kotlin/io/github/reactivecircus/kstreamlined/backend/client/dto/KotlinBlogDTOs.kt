@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.client.dto.kotlinblog
+package io.github.reactivecircus.kstreamlined.backend.client.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

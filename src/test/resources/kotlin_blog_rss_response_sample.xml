@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+     xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+>
+    <channel>
+        <title>The Kotlin Blog : Kotlin Programming Language by JetBrains | The JetBrains Blog</title>
+        <atom:link href="https://blog.jetbrains.com/kotlin/feed/" rel="self" type="application/rss+xml"/>
+        <link>https://blog.jetbrains.com</link>
+        <description>Developer Tools for Professionals and Teams</description>
+        <lastBuildDate>Fri, 15 Jul 2022 10:56:15 +0000</lastBuildDate>
+        <language>en-US</language>
+        <sy:updatePeriod>
+            hourly
+        </sy:updatePeriod>
+        <sy:updateFrequency>
+            1
+        </sy:updateFrequency>
+
+        <image>
+            <url>https://blog.jetbrains.com/wp-content/uploads/2020/07/favicon-32x32-1.png</url>
+            <title>The Kotlin Blog : Kotlin Programming Language by JetBrains | The JetBrains Blog</title>
+            <link>https://blog.jetbrains.com</link>
+            <width>32</width>
+            <height>32</height>
+        </image>
+        <item>
+            <title>A New Approach to Incremental Compilation in Kotlin</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/07/a-new-approach-to-incremental-compilation-in-kotlin/</link>
+
+            <dc:creator><![CDATA[Andrey Uskov]]></dc:creator>
+            <pubDate>Fri, 15 Jul 2022 10:56:13 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_Twitter-Blog.png</featuredImage>
+            <category><![CDATA[news]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=264203</guid>
+
+            <description>
+                <![CDATA[In Kotlin 1.7.0, we&#8217;ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the Gradle build cache. Support for compilation avoidance has also been improved. All of these advancements decrease [&#8230;]]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<p>In Kotlin 1.7.0, we&#8217;ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the <a href="https://docs.gradle.org/current/userguide/build_cache.html">Gradle build cache</a>. Support for compilation avoidance has also been improved. All of these advancements decrease the number of necessary full-module and file recompilations, making the overall compilation time faster.</p>]]>
+            </content:encoded>
+        </item>
+        <item>
+            <title>Kotlin News: KotlinConf, Build Reports, DataFrame Preview, and More</title>
+            <link>https://blog.jetbrains.com/kotlin/2022/07/kotlin-news-june/</link>
+            <dc:creator><![CDATA[Ekaterina Petrova]]></dc:creator>
+            <pubDate>Fri, 15 Jul 2022 10:32:08 +0000</pubDate>
+            <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/07/Monthly-digest-4-Summer-2022-01.png</featuredImage>
+            <category><![CDATA[news]]></category>
+            <category><![CDATA[kotlin-news]]></category>
+            <category><![CDATA[newsletter]]></category>
+            <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=265263</guid>
+            <description>
+                <![CDATA[Kotlin Developer Survey is Open Share your opinions about the language itself, IDEs, libraries, build tools, and subsystems. Your answers will help the Kotlin team make the language and tools even better and more convenient. Give your feedback KotlinConf is Back! KotlinConf is making a glorious comeback! It will take place in Amsterdam on April [&#8230;]]]>
+            </description>
+            <content:encoded>
+                <![CDATA[<h2><strong>Kotlin Developer Survey is Open</strong></h2>]]>
+            </content:encoded>
+            <language>
+                <code><![CDATA[zh-hans]]></code>
+                <url>https://blog.jetbrains.com/zh-hans/kotlin/2022/06/multiplatform-survey-q3-q4-2021/</url>
+            </language>
+            <language>
+                <code><![CDATA[fr]]></code>
+                <url>https://blog.jetbrains.com/fr/kotlin/2022/06/multiplatform-survey-q3-q4-2021/</url>
+            </language>
+        </item>
+    </channel>
+</rss>

@@ -1,6 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.client
 
-import io.github.reactivecircus.kstreamlined.backend.client.dto.kotlinblog.KotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
 
 object FakeFeedClient : FeedClient {
 
