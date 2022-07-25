@@ -1,10 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
-import io.github.reactivecircus.kstreamlined.backend.client.dto.Link
-import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly
-import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -16,7 +13,7 @@ class KotlinWeeklyEntryMapperTest {
             id = "21a2c7f9e24fae1631468c5507e4ff7c",
             title = "@KotlinWeekly: Kotlin Weekly #312 has just been published!",
             publishDate = "Sun, 24 Jul 2022 15:03:40 GMT",
-            contentUrl = "https://twitter.com/KotlinWeekly/status/1551221582248419328",
+            contentUrl = "https://t.co/7JzvarYb05",
             newsletterLogoUrl = "logo-url",
         )
         val actual = KotlinWeeklyItem(
