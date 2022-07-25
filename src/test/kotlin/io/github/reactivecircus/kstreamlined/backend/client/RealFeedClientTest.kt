@@ -1,6 +1,11 @@
 package io.github.reactivecircus.kstreamlined.backend.client
 
+import io.github.reactivecircus.kstreamlined.backend.client.dto.Author
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.Link
+import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaCommunity
+import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaGroup
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
@@ -18,6 +23,9 @@ class RealFeedClientTest {
 
     private val mockKotlinBlogRssResponse =
         javaClass.classLoader.getResource("kotlin_blog_rss_response_sample.xml")?.readText()!!
+
+    private val mockKotlinYouTubeRssResponse =
+        javaClass.classLoader.getResource("kotlin_youtube_rss_response_sample.xml")?.readText()!!
 
     @Test
     fun `loadKotlinBlogFeed() returns KotlinBlogItems when API call was successful`() = runBlocking {
@@ -77,6 +85,114 @@ class RealFeedClientTest {
 
         assertThrows<ClientRequestException> {
             feedClient.loadKotlinBlogFeed()
+        }
+    }
+
+    @Test
+    fun `loadKotlinYouTubeFeed() returns KotlinYouTubeItems when API call was successful`() = runBlocking {
+        val mockEngine = MockEngine {
+            respond(
+                content = ByteReadChannel(mockKotlinYouTubeRssResponse),
+                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
+            )
+        }
+        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+
+        val expected = listOf(
+            KotlinYouTubeItem(
+                id = "yt:video:ihMhu3hvCCE",
+                videoId = "ihMhu3hvCCE",
+                channelId = "UCP7uiEZIqci43m22KDl0sNw",
+                title = "Kotlin and Java Interoperability in Spring Projects",
+                link = Link(
+                    href = "https://www.youtube.com/watch?v=ihMhu3hvCCE",
+                    rel = "alternate",
+                ),
+                author = Author(
+                    name = "Kotlin by JetBrains",
+                    uri = "https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw",
+                ),
+                published = "2022-07-06T13:39:46+00:00",
+                updated = "2022-07-11T13:45:53+00:00",
+                mediaGroup = MediaGroup(
+                    title = "Kotlin and Java Interoperability in Spring Projects",
+                    content = MediaGroup.Content(
+                        url = "https://www.youtube.com/v/ihMhu3hvCCE?version=3",
+                        type = "application/x-shockwave-flash",
+                        width = "640",
+                        height = "390",
+                    ),
+                    thumbnail = MediaGroup.Thumbnail(
+                        url = "https://i2.ytimg.com/vi/ihMhu3hvCCE/hqdefault.jpg",
+                        width = "480",
+                        height = "360",
+                    ),
+                    description = "We have configured the Kotlin compiler in a Java/Spring project - now what? Let's talk about important details you need to know about calling Java from Kotlin code and vice versa. Links: Adding Kotlin to Spring/Maven project: https://youtu.be/4-qOxvjjF8g Calling Java from Kotlin: https://kotlinlang.org/docs/java-interop.html Calling Kotlin from Java: https://kotlinlang.org/docs/java-to-kotlin-interop.html Kotlin Spring compiler plugin: https://kotlinlang.org/docs/all-open-plugin.html#spring-support Just starting with Kotlin? Learn Kotlin by creating real-world applications with JetBrains Academy Build simple games, a chat bot, a coffee machine simulator, and other interactive projects step by step in a hands-on learning environment. Get started: https://hyperskill.org/join/fromyoutubetoJetSalesStat?redirect=true&next=/tracks/18 #springboot #springframework #kotlin #interoperability",
+                    community = MediaCommunity(
+                        starRating = MediaCommunity.StarRating(
+                            count = "188",
+                            average = "5.00",
+                            min = "1",
+                            max = "5",
+                        ),
+                        statistics = MediaCommunity.Statistics(views = "4397"),
+                    ),
+                ),
+            ),
+            KotlinYouTubeItem(
+                id = "yt:video:tX4nLqcW2JA",
+                videoId = "tX4nLqcW2JA",
+                channelId = "UCP7uiEZIqci43m22KDl0sNw",
+                title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta | Talking Kotlin",
+                link = Link(
+                    href = "https://www.youtube.com/watch?v=tX4nLqcW2JA",
+                    rel = "alternate",
+                ),
+                author = Author(
+                    name = "Kotlin by JetBrains",
+                    uri = "https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw",
+                ),
+                published = "2022-06-28T15:00:15+00:00",
+                updated = "2022-07-05T08:29:07+00:00",
+                mediaGroup = MediaGroup(
+                    title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta | Talking Kotlin",
+                    content = MediaGroup.Content(
+                        url = "https://www.youtube.com/v/tX4nLqcW2JA?version=3",
+                        type = "application/x-shockwave-flash",
+                        width = "640",
+                        height = "390",
+                    ),
+                    thumbnail = MediaGroup.Thumbnail(
+                        url = "https://i1.ytimg.com/vi/tX4nLqcW2JA/hqdefault.jpg",
+                        width = "480",
+                        height = "360",
+                    ),
+                    description = "We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language. Arrow - https://arrow-kt.io/ Arrow Analysis - https://arrow-kt.io/docs/meta/analysis/ 47 Degrees - https://www.47deg.com/ 47 Degrees jobs - https://www.47deg.com/company/ Arrow twitter - @arrow_kt #Arrow #Kotlin #Programming #arrow-kt",
+                    community = MediaCommunity(
+                        starRating = MediaCommunity.StarRating(
+                            count = "124",
+                            average = "5.00",
+                            min = "1",
+                            max = "5",
+                        ),
+                        statistics = MediaCommunity.Statistics(views = "3287"),
+                    ),
+                ),
+            ),
+        )
+
+        assertEquals(expected, feedClient.loadKotlinYouTubeFeed().take(1))
+    }
+
+    @Test
+    fun `loadKotlinYouTubeFeed() throws exception when API call failed`(): Unit = runBlocking {
+        val mockEngine = MockEngine {
+            respondError(HttpStatusCode.RequestTimeout)
+        }
+        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+
+        assertThrows<ClientRequestException> {
+            feedClient.loadKotlinYouTubeFeed()
         }
     }
 }

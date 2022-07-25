@@ -1,0 +1,58 @@
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+    <link rel="self" href="http://www.youtube.com/feeds/videos.xml?channel_id=UCP7uiEZIqci43m22KDl0sNw"/>
+    <id>yt:channel:UCP7uiEZIqci43m22KDl0sNw</id>
+    <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+    <title>Kotlin by JetBrains</title>
+    <link rel="alternate" href="https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw"/>
+    <author>
+        <name>Kotlin by JetBrains</name>
+        <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+    </author>
+    <published>2020-12-21T11:01:17+00:00</published>
+    <entry>
+        <id>yt:video:ihMhu3hvCCE</id>
+        <yt:videoId>ihMhu3hvCCE</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Kotlin and Java Interoperability in Spring Projects</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=ihMhu3hvCCE"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-07-06T13:39:46+00:00</published>
+        <updated>2022-07-11T13:45:53+00:00</updated>
+        <media:group>
+            <media:title>Kotlin and Java Interoperability in Spring Projects</media:title>
+            <media:content url="https://www.youtube.com/v/ihMhu3hvCCE?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i2.ytimg.com/vi/ihMhu3hvCCE/hqdefault.jpg" width="480" height="360"/>
+            <media:description>We have configured the Kotlin compiler in a Java/Spring project - now what? Let's talk about important details you need to know about calling Java from Kotlin code and vice versa. Links: Adding Kotlin to Spring/Maven project: https://youtu.be/4-qOxvjjF8g Calling Java from Kotlin: https://kotlinlang.org/docs/java-interop.html Calling Kotlin from Java: https://kotlinlang.org/docs/java-to-kotlin-interop.html Kotlin Spring compiler plugin: https://kotlinlang.org/docs/all-open-plugin.html#spring-support Just starting with Kotlin? Learn Kotlin by creating real-world applications with JetBrains Academy Build simple games, a chat bot, a coffee machine simulator, and other interactive projects step by step in a hands-on learning environment. Get started: https://hyperskill.org/join/fromyoutubetoJetSalesStat?redirect=true&next=/tracks/18 #springboot #springframework #kotlin #interoperability</media:description>
+            <media:community>
+                <media:starRating count="188" average="5.00" min="1" max="5"/>
+                <media:statistics views="4397"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:tX4nLqcW2JA</id>
+        <yt:videoId>tX4nLqcW2JA</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Turbocharging Kotlin: Arrow Analysis, Optics & Meta | Talking Kotlin</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=tX4nLqcW2JA"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-06-28T15:00:15+00:00</published>
+        <updated>2022-07-05T08:29:07+00:00</updated>
+        <media:group>
+            <media:title>Turbocharging Kotlin: Arrow Analysis, Optics & Meta | Talking Kotlin</media:title>
+            <media:content url="https://www.youtube.com/v/tX4nLqcW2JA?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i1.ytimg.com/vi/tX4nLqcW2JA/hqdefault.jpg" width="480" height="360"/>
+            <media:description>We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language. Arrow - https://arrow-kt.io/ Arrow Analysis - https://arrow-kt.io/docs/meta/analysis/ 47 Degrees - https://www.47deg.com/ 47 Degrees jobs - https://www.47deg.com/company/ Arrow twitter - @arrow_kt #Arrow #Kotlin #Programming #arrow-kt</media:description>
+            <media:community>
+                <media:starRating count="124" average="5.00" min="1" max="5"/>
+                <media:statistics views="3287"/>
+            </media:community>
+        </media:group>
+    </entry>
+</feed>

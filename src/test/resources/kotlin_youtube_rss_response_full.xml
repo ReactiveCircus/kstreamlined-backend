@@ -1,0 +1,357 @@
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+    <link rel="self" href="http://www.youtube.com/feeds/videos.xml?channel_id=UCP7uiEZIqci43m22KDl0sNw"/>
+    <id>yt:channel:UCP7uiEZIqci43m22KDl0sNw</id>
+    <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+    <title>Kotlin by JetBrains</title>
+    <link rel="alternate" href="https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw"/>
+    <author>
+        <name>Kotlin by JetBrains</name>
+        <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+    </author>
+    <published>2020-12-21T11:01:17+00:00</published>
+    <entry>
+        <id>yt:video:ihMhu3hvCCE</id>
+        <yt:videoId>ihMhu3hvCCE</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Kotlin and Java Interoperability in Spring Projects</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=ihMhu3hvCCE"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-07-06T13:39:46+00:00</published>
+        <updated>2022-07-11T13:45:53+00:00</updated>
+        <media:group>
+            <media:title>Kotlin and Java Interoperability in Spring Projects</media:title>
+            <media:content url="https://www.youtube.com/v/ihMhu3hvCCE?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i2.ytimg.com/vi/ihMhu3hvCCE/hqdefault.jpg" width="480" height="360"/>
+            <media:description>We have configured the Kotlin compiler in a Java/Spring project - now what? Let's talk about important details you need to know about calling Java from Kotlin code and vice versa. Links: Adding Kotlin to Spring/Maven project: https://youtu.be/4-qOxvjjF8g Calling Java from Kotlin: https://kotlinlang.org/docs/java-interop.html Calling Kotlin from Java: https://kotlinlang.org/docs/java-to-kotlin-interop.html Kotlin Spring compiler plugin: https://kotlinlang.org/docs/all-open-plugin.html#spring-support Just starting with Kotlin? Learn Kotlin by creating real-world applications with JetBrains Academy Build simple games, a chat bot, a coffee machine simulator, and other interactive projects step by step in a hands-on learning environment. Get started: https://hyperskill.org/join/fromyoutubetoJetSalesStat?redirect=true&next=/tracks/18 #springboot #springframework #kotlin #interoperability</media:description>
+            <media:community>
+                <media:starRating count="188" average="5.00" min="1" max="5"/>
+                <media:statistics views="4397"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:tX4nLqcW2JA</id>
+        <yt:videoId>tX4nLqcW2JA</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Turbocharging Kotlin: Arrow Analysis, Optics & Meta | Talking Kotlin</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=tX4nLqcW2JA"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-06-28T15:00:15+00:00</published>
+        <updated>2022-07-05T08:29:07+00:00</updated>
+        <media:group>
+            <media:title>Turbocharging Kotlin: Arrow Analysis, Optics & Meta | Talking Kotlin</media:title>
+            <media:content url="https://www.youtube.com/v/tX4nLqcW2JA?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i1.ytimg.com/vi/tX4nLqcW2JA/hqdefault.jpg" width="480" height="360"/>
+            <media:description>We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language. Arrow - https://arrow-kt.io/ Arrow Analysis - https://arrow-kt.io/docs/meta/analysis/ 47 Degrees - https://www.47deg.com/ 47 Degrees jobs - https://www.47deg.com/company/ Arrow twitter - @arrow_kt #Arrow #Kotlin #Programming #arrow-kt</media:description>
+            <media:community>
+                <media:starRating count="124" average="5.00" min="1" max="5"/>
+                <media:statistics views="3287"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:1VWYP3S12Do</id>
+        <yt:videoId>1VWYP3S12Do</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Factory Design Pattern in Kotlin</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=1VWYP3S12Do"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-06-16T14:52:33+00:00</published>
+        <updated>2022-07-14T07:10:00+00:00</updated>
+        <media:group>
+            <media:title>Factory Design Pattern in Kotlin</media:title>
+            <media:content url="https://www.youtube.com/v/1VWYP3S12Do?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i2.ytimg.com/vi/1VWYP3S12Do/hqdefault.jpg" width="480" height="360"/>
+            <media:description>Alexey Soshin, the author of “Kotlin Design Patterns and Best Practices”, sits down with Sebastian to discuss the factory design pattern – a creational design pattern popularized by the “Gang of Four” book “Design Patterns: Elements of Reusable Object-Oriented Software”. Alexey guides Sebastian through the ins and outs of the pattern, and they discuss benefits, naming conventions, and more. Buy Kotlin Design Patterns and Best Practices - https://kotl.in/Design-Patterns-and-Best-Practices Sebastian on Twitter - https://twitter.com/sebi_io #Kotlin #Factory #Programming</media:description>
+            <media:community>
+                <media:starRating count="561" average="5.00" min="1" max="5"/>
+                <media:statistics views="11514"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:54WEfLKtCGk</id>
+        <yt:videoId>54WEfLKtCGk</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>What's New in Kotlin 1.7 / Kotlin 1.7의 새로운 기능</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=54WEfLKtCGk"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-06-09T15:24:59+00:00</published>
+        <updated>2022-07-21T07:02:47+00:00</updated>
+        <media:group>
+            <media:title>What's New in Kotlin 1.7 / Kotlin 1.7의 새로운 기능</media:title>
+            <media:content url="https://www.youtube.com/v/54WEfLKtCGk?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i2.ytimg.com/vi/54WEfLKtCGk/hqdefault.jpg" width="480" height="360"/>
+            <media:description>Korean subtitles are added!!! Kotlin 1.7.0 has been released. It unveils the Alpha version of the new Kotlin/JVM K2 compiler, stabilizes language features, and brings performance improvements for the JVM, JS, and Native platforms. 0:00 Introduction 0:44 K2 Compiler 2:52 Language Changes 7:48 Kotlin/JVM 9:27 Kotlin/Native 11:39 Kotlin/JS 13:32 Standard Library 19:06 Gradle Plugin The Road to the New Kotlin Compiler https://www.youtube.com/watch?v=iTdJJq_LyoY K2 Compiler: a Top-Down View https://www.youtube.com/watch?v=db19VFLZqJM Kotlin 1.7 Release Announcement: https://blog.jetbrains.com/kotlin/2022/06/kotlin-1-7-0-released/ Kotlin 1.7.0이 공개되었습니다. 새로운 Kotlin/JVM K2 컴파일러의 알파 버전이 공개되었고, 여러 언어 기능이 안정화되었습니다. 또한 JVM, JS 및 네이티브 플랫폼에 대한 성능 개선도 포함되어 있습니다. K2 컴파일러로 가는 길(한국어 자막 제공): https://youtu.be/iTdJJq_LyoY Kotlin 1.7 릴리스: https://blog.jetbrains.com/ko/kotlin/2022/06/kotlin-1-7-0-released/ #Kotlin #Release #WhatsNew #릴리스 #WhatsNew #새로운기능</media:description>
+            <media:community>
+                <media:starRating count="616" average="5.00" min="1" max="5"/>
+                <media:statistics views="18778"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:wwplVknTza4</id>
+        <yt:videoId>wwplVknTza4</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>What Happens if You Add `null + null` in Kotlin? | Kotlin Tips 2022</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=wwplVknTza4"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-06-07T13:59:03+00:00</published>
+        <updated>2022-06-13T08:51:34+00:00</updated>
+        <media:group>
+            <media:title>What Happens if You Add `null + null` in Kotlin? | Kotlin Tips 2022</media:title>
+            <media:content url="https://www.youtube.com/v/wwplVknTza4?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i4.ytimg.com/vi/wwplVknTza4/hqdefault.jpg" width="480" height="360"/>
+            <media:description>Null-safety is number one in Kotlin – but what happens when you add null + null, and why does it return a string? In this episode of Kotlin Tips Seb (https://twitter.com/sebi_io) addresses the mystery, and points out: It might not be as much of a problem as you might initially think. #KotlinTips #null #kotlin #kotlintutorials</media:description>
+            <media:community>
+                <media:starRating count="584" average="5.00" min="1" max="5"/>
+                <media:statistics views="12628"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:ECOf0PeSANw</id>
+        <yt:videoId>ECOf0PeSANw</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Deduplicating Collection Items | Kotlin Tips 2022</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=ECOf0PeSANw"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-06-02T14:56:08+00:00</published>
+        <updated>2022-07-22T05:31:47+00:00</updated>
+        <media:group>
+            <media:title>Deduplicating Collection Items | Kotlin Tips 2022</media:title>
+            <media:content url="https://www.youtube.com/v/ECOf0PeSANw?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i2.ytimg.com/vi/ECOf0PeSANw/hqdefault.jpg" width="480" height="360"/>
+            <media:description>When working with collections, we are often only interested in distinct or unique items – items that are somehow different from each other. In this episode of Kotlin Tips Sebastian (https://twitter.com/sebi_io) shows you how you can remove duplicates from your Kotlin lists, or turn them into a set – a collection type that doesn’t allow you duplicates in the first place. #KotlinTips #Kotlin #JetBrains #Programming #Coding</media:description>
+            <media:community>
+                <media:starRating count="481" average="5.00" min="1" max="5"/>
+                <media:statistics views="7525"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:g79A6HmbW5M</id>
+        <yt:videoId>g79A6HmbW5M</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Building applications with Kotlin and Arrow.kt in style</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=g79A6HmbW5M"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-05-31T15:54:44+00:00</published>
+        <updated>2022-06-03T13:38:59+00:00</updated>
+        <media:group>
+            <media:title>Building applications with Kotlin and Arrow.kt in style</media:title>
+            <media:content url="https://www.youtube.com/v/g79A6HmbW5M?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i4.ytimg.com/vi/g79A6HmbW5M/hqdefault.jpg" width="480" height="360"/>
+            <media:description>In this session, we are going to build an end-to-end example that uses the patterns we have discussed in the previous session (https://www.youtube.com/watch?v=IDMmmrRhUvQ) about functional programming with Kotlin and Arrow.kt. This time, we will look at the complete workflow from beginning to end, from handling the request, interacting with the database, and sending a response. All in a functional style, of course. Speaker: Simon Vergauwen https://twitter.com/vergauwen_simon Demo project: https://github.com/nomisRev/ktor-arrow-example #ktor #kotlin #programming #arrowkt #serverside</media:description>
+            <media:community>
+                <media:starRating count="279" average="5.00" min="1" max="5"/>
+                <media:statistics views="8038"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:R2395u7SdcI</id>
+        <yt:videoId>R2395u7SdcI</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>The Suspend & Inline Mystery | Kotlin Tips 2022</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=R2395u7SdcI"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-05-26T14:56:36+00:00</published>
+        <updated>2022-07-22T03:36:36+00:00</updated>
+        <media:group>
+            <media:title>The Suspend & Inline Mystery | Kotlin Tips 2022</media:title>
+            <media:content url="https://www.youtube.com/v/R2395u7SdcI?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i3.ytimg.com/vi/R2395u7SdcI/hqdefault.jpg" width="480" height="360"/>
+            <media:description>How come functions like `repeat`, `map` and `filter` accept suspending functions in their lambdas, even though their signatures aren’t coroutines-aware? In this episode of Kotlin Tips Sebastian (https://twitter.com/sebi_io) solves the riddle: It has something to do with the inline modifier. #Kotlin #kotlinTips #JetBrains #programming</media:description>
+            <media:community>
+                <media:starRating count="643" average="5.00" min="1" max="5"/>
+                <media:statistics views="7904"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:5fTRAwX1oew</id>
+        <yt:videoId>5fTRAwX1oew</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Kotlin + jOOQ</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=5fTRAwX1oew"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-05-24T15:01:42+00:00</published>
+        <updated>2022-07-22T10:48:55+00:00</updated>
+        <media:group>
+            <media:title>Kotlin + jOOQ</media:title>
+            <media:content url="https://www.youtube.com/v/5fTRAwX1oew?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i2.ytimg.com/vi/5fTRAwX1oew/hqdefault.jpg" width="480" height="360"/>
+            <media:description>jOOQ is a popular database library written in Java, which models the SQL language as a type-safe, internal DSL. It works even better in Kotlin. We'll discuss how you can use jOOQ in your Kotlin projects to get the most out of your SQL integration. Speaker: Lukas Eder https://twitter.com/lukaseder Lukas Eder is the founder of Data Geekery and the creator of jOOQ https://www.jooq.org/ Demo project: https://github.com/jOOQ/demo</media:description>
+            <media:community>
+                <media:starRating count="187" average="5.00" min="1" max="5"/>
+                <media:statistics views="4322"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:mJRzF9WtCpU</id>
+        <yt:videoId>mJRzF9WtCpU</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Fully Qualified Names to the Rescue! | Kotlin Tips 2022</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=mJRzF9WtCpU"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-05-19T15:49:21+00:00</published>
+        <updated>2022-07-14T11:57:23+00:00</updated>
+        <media:group>
+            <media:title>Fully Qualified Names to the Rescue! | Kotlin Tips 2022</media:title>
+            <media:content url="https://www.youtube.com/v/mJRzF9WtCpU?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i2.ytimg.com/vi/mJRzF9WtCpU/hqdefault.jpg" width="480" height="360"/>
+            <media:description>Shadowing means having two declarations in a scope have the same name. So, how do you pick? In this episode of Kotlin Tips Sebastian (https://twitter.com/sebi_io) shows you a simple Kotlin trick to call exactly the function that you need, using the power of fully qualified names! #KotlinTips #Kotlin #Declarations #KotlinNames #KotlinTutorial # KotlinHowTo</media:description>
+            <media:community>
+                <media:starRating count="413" average="5.00" min="1" max="5"/>
+                <media:statistics views="7829"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:dPhZIo27fYE</id>
+        <yt:videoId>dPhZIo27fYE</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Property-based testing in Kotlin and Java with jqwik</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=dPhZIo27fYE"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-05-17T04:07:07+00:00</published>
+        <updated>2022-07-22T11:44:30+00:00</updated>
+        <media:group>
+            <media:title>Property-based testing in Kotlin and Java with jqwik</media:title>
+            <media:content url="https://www.youtube.com/v/dPhZIo27fYE?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i1.ytimg.com/vi/dPhZIo27fYE/hqdefault.jpg" width="480" height="360"/>
+            <media:description>Test-driven Development in OO languages like Kotlin and Java focuses on example-based test cases, which can easily be written with JUnit or similar tools. Property-based Testing, however, is based on the idea to specify intended generic properties of our code and let the testing library create and execute test cases that try to falsify those properties. With jqwik and kotest there exist at least two libraries that make PBT easily accessible for the Kotlin programmer. In this session, Johannes Link will explain what PBT is all about, and demonstrate how to use jqwik.net with Kotlin and IntelliJ IDEA. Speaker: Johannes Link https://twitter.com/johanneslink Bio: For over two decades Johannes (https://johanneslink.net) has been practicing and promoting test-driven development and other techniques from Extreme Programming. He was part of the initial team that developed JUnit 5 and is now the main committer of jqwik.net.</media:description>
+            <media:community>
+                <media:starRating count="154" average="5.00" min="1" max="5"/>
+                <media:statistics views="4018"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:L8aFK7QrbA8</id>
+        <yt:videoId>L8aFK7QrbA8</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Return and Throw with the Elvis Operator | Kotlin Tips</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=L8aFK7QrbA8"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-05-12T14:02:30+00:00</published>
+        <updated>2022-07-22T03:48:04+00:00</updated>
+        <media:group>
+            <media:title>Return and Throw with the Elvis Operator | Kotlin Tips</media:title>
+            <media:content url="https://www.youtube.com/v/L8aFK7QrbA8?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i1.ytimg.com/vi/L8aFK7QrbA8/hqdefault.jpg" width="480" height="360"/>
+            <media:description>Elvis has entered the building once more! In this episode of Kotlin Tips Seb (https://twitter.com/sebi_io) explains why the operator is named after the famous singer, and how you can use `?:` in Kotlin to return or throw. The magic behind the scenes? The Nothing type (https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-nothing.html). #KotlinTips #Elvis #Kotlin</media:description>
+            <media:community>
+                <media:starRating count="597" average="5.00" min="1" max="5"/>
+                <media:statistics views="9387"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:PRoFPsplfnM</id>
+        <yt:videoId>PRoFPsplfnM</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Event Streaming with Apache Pulsar and Kotlin</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=PRoFPsplfnM"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-05-11T05:17:37+00:00</published>
+        <updated>2022-07-23T08:51:54+00:00</updated>
+        <media:group>
+            <media:title>Event Streaming with Apache Pulsar and Kotlin</media:title>
+            <media:content url="https://www.youtube.com/v/PRoFPsplfnM?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i1.ytimg.com/vi/PRoFPsplfnM/hqdefault.jpg" width="480" height="360"/>
+            <media:description>In this session, we will walk through how you can take the power of Kotlin into the event streaming world with Apache Pulsar, a unified messaging and streaming platform suited for large-scale cloud-native workloads. We will show how to use features – such as data classes, serialization, channels, and coroutines – to empower event-driven microservices with advanced capabilities, such as on-the-fly serialization, parallel processing, and schema management. Speaker: Gilles Barbier Demo project https://github.com/geomagilles/demo-pulsar-kotlin Using Apache Pulsar with Kotlin: https://gillesbarbier.medium.com/using-apache-pulsar-with-kotlin-3b0ab398cf52 #apachepulsar #kotlin #datastreaming</media:description>
+            <media:community>
+                <media:starRating count="114" average="5.00" min="1" max="5"/>
+                <media:statistics views="3087"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:zu1PUAvk_Lw</id>
+        <yt:videoId>zu1PUAvk_Lw</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Kotlin Evergreen Tips: Destructuring Declarations</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=zu1PUAvk_Lw"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-05-03T14:30:56+00:00</published>
+        <updated>2022-07-11T10:04:10+00:00</updated>
+        <media:group>
+            <media:title>Kotlin Evergreen Tips: Destructuring Declarations</media:title>
+            <media:content url="https://www.youtube.com/v/zu1PUAvk_Lw?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i3.ytimg.com/vi/zu1PUAvk_Lw/hqdefault.jpg" width="480" height="360"/>
+            <media:description>With destructuring declarations in Kotlin, you can create multiple variables from a single object, all at once. Sebastian (https://twitter.com/sebi_io) shows you a selection of things that can be destructured – pairs, lists, maps, and more. And what about your own objects? Kotlin’s component functions provide an answer for those as well. The issue for object (name-based) destructuring in Kotlin: https://youtrack.jetbrains.com/issue/KT-19627 #KotlinTips #Kotlin #Programming</media:description>
+            <media:community>
+                <media:starRating count="659" average="5.00" min="1" max="5"/>
+                <media:statistics views="12537"/>
+            </media:community>
+        </media:group>
+    </entry>
+    <entry>
+        <id>yt:video:x2bZJv8i0vw</id>
+        <yt:videoId>x2bZJv8i0vw</yt:videoId>
+        <yt:channelId>UCP7uiEZIqci43m22KDl0sNw</yt:channelId>
+        <title>Operator Functions With Nullable Values | Kotlin Tips 2022</title>
+        <link rel="alternate" href="https://www.youtube.com/watch?v=x2bZJv8i0vw"/>
+        <author>
+            <name>Kotlin by JetBrains</name>
+            <uri>https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw</uri>
+        </author>
+        <published>2022-04-21T14:13:16+00:00</published>
+        <updated>2022-05-17T11:42:03+00:00</updated>
+        <media:group>
+            <media:title>Operator Functions With Nullable Values | Kotlin Tips 2022</media:title>
+            <media:content url="https://www.youtube.com/v/x2bZJv8i0vw?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+            <media:thumbnail url="https://i1.ytimg.com/vi/x2bZJv8i0vw/hqdefault.jpg" width="480" height="360"/>
+            <media:description>In Kotlin, you can override operators like addition and subtraction for your classes and supply your own logic. But what if you want to allow null values, both on their left and right sides? In this episode of Kotlin Tips, Sebastian (https://twitter.com/sebi_io) answers this question. #KotlinTips #Kotlin #NullSafety</media:description>
+            <media:community>
+                <media:starRating count="616" average="5.00" min="1" max="5"/>
+                <media:statistics views="9595"/>
+            </media:community>
+        </media:group>
+    </entry>
+</feed>

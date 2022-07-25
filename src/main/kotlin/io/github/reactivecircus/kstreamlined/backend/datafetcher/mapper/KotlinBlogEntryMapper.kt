@@ -5,7 +5,7 @@ import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.Kotl
 
 fun KotlinBlogItem.toKotlinBlogEntry(): KotlinBlogEntry {
     return KotlinBlogEntry(
-        id = this.guid,
+        id = guid,
         title = title,
         publishDate = pubDate,
         contentUrl = link,

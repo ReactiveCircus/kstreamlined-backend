@@ -3,8 +3,10 @@ package io.github.reactivecircus.kstreamlined.backend.datafetcher
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsQuery
 import com.netflix.graphql.dgs.DgsTypeResolver
+import com.netflix.graphql.dgs.InputArgument
 import io.github.reactivecircus.kstreamlined.backend.client.FeedClient
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinBlogEntry
+import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinYouTubeEntry
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.DgsConstants
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey
@@ -25,15 +27,20 @@ class FeedEntryDataFetcher(
 ) {
 
     @DgsQuery(field = DgsConstants.QUERY.FeedEntries)
-    suspend fun feedEntries(): List<FeedEntry> = coroutineScope {
-        // TODO replace with FeedSourceKey.values()
-        listOf(FeedSourceKey.KOTLIN_BLOG).map { source ->
-            async<List<FeedEntry>>(coroutineDispatcher) {
+    suspend fun feedEntries(@InputArgument filters: List<FeedSourceKey>?): List<FeedEntry> = coroutineScope {
+        FeedSourceKey.values().filter {
+            filters == null || filters.contains(it)
+        }.map { source ->
+            async(coroutineDispatcher) {
                 when (source) {
                     FeedSourceKey.KOTLIN_BLOG -> {
+                        println("loading kotlin blog")
                         feedClient.loadKotlinBlogFeed().map { it.toKotlinBlogEntry() }
                     }
-                    FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> TODO()
+                    FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> {
+                        println("loading kotlin youtube")
+                        feedClient.loadKotlinYouTubeFeed().map { it.toKotlinYouTubeEntry() }
+                    }
                     FeedSourceKey.TALKING_KOTLIN_PODCAST -> TODO()
                     FeedSourceKey.KOTLIN_WEEKLY -> TODO()
                 }
