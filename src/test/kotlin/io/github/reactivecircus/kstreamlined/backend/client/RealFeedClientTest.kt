@@ -1,6 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.client
 
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeAuthor
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.Link
@@ -30,6 +31,9 @@ class RealFeedClientTest {
 
     private val mockTalkingKotlinRssResponse =
         javaClass.classLoader.getResource("talking_kotlin_rss_response_sample.xml")?.readText()!!
+
+    private val mockKotlinWeeklyRssResponse =
+        javaClass.classLoader.getResource("kotlin_weekly_rss_response_sample.xml")?.readText()!!
 
     @Test
     fun `loadKotlinBlogFeed() returns KotlinBlogItems when API call was successful`() = runBlocking {
@@ -201,7 +205,7 @@ class RealFeedClientTest {
     }
 
     @Test
-    fun `loadTalkingKotlinFeed() returns TalkingYouTubeItems when API call was successful`() = runBlocking {
+    fun `loadTalkingKotlinFeed() returns TalkingKotlinItems when API call was successful`() = runBlocking {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockTalkingKotlinRssResponse),
@@ -280,6 +284,50 @@ class RealFeedClientTest {
 
         assertThrows<ClientRequestException> {
             feedClient.loadTalkingKotlinFeed()
+        }
+    }
+
+    @Test
+    fun `loadKotlinWeeklyFeed() returns KotlinWeeklyItems when API call was successful`() = runBlocking {
+        val mockEngine = MockEngine {
+            respond(
+                content = ByteReadChannel(mockKotlinWeeklyRssResponse),
+                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
+            )
+        }
+        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+
+        val expected = listOf(
+            KotlinWeeklyItem(
+                title = " @KotlinWeekly: Kotlin Weekly #312 has just been published! - ",
+                description = " <blockquote class=\"twitter-tweet\" data-width=\"550\"><p lang=\"en\" dir=\"ltr\">Kotlin Weekly #312 has just been published! - <a href=\"https://t.co/7JzvarYb05\">https://t.co/7JzvarYb05</a></p>— Kotlin Weekly (@KotlinWeekly) <a href=\"https://twitter.com/KotlinWeekly/status/1551221582248419328?ref_src=twsrc%5Etfw\">July 24, 2022</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script> ",
+                link = "https://twitter.com/KotlinWeekly/status/1551221582248419328",
+                guid = "21a2c7f9e24fae1631468c5507e4ff7c",
+                creator = " @KotlinWeekly ",
+                pubDate = "Sun, 24 Jul 2022 15:03:40 GMT",
+            ),
+            KotlinWeeklyItem(
+                title = " @KotlinWeekly: Kotlin Weekly #311 has just been published! - ",
+                description = " <blockquote class=\"twitter-tweet\" data-width=\"550\"><p lang=\"en\" dir=\"ltr\">Kotlin Weekly #311 has just been published! - <a href=\"https://t.co/o3TtU1evhD\">https://t.co/o3TtU1evhD</a></p>— Kotlin Weekly (@KotlinWeekly) <a href=\"https://twitter.com/KotlinWeekly/status/1548584086289121281?ref_src=twsrc%5Etfw\">July 17, 2022</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script> ",
+                link = "https://twitter.com/KotlinWeekly/status/1548584086289121281",
+                guid = "a2871bba25914e5fc06ed853674b16ef",
+                creator = " @KotlinWeekly ",
+                pubDate = "Sun, 17 Jul 2022 08:23:12 GMT",
+            ),
+        )
+
+        assertEquals(expected, feedClient.loadKotlinWeeklyFeed())
+    }
+
+    @Test
+    fun `loadKotlinWeeklyFeed() throws exception when API call failed`(): Unit = runBlocking {
+        val mockEngine = MockEngine {
+            respondError(HttpStatusCode.RequestTimeout)
+        }
+        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+
+        assertThrows<ClientRequestException> {
+            feedClient.loadKotlinWeeklyFeed()
         }
     }
 }

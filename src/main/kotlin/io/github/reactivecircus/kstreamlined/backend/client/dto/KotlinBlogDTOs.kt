@@ -19,7 +19,7 @@ data class KotlinBlogChannel(
     @XmlElement(true)
     val title: String,
     @XmlSerialName(value = "link", namespace = Namespace.atom, prefix = "")
-    val atomLink: AtomLink,
+    val atomLink: Link,
     @XmlElement(true)
     val link: String,
     @XmlElement(true)
@@ -37,16 +37,6 @@ data class KotlinBlogChannel(
     val image: Image,
     val items: List<KotlinBlogItem>,
 ) {
-    @Serializable
-    data class AtomLink(
-        @XmlElement(false)
-        val href: String,
-        @XmlElement(false)
-        val rel: String,
-        @XmlElement(false)
-        val type: String,
-    )
-
     @XmlSerialName("image", "", "")
     @Serializable
     data class Image(

@@ -1,0 +1,302 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+    <channel>
+        <title>
+            <![CDATA[ Kotlin Weekly (@KotlinWeekly) | Twitter ]]>
+        </title>
+        <description>
+            <![CDATA[ The latest Tweets from Kotlin Weekly (@KotlinWeekly). Your weekly dose of Kotlin. Hosted by @eenriquelopez. The world ]]>
+        </description>
+        <link>https://twitter.com/KotlinWeekly</link>
+        <image>
+            <url>https://abs.twimg.com/favicons/favicon.ico</url>
+            <title>Kotlin Weekly (@KotlinWeekly) | Twitter</title>
+            <link>https://twitter.com/KotlinWeekly</link>
+        </image>
+        <generator>https://rss.app</generator>
+        <lastBuildDate>Mon, 25 Jul 2022 13:55:16 GMT</lastBuildDate>
+        <atom:link href="https://rss.app/feeds/2yaQT616Ogf7lDB8.xml" rel="self" type="application/rss+xml"/>
+        <language>
+            <![CDATA[ en ]]>
+        </language>
+        <item>
+            <title>
+                <![CDATA[ @alpeshvas: My first ever kotlin library in @KotlinWeekly, check it out: @KotlinWeekly 🙏 ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">My first ever kotlin library in <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a>, check it out: <a href="https://t.co/p4fbllrMuz">https://t.co/p4fbllrMuz</a><br>Thanks <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> 🙏 <a href="https://t.co/PWrHsBv6LB">https://t.co/PWrHsBv6LB</a> <a href="https://t.co/URik75gemi">pic.twitter.com/URik75gemi</a></p>— Alpesh Vas (@alpeshvas) <a href="https://twitter.com/alpeshvas/status/1551248648586944512?ref_src=twsrc%5Etfw">July 24, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/alpeshvas/status/1551248648586944512</link>
+            <guid isPermaLink="false">03032c55f53accace69b23155ca924b4</guid>
+            <dc:creator>
+                <![CDATA[ @alpeshvas ]]>
+            </dc:creator>
+            <pubDate>Sun, 24 Jul 2022 16:51:13 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @sockeqwe: Just stumbled upon this great article by @zsmb13 in @KotlinWeekly .I have to say I get confused with all the setup required by the new coroutines testing APIs 🤪 ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Just stumbled upon this great article by <a href="https://twitter.com/zsmb13?ref_src=twsrc%5Etfw">@zsmb13</a> in <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> .<br>I have to say I get confused with all the setup required by the new coroutines testing APIs 🤪<a href="https://t.co/3hwm8rnLwU">https://t.co/3hwm8rnLwU</a></p>— Hannes Dorfmann (@sockeqwe) <a href="https://twitter.com/sockeqwe/status/1551231943009861641?ref_src=twsrc%5Etfw">July 24, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/sockeqwe/status/1551231943009861641</link>
+            <guid isPermaLink="false">0fb9b373c73e5ed2b1508b8d097104a8</guid>
+            <dc:creator>
+                <![CDATA[ @sockeqwe ]]>
+            </dc:creator>
+            <pubDate>Sun, 24 Jul 2022 15:44:50 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @JorgeCastilloPr: Last @effandroid article about movableContentOf made it to the @KotlinWeekly 🥳 ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Last <a href="https://twitter.com/effandroid?ref_src=twsrc%5Etfw">@effandroid</a> article about movableContentOf made it to the <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> 🥳<a href="https://t.co/Zb0P9QHDHN">https://t.co/Zb0P9QHDHN</a> <a href="https://t.co/LZqStAxMwT">https://t.co/LZqStAxMwT</a></p>— Jorge Castillo (@JorgeCastilloPr) <a href="https://twitter.com/JorgeCastilloPr/status/1551229414792380416?ref_src=twsrc%5Etfw">July 24, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/JorgeCastilloPr/status/1551229414792380416</link>
+            <guid isPermaLink="false">3d98d79715a0deeaf97c568193a8c84f</guid>
+            <dc:creator>
+                <![CDATA[ @JorgeCastilloPr ]]>
+            </dc:creator>
+            <pubDate>Sun, 24 Jul 2022 15:34:47 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @KotlinWeekly: Kotlin Weekly #312 has just been published! - ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Kotlin Weekly #312 has just been published! - <a href="https://t.co/7JzvarYb05">https://t.co/7JzvarYb05</a></p>— Kotlin Weekly (@KotlinWeekly) <a href="https://twitter.com/KotlinWeekly/status/1551221582248419328?ref_src=twsrc%5Etfw">July 24, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/KotlinWeekly/status/1551221582248419328</link>
+            <guid isPermaLink="false">21a2c7f9e24fae1631468c5507e4ff7c</guid>
+            <dc:creator>
+                <![CDATA[ @KotlinWeekly ]]>
+            </dc:creator>
+            <pubDate>Sun, 24 Jul 2022 15:03:40 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @shaktiman_droid: Thank you @KotlinWeekly🙏🏽 for including my third post in Kotlin/JS series about “Different ways to distribute and integrate Kotlin/JS library”#KotlinMultiplatform #KotlinJs ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thank you <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a>🙏🏽 for including my third post in Kotlin/JS series about “Different ways to distribute and integrate Kotlin/JS library”<a href="https://twitter.com/hashtag/KotlinMultiplatform?src=hash&ref_src=twsrc%5Etfw">#KotlinMultiplatform</a> <a href="https://twitter.com/hashtag/KotlinJs?src=hash&ref_src=twsrc%5Etfw">#KotlinJs</a> <a href="https://t.co/lRa1eK3mDH">https://t.co/lRa1eK3mDH</a> <a href="https://t.co/A48Br7JP5m">pic.twitter.com/A48Br7JP5m</a></p>— Jigar (@shaktiman_droid) <a href="https://twitter.com/shaktiman_droid/status/1549014249166577664?ref_src=twsrc%5Etfw">July 18, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/shaktiman_droid/status/1549014249166577664</link>
+            <guid isPermaLink="false">72d9f9daeee9e742ee00eb4c2cf81f64</guid>
+            <dc:creator>
+                <![CDATA[ @shaktiman_droid ]]>
+            </dc:creator>
+            <pubDate>Mon, 18 Jul 2022 12:52:30 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @saurabh30pant: Thank you @KotlinWeekly for featuring my article on Passing data from api to composable. Cheers! ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thank you <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> for featuring my article on Passing data from api to composable. <br><br>Cheers! <a href="https://t.co/BjWPbkuPkv">https://t.co/BjWPbkuPkv</a></p>— saurabhpant (@saurabh30pant) <a href="https://twitter.com/saurabh30pant/status/1548852081766723584?ref_src=twsrc%5Etfw">July 18, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/saurabh30pant/status/1548852081766723584</link>
+            <guid isPermaLink="false">23dd0751d81c6b6de3ac3018533bc8b7</guid>
+            <dc:creator>
+                <![CDATA[ @saurabh30pant ]]>
+            </dc:creator>
+            <pubDate>Mon, 18 Jul 2022 02:08:07 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @akjaw1: Thank you for featuring my article about keeping Kotlin Multiplatform tests clean ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thank you for featuring my article about keeping Kotlin Multiplatform tests clean <a href="https://t.co/cQjdnc8q6q">https://t.co/cQjdnc8q6q</a></p>— Aleksander Jaworski (@akjaw1) <a href="https://twitter.com/akjaw1/status/1548749883473010688?ref_src=twsrc%5Etfw">July 17, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/akjaw1/status/1548749883473010688</link>
+            <guid isPermaLink="false">1b1c1bc78a2f83c073545d378e3d6412</guid>
+            <dc:creator>
+                <![CDATA[ @akjaw1 ]]>
+            </dc:creator>
+            <pubDate>Sun, 17 Jul 2022 19:22:01 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @arkann1985: Thanks for featuring MVIKotlin 3.0.0 release!Release notes: ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thanks for featuring MVIKotlin 3.0.0 release!<br><br>Release notes: <a href="https://t.co/z9lnP9zm4w">https://t.co/z9lnP9zm4w</a> <a href="https://t.co/78x3n1y4aP">https://t.co/78x3n1y4aP</a></p>— Arkadii Ivanov (@arkann1985) <a href="https://twitter.com/arkann1985/status/1548717615140544513?ref_src=twsrc%5Etfw">July 17, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/arkann1985/status/1548717615140544513</link>
+            <guid isPermaLink="false">303adfbf061e4f8fe32a27849e071eec</guid>
+            <dc:creator>
+                <![CDATA[ @arkann1985 ]]>
+            </dc:creator>
+            <pubDate>Sun, 17 Jul 2022 17:13:47 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @JorgeCastilloPr: Jetpack Compose internals is on @KotlinWeekly today with an important discount 👇 ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Jetpack Compose internals is on <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> today with an important discount 👇 <a href="https://t.co/nZFj8brkai">https://t.co/nZFj8brkai</a></p>— Jorge Castillo (@JorgeCastilloPr) <a href="https://twitter.com/JorgeCastilloPr/status/1548590617994969090?ref_src=twsrc%5Etfw">July 17, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/JorgeCastilloPr/status/1548590617994969090</link>
+            <guid isPermaLink="false">9157a04448f9248de9f0f3273ba272d0</guid>
+            <dc:creator>
+                <![CDATA[ @JorgeCastilloPr ]]>
+            </dc:creator>
+            <pubDate>Sun, 17 Jul 2022 08:49:09 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @KotlinWeekly: Kotlin Weekly #311 has just been published! - ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Kotlin Weekly #311 has just been published! - <a href="https://t.co/o3TtU1evhD">https://t.co/o3TtU1evhD</a></p>— Kotlin Weekly (@KotlinWeekly) <a href="https://twitter.com/KotlinWeekly/status/1548584086289121281?ref_src=twsrc%5Etfw">July 17, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/KotlinWeekly/status/1548584086289121281</link>
+            <guid isPermaLink="false">a2871bba25914e5fc06ed853674b16ef</guid>
+            <dc:creator>
+                <![CDATA[ @KotlinWeekly ]]>
+            </dc:creator>
+            <pubDate>Sun, 17 Jul 2022 08:23:12 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @vergauwen_simon: Thank you @KotlinWeekly for the mention in the Libraries section 🥰 ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thank you <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> for the mention in the Libraries section 🥰<a href="https://t.co/w5NNGIC17h">https://t.co/w5NNGIC17h</a> <a href="https://t.co/w3GJyF0EY6">https://t.co/w3GJyF0EY6</a></p>— Simon Vergauwen (@vergauwen_simon) <a href="https://twitter.com/vergauwen_simon/status/1546380424573755394?ref_src=twsrc%5Etfw">July 11, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/vergauwen_simon/status/1546380424573755394</link>
+            <guid isPermaLink="false">21808c195499c0c12c627dc701e13199</guid>
+            <dc:creator>
+                <![CDATA[ @vergauwen_simon ]]>
+            </dc:creator>
+            <pubDate>Mon, 11 Jul 2022 06:26:38 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @krossovochkin: Oh, wowThanks for sharing chess.kt ☺️ ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Oh, wow<br>Thanks for sharing chess.kt ☺️<a href="https://t.co/ik4AFlYr4b">https://t.co/ik4AFlYr4b</a> <a href="https://t.co/YmxBGkBEr6">https://t.co/YmxBGkBEr6</a></p>— Vasya Drobushkóv (@krossovochkin) <a href="https://twitter.com/krossovochkin/status/1546350310167351301?ref_src=twsrc%5Etfw">July 11, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/krossovochkin/status/1546350310167351301</link>
+            <guid isPermaLink="false">f0d94cfc76d08271db196558a424d737</guid>
+            <dc:creator>
+                <![CDATA[ @krossovochkin ]]>
+            </dc:creator>
+            <pubDate>Mon, 11 Jul 2022 04:26:58 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @heyitsmohit: Thank you to @KotlinWeekly for including my talk on migrating to state and shared flows! ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thank you to <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> for including my talk on migrating to state and shared flows! <a href="https://t.co/eVczV9j2eI">https://t.co/eVczV9j2eI</a></p>— Mohit (@heyitsmohit) <a href="https://twitter.com/heyitsmohit/status/1546228604593442819?ref_src=twsrc%5Etfw">July 10, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/heyitsmohit/status/1546228604593442819</link>
+            <guid isPermaLink="false">66388930eec9c7890dab2a44d496f59e</guid>
+            <dc:creator>
+                <![CDATA[ @heyitsmohit ]]>
+            </dc:creator>
+            <pubDate>Sun, 10 Jul 2022 20:23:21 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @saurabh30pant: Thank you @KotlinWeekly for featuring my article on Coroutine exception handling.Cheers! ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thank you <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> for featuring my article on Coroutine exception handling.<br><br>Cheers! <a href="https://t.co/s2wWrG9arz">https://t.co/s2wWrG9arz</a></p>— saurabhpant (@saurabh30pant) <a href="https://twitter.com/saurabh30pant/status/1546110707099246592?ref_src=twsrc%5Etfw">July 10, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/saurabh30pant/status/1546110707099246592</link>
+            <guid isPermaLink="false">d36ab4bcb317766a7b68292fa99936f5</guid>
+            <dc:creator>
+                <![CDATA[ @saurabh30pant ]]>
+            </dc:creator>
+            <pubDate>Sun, 10 Jul 2022 12:34:52 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @msfjarvis: Thanks for featuring my post on writing Paparazzi tests for Compose Multiplatform projects! ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thanks for featuring my post on writing Paparazzi tests for Compose Multiplatform projects!<a href="https://t.co/6c2CE4yIpf">https://t.co/6c2CE4yIpf</a> <a href="https://t.co/lEM9AuXwY0">https://t.co/lEM9AuXwY0</a></p>— Harsh Shandilya (@msfjarvis) <a href="https://twitter.com/msfjarvis/status/1546047011446616065?ref_src=twsrc%5Etfw">July 10, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/msfjarvis/status/1546047011446616065</link>
+            <guid isPermaLink="false">f7317596f9d024f7c8d2bd5f6e6222b2</guid>
+            <dc:creator>
+                <![CDATA[ @msfjarvis ]]>
+            </dc:creator>
+            <pubDate>Sun, 10 Jul 2022 08:21:46 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @KotlinWeekly: Kotlin Weekly #310 has just been published! - ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Kotlin Weekly #310 has just been published! - <a href="https://t.co/Y1dCI9zb1G">https://t.co/Y1dCI9zb1G</a></p>— Kotlin Weekly (@KotlinWeekly) <a href="https://twitter.com/KotlinWeekly/status/1546028156171206659?ref_src=twsrc%5Etfw">July 10, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/KotlinWeekly/status/1546028156171206659</link>
+            <guid isPermaLink="false">0ec706a220b525da7728635a20e74342</guid>
+            <dc:creator>
+                <![CDATA[ @KotlinWeekly ]]>
+            </dc:creator>
+            <pubDate>Sun, 10 Jul 2022 07:06:50 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @github_skydoves: Thank you @androidweekly and @KotlinWeekly for featuring my recent open-source library, Orbitary!🪐 Jetpack Compose animation library that allows you to implement animations such as shared element transition. ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thank you <a href="https://twitter.com/androidweekly?ref_src=twsrc%5Etfw">@androidweekly</a> and <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> for featuring my recent open-source library, Orbitary!<br><br>🪐 Jetpack Compose animation library that allows you to implement animations such as shared element transition.<a href="https://t.co/edzMgBE5lu">https://t.co/edzMgBE5lu</a></p>— Jaewoong Eum (@github_skydoves) <a href="https://twitter.com/github_skydoves/status/1544581516646236160?ref_src=twsrc%5Etfw">July 6, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/github_skydoves/status/1544581516646236160</link>
+            <guid isPermaLink="false">e0f479132ab11e1004b3b49d0b1a35e0</guid>
+            <dc:creator>
+                <![CDATA[ @github_skydoves ]]>
+            </dc:creator>
+            <pubDate>Wed, 06 Jul 2022 07:18:25 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @marcoGomier: Thanks for featuring my article about KMM app architecture 🙏😍 ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thanks for featuring my article about KMM app architecture 🙏😍 <a href="https://t.co/XKVXpRVMgO">https://t.co/XKVXpRVMgO</a></p>— Marco Gomiero (@marcoGomier) <a href="https://twitter.com/marcoGomier/status/1544213318876921857?ref_src=twsrc%5Etfw">July 5, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/marcoGomier/status/1544213318876921857</link>
+            <guid isPermaLink="false">414d6250014c4afcd3226feb1f3ac495</guid>
+            <dc:creator>
+                <![CDATA[ @marcoGomier ]]>
+            </dc:creator>
+            <pubDate>Tue, 05 Jul 2022 06:55:19 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @imShreyasPatil: Thanks @KotlinWeekly for featuring my recent library - Permission Flow - Android ♥️Repo: ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thanks <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> for featuring my recent library - Permission Flow - Android ♥️<br><br>Repo: <a href="https://t.co/NVOhXZObvR">https://t.co/NVOhXZObvR</a> <a href="https://t.co/Xl37CF6OwT">https://t.co/Xl37CF6OwT</a></p>— Shreyas Patil 🇮🇳 (@imShreyasPatil) <a href="https://twitter.com/imShreyasPatil/status/1543586928204840961?ref_src=twsrc%5Etfw">July 3, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/imShreyasPatil/status/1543586928204840961</link>
+            <guid isPermaLink="false">f61ead2045d84bac42f6fd6a6817b697</guid>
+            <dc:creator>
+                <![CDATA[ @imShreyasPatil ]]>
+            </dc:creator>
+            <pubDate>Sun, 03 Jul 2022 13:26:16 GMT</pubDate>
+        </item>
+        <item>
+            <title>
+                <![CDATA[ @saurabh30pant: Thank you @KotlinWeekly for featuring my article on Kotlin Flows. Cheers! ]]>
+            </title>
+            <description>
+                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Thank you <a href="https://twitter.com/KotlinWeekly?ref_src=twsrc%5Etfw">@KotlinWeekly</a> for featuring my article on Kotlin Flows. <br><br>Cheers! <a href="https://t.co/QbHKJhv5Eh">https://t.co/QbHKJhv5Eh</a></p>— saurabhpant (@saurabh30pant) <a href="https://twitter.com/saurabh30pant/status/1543526207815225346?ref_src=twsrc%5Etfw">July 3, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
+            </description>
+            <link>https://twitter.com/saurabh30pant/status/1543526207815225346</link>
+            <guid isPermaLink="false">97bc7c8123b9e43082670d9001fecc73</guid>
+            <dc:creator>
+                <![CDATA[ @saurabh30pant ]]>
+            </dc:creator>
+            <pubDate>Sun, 03 Jul 2022 09:24:59 GMT</pubDate>
+        </item>
+    </channel>
+</rss>

@@ -2,6 +2,8 @@ package io.github.reactivecircus.kstreamlined.backend.client
 
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogRss
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyRss
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeRss
 import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
@@ -25,6 +27,8 @@ interface FeedClient {
     suspend fun loadKotlinYouTubeFeed(): List<KotlinYouTubeItem>
 
     suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem>
+
+    suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem>
 }
 
 class RealFeedClient(
@@ -37,6 +41,7 @@ class RealFeedClient(
         install(ContentNegotiation) {
             xml(contentType = ContentType.Application.Rss)
             xml(contentType = ContentType.Application.Xml)
+            xml(contentType = ContentType.Text.Xml)
         }
     }
 
@@ -56,5 +61,15 @@ class RealFeedClient(
 
     override suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem> {
         return httpClient.get(clientConfigs.talkingKotlinFeedUrl).body<TalkingKotlinRss>().entries
+    }
+
+    override suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem> {
+        return httpClient.get(clientConfigs.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items.filter {
+            it.creator.contains(KOTLIN_WEEKLY_TWITTER_USERNAME)
+        }
+    }
+
+    companion object {
+        private const val KOTLIN_WEEKLY_TWITTER_USERNAME = "@KotlinWeekly"
     }
 }

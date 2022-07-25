@@ -5,8 +5,10 @@ import com.netflix.graphql.dgs.DgsQuery
 import com.netflix.graphql.dgs.DgsTypeResolver
 import com.netflix.graphql.dgs.InputArgument
 import io.github.reactivecircus.kstreamlined.backend.client.FeedClient
+import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.KOTLIN_WEEKLY_LOGO_URL
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.TALKING_KOTLIN_LOGO_URL
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinBlogEntry
+import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinWeeklyEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinYouTubeEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toTalkingKotlinEntry
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.DgsConstants
@@ -44,7 +46,9 @@ class FeedEntryDataFetcher(
                     FeedSourceKey.TALKING_KOTLIN_PODCAST -> {
                         feedClient.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry(TALKING_KOTLIN_LOGO_URL) }
                     }
-                    FeedSourceKey.KOTLIN_WEEKLY -> TODO()
+                    FeedSourceKey.KOTLIN_WEEKLY -> {
+                        feedClient.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry(KOTLIN_WEEKLY_LOGO_URL) }
+                    }
                 }
             }
         }
