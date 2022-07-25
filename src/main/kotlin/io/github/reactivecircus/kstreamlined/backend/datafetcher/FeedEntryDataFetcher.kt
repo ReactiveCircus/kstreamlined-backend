@@ -5,15 +5,17 @@ import com.netflix.graphql.dgs.DgsQuery
 import com.netflix.graphql.dgs.DgsTypeResolver
 import com.netflix.graphql.dgs.InputArgument
 import io.github.reactivecircus.kstreamlined.backend.client.FeedClient
+import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.TALKING_KOTLIN_LOGO_URL
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinBlogEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinYouTubeEntry
+import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toTalkingKotlinEntry
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.DgsConstants
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey
-import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlogEntry
-import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyEntry
-import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTubeEntry
-import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlinEntry
+import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog
+import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly
+import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube
+import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -34,14 +36,14 @@ class FeedEntryDataFetcher(
             async(coroutineDispatcher) {
                 when (source) {
                     FeedSourceKey.KOTLIN_BLOG -> {
-                        println("loading kotlin blog")
                         feedClient.loadKotlinBlogFeed().map { it.toKotlinBlogEntry() }
                     }
                     FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> {
-                        println("loading kotlin youtube")
                         feedClient.loadKotlinYouTubeFeed().map { it.toKotlinYouTubeEntry() }
                     }
-                    FeedSourceKey.TALKING_KOTLIN_PODCAST -> TODO()
+                    FeedSourceKey.TALKING_KOTLIN_PODCAST -> {
+                        feedClient.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry(TALKING_KOTLIN_LOGO_URL) }
+                    }
                     FeedSourceKey.KOTLIN_WEEKLY -> TODO()
                 }
             }
@@ -57,10 +59,10 @@ class FeedEntryDataFetcher(
     @DgsTypeResolver(name = DgsConstants.FEEDENTRY.TYPE_NAME)
     internal fun resolveFeedEntry(feedEntry: FeedEntry): String {
         return when (feedEntry) {
-            is KotlinBlogEntry -> DgsConstants.KOTLINBLOG.TYPE_NAME
-            is KotlinYouTubeEntry -> DgsConstants.KOTLINYOUTUBE.TYPE_NAME
-            is TalkingKotlinEntry -> DgsConstants.TALKINGKOTLIN.TYPE_NAME
-            is KotlinWeeklyEntry -> DgsConstants.KOTLINWEEKLY.TYPE_NAME
+            is KotlinBlog -> DgsConstants.KOTLINBLOG.TYPE_NAME
+            is KotlinYouTube -> DgsConstants.KOTLINYOUTUBE.TYPE_NAME
+            is TalkingKotlin -> DgsConstants.TALKINGKOTLIN.TYPE_NAME
+            is KotlinWeekly -> DgsConstants.KOTLINWEEKLY.TYPE_NAME
             else -> throw IllegalStateException("Invalid type: ${feedEntry::class.simpleName}")
         }
     }

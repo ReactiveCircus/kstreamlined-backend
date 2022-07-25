@@ -1,21 +1,21 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.client.dto.Author
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeAuthor
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.Link
 import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaCommunity
 import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaGroup
-import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTubeEntry
+import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class KotlinYouTubeEntryMapperTest {
 
     @Test
-    fun `toKotlinYouTubeEntry() converts KotlinYouTubeItem to KotlinYouTubeEntry`() {
-        val expected = KotlinYouTubeEntry(
+    fun `toKotlinYouTubeEntry() converts KotlinYouTubeItem to KotlinYouTube`() {
+        val expected = KotlinYouTube(
             id = "id",
-            title = "Blog title",
+            title = "Video title",
             publishDate = "publish date",
             contentUrl = "url",
             thumbnailUrl = "image-url",
@@ -25,9 +25,9 @@ class KotlinYouTubeEntryMapperTest {
             id = "id",
             videoId = "videoId",
             channelId = "channelId",
-            title = "Blog title",
+            title = "Video title",
             link = Link(href = "url", rel = "alternate"),
-            author = Author(name = "author", uri = "uri"),
+            author = KotlinYouTubeAuthor(name = "author", uri = "uri"),
             published = "publish date",
             updated = "update date",
             mediaGroup = MediaGroup(

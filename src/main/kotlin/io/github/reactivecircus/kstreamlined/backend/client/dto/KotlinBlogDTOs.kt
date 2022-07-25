@@ -11,21 +11,14 @@ data class KotlinBlogRss(
     @XmlElement(false)
     val version: String,
     val channel: KotlinBlogChannel,
-) {
-    object Namespace {
-        const val content = "http://purl.org/rss/1.0/modules/content/"
-        const val dc = "http://purl.org/dc/elements/1.1/"
-        const val atom = "http://www.w3.org/2005/Atom"
-        const val sy = "http://purl.org/rss/1.0/modules/syndication/"
-    }
-}
+)
 
 @XmlSerialName("channel", "", "")
 @Serializable
 data class KotlinBlogChannel(
     @XmlElement(true)
     val title: String,
-    @XmlSerialName(value = "link", namespace = KotlinBlogRss.Namespace.atom, prefix = "")
+    @XmlSerialName(value = "link", namespace = Namespace.atom, prefix = "")
     val atomLink: AtomLink,
     @XmlElement(true)
     val link: String,
@@ -36,10 +29,10 @@ data class KotlinBlogChannel(
     @XmlElement(true)
     val language: String,
     @XmlElement(true)
-    @XmlSerialName(value = "updatePeriod", namespace = KotlinBlogRss.Namespace.sy, prefix = "")
+    @XmlSerialName(value = "updatePeriod", namespace = Namespace.sy, prefix = "")
     val updatePeriod: String,
     @XmlElement(true)
-    @XmlSerialName(value = "updateFrequency", namespace = KotlinBlogRss.Namespace.sy, prefix = "")
+    @XmlSerialName(value = "updateFrequency", namespace = Namespace.sy, prefix = "")
     val updateFrequency: String,
     val image: Image,
     val items: List<KotlinBlogItem>,
@@ -78,7 +71,7 @@ data class KotlinBlogItem(
     @XmlElement(true)
     val link: String,
     @XmlElement(true)
-    @XmlSerialName(value = "creator", namespace = KotlinBlogRss.Namespace.dc, prefix = "")
+    @XmlSerialName(value = "creator", namespace = Namespace.dc, prefix = "")
     val creator: String,
     @XmlElement(true)
     val pubDate: String,
@@ -92,7 +85,7 @@ data class KotlinBlogItem(
     @XmlElement(true)
     val description: String,
     @XmlElement(true)
-    @XmlSerialName(value = "encoded", namespace = KotlinBlogRss.Namespace.content, prefix = "")
+    @XmlSerialName(value = "encoded", namespace = Namespace.content, prefix = "")
     val encoded: String,
     @XmlElement(true)
     val languages: List<Language>,

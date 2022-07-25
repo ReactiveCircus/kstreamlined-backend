@@ -1,15 +1,15 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
-import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlogEntry
+import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class KotlinBlogEntryMapperTest {
 
     @Test
-    fun `toKotlinBlogEntry() converts KotlinBlogItem to KotlinBlogEntry`() {
-        val expected = KotlinBlogEntry(
+    fun `toKotlinBlogEntry() converts KotlinBlogItem to KotlinBlog`() {
+        val expected = KotlinBlog(
             id = "id",
             title = "Blog title",
             publishDate = "publish date",

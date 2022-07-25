@@ -2,6 +2,7 @@ package io.github.reactivecircus.kstreamlined.backend.client
 
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
 
 object FakeFeedClient : FeedClient {
 
@@ -13,11 +14,19 @@ object FakeFeedClient : FeedClient {
         TODO()
     }
 
+    var nextTalkingKotlinFeedResponse: () -> List<TalkingKotlinItem> = {
+        TODO()
+    }
+
     override suspend fun loadKotlinBlogFeed(): List<KotlinBlogItem> {
         return nextKotlinBlogFeedResponse()
     }
 
     override suspend fun loadKotlinYouTubeFeed(): List<KotlinYouTubeItem> {
         return nextKotlinYouTubeFeedResponse()
+    }
+
+    override suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem> {
+        return nextTalkingKotlinFeedResponse()
     }
 }

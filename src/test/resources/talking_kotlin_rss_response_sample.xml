@@ -1,0 +1,42 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator>
+    <link href="https://talkingkotlin.com/feed.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://talkingkotlin.com/" rel="alternate" type="text/html"/>
+    <updated>2022-06-28T17:16:47+02:00</updated>
+    <id>https://talkingkotlin.com/feed.xml</id>
+    <title type="html">Talking Kotlin</title>
+    <subtitle>A Podcast on Kotlin and more</subtitle>
+    <entry>
+        <title type="html">Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta</title>
+        <link href="https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/" rel="alternate" type="text/html" title="Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta"/>
+        <published>2022-06-28T00:00:00+02:00</published>
+        <updated>2022-06-28T00:00:00+02:00</updated>
+        <id>https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta</id>
+        <content type="html" xml:base="https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Arrow"/>
+        <category term="Code Quality"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/arrow-analisys.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/arrow-analisys.png"/>
+    </entry>
+    <entry>
+        <title type="html">70 Billion Events per Day – Adobe &amp; Kotlin</title>
+        <link href="https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/" rel="alternate" type="text/html" title="70 Billion Events per Day – Adobe &amp; Kotlin"/>
+        <published>2022-04-19T00:00:00+02:00</published>
+        <updated>2022-04-19T00:00:00+02:00</updated>
+        <id>https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin</id>
+        <content type="html" xml:base="https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Kotlin Multiplatform"/>
+        <category term="Ktor"/>
+        <category term="Adobe"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/Adobe.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/Adobe.png"/>
+    </entry>
+</feed>

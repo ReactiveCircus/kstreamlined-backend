@@ -1,11 +1,12 @@
 package io.github.reactivecircus.kstreamlined.backend.client
 
-import io.github.reactivecircus.kstreamlined.backend.client.dto.Author
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeAuthor
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.Link
 import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaCommunity
 import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaGroup
+import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
@@ -26,6 +27,9 @@ class RealFeedClientTest {
 
     private val mockKotlinYouTubeRssResponse =
         javaClass.classLoader.getResource("kotlin_youtube_rss_response_sample.xml")?.readText()!!
+
+    private val mockTalkingKotlinRssResponse =
+        javaClass.classLoader.getResource("talking_kotlin_rss_response_sample.xml")?.readText()!!
 
     @Test
     fun `loadKotlinBlogFeed() returns KotlinBlogItems when API call was successful`() = runBlocking {
@@ -108,7 +112,7 @@ class RealFeedClientTest {
                     href = "https://www.youtube.com/watch?v=ihMhu3hvCCE",
                     rel = "alternate",
                 ),
-                author = Author(
+                author = KotlinYouTubeAuthor(
                     name = "Kotlin by JetBrains",
                     uri = "https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw",
                 ),
@@ -148,7 +152,7 @@ class RealFeedClientTest {
                     href = "https://www.youtube.com/watch?v=tX4nLqcW2JA",
                     rel = "alternate",
                 ),
-                author = Author(
+                author = KotlinYouTubeAuthor(
                     name = "Kotlin by JetBrains",
                     uri = "https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw",
                 ),
@@ -181,7 +185,7 @@ class RealFeedClientTest {
             ),
         )
 
-        assertEquals(expected, feedClient.loadKotlinYouTubeFeed().take(1))
+        assertEquals(expected, feedClient.loadKotlinYouTubeFeed())
     }
 
     @Test
@@ -193,6 +197,89 @@ class RealFeedClientTest {
 
         assertThrows<ClientRequestException> {
             feedClient.loadKotlinYouTubeFeed()
+        }
+    }
+
+    @Test
+    fun `loadTalkingKotlinFeed() returns TalkingYouTubeItems when API call was successful`() = runBlocking {
+        val mockEngine = MockEngine {
+            respond(
+                content = ByteReadChannel(mockTalkingKotlinRssResponse),
+                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
+            )
+        }
+        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+
+        val expected = listOf(
+            TalkingKotlinItem(
+                id = "https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta",
+                title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta",
+                link = Link(
+                    href = "https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/",
+                    rel = "alternate",
+                    type = "text/html",
+                    title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta",
+                ),
+                author = TalkingKotlinItem.Author(name = ""),
+                published = "2022-06-28T00:00:00+02:00",
+                updated = "2022-06-28T00:00:00+02:00",
+                content = TalkingKotlinItem.Content(
+                    type = "html",
+                    base = "https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/",
+                ),
+                categories = listOf(
+                    TalkingKotlinItem.Category("Arrow"),
+                    TalkingKotlinItem.Category("Code Quality"),
+                ),
+                summary = TalkingKotlinItem.Summary("html"),
+                thumbnail = TalkingKotlinItem.Thumbnail("https://talkingkotlin.com/arrow-analisys.png"),
+                mediaContent = TalkingKotlinItem.MediaContent(
+                    medium = "image",
+                    url = "https://talkingkotlin.com/arrow-analisys.png",
+                ),
+            ),
+            TalkingKotlinItem(
+                id = "https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin",
+                title = "70 Billion Events per Day – Adobe & Kotlin",
+                link = Link(
+                    href = "https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/",
+                    rel = "alternate",
+                    type = "text/html",
+                    title = "70 Billion Events per Day – Adobe & Kotlin",
+                ),
+                author = TalkingKotlinItem.Author(name = ""),
+                published = "2022-04-19T00:00:00+02:00",
+                updated = "2022-04-19T00:00:00+02:00",
+                content = TalkingKotlinItem.Content(
+                    type = "html",
+                    base = "https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/",
+                ),
+                categories = listOf(
+                    TalkingKotlinItem.Category("Kotlin Multiplatform"),
+                    TalkingKotlinItem.Category("Ktor"),
+                    TalkingKotlinItem.Category("Adobe"),
+                ),
+                summary = TalkingKotlinItem.Summary("html"),
+                thumbnail = TalkingKotlinItem.Thumbnail("https://talkingkotlin.com/Adobe.png"),
+                mediaContent = TalkingKotlinItem.MediaContent(
+                    medium = "image",
+                    url = "https://talkingkotlin.com/Adobe.png",
+                ),
+            ),
+        )
+
+        assertEquals(expected, feedClient.loadTalkingKotlinFeed())
+    }
+
+    @Test
+    fun `loadTalkingKotlinFeed() throws exception when API call failed`(): Unit = runBlocking {
+        val mockEngine = MockEngine {
+            respondError(HttpStatusCode.RequestTimeout)
+        }
+        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+
+        assertThrows<ClientRequestException> {
+            feedClient.loadTalkingKotlinFeed()
         }
     }
 }

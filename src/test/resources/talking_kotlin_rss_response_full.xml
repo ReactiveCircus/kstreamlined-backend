@@ -1,0 +1,179 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator>
+    <link href="https://talkingkotlin.com/feed.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://talkingkotlin.com/" rel="alternate" type="text/html"/>
+    <updated>2022-06-28T17:16:47+02:00</updated>
+    <id>https://talkingkotlin.com/feed.xml</id>
+    <title type="html">Talking Kotlin</title>
+    <subtitle>A Podcast on Kotlin and more</subtitle>
+    <entry>
+        <title type="html">Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta</title>
+        <link href="https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/" rel="alternate" type="text/html" title="Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta"/>
+        <published>2022-06-28T00:00:00+02:00</published>
+        <updated>2022-06-28T00:00:00+02:00</updated>
+        <id>https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta</id>
+        <content type="html" xml:base="https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Arrow"/>
+        <category term="Code Quality"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/arrow-analisys.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/arrow-analisys.png"/>
+    </entry>
+    <entry>
+        <title type="html">70 Billion Events per Day – Adobe &amp; Kotlin</title>
+        <link href="https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/" rel="alternate" type="text/html" title="70 Billion Events per Day – Adobe &amp; Kotlin"/>
+        <published>2022-04-19T00:00:00+02:00</published>
+        <updated>2022-04-19T00:00:00+02:00</updated>
+        <id>https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin</id>
+        <content type="html" xml:base="https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Kotlin Multiplatform"/>
+        <category term="Ktor"/>
+        <category term="Adobe"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/Adobe.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/Adobe.png"/>
+    </entry>
+    <entry>
+        <title type="html">Why iOS Developers at Todoist Wanted Kotlin Multiplatform</title>
+        <link href="https://talkingkotlin.com/why-ios-developers-at-todoist-wanted-kotlin-multiplatform/" rel="alternate" type="text/html" title="Why iOS Developers at Todoist Wanted Kotlin Multiplatform"/>
+        <published>2022-02-17T00:00:00+01:00</published>
+        <updated>2022-02-17T00:00:00+01:00</updated>
+        <id>https://talkingkotlin.com/why-ios-developers-at-todoist-wanted-kotlin-multiplatform</id>
+        <content type="html" xml:base="https://talkingkotlin.com/why-ios-developers-at-todoist-wanted-kotlin-multiplatform/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Kotlin Multiplatform"/>
+        <category term="Todoist"/>
+        <category term="Ktor"/>
+        <category term="Server-Side"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/Goncalo-Silva.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/Goncalo-Silva.png"/>
+    </entry>
+    <entry>
+        <title type="html">The First Kotlin Commit in Android</title>
+        <link href="https://talkingkotlin.com/the-first-kotlin-commit-in-android/" rel="alternate" type="text/html" title="The First Kotlin Commit in Android"/>
+        <published>2022-02-01T00:00:00+01:00</published>
+        <updated>2022-02-01T00:00:00+01:00</updated>
+        <id>https://talkingkotlin.com/the-first-kotlin-commit-in-android</id>
+        <content type="html" xml:base="https://talkingkotlin.com/the-first-kotlin-commit-in-android/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Android"/>
+        <category term="Google"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/Yigit-Boyar.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/Yigit-Boyar.png"/>
+    </entry>
+    <entry>
+        <title type="html">5 Years of Talking Kotlin Special</title>
+        <link href="https://talkingkotlin.com/five-years-of-talking-kotlin-special/" rel="alternate" type="text/html" title="5 Years of Talking Kotlin Special"/>
+        <published>2022-01-10T00:00:00+01:00</published>
+        <updated>2022-01-10T00:00:00+01:00</updated>
+        <id>https://talkingkotlin.com/five-years-of-talking-kotlin-special</id>
+        <content type="html" xml:base="https://talkingkotlin.com/five-years-of-talking-kotlin-special/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Talking Kotlin"/>
+        <category term="Special"/>
+        <category term="5 years"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/5-years.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/5-years.png"/>
+    </entry>
+    <entry>
+        <title type="html">Slacking with Zac Sweers</title>
+        <link href="https://talkingkotlin.com/slacking-with-zac-sweers/" rel="alternate" type="text/html" title="Slacking with Zac Sweers"/>
+        <published>2021-12-27T00:00:00+01:00</published>
+        <updated>2021-12-27T00:00:00+01:00</updated>
+        <id>https://talkingkotlin.com/slacking-with-zac-sweers</id>
+        <content type="html" xml:base="https://talkingkotlin.com/slacking-with-zac-sweers/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Compose"/>
+        <category term="Multiplatform"/>
+        <category term="Slack"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/zac-sweers.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/zac-sweers.png"/>
+    </entry>
+    <entry>
+        <title type="html">Building a static analyzer for Kotlin</title>
+        <link href="https://talkingkotlin.com/building-a-static-analyzer-for-kotlin/" rel="alternate" type="text/html" title="Building a static analyzer for Kotlin"/>
+        <published>2021-12-13T00:00:00+01:00</published>
+        <updated>2021-12-13T00:00:00+01:00</updated>
+        <id>https://talkingkotlin.com/building-a-static-analyzer-for-kotlin</id>
+        <content type="html" xml:base="https://talkingkotlin.com/building-a-static-analyzer-for-kotlin/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="SonarSourse"/>
+        <category term="Static analysis"/>
+        <category term="Testing"/>
+        <category term="Code quality"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/margarita_nedzelska.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/margarita_nedzelska.png"/>
+    </entry>
+    <entry>
+        <title type="html">Moving 1M users to Kotlin and Compose</title>
+        <link href="https://talkingkotlin.com/moving-one-million-users-to-Kotlin-and-Compose/" rel="alternate" type="text/html" title="Moving 1M users to Kotlin and Compose"/>
+        <published>2021-11-28T00:00:00+01:00</published>
+        <updated>2021-11-28T00:00:00+01:00</updated>
+        <id>https://talkingkotlin.com/moving-one-million-users-to-Kotlin-and-Compose</id>
+        <content type="html" xml:base="https://talkingkotlin.com/moving-one-million-users-to-Kotlin-and-Compose/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Compose"/>
+        <category term="JetBrains Toolbox"/>
+        <category term="C++"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/victor-kropp.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/victor-kropp.png"/>
+    </entry>
+    <entry>
+        <title type="html">What goes into a Kotlin Release</title>
+        <link href="https://talkingkotlin.com/what-goes-into-a-kotlin-release/" rel="alternate" type="text/html" title="What goes into a Kotlin Release"/>
+        <published>2021-11-11T00:00:00+01:00</published>
+        <updated>2021-11-11T00:00:00+01:00</updated>
+        <id>https://talkingkotlin.com/what-goes-into-a-kotlin-release</id>
+        <content type="html" xml:base="https://talkingkotlin.com/what-goes-into-a-kotlin-release/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="Release"/>
+        <category term="Testing"/>
+        <category term="Kotlin Team"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/marina-shishikina.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/marina-shishikina.png"/>
+    </entry>
+    <entry>
+        <title type="html">From Java to Kotlin</title>
+        <link href="https://talkingkotlin.com/from-java-to-kotlin/" rel="alternate" type="text/html" title="From Java to Kotlin"/>
+        <published>2021-10-18T00:00:00+02:00</published>
+        <updated>2021-10-18T00:00:00+02:00</updated>
+        <id>https://talkingkotlin.com/from-java-to-kotlin</id>
+        <content type="html" xml:base="https://talkingkotlin.com/from-java-to-kotlin/"/>
+        <author>
+            <name/>
+        </author>
+        <category term="JavaToKotlin"/>
+        <category term="Server-Side"/>
+        <category term="Coroutines"/>
+        <summary type="html"/>
+        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/java-to-kotlin.png"/>
+        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/java-to-kotlin.png"/>
+    </entry>
+</feed>

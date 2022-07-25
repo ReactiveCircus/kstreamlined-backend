@@ -77,8 +77,6 @@ type TalkingKotlin implements FeedEntry {
   contentUrl: String!
   "Url of the podcast logo."
   podcastLogoUrl: String!
-  "Description of the episode."
-  description: String!
   "Tags of the episode."
   tags: [String!]!
 }
