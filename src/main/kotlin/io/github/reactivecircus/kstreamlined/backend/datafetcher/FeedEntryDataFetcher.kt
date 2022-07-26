@@ -1,10 +1,17 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.netflix.graphql.dgs.DgsComponent
 import com.netflix.graphql.dgs.DgsQuery
 import com.netflix.graphql.dgs.DgsTypeResolver
 import com.netflix.graphql.dgs.InputArgument
+import io.github.reactivecircus.kstreamlined.backend.client.CacheContext
 import io.github.reactivecircus.kstreamlined.backend.client.FeedClient
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
+import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.KOTLIN_WEEKLY_LOGO_URL
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.TALKING_KOTLIN_LOGO_URL
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinBlogEntry
@@ -23,12 +30,40 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import java.time.Duration
 
 @DgsComponent
 class FeedEntryDataFetcher(
     private val feedClient: FeedClient,
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
+    private val kotlinBlogCacheContext = object : CacheContext<KotlinBlogItem> {
+        override val cache: Cache<Unit, List<KotlinBlogItem>> = Caffeine
+            .newBuilder()
+            .expireAfterAccess(Duration.ofHours(1))
+            .build()
+    }
+
+    private val kotlinYouTubeCacheContext = object : CacheContext<KotlinYouTubeItem> {
+        override val cache: Cache<Unit, List<KotlinYouTubeItem>> = Caffeine
+            .newBuilder()
+            .expireAfterAccess(Duration.ofHours(1))
+            .build()
+    }
+
+    private val talkingKotlinCacheContext = object : CacheContext<TalkingKotlinItem> {
+        override val cache: Cache<Unit, List<TalkingKotlinItem>> = Caffeine
+            .newBuilder()
+            .expireAfterAccess(Duration.ofHours(1))
+            .build()
+    }
+
+    private val kotlinWeeklyCacheContext = object : CacheContext<KotlinWeeklyItem> {
+        override val cache: Cache<Unit, List<KotlinWeeklyItem>> = Caffeine
+            .newBuilder()
+            .expireAfterAccess(Duration.ofHours(1))
+            .build()
+    }
 
     @DgsQuery(field = DgsConstants.QUERY.FeedEntries)
     suspend fun feedEntries(@InputArgument filters: List<FeedSourceKey>?): List<FeedEntry> = coroutineScope {
@@ -37,16 +72,19 @@ class FeedEntryDataFetcher(
         }.map { source ->
             async(coroutineDispatcher) {
                 when (source) {
-                    FeedSourceKey.KOTLIN_BLOG -> {
+                    FeedSourceKey.KOTLIN_BLOG -> with(kotlinBlogCacheContext) {
                         feedClient.loadKotlinBlogFeed().map { it.toKotlinBlogEntry() }
                     }
-                    FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> {
+
+                    FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> with(kotlinYouTubeCacheContext) {
                         feedClient.loadKotlinYouTubeFeed().map { it.toKotlinYouTubeEntry() }
                     }
-                    FeedSourceKey.TALKING_KOTLIN_PODCAST -> {
+
+                    FeedSourceKey.TALKING_KOTLIN_PODCAST -> with(talkingKotlinCacheContext) {
                         feedClient.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry(TALKING_KOTLIN_LOGO_URL) }
                     }
-                    FeedSourceKey.KOTLIN_WEEKLY -> {
+
+                    FeedSourceKey.KOTLIN_WEEKLY -> with(kotlinWeeklyCacheContext) {
                         feedClient.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry(KOTLIN_WEEKLY_LOGO_URL) }
                     }
                 }

@@ -1,6 +1,5 @@
 package io.github.reactivecircus.kstreamlined.backend
 
-import com.github.benmanes.caffeine.cache.Caffeine
 import io.github.reactivecircus.kstreamlined.backend.client.ClientConfigs
 import io.github.reactivecircus.kstreamlined.backend.client.FeedClient
 import io.github.reactivecircus.kstreamlined.backend.client.RealFeedClient
@@ -8,7 +7,6 @@ import io.ktor.client.engine.cio.CIO
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.time.Duration
 
 @Configuration
 class KSConfiguration {
@@ -18,22 +16,6 @@ class KSConfiguration {
         return RealFeedClient(
             engine = CIO.create(),
             clientConfigs = clientConfigs,
-            kotlinBlogItemsCache = Caffeine
-                .newBuilder()
-                .expireAfterAccess(Duration.ofHours(1))
-                .build(),
-            kotlinYouTubeItemsCache = Caffeine
-                .newBuilder()
-                .expireAfterAccess(Duration.ofHours(1))
-                .build(),
-            talkingKotlinItemsCache = Caffeine
-                .newBuilder()
-                .expireAfterAccess(Duration.ofHours(1))
-                .build(),
-            kotlinWeeklyItemsCache = Caffeine
-                .newBuilder()
-                .expireAfterAccess(Duration.ofHours(1))
-                .build(),
         )
     }
 

@@ -33,7 +33,9 @@ class FullResponseParserTest {
         }
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
-        assertEquals(12, feedClient.loadKotlinBlogFeed().size)
+        with(fakeKotlinBlogCacheContext()) {
+            assertEquals(12, feedClient.loadKotlinBlogFeed().size)
+        }
     }
 
     @Test
@@ -46,7 +48,9 @@ class FullResponseParserTest {
         }
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
-        assertEquals(15, feedClient.loadKotlinYouTubeFeed().size)
+        with(fakeKotlinYouTubeCacheContext()) {
+            assertEquals(15, feedClient.loadKotlinYouTubeFeed().size)
+        }
     }
 
     @Test
@@ -59,7 +63,9 @@ class FullResponseParserTest {
         }
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
-        assertEquals(10, feedClient.loadTalkingKotlinFeed().size)
+        with(fakeTalkingKotlinCacheContext()) {
+            assertEquals(10, feedClient.loadTalkingKotlinFeed().size)
+        }
     }
 
     @Test
@@ -72,6 +78,8 @@ class FullResponseParserTest {
         }
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
-        assertEquals(3, feedClient.loadKotlinWeeklyFeed().size)
+        with(fakeKotlinWeeklyCacheContext()) {
+            assertEquals(3, feedClient.loadKotlinWeeklyFeed().size)
+        }
     }
 }

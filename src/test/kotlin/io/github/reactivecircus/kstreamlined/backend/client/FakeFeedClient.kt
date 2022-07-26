@@ -1,5 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.client
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeAuthor
@@ -27,21 +29,41 @@ object FakeFeedClient : FeedClient {
         listOf(DummyKotlinWeeklyItem)
     }
 
+    context(CacheContext<KotlinBlogItem>)
     override suspend fun loadKotlinBlogFeed(): List<KotlinBlogItem> {
         return nextKotlinBlogFeedResponse()
     }
 
+    context(CacheContext<KotlinYouTubeItem>)
     override suspend fun loadKotlinYouTubeFeed(): List<KotlinYouTubeItem> {
         return nextKotlinYouTubeFeedResponse()
     }
 
+    context(CacheContext<TalkingKotlinItem>)
     override suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem> {
         return nextTalkingKotlinFeedResponse()
     }
 
+    context(CacheContext<KotlinWeeklyItem>)
     override suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem> {
         return nextKotlinWeeklyFeedResponse()
     }
+}
+
+fun fakeKotlinBlogCacheContext() = object : CacheContext<KotlinBlogItem> {
+    override val cache: Cache<Unit, List<KotlinBlogItem>> = Caffeine.newBuilder().build()
+}
+
+fun fakeKotlinYouTubeCacheContext() = object : CacheContext<KotlinYouTubeItem> {
+    override val cache: Cache<Unit, List<KotlinYouTubeItem>> = Caffeine.newBuilder().build()
+}
+
+fun fakeTalkingKotlinCacheContext() = object : CacheContext<TalkingKotlinItem> {
+    override val cache: Cache<Unit, List<TalkingKotlinItem>> = Caffeine.newBuilder().build()
+}
+
+fun fakeKotlinWeeklyCacheContext() = object : CacheContext<KotlinWeeklyItem> {
+    override val cache: Cache<Unit, List<KotlinWeeklyItem>> = Caffeine.newBuilder().build()
 }
 
 val DummyKotlinBlogItem = KotlinBlogItem(

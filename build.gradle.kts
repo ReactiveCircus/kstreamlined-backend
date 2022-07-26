@@ -79,6 +79,7 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs += listOf(
             "-opt-in=kotlin.RequiresOptIn",
             "-Xjsr305=strict",
+            "-Xcontext-receivers",
         )
         jvmTarget = "11"
     }
