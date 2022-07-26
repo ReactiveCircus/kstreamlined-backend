@@ -1,5 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.client
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogRss
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
@@ -19,6 +21,7 @@ import io.ktor.serialization.kotlinx.xml.DefaultXml
 import io.ktor.serialization.kotlinx.xml.xml
 import kotlinx.serialization.decodeFromString
 import org.apache.commons.text.StringEscapeUtils
+import java.time.Duration
 
 interface FeedClient {
 
@@ -34,6 +37,22 @@ interface FeedClient {
 class RealFeedClient(
     engine: HttpClientEngine,
     private val clientConfigs: ClientConfigs,
+    private val kotlinBlogItemsCache: Cache<Unit, List<KotlinBlogItem>> = Caffeine
+        .newBuilder()
+        .expireAfterAccess(Duration.ofHours(1))
+        .build(),
+    private val kotlinYouTubeItemsCache: Cache<Unit, List<KotlinYouTubeItem>> = Caffeine
+        .newBuilder()
+        .expireAfterAccess(Duration.ofHours(1))
+        .build(),
+    private val talkingKotlinItemsCache: Cache<Unit, List<TalkingKotlinItem>> = Caffeine
+        .newBuilder()
+        .expireAfterAccess(Duration.ofHours(1))
+        .build(),
+    private val kotlinWeeklyItemsCache: Cache<Unit, List<KotlinWeeklyItem>> = Caffeine
+        .newBuilder()
+        .expireAfterAccess(Duration.ofHours(1))
+        .build(),
 ) : FeedClient {
 
     private val httpClient = HttpClient(engine) {
@@ -45,31 +64,40 @@ class RealFeedClient(
         }
     }
 
-    override suspend fun loadKotlinBlogFeed(): List<KotlinBlogItem> {
-        return httpClient.get(clientConfigs.kotlinBlogFeedUrl).body<KotlinBlogRss>().channel.items.map {
-            it.copy(
-                description = StringEscapeUtils.unescapeXml(it.description)
-            )
+    override suspend fun loadKotlinBlogFeed(): List<KotlinBlogItem> = getFromCacheOrFetch(kotlinBlogItemsCache) {
+        httpClient.get(clientConfigs.kotlinBlogFeedUrl)
+            .body<KotlinBlogRss>().channel.items.map {
+                it.copy(
+                    description = StringEscapeUtils.unescapeXml(it.description)
+                )
+            }
+    }
+
+    override suspend fun loadKotlinYouTubeFeed(): List<KotlinYouTubeItem> =
+        getFromCacheOrFetch(kotlinYouTubeItemsCache) {
+            httpClient.get(clientConfigs.kotlinYouTubeFeedUrl).bodyAsText().let {
+                DefaultXml.decodeFromString<KotlinYouTubeRss>(it.replace("&(?!.{2,4};)".toRegex(), "&amp;")).entries
+            }
         }
-    }
 
-    override suspend fun loadKotlinYouTubeFeed(): List<KotlinYouTubeItem> {
-        return httpClient.get(clientConfigs.kotlinYouTubeFeedUrl).bodyAsText().let {
-            DefaultXml.decodeFromString<KotlinYouTubeRss>(it.replace("&(?!.{2,4};)".toRegex(), "&amp;")).entries
+    override suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem> =
+        getFromCacheOrFetch(talkingKotlinItemsCache) {
+            httpClient.get(clientConfigs.talkingKotlinFeedUrl).body<TalkingKotlinRss>().entries
         }
-    }
 
-    override suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem> {
-        return httpClient.get(clientConfigs.talkingKotlinFeedUrl).body<TalkingKotlinRss>().entries
-    }
-
-    override suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem> {
-        return httpClient.get(clientConfigs.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items.filter {
+    override suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem> = getFromCacheOrFetch(kotlinWeeklyItemsCache) {
+        httpClient.get(clientConfigs.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items.filter {
             it.creator.contains(KOTLIN_WEEKLY_TWITTER_USERNAME)
         }
     }
 
     companion object {
         private const val KOTLIN_WEEKLY_TWITTER_USERNAME = "@KotlinWeekly"
+    }
+}
+
+private suspend fun <T : Any> getFromCacheOrFetch(cache: Cache<Unit, List<T>>, fetch: suspend () -> List<T>): List<T> {
+    return cache.getIfPresent(Unit) ?: fetch().also {
+        cache.put(Unit, it)
     }
 }
