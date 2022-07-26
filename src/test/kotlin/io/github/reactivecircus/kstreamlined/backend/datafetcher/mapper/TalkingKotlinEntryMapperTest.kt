@@ -13,7 +13,7 @@ class TalkingKotlinEntryMapperTest {
         val expected = TalkingKotlin(
             id = "id",
             title = "Podcast title",
-            publishDate = "publish date",
+            publishTimestamp = "1656374400",
             contentUrl = "url",
             podcastLogoUrl = "logo-url",
             tags = listOf(
@@ -31,8 +31,8 @@ class TalkingKotlinEntryMapperTest {
                 title = "Podcast title",
             ),
             author = TalkingKotlinItem.Author(name = ""),
-            published = "publish date",
-            updated = "update date",
+            published = "2022-06-28T00:00:00+02:00",
+            updated = "2022-06-28T00:00:00+02:00",
             content = TalkingKotlinItem.Content(
                 type = "html",
                 base = "url",

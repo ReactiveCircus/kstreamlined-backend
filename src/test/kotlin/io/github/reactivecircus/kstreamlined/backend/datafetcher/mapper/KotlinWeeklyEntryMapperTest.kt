@@ -12,7 +12,7 @@ class KotlinWeeklyEntryMapperTest {
         val expected = KotlinWeekly(
             id = "21a2c7f9e24fae1631468c5507e4ff7c",
             title = "@KotlinWeekly: Kotlin Weekly #312 has just been published!",
-            publishDate = "Sun, 24 Jul 2022 15:03:40 GMT",
+            publishTimestamp = "1658675020",
             contentUrl = "https://t.co/7JzvarYb05",
             newsletterLogoUrl = "logo-url",
         )

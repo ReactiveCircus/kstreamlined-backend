@@ -16,7 +16,7 @@ class KotlinYouTubeEntryMapperTest {
         val expected = KotlinYouTube(
             id = "id",
             title = "Video title",
-            publishDate = "publish date",
+            publishTimestamp = "1657114786",
             contentUrl = "url",
             thumbnailUrl = "image-url",
             description = "description",
@@ -28,8 +28,8 @@ class KotlinYouTubeEntryMapperTest {
             title = "Video title",
             link = Link(href = "url", rel = "alternate"),
             author = KotlinYouTubeAuthor(name = "author", uri = "uri"),
-            published = "publish date",
-            updated = "update date",
+            published = "2022-07-06T13:39:46+00:00",
+            updated = "2022-07-11T13:45:53+00:00",
             mediaGroup = MediaGroup(
                 title = "title",
                 content = MediaGroup.Content(

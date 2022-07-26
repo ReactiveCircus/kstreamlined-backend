@@ -54,9 +54,8 @@ class FeedEntryDataFetcher(
         }
             .awaitAll()
             .flatten()
-            .sortedBy {
-                // TODO sort
-                it.publishDate
+            .sortedByDescending {
+                it.publishTimestamp.toLong()
             }
     }
 

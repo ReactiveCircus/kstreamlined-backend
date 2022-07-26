@@ -12,7 +12,7 @@ class KotlinBlogEntryMapperTest {
         val expected = KotlinBlog(
             id = "id",
             title = "Blog title",
-            publishDate = "publish date",
+            publishTimestamp = "1657882575",
             contentUrl = "url",
             featuredImageUrl = "image-url",
             description = "description",
@@ -21,7 +21,7 @@ class KotlinBlogEntryMapperTest {
             title = "Blog title",
             link = "url",
             creator = "creator",
-            pubDate = "publish date",
+            pubDate = "Fri, 15 Jul 2022 10:56:15 +0000",
             featuredImage = "image-url",
             categories = emptyList(),
             guid = "id",

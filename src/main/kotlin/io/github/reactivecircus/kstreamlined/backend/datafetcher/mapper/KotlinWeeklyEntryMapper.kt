@@ -2,12 +2,17 @@ package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 fun KotlinWeeklyItem.toKotlinWeeklyEntry(logoUrl: String): KotlinWeekly {
     return KotlinWeekly(
         id = guid,
         title = title.trim().removeSuffix(" -"),
-        publishDate = pubDate,
+        publishTimestamp = LocalDateTime
+            .parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME)
+            .toEpochSecond(ZoneOffset.UTC).toString(),
         contentUrl = CONTENT_URL_REGEX.find(description)?.value.orEmpty(),
         newsletterLogoUrl = logoUrl,
     )
