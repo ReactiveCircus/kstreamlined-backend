@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage", "DSL_SCOPE_VIOLATION")
 
+import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -24,6 +25,12 @@ version = "0.0.1-SNAPSHOT"
 
 tasks.withType<GenerateJavaTask> {
     packageName = "io.github.reactivecircus.kstreamlined.backend.schema.generated"
+}
+
+jib.to.image = "gcr.io/kstreamlined-backend/kstreamlined-api"
+
+tasks.withType<BuildImageTask> {
+    notCompatibleWithConfigurationCache("Jib Gradle plugin does not support configuration cache.")
 }
 
 dependencies {

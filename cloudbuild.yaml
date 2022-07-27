@@ -1,0 +1,15 @@
+steps:
+
+# build and push the container image
+- name: gradle:jdk11-alpine
+  entrypoint: gradle
+  args: [ 'jib', '--image=${_CONTAINER_IMAGE}:$SHORT_SHA' ]
+
+# deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+  entrypoint: gcloud
+  args: [
+    'run', 'deploy', '${_SERVICE_NAME}',
+    '--image', '${_CONTAINER_IMAGE}:$SHORT_SHA',
+    '--region', '$LOCATION',
+  ]
