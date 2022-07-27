@@ -11,13 +11,13 @@ class KotlinWeeklyEntryMapperTest {
     fun `toKotlinWeeklyEntry() converts KotlinWeeklyItem to KotlinWeekly`() {
         val expected = KotlinWeekly(
             id = "21a2c7f9e24fae1631468c5507e4ff7c",
-            title = "@KotlinWeekly: Kotlin Weekly #312 has just been published!",
+            title = "Kotlin Weekly #312 has just been published!",
             publishTimestamp = "1658675020",
             contentUrl = "https://t.co/7JzvarYb05",
             newsletterLogoUrl = "logo-url",
         )
         val actual = KotlinWeeklyItem(
-            title = " @KotlinWeekly: Kotlin Weekly #312 has just been published! - ",
+            title = " @KotlinWeekly: Kotlin Weekly #312 has just been published! ",
             description = " <blockquote class=\"twitter-tweet\" data-width=\"550\"><p lang=\"en\" dir=\"ltr\">Kotlin Weekly #312 has just been published! - <a href=\"https://t.co/7JzvarYb05\">https://t.co/7JzvarYb05</a></p>— Kotlin Weekly (@KotlinWeekly) <a href=\"https://twitter.com/KotlinWeekly/status/1551221582248419328?ref_src=twsrc%5Etfw\">July 24, 2022</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script> ",
             link = "https://twitter.com/KotlinWeekly/status/1551221582248419328",
             guid = "21a2c7f9e24fae1631468c5507e4ff7c",

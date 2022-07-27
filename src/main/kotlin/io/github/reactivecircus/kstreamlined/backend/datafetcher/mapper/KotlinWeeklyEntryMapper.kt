@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter
 fun KotlinWeeklyItem.toKotlinWeeklyEntry(logoUrl: String): KotlinWeekly {
     return KotlinWeekly(
         id = guid,
-        title = title.trim().removeSuffix(" -"),
+        title = title.trim().removePrefix(TITLE_PREFIX),
         publishTimestamp = LocalDateTime
             .parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME)
             .toEpochSecond(ZoneOffset.UTC).toString(),
@@ -20,4 +20,5 @@ fun KotlinWeeklyItem.toKotlinWeeklyEntry(logoUrl: String): KotlinWeekly {
 
 const val KOTLIN_WEEKLY_LOGO_URL = "https://pbs.twimg.com/profile_images/883969154667204608/26qTz9AE_400x400.jpg"
 
+private const val TITLE_PREFIX = "@KotlinWeekly: "
 private val CONTENT_URL_REGEX = "https://t.co[^\"]+".toRegex()
