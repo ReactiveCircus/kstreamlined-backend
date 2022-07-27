@@ -4,6 +4,8 @@ steps:
 - name: gradle:jdk11-alpine
   entrypoint: gradle
   args: [ 'jib', '--image=${_CONTAINER_IMAGE}:$SHORT_SHA', '--no-configuration-cache' ]
+  env:
+    - 'GRADLE_OPTS="-Dorg.gradle.daemon=false -Dkotlin.incremental=false"'
 
 # deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
@@ -12,4 +14,7 @@ steps:
     'run', 'deploy', '${_SERVICE_NAME}',
     '--image', '${_CONTAINER_IMAGE}:$SHORT_SHA',
     '--region', '$LOCATION',
+    '--cpu', '${_CPU}',
+    '--memory', '${_MEMORY}',
+    '--timeout', '${_REQUEST_TIMEOUT}',
   ]
