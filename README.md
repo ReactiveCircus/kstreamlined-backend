@@ -1,6 +1,6 @@
 # KStreamlined Backend
 
-GraphQL API for the [KStreamlined](https://github.com/ReactiveCircus/KStreamlined) mobile apps.
+GraphQL API for the [KStreamlined mobile apps](https://github.com/ReactiveCircus/kstreamlined-mobile).
 
 The API combines multiple Kotlin-related RSS feeds into a single list of `FeedEntry` and supports filtering by feed sources.
 
