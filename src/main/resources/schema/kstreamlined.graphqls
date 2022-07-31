@@ -2,7 +2,7 @@ type Query {
   "Returns list of entries from the selected sources in the provided filters."
   feedEntries(filters: [FeedSourceKey!] = null): [FeedEntry!]!
   "Returns list of all available feed sources."
-  feedSources: [FeedSource]!
+  feedSources: [FeedSource!]!
 }
 
 type FeedSource {
