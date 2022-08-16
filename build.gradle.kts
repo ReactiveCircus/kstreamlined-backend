@@ -87,6 +87,7 @@ tasks.withType<KotlinCompile> {
             "-opt-in=kotlin.RequiresOptIn",
             "-Xjsr305=strict",
             "-Xcontext-receivers",
+            "-Xbackend-threads=0",
         )
         jvmTarget = "11"
     }
