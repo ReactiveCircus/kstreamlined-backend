@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.7.20-Beta"
-spring-boot = "2.7.2"
+spring-boot = "2.7.3"
 spring-dependencyManagement = "1.0.12.RELEASE"
 jib = "3.2.1"
 ktor = "2.1.0"
