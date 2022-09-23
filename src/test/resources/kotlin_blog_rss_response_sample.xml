@@ -35,6 +35,7 @@
             <dc:creator><![CDATA[Andrey Uskov]]></dc:creator>
             <pubDate>Fri, 15 Jul 2022 10:56:13 +0000</pubDate>
             <featuredImage>https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_Twitter-Blog.png</featuredImage>
+            <product><![CDATA[kotlin]]></product>
             <category><![CDATA[news]]></category>
             <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=264203</guid>
 

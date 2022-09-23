@@ -436,6 +436,7 @@
             <featuredImage>
                 https://blog.jetbrains.com/wp-content/uploads/2022/06/Kotlin-Dataframe-Preview_Blog-Twitter.png
             </featuredImage>
+            <product><![CDATA[kotlin-dataframe]]></product>
             <category><![CDATA[data-science]]></category>
             <category><![CDATA[datascience]]></category>
             <guid isPermaLink="false">https://blog.jetbrains.com/?post_type=kotlin&#038;p=260693</guid>

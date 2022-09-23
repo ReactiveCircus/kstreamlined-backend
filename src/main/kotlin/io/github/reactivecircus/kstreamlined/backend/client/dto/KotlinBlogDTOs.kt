@@ -68,6 +68,8 @@ data class KotlinBlogItem(
     @XmlElement(true)
     val featuredImage: String,
     @XmlElement(true)
+    val product: String?,
+    @XmlElement(true)
     @SerialName("category")
     val categories: List<String>,
     @XmlElement(true)

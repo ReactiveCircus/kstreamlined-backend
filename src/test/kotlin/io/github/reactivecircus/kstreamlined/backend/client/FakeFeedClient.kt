@@ -72,6 +72,7 @@ val DummyKotlinBlogItem = KotlinBlogItem(
     creator = "Andrey Uskov",
     pubDate = "Fri, 15 Jul 2022 10:56:13 +0000",
     featuredImage = "https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_Twitter-Blog.png",
+    product = null,
     categories = listOf("news"),
     guid = "https://blog.jetbrains.com/?post_type=kotlin&p=264203",
     description = "In Kotlin 1.7.0, we’ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the Gradle build cache. Support for compilation avoidance has also been improved. All of these advancements decrease […]",
