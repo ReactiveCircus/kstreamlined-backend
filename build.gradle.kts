@@ -16,6 +16,12 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
+dependencyManagement {
+    imports {
+        mavenBom(libs.dgs.bom.get().toString())
+    }
+}
+
 repositories {
     mavenCentral()
 }

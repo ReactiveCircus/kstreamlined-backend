@@ -4,7 +4,7 @@ spring-boot = "2.7.4"
 spring-dependencyManagement = "1.0.12.RELEASE"
 jib = "3.2.1"
 ktor = "2.1.2"
-dgsFramework = "5.3.0"
+dgsBom = "5.4.1"
 dgsCodegen = "5.4.0"
 kotlinx-coroutines = "1.6.4"
 kotlinx-serialization = "1.4.1"
@@ -31,6 +31,7 @@ ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 ktor-serialization-xml = { module = "io.ktor:ktor-serialization-kotlinx-xml", version.ref = "ktor" }
-dgs-starter = { module = "com.netflix.graphql.dgs:graphql-dgs-webflux-starter", version.ref = "dgsFramework" }
+dgs-bom = { module = "com.netflix.graphql.dgs:graphql-dgs-platform-dependencies", version.ref = "dgsBom" }
+dgs-starter = { module = "com.netflix.graphql.dgs:graphql-dgs-webflux-starter"}
 apacheCommonsText = { module = "org.apache.commons:commons-text", version.ref = "apacheCommonsText" }
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
