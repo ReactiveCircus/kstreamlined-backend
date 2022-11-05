@@ -20,15 +20,10 @@ class KotlinBlogEntryMapperTest {
         val actual = KotlinBlogItem(
             title = "Blog title",
             link = "url",
-            creator = "creator",
             pubDate = "Fri, 15 Jul 2022 10:56:15 +0000",
             featuredImage = "image-url",
-            product = null,
-            categories = emptyList(),
             guid = "id",
             description = "description",
-            encoded = "encoded",
-            languages = emptyList(),
         ).toKotlinBlogEntry()
 
         assertEquals(expected, actual)

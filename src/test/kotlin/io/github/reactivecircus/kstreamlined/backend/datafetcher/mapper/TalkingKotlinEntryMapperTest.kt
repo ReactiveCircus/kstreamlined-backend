@@ -30,22 +30,10 @@ class TalkingKotlinEntryMapperTest {
                 type = "text/html",
                 title = "Podcast title",
             ),
-            author = TalkingKotlinItem.Author(name = ""),
             published = "2022-06-28T00:00:00+02:00",
-            updated = "2022-06-28T00:00:00+02:00",
-            content = TalkingKotlinItem.Content(
-                type = "html",
-                base = "url",
-            ),
             categories = listOf(
                 TalkingKotlinItem.Category("tag1"),
                 TalkingKotlinItem.Category("tag2"),
-            ),
-            summary = TalkingKotlinItem.Summary("html"),
-            thumbnail = TalkingKotlinItem.Thumbnail("thumbnail-url"),
-            mediaContent = TalkingKotlinItem.MediaContent(
-                medium = "image",
-                url = "image-url",
             ),
         ).toTalkingKotlinEntry(logoUrl = "logo-url")
 

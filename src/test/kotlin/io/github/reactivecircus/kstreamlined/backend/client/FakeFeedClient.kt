@@ -69,15 +69,10 @@ fun fakeKotlinWeeklyCacheContext() = object : CacheContext<KotlinWeeklyItem> {
 val DummyKotlinBlogItem = KotlinBlogItem(
     title = "A New Approach to Incremental Compilation in Kotlin",
     link = "https://blog.jetbrains.com/kotlin/2022/07/a-new-approach-to-incremental-compilation-in-kotlin/",
-    creator = "Andrey Uskov",
     pubDate = "Fri, 15 Jul 2022 10:56:13 +0000",
     featuredImage = "https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_Twitter-Blog.png",
-    product = null,
-    categories = listOf("news"),
     guid = "https://blog.jetbrains.com/?post_type=kotlin&p=264203",
     description = "In Kotlin 1.7.0, we’ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the Gradle build cache. Support for compilation avoidance has also been improved. All of these advancements decrease […]",
-    encoded = "<p>In Kotlin 1.7.0, we&#8217;ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the <a href=\"https://docs.gradle.org/current/userguide/build_cache.html\">Gradle build cache</a>. Support for compilation avoidance has also been improved. All of these advancements decrease the number of necessary full-module and file recompilations, making the overall compilation time faster.</p>",
-    languages = emptyList(),
 )
 
 val DummyKotlinYouTubeItem = KotlinYouTubeItem(
@@ -130,22 +125,10 @@ val DummyTalkingKotlinItem = TalkingKotlinItem(
         type = "text/html",
         title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta",
     ),
-    author = TalkingKotlinItem.Author(name = ""),
     published = "2022-06-28T00:00:00+02:00",
-    updated = "2022-06-28T00:00:00+02:00",
-    content = TalkingKotlinItem.Content(
-        type = "html",
-        base = "https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/",
-    ),
     categories = listOf(
         TalkingKotlinItem.Category("Arrow"),
         TalkingKotlinItem.Category("Code Quality"),
-    ),
-    summary = TalkingKotlinItem.Summary("html"),
-    thumbnail = TalkingKotlinItem.Thumbnail("https://talkingkotlin.com/arrow-analisys.png"),
-    mediaContent = TalkingKotlinItem.MediaContent(
-        medium = "image",
-        url = "https://talkingkotlin.com/arrow-analisys.png",
     ),
 )
 

@@ -19,6 +19,8 @@ import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.xml.DefaultXml
 import io.ktor.serialization.kotlinx.xml.xml
 import kotlinx.serialization.decodeFromString
+import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
+import nl.adaptivity.xmlutil.serialization.DefaultXmlSerializationPolicy
 import org.apache.commons.text.StringEscapeUtils
 
 interface FeedClient {
@@ -45,12 +47,20 @@ class RealFeedClient(
     private val clientConfigs: ClientConfigs
 ) : FeedClient {
 
+    @OptIn(ExperimentalXmlUtilApi::class)
     private val httpClient = HttpClient(engine) {
         expectSuccess = true
         install(ContentNegotiation) {
-            xml(contentType = ContentType.Application.Rss)
-            xml(contentType = ContentType.Application.Xml)
-            xml(contentType = ContentType.Text.Xml)
+            val format = DefaultXml.copy {
+                policy = DefaultXmlSerializationPolicy(
+                    pedantic = false,
+                    unknownChildHandler = { _, _, _, _, _ -> emptyList() }
+                )
+            }
+
+            xml(format, ContentType.Application.Rss)
+            xml(format, ContentType.Application.Xml)
+            xml(format, ContentType.Text.Xml)
         }
     }
 

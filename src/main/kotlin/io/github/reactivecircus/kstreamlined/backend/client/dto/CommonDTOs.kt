@@ -9,7 +9,6 @@ object Namespace {
     const val content = "http://purl.org/rss/1.0/modules/content/"
     const val yt = "http://www.youtube.com/xml/schemas/2015"
     const val dc = "http://purl.org/dc/elements/1.1/"
-    const val sy = "http://purl.org/rss/1.0/modules/syndication/"
 }
 
 @Serializable
