@@ -8,7 +8,7 @@ dgsBom = "5.4.3"
 dgsCodegen = "5.6.2"
 kotlinx-coroutines = "1.6.4"
 kotlinx-serialization = "1.4.1"
-detekt = "1.21.0"
+detekt = "1.22.0"
 apacheCommonsText = "1.9"
 caffeine = "3.1.1"
 
