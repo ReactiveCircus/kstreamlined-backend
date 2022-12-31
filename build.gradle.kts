@@ -3,6 +3,8 @@
 import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -86,16 +88,16 @@ allprojects {
 
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        languageVersion = "1.7"
-        useK2 = false // TODO enable once K2 supports compiler plugins
-        freeCompilerArgs += listOf(
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+        languageVersion.set(KotlinVersion.KOTLIN_1_8)
+        useK2.set(false) // TODO enable once K2 supports compiler plugins
+        freeCompilerArgs.addAll(
             "-opt-in=kotlin.RequiresOptIn",
             "-Xjsr305=strict",
             "-Xcontext-receivers",
             "-Xbackend-threads=0",
         )
-        jvmTarget = "11"
     }
 }
 
