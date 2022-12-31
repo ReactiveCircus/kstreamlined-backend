@@ -66,7 +66,8 @@ configurations.all {
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of("11"))
+        languageVersion.set(JavaLanguageVersion.of(11))
+        vendor.set(JvmVendorSpec.AZUL)
     }
 }
 
