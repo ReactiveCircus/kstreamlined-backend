@@ -31,13 +31,13 @@ repositories {
 group = "io.github.reactivecircus.kstreamlined.backend"
 version = "0.0.1-SNAPSHOT"
 
-tasks.withType<GenerateJavaTask> {
+tasks.withType<GenerateJavaTask>().configureEach {
     packageName = "io.github.reactivecircus.kstreamlined.backend.schema.generated"
 }
 
 jib.to.image = "gcr.io/kstreamlined-backend/kstreamlined-api"
 
-tasks.withType<BuildImageTask> {
+tasks.withType<BuildImageTask>().configureEach {
     notCompatibleWithConfigurationCache("Jib Gradle plugin does not support configuration cache.")
 }
 
@@ -88,7 +88,7 @@ allprojects {
 }
 
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         jvmTarget.set(JvmTarget.JVM_11)
         languageVersion.set(KotlinVersion.KOTLIN_1_8)
@@ -102,7 +102,7 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
 }
