@@ -1,7 +1,7 @@
 steps:
 
 # build and push the container image
-- name: gradle:jdk11-alpine
+- name: gradle:jdk17-alpine
   entrypoint: gradle
   args: [ 'jib', '--image=${_CONTAINER_IMAGE}:$SHORT_SHA', '--no-configuration-cache' ]
 

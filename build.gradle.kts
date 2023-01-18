@@ -66,7 +66,7 @@ configurations.all {
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
+        languageVersion.set(JavaLanguageVersion.of(17))
         vendor.set(JvmVendorSpec.AZUL)
     }
 }
@@ -79,7 +79,6 @@ allprojects {
         allRules = true
     }
     tasks.withType<Detekt>().configureEach {
-        jvmTarget = "11"
         reports {
             html.outputLocation.set(file("build/reports/detekt/${project.name}.html"))
         }
@@ -90,7 +89,6 @@ allprojects {
 
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
         languageVersion.set(KotlinVersion.KOTLIN_1_8)
         useK2.set(false) // TODO enable once K2 supports compiler plugins
         freeCompilerArgs.addAll(
