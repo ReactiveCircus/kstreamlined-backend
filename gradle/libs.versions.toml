@@ -10,7 +10,7 @@ kotlinx-coroutines = "1.6.4"
 kotlinx-serialization = "1.4.1"
 detekt = "1.22.0"
 apacheCommonsText = "1.10.0"
-caffeine = "3.1.5"
+caffeine = "3.1.6"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
