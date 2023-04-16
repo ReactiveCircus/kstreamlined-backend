@@ -270,19 +270,19 @@ class RealFeedClientTest {
 
         val expected = listOf(
             KotlinWeeklyItem(
-                title = " @KotlinWeekly: Kotlin Weekly #312 has just been published! ",
-                description = " <blockquote class=\"twitter-tweet\" data-width=\"550\"><p lang=\"en\" dir=\"ltr\">Kotlin Weekly #312 has just been published! - <a href=\"https://t.co/7JzvarYb05\">https://t.co/7JzvarYb05</a></p>— Kotlin Weekly (@KotlinWeekly) <a href=\"https://twitter.com/KotlinWeekly/status/1551221582248419328?ref_src=twsrc%5Etfw\">July 24, 2022</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script> ",
+                title = "@KotlinWeekly: Kotlin Weekly #312 has just been published!",
+                description = "<blockquote class=\"twitter-tweet\" data-width=\"550\"><p lang=\"en\" dir=\"ltr\">Kotlin Weekly #312 has just been published! - <a href=\"https://t.co/7JzvarYb05\">https://t.co/7JzvarYb05</a></p>— Kotlin Weekly (@KotlinWeekly) <a href=\"https://twitter.com/KotlinWeekly/status/1551221582248419328?ref_src=twsrc%5Etfw\">July 24, 2022</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>",
                 link = "https://twitter.com/KotlinWeekly/status/1551221582248419328",
                 guid = "21a2c7f9e24fae1631468c5507e4ff7c",
-                creator = " @KotlinWeekly ",
+                creator = "@KotlinWeekly",
                 pubDate = "Sun, 24 Jul 2022 15:03:40 GMT",
             ),
             KotlinWeeklyItem(
-                title = " @KotlinWeekly: Kotlin Weekly #311 has just been published! ",
-                description = " <blockquote class=\"twitter-tweet\" data-width=\"550\"><p lang=\"en\" dir=\"ltr\">Kotlin Weekly #311 has just been published! - <a href=\"https://t.co/o3TtU1evhD\">https://t.co/o3TtU1evhD</a></p>— Kotlin Weekly (@KotlinWeekly) <a href=\"https://twitter.com/KotlinWeekly/status/1548584086289121281?ref_src=twsrc%5Etfw\">July 17, 2022</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script> ",
+                title = "@KotlinWeekly: Kotlin Weekly #311 has just been published!",
+                description = "<blockquote class=\"twitter-tweet\" data-width=\"550\"><p lang=\"en\" dir=\"ltr\">Kotlin Weekly #311 has just been published! - <a href=\"https://t.co/o3TtU1evhD\">https://t.co/o3TtU1evhD</a></p>— Kotlin Weekly (@KotlinWeekly) <a href=\"https://twitter.com/KotlinWeekly/status/1548584086289121281?ref_src=twsrc%5Etfw\">July 17, 2022</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>",
                 link = "https://twitter.com/KotlinWeekly/status/1548584086289121281",
                 guid = "a2871bba25914e5fc06ed853674b16ef",
-                creator = " @KotlinWeekly ",
+                creator = "@KotlinWeekly",
                 pubDate = "Sun, 17 Jul 2022 08:23:12 GMT",
             ),
         )

@@ -29,4 +29,6 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
       - uses: gradle/gradle-build-action@v2
+        with:
+          gradle-home-cache-cleanup: true
       - run: ./gradlew assemble check --no-configuration-cache
