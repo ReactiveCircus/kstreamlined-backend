@@ -11,6 +11,7 @@ kotlinx-serialization = "1.5.1"
 detekt = "1.23.1"
 apacheCommonsText = "1.10.0"
 caffeine = "3.1.8"
+toolchainsResolver = "0.7.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
