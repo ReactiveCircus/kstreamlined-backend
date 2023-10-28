@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage", "DSL_SCOPE_VIOLATION")
-
 import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
@@ -57,22 +55,22 @@ dependencies {
 
 configurations.all {
     resolutionStrategy.eachDependency {
-        if (requested.group == "org.jetbrains.kotlinx" && requested.name.startsWith("kotlinx-coroutines")) {
-            useVersion(libs.versions.kotlinx.coroutines.get())
+        if (this@all.name == "detekt" && requested.group == "org.jetbrains.kotlin") {
+            useVersion("1.9.0")
         }
     }
 }
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(20))
     }
 }
 
 allprojects {
     detekt {
-        source = files("src/")
-        config = files("${project.rootDir}/detekt.yml")
+        source.setFrom(files("src/"))
+        config.setFrom(files("${project.rootDir}/detekt.yml"))
         buildUponDefaultConfig = true
         allRules = true
     }
@@ -83,7 +81,6 @@ allprojects {
     }
     dependencies.add("detektPlugins", libs.detektFormatting)
 }
-
 
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {

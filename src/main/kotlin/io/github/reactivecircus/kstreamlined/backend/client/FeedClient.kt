@@ -21,6 +21,7 @@ import io.ktor.serialization.kotlinx.xml.xml
 import kotlinx.serialization.decodeFromString
 import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
 import nl.adaptivity.xmlutil.serialization.DefaultXmlSerializationPolicy
+import nl.adaptivity.xmlutil.serialization.XmlConfig
 import org.apache.commons.text.StringEscapeUtils
 
 interface FeedClient {
@@ -54,7 +55,7 @@ class RealFeedClient(
             val format = DefaultXml.copy {
                 policy = DefaultXmlSerializationPolicy(
                     pedantic = false,
-                    unknownChildHandler = { _, _, _, _, _ -> emptyList() }
+                    unknownChildHandler = XmlConfig.IGNORING_UNKNOWN_CHILD_HANDLER
                 )
             }
 
