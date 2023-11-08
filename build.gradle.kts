@@ -53,17 +53,10 @@ dependencies {
     testImplementation(libs.ktor.client.mock)
 }
 
-configurations.all {
-    resolutionStrategy.eachDependency {
-        if (this@all.name == "detekt" && requested.group == "org.jetbrains.kotlin") {
-            useVersion("1.9.0")
-        }
-    }
-}
-
 kotlin {
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of(20))
+        vendor.set(JvmVendorSpec.AZUL)
     }
 }
 
