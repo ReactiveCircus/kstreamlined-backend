@@ -33,7 +33,7 @@ tasks.withType<GenerateJavaTask>().configureEach {
 }
 
 jib {
-    to.image = "australia-southeast2-docker.pkg.dev/kstreamlined-backend/kstreamlined/kstreamlined-api"
+    to.image = "australia-southeast1-docker.pkg.dev/kstreamlined-backend/kstreamlined/kstreamlined-api"
     from.image = "azul/zulu-openjdk:21"
 }
 
