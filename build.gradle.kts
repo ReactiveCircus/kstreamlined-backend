@@ -32,7 +32,10 @@ tasks.withType<GenerateJavaTask>().configureEach {
     packageName = "io.github.reactivecircus.kstreamlined.backend.schema.generated"
 }
 
-jib.to.image = "gcr.io/kstreamlined-backend/kstreamlined-api"
+jib {
+    to.image = "australia-southeast2-docker.pkg.dev/kstreamlined-backend/kstreamlined/kstreamlined-api"
+    from.image = "azul/zulu-openjdk:21"
+}
 
 tasks.withType<BuildImageTask>().configureEach {
     notCompatibleWithConfigurationCache("Jib Gradle plugin does not support configuration cache.")
