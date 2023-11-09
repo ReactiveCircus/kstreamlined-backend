@@ -1,8 +1,7 @@
 import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -58,8 +57,29 @@ dependencies {
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(20))
+        languageVersion.set(JavaLanguageVersion.of(21))
         vendor.set(JvmVendorSpec.AZUL)
+    }
+    compilerOptions {
+        // languageVersion.set(KotlinVersion.KOTLIN_2_0) TODO enable once tests pass with K2
+        freeCompilerArgs.addAll(
+            "-opt-in=kotlin.RequiresOptIn",
+            "-Xjsr305=strict",
+            "-Xcontext-receivers",
+        )
+    }
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+}
+
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (this@configureEach.name == "detekt" && requested.group == "org.jetbrains.kotlin") {
+            useVersion("1.9.10")
+        }
     }
 }
 
@@ -72,27 +92,11 @@ allprojects {
     }
     tasks.withType<Detekt>().configureEach {
         reports {
+            jvmTarget = JvmTarget.JVM_20.target // TODO remove once detekt supports JVM 21 bytecode
             html.outputLocation.set(file("build/reports/detekt/${project.name}.html"))
         }
     }
     dependencies.add("detektPlugins", libs.detektFormatting)
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions {
-        languageVersion.set(KotlinVersion.KOTLIN_2_0)
-        freeCompilerArgs.addAll(
-            "-opt-in=kotlin.RequiresOptIn",
-            "-Xjsr305=strict",
-            "-Xcontext-receivers",
-            "-Xbackend-threads=0",
-        )
-    }
-}
-
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
 }
 
 fun Project.envOrProp(name: String): String {
