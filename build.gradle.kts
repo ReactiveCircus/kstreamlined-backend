@@ -2,6 +2,7 @@ import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -61,7 +62,7 @@ kotlin {
         vendor.set(JvmVendorSpec.AZUL)
     }
     compilerOptions {
-        // languageVersion.set(KotlinVersion.KOTLIN_2_0) TODO enable once tests pass with K2
+        languageVersion.set(KotlinVersion.KOTLIN_1_9) // TODO enable once tests pass with K2
         freeCompilerArgs.addAll(
             "-opt-in=kotlin.RequiresOptIn",
             "-Xjsr305=strict",
