@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.ktor.client.contentNegotiation)
     implementation(libs.ktor.serialization.xml)
     implementation(libs.apacheCommonsText)
+    implementation(libs.apacheCommonsLang3)
     implementation(libs.caffeine)
 
     testImplementation(libs.spring.boot.starter.test)
