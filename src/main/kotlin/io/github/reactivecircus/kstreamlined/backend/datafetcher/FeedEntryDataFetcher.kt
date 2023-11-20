@@ -67,7 +67,7 @@ class FeedEntryDataFetcher(
 
     @DgsQuery(field = DgsConstants.QUERY.FeedEntries)
     suspend fun feedEntries(@InputArgument filters: List<FeedSourceKey>?): List<FeedEntry> = coroutineScope {
-        FeedSourceKey.values().filter {
+        FeedSourceKey.entries.filter {
             filters == null || filters.contains(it)
         }.map { source ->
             async(coroutineDispatcher) {

@@ -26,7 +26,7 @@ data class KotlinBlogItem(
     @XmlElement(true)
     val pubDate: String,
     @XmlElement(true)
-    val featuredImage: String,
+    val featuredImage: String?,
     @XmlElement(true)
     val guid: String,
     @XmlElement(true)

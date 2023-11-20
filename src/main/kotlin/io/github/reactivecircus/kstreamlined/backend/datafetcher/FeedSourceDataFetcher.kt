@@ -11,7 +11,7 @@ class FeedSourceDataFetcher {
 
     @DgsQuery(field = DgsConstants.QUERY.FeedSources)
     suspend fun feedSources(): List<FeedSource> {
-        return FeedSourceKey.values().map {
+        return FeedSourceKey.entries.map {
             val title = when (it) {
                 FeedSourceKey.KOTLIN_BLOG -> FeedSourceTitle.KotlinBlog
                 FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> FeedSourceTitle.KotlinYouTube

@@ -46,7 +46,7 @@ type KotlinBlog implements FeedEntry {
   "Url of the content."
   contentUrl: String!
   "Url of the feature image."
-  featuredImageUrl: String!
+  featuredImageUrl: String
   "Description of the blog post."
   description: String!
 }
