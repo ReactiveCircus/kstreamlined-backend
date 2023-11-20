@@ -9,16 +9,13 @@ import java.time.format.DateTimeFormatter
 fun KotlinWeeklyItem.toKotlinWeeklyEntry(logoUrl: String): KotlinWeekly {
     return KotlinWeekly(
         id = guid,
-        title = title.trim().removePrefix(TITLE_PREFIX),
+        title = title,
         publishTimestamp = LocalDateTime
             .parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME)
             .toEpochSecond(ZoneOffset.UTC).toString(),
-        contentUrl = contentUrlRegex.find(description)?.value.orEmpty(),
+        contentUrl = link,
         newsletterLogoUrl = logoUrl,
     )
 }
 
 const val KOTLIN_WEEKLY_LOGO_URL = "https://pbs.twimg.com/profile_images/883969154667204608/26qTz9AE_400x400.jpg"
-
-private const val TITLE_PREFIX = "@KotlinWeekly: "
-private val contentUrlRegex = "https://t.co[^\"]+".toRegex()

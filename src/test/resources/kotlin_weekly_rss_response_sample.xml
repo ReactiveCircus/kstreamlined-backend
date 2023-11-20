@@ -1,50 +1,27 @@
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
     <channel>
         <title>
-            <![CDATA[ Kotlin Weekly (@KotlinWeekly) | Twitter ]]>
+            <![CDATA[Kotlin Weekly Archive Feed]]>
         </title>
         <description>
             <![CDATA[ The latest Tweets from Kotlin Weekly (@KotlinWeekly). Your weekly dose of Kotlin. Hosted by @eenriquelopez. The world ]]>
         </description>
-        <link>https://twitter.com/KotlinWeekly</link>
-        <image>
-            <url>https://abs.twimg.com/favicons/favicon.ico</url>
-            <title>Kotlin Weekly (@KotlinWeekly) | Twitter</title>
-            <link>https://twitter.com/KotlinWeekly</link>
-        </image>
-        <generator>https://rss.app</generator>
-        <lastBuildDate>Mon, 25 Jul 2022 13:55:16 GMT</lastBuildDate>
-        <atom:link href="https://rss.app/feeds/2yaQT616Ogf7lDB8.xml" rel="self" type="application/rss+xml"/>
-        <language>
-            <![CDATA[ en ]]>
-        </language>
+        <link>https://us12.campaign-archive.com/feed?u=f39692e245b94f7fb693b6d82&amp;id=93b2272cb6</link>
+        <description><![CDATA[]]></description>
+        <pubDate>Mon, 20 Nov 2023 12:39:18 +0000</pubDate>
+        <generator>Zend_Feed</generator>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <item>
-            <title>
-                <![CDATA[ @KotlinWeekly: Kotlin Weekly #312 has just been published! ]]>
-            </title>
-            <description>
-                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Kotlin Weekly #312 has just been published! - <a href="https://t.co/7JzvarYb05">https://t.co/7JzvarYb05</a></p>— Kotlin Weekly (@KotlinWeekly) <a href="https://twitter.com/KotlinWeekly/status/1551221582248419328?ref_src=twsrc%5Etfw">July 24, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
-            </description>
-            <link>https://twitter.com/KotlinWeekly/status/1551221582248419328</link>
-            <guid isPermaLink="false">21a2c7f9e24fae1631468c5507e4ff7c</guid>
-            <dc:creator>
-                <![CDATA[ @KotlinWeekly ]]>
-            </dc:creator>
-            <pubDate>Sun, 24 Jul 2022 15:03:40 GMT</pubDate>
+            <title><![CDATA[Kotlin Weekly #381]]></title>
+            <link>https://mailchi.mp/kotlinweekly/kotlin-weekly-381</link>
+            <guid>https://mailchi.mp/kotlinweekly/kotlin-weekly-381</guid>
+            <pubDate>Sun, 19 Nov 2023 09:13:00 +0000</pubDate>
         </item>
         <item>
-            <title>
-                <![CDATA[ @KotlinWeekly: Kotlin Weekly #311 has just been published! ]]>
-            </title>
-            <description>
-                <![CDATA[ <blockquote class="twitter-tweet" data-width="550"><p lang="en" dir="ltr">Kotlin Weekly #311 has just been published! - <a href="https://t.co/o3TtU1evhD">https://t.co/o3TtU1evhD</a></p>— Kotlin Weekly (@KotlinWeekly) <a href="https://twitter.com/KotlinWeekly/status/1548584086289121281?ref_src=twsrc%5Etfw">July 17, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> ]]>
-            </description>
-            <link>https://twitter.com/KotlinWeekly/status/1548584086289121281</link>
-            <guid isPermaLink="false">a2871bba25914e5fc06ed853674b16ef</guid>
-            <dc:creator>
-                <![CDATA[ @KotlinWeekly ]]>
-            </dc:creator>
-            <pubDate>Sun, 17 Jul 2022 08:23:12 GMT</pubDate>
+            <title><![CDATA[Kotlin Weekly #380]]></title>
+            <link>https://mailchi.mp/kotlinweekly/kotlin-weekly-380</link>
+            <guid>https://mailchi.mp/kotlinweekly/kotlin-weekly-380</guid>
+            <pubDate>Sun, 12 Nov 2023 09:14:59 +0000</pubDate>
         </item>
     </channel>
 </rss>

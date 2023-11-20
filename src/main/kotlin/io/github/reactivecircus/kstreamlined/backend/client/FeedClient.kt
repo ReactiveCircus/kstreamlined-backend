@@ -89,19 +89,7 @@ class RealFeedClient(
 
     context(CacheContext<KotlinWeeklyItem>)
     override suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem> = getFromCacheOrFetch {
-        httpClient.get(clientConfigs.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items.filter {
-            it.creator.contains(KOTLIN_WEEKLY_TWITTER_USERNAME)
-        }.map {
-            it.copy(
-                title = StringEscapeUtils.unescapeXml(it.title).trim(),
-                description = StringEscapeUtils.unescapeXml(it.description).trim(),
-                creator = StringEscapeUtils.unescapeXml(it.creator).trim(),
-            )
-        }
-    }
-
-    companion object {
-        private const val KOTLIN_WEEKLY_TWITTER_USERNAME = "@KotlinWeekly"
+        httpClient.get(clientConfigs.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items
     }
 }
 

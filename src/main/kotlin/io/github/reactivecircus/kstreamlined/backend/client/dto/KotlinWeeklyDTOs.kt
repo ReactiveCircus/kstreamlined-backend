@@ -22,14 +22,9 @@ data class KotlinWeeklyItem(
     @XmlElement(true)
     val title: String,
     @XmlElement(true)
-    val description: String,
-    @XmlElement(true)
     val link: String,
     @XmlElement(true)
     val guid: String,
-    @XmlElement(true)
-    @XmlSerialName(value = "creator", namespace = Namespace.dc, prefix = "")
-    val creator: String,
     @XmlElement(true)
     val pubDate: String,
 )
