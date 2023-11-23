@@ -12,8 +12,6 @@ import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
 import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
-import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.KOTLIN_WEEKLY_LOGO_URL
-import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.TALKING_KOTLIN_LOGO_URL
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinBlogEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinWeeklyEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinYouTubeEntry
@@ -81,11 +79,11 @@ class FeedEntryDataFetcher(
                     }
 
                     FeedSourceKey.TALKING_KOTLIN_PODCAST -> with(talkingKotlinCacheContext) {
-                        feedClient.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry(TALKING_KOTLIN_LOGO_URL) }
+                        feedClient.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry() }
                     }
 
                     FeedSourceKey.KOTLIN_WEEKLY -> with(kotlinWeeklyCacheContext) {
-                        feedClient.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry(KOTLIN_WEEKLY_LOGO_URL) }
+                        feedClient.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry() }
                     }
                 }
             }
@@ -93,7 +91,7 @@ class FeedEntryDataFetcher(
             .awaitAll()
             .flatten()
             .sortedByDescending {
-                it.publishTimestamp.toLong()
+                it.publishTime
             }
     }
 

@@ -16,7 +16,7 @@ class KotlinYouTubeEntryMapperTest {
         val expected = KotlinYouTube(
             id = "id",
             title = "Video title",
-            publishTimestamp = "1657114786",
+            publishTime = "2022-07-06T13:39:46Z",
             contentUrl = "url",
             thumbnailUrl = "image-url",
             description = "description",

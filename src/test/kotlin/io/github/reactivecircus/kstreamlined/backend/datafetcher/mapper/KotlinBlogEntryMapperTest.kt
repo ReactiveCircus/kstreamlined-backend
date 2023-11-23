@@ -12,7 +12,7 @@ class KotlinBlogEntryMapperTest {
         val expected = KotlinBlog(
             id = "id",
             title = "Blog title",
-            publishTimestamp = "1657882575",
+            publishTime = "2022-07-15T10:56:15Z",
             contentUrl = "url",
             featuredImageUrl = "image-url",
             description = "description",
@@ -22,6 +22,28 @@ class KotlinBlogEntryMapperTest {
             link = "url",
             pubDate = "Fri, 15 Jul 2022 10:56:15 +0000",
             featuredImage = "image-url",
+            guid = "id",
+            description = "description",
+        ).toKotlinBlogEntry()
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `toKotlinBlogEntry() converts KotlinBlogItem to KotlinBlog with fallback featuredImageUrl when missing`() {
+        val expected = KotlinBlog(
+            id = "id",
+            title = "Blog title",
+            publishTime = "2022-07-15T10:56:15Z",
+            contentUrl = "url",
+            featuredImageUrl = FallbackFeatureImageUrl,
+            description = "description",
+        )
+        val actual = KotlinBlogItem(
+            title = "Blog title",
+            link = "url",
+            pubDate = "Fri, 15 Jul 2022 10:56:15 +0000",
+            featuredImage = null,
             guid = "id",
             description = "description",
         ).toKotlinBlogEntry()

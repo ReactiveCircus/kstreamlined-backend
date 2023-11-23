@@ -30,8 +30,8 @@ interface FeedEntry {
   id: String!
   "Title of the feed entry."
   title: String!
-  "Publish date of the feed entry as UTC timestamp."
-  publishTimestamp: String!
+  "Publish time of the feed entry in ISO 8601."
+  publishTime: String!
   "Url of the content."
   contentUrl: String!
 }
@@ -41,12 +41,12 @@ type KotlinBlog implements FeedEntry {
   id: String!
   "Title of the feed entry."
   title: String!
-  "Publish date of the feed entry as UTC timestamp."
-  publishTimestamp: String!
+  "Publish time of the feed entry in ISO 8601."
+  publishTime: String!
   "Url of the content."
   contentUrl: String!
   "Url of the feature image."
-  featuredImageUrl: String
+  featuredImageUrl: String!
   "Description of the blog post."
   description: String!
 }
@@ -56,8 +56,8 @@ type KotlinYouTube implements FeedEntry {
   id: String!
   "Title of the feed entry."
   title: String!
-  "Publish date of the feed entry as UTC timestamp."
-  publishTimestamp: String!
+  "Publish time of the feed entry in ISO 8601."
+  publishTime: String!
   "Url of the content."
   contentUrl: String!
   "Url of the video thumbnail."
@@ -71,8 +71,8 @@ type TalkingKotlin implements FeedEntry {
   id: String!
   "Title of the feed entry."
   title: String!
-  "Publish date of the feed entry as UTC timestamp."
-  publishTimestamp: String!
+  "Publish time of the feed entry in ISO 8601."
+  publishTime: String!
   "Url of the content."
   contentUrl: String!
   "Url of the podcast logo."
@@ -86,10 +86,8 @@ type KotlinWeekly implements FeedEntry {
   id: String!
   "Title of the feed entry."
   title: String!
-  "Publish date of the feed entry as UTC timestamp."
-  publishTimestamp: String!
+  "Publish time of the feed entry in ISO 8601."
+  publishTime: String!
   "Url of the content."
   contentUrl: String!
-  "Url of the newsletter logo."
-  newsletterLogoUrl: String!
 }

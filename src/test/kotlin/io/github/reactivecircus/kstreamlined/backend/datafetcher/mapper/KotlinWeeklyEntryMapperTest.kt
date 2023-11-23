@@ -12,16 +12,15 @@ class KotlinWeeklyEntryMapperTest {
         val expected = KotlinWeekly(
             id = "https://mailchi.mp/kotlinweekly/kotlin-weekly-381",
             title = "Kotlin Weekly #381",
-            publishTimestamp = "1700385180",
+            publishTime = "2023-11-19T09:13:00Z",
             contentUrl = "https://mailchi.mp/kotlinweekly/kotlin-weekly-381",
-            newsletterLogoUrl = "logo-url",
         )
         val actual = KotlinWeeklyItem(
             title = "Kotlin Weekly #381",
             link = "https://mailchi.mp/kotlinweekly/kotlin-weekly-381",
             guid = "https://mailchi.mp/kotlinweekly/kotlin-weekly-381",
             pubDate = "Sun, 19 Nov 2023 09:13:00 +0000",
-        ).toKotlinWeeklyEntry(logoUrl = "logo-url")
+        ).toKotlinWeeklyEntry()
 
         assertEquals(expected, actual)
     }

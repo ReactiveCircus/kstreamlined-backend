@@ -13,9 +13,9 @@ class TalkingKotlinEntryMapperTest {
         val expected = TalkingKotlin(
             id = "id",
             title = "Podcast title",
-            publishTimestamp = "1656374400",
+            publishTime = "2022-06-27T22:00:00Z",
             contentUrl = "url",
-            podcastLogoUrl = "logo-url",
+            podcastLogoUrl = TalkingKotlinLogoUrl,
             tags = listOf(
                 "tag1",
                 "tag2",
@@ -35,7 +35,7 @@ class TalkingKotlinEntryMapperTest {
                 TalkingKotlinItem.Category("tag1"),
                 TalkingKotlinItem.Category("tag2"),
             ),
-        ).toTalkingKotlinEntry(logoUrl = "logo-url")
+        ).toTalkingKotlinEntry()
 
         assertEquals(expected, actual)
     }
