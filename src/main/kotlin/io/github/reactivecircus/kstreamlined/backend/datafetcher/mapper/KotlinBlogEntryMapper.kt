@@ -11,7 +11,7 @@ fun KotlinBlogItem.toKotlinBlogEntry(): KotlinBlog {
         title = title,
         publishTime = ZonedDateTime
             .parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME)
-            .format(DateTimeFormatter.ISO_INSTANT),
+            .toInstant(),
         contentUrl = link,
         featuredImageUrl = featuredImage ?: FallbackFeatureImageUrl,
         description = description,

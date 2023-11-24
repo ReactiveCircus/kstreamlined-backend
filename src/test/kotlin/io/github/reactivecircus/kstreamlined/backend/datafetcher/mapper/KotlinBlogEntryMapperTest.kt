@@ -3,6 +3,7 @@ package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog
 import org.junit.jupiter.api.Test
+import java.time.Instant
 import kotlin.test.assertEquals
 
 class KotlinBlogEntryMapperTest {
@@ -12,7 +13,7 @@ class KotlinBlogEntryMapperTest {
         val expected = KotlinBlog(
             id = "id",
             title = "Blog title",
-            publishTime = "2022-07-15T10:56:15Z",
+            publishTime = Instant.parse("2022-07-15T10:56:15Z"),
             contentUrl = "url",
             featuredImageUrl = "image-url",
             description = "description",
@@ -34,7 +35,7 @@ class KotlinBlogEntryMapperTest {
         val expected = KotlinBlog(
             id = "id",
             title = "Blog title",
-            publishTime = "2022-07-15T10:56:15Z",
+            publishTime = Instant.parse("2022-07-15T10:56:15Z"),
             contentUrl = "url",
             featuredImageUrl = FallbackFeatureImageUrl,
             description = "description",

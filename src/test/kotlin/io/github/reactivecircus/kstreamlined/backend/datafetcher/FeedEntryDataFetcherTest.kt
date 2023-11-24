@@ -14,14 +14,16 @@ import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlin
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinWeeklyEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinYouTubeEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toTalkingKotlinEntry
+import io.github.reactivecircus.kstreamlined.backend.scalar.InstantScalar
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
+import java.time.Instant
 import kotlin.test.assertEquals
 
-@SpringBootTest(classes = [DgsAutoConfiguration::class, FeedEntryDataFetcher::class])
+@SpringBootTest(classes = [DgsAutoConfiguration::class, FeedEntryDataFetcher::class, InstantScalar::class])
 @ContextConfiguration(classes = [TestKSConfiguration::class])
 class FeedEntryDataFetcherTest {
 
@@ -79,13 +81,13 @@ class FeedEntryDataFetcherTest {
         val dummyKotlinWeeklyEntry = DummyKotlinWeeklyItem.toKotlinWeeklyEntry()
         assertEquals(dummyKotlinWeeklyEntry.id, context.read("data.feedEntries[0].id"))
         assertEquals(dummyKotlinWeeklyEntry.title, context.read("data.feedEntries[0].title"))
-        assertEquals(dummyKotlinWeeklyEntry.publishTime, context.read("data.feedEntries[0].publishTime"))
+        assertEquals(dummyKotlinWeeklyEntry.publishTime, context.read<String>("data.feedEntries[0].publishTime").toInstant())
         assertEquals(dummyKotlinWeeklyEntry.contentUrl, context.read("data.feedEntries[0].contentUrl"))
 
         val dummyKotlinBlogEntry = DummyKotlinBlogItem.toKotlinBlogEntry()
         assertEquals(dummyKotlinBlogEntry.id, context.read("data.feedEntries[1].id"))
         assertEquals(dummyKotlinBlogEntry.title, context.read("data.feedEntries[1].title"))
-        assertEquals(dummyKotlinBlogEntry.publishTime, context.read("data.feedEntries[1].publishTime"))
+        assertEquals(dummyKotlinBlogEntry.publishTime, context.read<String>("data.feedEntries[1].publishTime").toInstant())
         assertEquals(dummyKotlinBlogEntry.contentUrl, context.read("data.feedEntries[1].contentUrl"))
         assertEquals(dummyKotlinBlogEntry.featuredImageUrl, context.read("data.feedEntries[1].featuredImageUrl"))
         assertEquals(dummyKotlinBlogEntry.description, context.read("data.feedEntries[1].description"))
@@ -93,7 +95,7 @@ class FeedEntryDataFetcherTest {
         val dummyKotlinYouTubeEntry = DummyKotlinYouTubeItem.toKotlinYouTubeEntry()
         assertEquals(dummyKotlinYouTubeEntry.id, context.read("data.feedEntries[2].id"))
         assertEquals(dummyKotlinYouTubeEntry.title, context.read("data.feedEntries[2].title"))
-        assertEquals(dummyKotlinYouTubeEntry.publishTime, context.read("data.feedEntries[2].publishTime"))
+        assertEquals(dummyKotlinYouTubeEntry.publishTime, context.read<String>("data.feedEntries[2].publishTime").toInstant())
         assertEquals(dummyKotlinYouTubeEntry.contentUrl, context.read("data.feedEntries[2].contentUrl"))
         assertEquals(dummyKotlinYouTubeEntry.thumbnailUrl, context.read("data.feedEntries[2].thumbnailUrl"))
         assertEquals(dummyKotlinYouTubeEntry.description, context.read("data.feedEntries[2].description"))
@@ -101,7 +103,7 @@ class FeedEntryDataFetcherTest {
         val dummyTalkingKotlinEntry = DummyTalkingKotlinItem.toTalkingKotlinEntry()
         assertEquals(dummyTalkingKotlinEntry.id, context.read("data.feedEntries[3].id"))
         assertEquals(dummyTalkingKotlinEntry.title, context.read("data.feedEntries[3].title"))
-        assertEquals(dummyTalkingKotlinEntry.publishTime, context.read("data.feedEntries[3].publishTime"))
+        assertEquals(dummyTalkingKotlinEntry.publishTime, context.read<String>("data.feedEntries[3].publishTime").toInstant())
         assertEquals(dummyTalkingKotlinEntry.contentUrl, context.read("data.feedEntries[3].contentUrl"))
         assertEquals(dummyTalkingKotlinEntry.podcastLogoUrl, context.read("data.feedEntries[3].podcastLogoUrl"))
         assertEquals(dummyTalkingKotlinEntry.tags[0], context.read("data.feedEntries[3].tags[0]"))
@@ -153,7 +155,7 @@ class FeedEntryDataFetcherTest {
         val dummyKotlinBlogEntry = DummyKotlinBlogItem.toKotlinBlogEntry()
         assertEquals(dummyKotlinBlogEntry.id, context.read("data.feedEntries[0].id"))
         assertEquals(dummyKotlinBlogEntry.title, context.read("data.feedEntries[0].title"))
-        assertEquals(dummyKotlinBlogEntry.publishTime, context.read("data.feedEntries[0].publishTime"))
+        assertEquals(dummyKotlinBlogEntry.publishTime, context.read<String>("data.feedEntries[0].publishTime").toInstant())
         assertEquals(dummyKotlinBlogEntry.contentUrl, context.read("data.feedEntries[0].contentUrl"))
         assertEquals(dummyKotlinBlogEntry.featuredImageUrl, context.read("data.feedEntries[0].featuredImageUrl"))
         assertEquals(dummyKotlinBlogEntry.description, context.read("data.feedEntries[0].description"))
@@ -161,9 +163,11 @@ class FeedEntryDataFetcherTest {
         val dummyKotlinYouTubeEntry = DummyKotlinYouTubeItem.toKotlinYouTubeEntry()
         assertEquals(dummyKotlinYouTubeEntry.id, context.read("data.feedEntries[1].id"))
         assertEquals(dummyKotlinYouTubeEntry.title, context.read("data.feedEntries[1].title"))
-        assertEquals(dummyKotlinYouTubeEntry.publishTime, context.read("data.feedEntries[1].publishTime"))
+        assertEquals(dummyKotlinYouTubeEntry.publishTime, context.read<String>("data.feedEntries[1].publishTime").toInstant())
         assertEquals(dummyKotlinYouTubeEntry.contentUrl, context.read("data.feedEntries[1].contentUrl"))
         assertEquals(dummyKotlinYouTubeEntry.thumbnailUrl, context.read("data.feedEntries[1].thumbnailUrl"))
         assertEquals(dummyKotlinYouTubeEntry.description, context.read("data.feedEntries[1].description"))
     }
+
+    private fun String.toInstant(): Instant = Instant.parse(this)
 }

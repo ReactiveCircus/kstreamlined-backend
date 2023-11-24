@@ -1,14 +1,14 @@
 complexity:
-  TooManyFunctions:
-    excludes: ["**/test/**"]
   LongMethod:
-    excludes: ["**/test/**"]
-  LargeClass:
     excludes: ["**/test/**"]
   LongParameterList:
     active: false
+  TooManyFunctions:
+    excludes: ["**/test/**"]
 
 formatting:
+  ArgumentListWrapping:
+    excludes: [ '**/test/**' ]
   MaximumLineLength:
     active: false
 
@@ -20,6 +20,6 @@ naming:
 
 style:
   MaxLineLength:
-    active: false
+    excludes: [ '**/test/**' ]
   UseCheckOrError:
     active: false

@@ -3,6 +3,7 @@ package io.github.reactivecircus.kstreamlined.backend.datafetcher
 import com.netflix.graphql.dgs.DgsQueryExecutor
 import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration
 import io.github.reactivecircus.kstreamlined.backend.TestKSConfiguration
+import io.github.reactivecircus.kstreamlined.backend.scalar.InstantScalar
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
 import kotlin.test.assertEquals
 
-@SpringBootTest(classes = [DgsAutoConfiguration::class, FeedSourceDataFetcher::class])
+@SpringBootTest(classes = [DgsAutoConfiguration::class, FeedSourceDataFetcher::class, InstantScalar::class])
 @ContextConfiguration(classes = [TestKSConfiguration::class])
 class FeedSourceDataFetcherTest {
 

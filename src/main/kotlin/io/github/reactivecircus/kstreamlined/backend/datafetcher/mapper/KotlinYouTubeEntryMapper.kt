@@ -11,7 +11,7 @@ fun KotlinYouTubeItem.toKotlinYouTubeEntry(): KotlinYouTube {
         title = title,
         publishTime = ZonedDateTime
             .parse(published, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-            .format(DateTimeFormatter.ISO_INSTANT),
+            .toInstant(),
         contentUrl = link.href,
         thumbnailUrl = mediaGroup.thumbnail.url,
         description = mediaGroup.description,

@@ -7,6 +7,7 @@ import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaCommunity
 import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaGroup
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube
 import org.junit.jupiter.api.Test
+import java.time.Instant
 import kotlin.test.assertEquals
 
 class KotlinYouTubeEntryMapperTest {
@@ -16,7 +17,7 @@ class KotlinYouTubeEntryMapperTest {
         val expected = KotlinYouTube(
             id = "id",
             title = "Video title",
-            publishTime = "2022-07-06T13:39:46Z",
+            publishTime = Instant.parse("2022-07-06T13:39:46Z"),
             contentUrl = "url",
             thumbnailUrl = "image-url",
             description = "description",

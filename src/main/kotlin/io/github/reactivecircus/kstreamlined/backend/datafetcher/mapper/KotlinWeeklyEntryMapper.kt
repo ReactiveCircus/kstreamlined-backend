@@ -11,7 +11,7 @@ fun KotlinWeeklyItem.toKotlinWeeklyEntry(): KotlinWeekly {
         title = title,
         publishTime = ZonedDateTime
             .parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME)
-            .format(DateTimeFormatter.ISO_INSTANT),
+            .toInstant(),
         contentUrl = link,
     )
 }

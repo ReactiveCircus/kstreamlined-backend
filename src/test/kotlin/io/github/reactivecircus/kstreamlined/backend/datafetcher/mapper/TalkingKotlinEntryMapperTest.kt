@@ -4,6 +4,7 @@ import io.github.reactivecircus.kstreamlined.backend.client.dto.Link
 import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin
 import org.junit.jupiter.api.Test
+import java.time.Instant
 import kotlin.test.assertEquals
 
 class TalkingKotlinEntryMapperTest {
@@ -13,7 +14,7 @@ class TalkingKotlinEntryMapperTest {
         val expected = TalkingKotlin(
             id = "id",
             title = "Podcast title",
-            publishTime = "2022-06-27T22:00:00Z",
+            publishTime = Instant.parse("2022-06-27T22:00:00Z"),
             contentUrl = "url",
             podcastLogoUrl = TalkingKotlinLogoUrl,
             tags = listOf(
