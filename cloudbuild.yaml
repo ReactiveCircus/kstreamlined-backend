@@ -14,5 +14,8 @@ steps:
     '--cpu', '${_CPU}',
     '--memory', '${_MEMORY}',
     '--timeout', '${_REQUEST_TIMEOUT}',
+    '--min-instances', '${_MIN_INSTANCES}',
+    '--max-instances', '${_MAX_INSTANCES}',
+    '--cpu-boost',
     '--allow-unauthenticated',
   ]
