@@ -12,6 +12,7 @@ import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinRss
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
@@ -63,6 +64,10 @@ class RealFeedClient(
             xml(format, ContentType.Application.Xml)
             xml(format, ContentType.Text.Xml)
         }
+        install(HttpTimeout) {
+            connectTimeoutMillis = HttpTimeoutMillis
+            requestTimeoutMillis = HttpTimeoutMillis
+        }
     }
 
     context(CacheContext<KotlinBlogItem>)
@@ -90,6 +95,10 @@ class RealFeedClient(
     context(CacheContext<KotlinWeeklyItem>)
     override suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem> = getFromCacheOrFetch {
         httpClient.get(clientConfigs.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items
+    }
+
+    companion object {
+        private const val HttpTimeoutMillis = 30_000L
     }
 }
 
