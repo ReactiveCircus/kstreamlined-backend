@@ -7,6 +7,7 @@ ktor = "3.0.0-beta-2"
 dgsBom = "9.0.4"
 dgsCodegen = "6.2.2"
 detekt = "1.23.6"
+graalvmNative = "0.9.28"
 apacheCommonsText = "1.12.0"
 apacheCommonsLang3 = "3.16.0"
 apacheCommonsNet = "3.11.1"
@@ -26,6 +27,7 @@ spring-dependencyManagement = { id = "io.spring.dependency-management", version.
 dgsCodegen = { id = "com.netflix.dgs.codegen", version.ref = "dgsCodegen" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 jib = { id = "com.google.cloud.tools.jib", version.ref = "jib" }
+graalvmNative = { id = "org.graalvm.buildtools.native", version.ref = "graalvmNative" }
 
 [libraries]
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }

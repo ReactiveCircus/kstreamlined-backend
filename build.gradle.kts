@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.dgsCodegen)
     alias(libs.plugins.jib)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.graalvmNative)
 }
 
 group = "io.github.reactivecircus.kstreamlined.backend"
