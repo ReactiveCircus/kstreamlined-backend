@@ -21,10 +21,6 @@ dependencyManagement {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 group = "io.github.reactivecircus.kstreamlined.backend"
 version = "0.0.1-SNAPSHOT"
 
