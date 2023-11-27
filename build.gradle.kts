@@ -76,7 +76,7 @@ tasks.withType<Test>().configureEach {
 configurations.configureEach {
     resolutionStrategy.eachDependency {
         if (this@configureEach.name == "detekt" && requested.group == "org.jetbrains.kotlin") {
-            useVersion("1.9.10")
+            useVersion("1.9.21")
         }
     }
 }
@@ -90,7 +90,6 @@ allprojects {
     }
     tasks.withType<Detekt>().configureEach {
         reports {
-            jvmTarget = JvmTarget.JVM_20.target // TODO remove once detekt supports JVM 21 bytecode
             html.outputLocation.set(file("build/reports/detekt/${project.name}.html"))
         }
     }
