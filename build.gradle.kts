@@ -26,6 +26,26 @@ dependencyManagement {
     }
 }
 
+graalvmNative {
+    metadataRepository {
+        enabled.set(true)
+    }
+    binaries.configureEach {
+        resources.autodetect()
+    }
+    binaries.named("main") {
+        buildArgs(
+            "--strict-image-heap",
+            "-march=native",
+            "-R:MaxHeapSize=10m",
+        )
+        javaLauncher = javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(21))
+            vendor.set(JvmVendorSpec.GRAAL_VM)
+        }
+    }
+}
+
 tasks.withType<GenerateJavaTask>().configureEach {
     packageName = "io.github.reactivecircus.kstreamlined.backend.schema.generated"
 }

@@ -33,8 +33,9 @@ import java.time.Duration
 @DgsComponent
 class FeedEntryDataFetcher(
     private val client: FeedClient,
-    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
+    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
+
     private val kotlinBlogCacheContext = object : CacheContext<KotlinBlogItem> {
         override val cache: Cache<Unit, List<KotlinBlogItem>> = Caffeine
             .newBuilder()
