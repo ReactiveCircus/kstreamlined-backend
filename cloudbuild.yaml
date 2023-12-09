@@ -2,14 +2,14 @@ steps:
 
 # build and push the container image
 - name: azul/zulu-openjdk:21-latest
-  args: [ './gradlew', 'jib', '--image=${_CONTAINER_IMAGE}:$SHORT_SHA', '--no-configuration-cache' ]
+  args: [ './gradlew', 'jib', '--image=${_CONTAINER_IMAGE}:latest', '--no-configuration-cache' ]
 
 # deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
   entrypoint: gcloud
   args: [
     'run', 'deploy', '${_SERVICE_NAME}',
-    '--image', '${_CONTAINER_IMAGE}:$SHORT_SHA',
+    '--image', '${_CONTAINER_IMAGE}:latest',
     '--region', '$LOCATION',
     '--cpu', '${_CPU}',
     '--memory', '${_MEMORY}',
