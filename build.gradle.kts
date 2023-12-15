@@ -80,20 +80,18 @@ configurations.configureEach {
     }
 }
 
-allprojects {
-    detekt {
-        source.setFrom(files("src/"))
-        config.setFrom(files("${project.rootDir}/detekt.yml"))
-        buildUponDefaultConfig = true
-        allRules = true
-    }
-    tasks.withType<Detekt>().configureEach {
-        reports {
-            html.outputLocation.set(file("build/reports/detekt/${project.name}.html"))
-        }
-    }
-    dependencies.add("detektPlugins", libs.detektFormatting)
+detekt {
+    source.setFrom(files("src/"))
+    config.setFrom(files("${project.rootDir}/detekt.yml"))
+    buildUponDefaultConfig = true
+    allRules = true
 }
+tasks.withType<Detekt>().configureEach {
+    reports {
+        html.outputLocation.set(file("build/reports/detekt/${project.name}.html"))
+    }
+}
+dependencies.add("detektPlugins", libs.detektFormatting)
 
 fun Project.envOrProp(name: String): String {
     return providers.environmentVariable(name).orNull
