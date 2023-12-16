@@ -4,5 +4,6 @@ target/
 out/
 local.properties
 .idea/
+.kotlin/
 *.iml
 *.DS_Store
