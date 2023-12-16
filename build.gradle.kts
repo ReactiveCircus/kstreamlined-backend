@@ -14,14 +14,14 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
+group = "io.github.reactivecircus.kstreamlined.backend"
+version = "0.0.1-SNAPSHOT"
+
 dependencyManagement {
     imports {
         mavenBom(libs.dgs.bom.get().toString())
     }
 }
-
-group = "io.github.reactivecircus.kstreamlined.backend"
-version = "0.0.1-SNAPSHOT"
 
 tasks.withType<GenerateJavaTask>().configureEach {
     packageName = "io.github.reactivecircus.kstreamlined.backend.schema.generated"
