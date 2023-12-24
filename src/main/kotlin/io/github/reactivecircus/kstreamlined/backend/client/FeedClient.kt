@@ -72,12 +72,11 @@ class RealFeedClient(
 
     context(CacheContext<KotlinBlogItem>)
     override suspend fun loadKotlinBlogFeed(): List<KotlinBlogItem> = getFromCacheOrFetch {
-        httpClient.get(clientConfigs.kotlinBlogFeedUrl)
-            .body<KotlinBlogRss>().channel.items.map {
-                it.copy(
-                    description = StringEscapeUtils.unescapeXml(it.description).trim()
-                )
-            }
+        httpClient.get(clientConfigs.kotlinBlogFeedUrl).body<KotlinBlogRss>().channel.items.map {
+            it.copy(
+                description = StringEscapeUtils.unescapeXml(it.description).trim()
+            )
+        }
     }
 
     context(CacheContext<KotlinYouTubeItem>)
@@ -89,7 +88,13 @@ class RealFeedClient(
 
     context(CacheContext<TalkingKotlinItem>)
     override suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem> = getFromCacheOrFetch {
-        httpClient.get(clientConfigs.talkingKotlinFeedUrl).body<TalkingKotlinRss>().entries
+        httpClient.get(clientConfigs.talkingKotlinFeedUrl).body<TalkingKotlinRss>().channel.items
+            .take(TalkingKotlinFeedSize)
+            .map {
+                it.copy(
+                    summary = StringEscapeUtils.unescapeXml(it.summary).trim()
+                )
+            }
     }
 
     context(CacheContext<KotlinWeeklyItem>)
@@ -99,6 +104,7 @@ class RealFeedClient(
 
     companion object {
         private const val HttpTimeoutMillis = 30_000L
+        private const val TalkingKotlinFeedSize = 10
     }
 }
 

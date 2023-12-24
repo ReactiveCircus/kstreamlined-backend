@@ -1,179 +1,344 @@
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator>
-    <link href="https://talkingkotlin.com/feed.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://talkingkotlin.com/" rel="alternate" type="text/html"/>
-    <updated>2022-06-28T17:16:47+02:00</updated>
-    <id>https://talkingkotlin.com/feed.xml</id>
-    <title type="html">Talking Kotlin</title>
-    <subtitle>A Podcast on Kotlin and more</subtitle>
-    <entry>
-        <title type="html">Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta</title>
-        <link href="https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/" rel="alternate" type="text/html" title="Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta"/>
-        <published>2022-06-28T00:00:00+02:00</published>
-        <updated>2022-06-28T00:00:00+02:00</updated>
-        <id>https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta</id>
-        <content type="html" xml:base="https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Arrow"/>
-        <category term="Code Quality"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/arrow-analisys.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/arrow-analisys.png"/>
-    </entry>
-    <entry>
-        <title type="html">70 Billion Events per Day – Adobe &amp; Kotlin</title>
-        <link href="https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/" rel="alternate" type="text/html" title="70 Billion Events per Day – Adobe &amp; Kotlin"/>
-        <published>2022-04-19T00:00:00+02:00</published>
-        <updated>2022-04-19T00:00:00+02:00</updated>
-        <id>https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin</id>
-        <content type="html" xml:base="https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Kotlin Multiplatform"/>
-        <category term="Ktor"/>
-        <category term="Adobe"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/Adobe.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/Adobe.png"/>
-    </entry>
-    <entry>
-        <title type="html">Why iOS Developers at Todoist Wanted Kotlin Multiplatform</title>
-        <link href="https://talkingkotlin.com/why-ios-developers-at-todoist-wanted-kotlin-multiplatform/" rel="alternate" type="text/html" title="Why iOS Developers at Todoist Wanted Kotlin Multiplatform"/>
-        <published>2022-02-17T00:00:00+01:00</published>
-        <updated>2022-02-17T00:00:00+01:00</updated>
-        <id>https://talkingkotlin.com/why-ios-developers-at-todoist-wanted-kotlin-multiplatform</id>
-        <content type="html" xml:base="https://talkingkotlin.com/why-ios-developers-at-todoist-wanted-kotlin-multiplatform/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Kotlin Multiplatform"/>
-        <category term="Todoist"/>
-        <category term="Ktor"/>
-        <category term="Server-Side"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/Goncalo-Silva.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/Goncalo-Silva.png"/>
-    </entry>
-    <entry>
-        <title type="html">The First Kotlin Commit in Android</title>
-        <link href="https://talkingkotlin.com/the-first-kotlin-commit-in-android/" rel="alternate" type="text/html" title="The First Kotlin Commit in Android"/>
-        <published>2022-02-01T00:00:00+01:00</published>
-        <updated>2022-02-01T00:00:00+01:00</updated>
-        <id>https://talkingkotlin.com/the-first-kotlin-commit-in-android</id>
-        <content type="html" xml:base="https://talkingkotlin.com/the-first-kotlin-commit-in-android/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Android"/>
-        <category term="Google"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/Yigit-Boyar.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/Yigit-Boyar.png"/>
-    </entry>
-    <entry>
-        <title type="html">5 Years of Talking Kotlin Special</title>
-        <link href="https://talkingkotlin.com/five-years-of-talking-kotlin-special/" rel="alternate" type="text/html" title="5 Years of Talking Kotlin Special"/>
-        <published>2022-01-10T00:00:00+01:00</published>
-        <updated>2022-01-10T00:00:00+01:00</updated>
-        <id>https://talkingkotlin.com/five-years-of-talking-kotlin-special</id>
-        <content type="html" xml:base="https://talkingkotlin.com/five-years-of-talking-kotlin-special/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Talking Kotlin"/>
-        <category term="Special"/>
-        <category term="5 years"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/5-years.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/5-years.png"/>
-    </entry>
-    <entry>
-        <title type="html">Slacking with Zac Sweers</title>
-        <link href="https://talkingkotlin.com/slacking-with-zac-sweers/" rel="alternate" type="text/html" title="Slacking with Zac Sweers"/>
-        <published>2021-12-27T00:00:00+01:00</published>
-        <updated>2021-12-27T00:00:00+01:00</updated>
-        <id>https://talkingkotlin.com/slacking-with-zac-sweers</id>
-        <content type="html" xml:base="https://talkingkotlin.com/slacking-with-zac-sweers/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Compose"/>
-        <category term="Multiplatform"/>
-        <category term="Slack"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/zac-sweers.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/zac-sweers.png"/>
-    </entry>
-    <entry>
-        <title type="html">Building a static analyzer for Kotlin</title>
-        <link href="https://talkingkotlin.com/building-a-static-analyzer-for-kotlin/" rel="alternate" type="text/html" title="Building a static analyzer for Kotlin"/>
-        <published>2021-12-13T00:00:00+01:00</published>
-        <updated>2021-12-13T00:00:00+01:00</updated>
-        <id>https://talkingkotlin.com/building-a-static-analyzer-for-kotlin</id>
-        <content type="html" xml:base="https://talkingkotlin.com/building-a-static-analyzer-for-kotlin/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="SonarSourse"/>
-        <category term="Static analysis"/>
-        <category term="Testing"/>
-        <category term="Code quality"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/margarita_nedzelska.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/margarita_nedzelska.png"/>
-    </entry>
-    <entry>
-        <title type="html">Moving 1M users to Kotlin and Compose</title>
-        <link href="https://talkingkotlin.com/moving-one-million-users-to-Kotlin-and-Compose/" rel="alternate" type="text/html" title="Moving 1M users to Kotlin and Compose"/>
-        <published>2021-11-28T00:00:00+01:00</published>
-        <updated>2021-11-28T00:00:00+01:00</updated>
-        <id>https://talkingkotlin.com/moving-one-million-users-to-Kotlin-and-Compose</id>
-        <content type="html" xml:base="https://talkingkotlin.com/moving-one-million-users-to-Kotlin-and-Compose/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Compose"/>
-        <category term="JetBrains Toolbox"/>
-        <category term="C++"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/victor-kropp.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/victor-kropp.png"/>
-    </entry>
-    <entry>
-        <title type="html">What goes into a Kotlin Release</title>
-        <link href="https://talkingkotlin.com/what-goes-into-a-kotlin-release/" rel="alternate" type="text/html" title="What goes into a Kotlin Release"/>
-        <published>2021-11-11T00:00:00+01:00</published>
-        <updated>2021-11-11T00:00:00+01:00</updated>
-        <id>https://talkingkotlin.com/what-goes-into-a-kotlin-release</id>
-        <content type="html" xml:base="https://talkingkotlin.com/what-goes-into-a-kotlin-release/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Release"/>
-        <category term="Testing"/>
-        <category term="Kotlin Team"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/marina-shishikina.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/marina-shishikina.png"/>
-    </entry>
-    <entry>
-        <title type="html">From Java to Kotlin</title>
-        <link href="https://talkingkotlin.com/from-java-to-kotlin/" rel="alternate" type="text/html" title="From Java to Kotlin"/>
-        <published>2021-10-18T00:00:00+02:00</published>
-        <updated>2021-10-18T00:00:00+02:00</updated>
-        <id>https://talkingkotlin.com/from-java-to-kotlin</id>
-        <content type="html" xml:base="https://talkingkotlin.com/from-java-to-kotlin/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="JavaToKotlin"/>
-        <category term="Server-Side"/>
-        <category term="Coroutines"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/java-to-kotlin.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/java-to-kotlin.png"/>
-    </entry>
-</feed>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <atom:link href="https://feeds.soundcloud.com/users/soundcloud:users:280353173/sounds.rss" rel="self"
+                   type="application/rss+xml"/>
+        <atom:link href="https://feeds.soundcloud.com/users/soundcloud:users:280353173/sounds.rss?before=302359364"
+                   rel="next" type="application/rss+xml"/>
+        <title>Talking Kotlin</title>
+        <link>http://talkingkotlin.com</link>
+        <pubDate>Wed, 13 Dec 2023 17:08:33 +0000</pubDate>
+        <lastBuildDate>Wed, 13 Dec 2023 17:08:33 +0000</lastBuildDate>
+        <ttl>60</ttl>
+        <language>en</language>
+        <copyright>All rights reserved</copyright>
+        <webMaster>feeds@soundcloud.com (SoundCloud Feeds)</webMaster>
+        <description>A bimonthly podcast that covers the Kotlin programming language by JetBrains, as well as related
+            technologies. Hosted by Hadi Hariri
+        </description>
+        <itunes:subtitle>A bimonthly podcast that covers the Kotlin progra…</itunes:subtitle>
+        <itunes:owner>
+            <itunes:name>Talking Kotlin</itunes:name>
+            <itunes:email>hadihariri@gmail.com</itunes:email>
+        </itunes:owner>
+        <itunes:author>A Podcast on Kotlin and more</itunes:author>
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:image href="https://i1.sndcdn.com/avatars-000289370353-di6ese-original.jpg"/>
+        <image>
+            <url>https://i1.sndcdn.com/avatars-000289370353-di6ese-original.jpg</url>
+            <title>Talking Kotlin</title>
+            <link>http://talkingkotlin.com</link>
+        </image>
+        <itunes:category text="Technology"/>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1295949565</guid>
+            <title>Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta</title>
+            <pubDate>Tue, 28 Jun 2022 16:00:27 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/arrow-analysis</link>
+            <itunes:duration>00:57:44</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and
+                safety to Kotlin, and how it aims to influence the future of the language.
+            </itunes:summary>
+            <itunes:subtitle>We chat with Raul, Simon, and Alejandro to learn …</itunes:subtitle>
+            <description>We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety
+                to Kotlin, and how it aims to influence the future of the language.
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1295949565-user-38099918-arrow-analysis.mp3"
+                       length="55432671"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-yEP8SdbEZOJcmVay-AWlLHQ-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1253069788</guid>
+            <title>70 Billion Events per Day – Adobe &amp; Kotlin</title>
+            <pubDate>Tue, 19 Apr 2022 16:00:24 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/70-billion-events-per-day-adobe-kotlin</link>
+            <itunes:duration>00:51:09</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>We talked to Rares Vlasceanu and Catalin Costache from Adobe about how they handle 70 000
+                000 000 events per day with the help of Kotlin and Ktor.
+            </itunes:summary>
+            <itunes:subtitle>We talked to Rares Vlasceanu and Catalin Costache…</itunes:subtitle>
+            <description>We talked to Rares Vlasceanu and Catalin Costache from Adobe about how they handle 70 000 000
+                000 events per day with the help of Kotlin and Ktor.
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1253069788-user-38099918-70-billion-events-per-day-adobe-kotlin.mp3"
+                       length="49113128"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-ANd7JtyjHYkhAUsQ-XU8I0Q-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1217582776</guid>
+            <title>Why iOS Developers at Todoist Wanted Kotlin Multiplatform</title>
+            <pubDate>Thu, 17 Feb 2022 18:00:24 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/why-ios-developers-at-todoist-wanted-kotlin-multiplatform</link>
+            <itunes:duration>00:45:23</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>iOS developers of your favorite to-do app want Kotlin Multiplatform! Why?
+
+                In this episode, we talked to Goncalo Silva – CTO of Doist, a company famous for its award-winning to-do
+                list app, Todoist. We covered how Kotlin is used in the company and which parts of the service they
+                share between iOS and Android using Kotlin Multiplatform. But most importantly, we took a deep dive into
+                how they introduced the technology to the development team, and how even their iOS developers came to
+                love Kotlin Multiplatform Mobile. What was their starting point with KMM? Which Kotlin Multiplatform
+                tutorials did they use? How did they decide between Kotlin Multiplatform and Flutter? Want to know the
+                answers to these questions? Check out the full episode!
+
+                Goncalo on Twitter - https://twitter.com/goncalossilva
+
+                Doist on GitHub - https://github.com/Doist
+                Doist Careers - https://doist.com/careers
+            </itunes:summary>
+            <itunes:subtitle>iOS developers of your favorite to-do app want Ko…</itunes:subtitle>
+            <description>iOS developers of your favorite to-do app want Kotlin Multiplatform! Why?
+
+                In this episode, we talked to Goncalo Silva – CTO of Doist, a company famous for its award-winning to-do
+                list app, Todoist. We covered how Kotlin is used in the company and which parts of the service they
+                share between iOS and Android using Kotlin Multiplatform. But most importantly, we took a deep dive into
+                how they introduced the technology to the development team, and how even their iOS developers came to
+                love Kotlin Multiplatform Mobile. What was their starting point with KMM? Which Kotlin Multiplatform
+                tutorials did they use? How did they decide between Kotlin Multiplatform and Flutter? Want to know the
+                answers to these questions? Check out the full episode!
+
+                Goncalo on Twitter - https://twitter.com/goncalossilva
+
+                Doist on GitHub - https://github.com/Doist
+                Doist Careers - https://doist.com/careers
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1217582776-user-38099918-why-ios-developers-at-todoist-wanted-kotlin-multiplatform.mp3"
+                       length="43577677"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-P70b8imvAD1GCTRg-ZkLqmA-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1207152076</guid>
+            <title>The First Kotlin Commit in Android</title>
+            <pubDate>Tue, 01 Feb 2022 18:00:25 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/the-first-kotlin-commit-in-android</link>
+            <itunes:duration>00:40:20</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>We sit down with the man who made the first Kotlin commit in Android – and who is also a
+                long-time fan of the show, apparently! Yigit Boyar (https://twitter.com/yigitboyar) is working on the
+                Android team at Google, bringing you the libraries you use to write your Android apps.
+            </itunes:summary>
+            <itunes:subtitle>We sit down with the man who made the first Kotli…</itunes:subtitle>
+            <description>We sit down with the man who made the first Kotlin commit in Android – and who is also a
+                long-time fan of the show, apparently! Yigit Boyar (https://twitter.com/yigitboyar) is working on the
+                Android team at Google, bringing you the libraries you use to write your Android apps.
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1207152076-user-38099918-the-first-kotlin-commit-in-android.mp3"
+                       length="38724753"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-W3Fy1jW0hXjk3lLb-VhzPeg-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1192013785</guid>
+            <title>5 Years of Talking Kotlin Special</title>
+            <pubDate>Mon, 10 Jan 2022 18:00:22 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/5-years-of-talking-kotlin-special</link>
+            <itunes:duration>00:51:24</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>This Special episode is dedicated to the 5 years anniversary of the Talking Kotlin podcast!
+                Hadi Hariri and Sebastian Aigner discuss how and why the podcast was started, remember funny moments
+                from the past and try to shed some light on what awaits it in the future.
+            </itunes:summary>
+            <itunes:subtitle>This Special episode is dedicated to the 5 years …</itunes:subtitle>
+            <description>This Special episode is dedicated to the 5 years anniversary of the Talking Kotlin podcast!
+                Hadi Hariri and Sebastian Aigner discuss how and why the podcast was started, remember funny moments
+                from the past and try to shed some light on what awaits it in the future.
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1192013785-user-38099918-5-years-of-talking-kotlin-special.mp3"
+                       length="49345096"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-0UUOqldr4te6Bps3-g3MpQw-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1185741637</guid>
+            <title>Slacking with Zac Sweers</title>
+            <pubDate>Mon, 27 Dec 2021 18:00:12 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/slacking-with-zac-sweers</link>
+            <itunes:duration>00:47:05</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>In this episode we chat with Zac Sweers about all that has happened since his last
+                appearance:
+                Multiplatform experiments
+                Kotlin usage in Slack
+                Thoughts about Compose
+                Weather in Munich, Malaga, and New York
+
+
+                Zac on Twitter - https://twitter.com/ZacSweers
+                Zac's website - https://www.zacsweers.dev/
+            </itunes:summary>
+            <itunes:subtitle>In this episode we chat with Zac Sweers about all…</itunes:subtitle>
+            <description>In this episode we chat with Zac Sweers about all that has happened since his last appearance:
+                Multiplatform experiments
+                Kotlin usage in Slack
+                Thoughts about Compose
+                Weather in Munich, Malaga, and New York
+
+
+                Zac on Twitter - https://twitter.com/ZacSweers
+                Zac's website - https://www.zacsweers.dev/
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1185741637-user-38099918-slacking-with-zac-sweers.mp3"
+                       length="45210643"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-sp2whzMPaMr3qJxq-RpPn9g-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1177049431</guid>
+            <title>Building a Static Analyzer for Kotlin</title>
+            <pubDate>Mon, 13 Dec 2021 17:45:00 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/building-a-static-analyzer-for-kotlin</link>
+            <itunes:duration>00:43:03</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>In this episode Hadi and Seb are talking to Margarita Nedzelska from SonarSource about how
+                she and her team built a working static analyzer for Kotlin.
+            </itunes:summary>
+            <itunes:subtitle>In this episode Hadi and Seb are talking to Marga…</itunes:subtitle>
+            <description>In this episode Hadi and Seb are talking to Margarita Nedzelska from SonarSource about how she
+                and her team built a working static analyzer for Kotlin.
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1177049431-user-38099918-building-a-static-analyzer-for-kotlin.mp3"
+                       length="41339506"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-XxfACaaxEAMl2ZL0-riyS4w-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1168303783</guid>
+            <title>Moving 1M users to Kotlin &amp; Compose: JB Toolbox</title>
+            <pubDate>Sun, 28 Nov 2021 18:08:24 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/moving-1m-users-to-kotlin-compose-jb-toolbox</link>
+            <itunes:duration>00:45:03</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>Victor Kropp tells us the story of moving JetBrains Toolbox from C++ to 100% Kotlin. Victor
+                (https://twitter.com/kropp) leads the Toolbox team at JetBrains, a small app that is the single entry
+                point for developing with JetBrains IDEs, which you can download at
+                https://www.jetbrains.com/toolbox-app/. It allows you to automatically download and update your IDEs,
+                and open all your projects with a single click.
+
+                Victor shares the story of how toolbox came to be – from its humble beginnings as an internal Hackathon
+                project back in 2015, to an app serving 1 million monthly active users. Together, we dive into the tech
+                stack of Toolbox and its evolution. We learn about the initial tech stack: C++ for the business logic
+                and JavaScript and React for the user interface. Victor shares the challenges and benefits of using this
+                stack – from hiring to UI visuals.
+
+                We learn why Toolbox took the big step of migrating from C++ to Kotlin, from the ability to reuse code
+                in the IntelliJ platform to developer ergonomics. Victor takes us through the multi-step process of how
+                they arrived at a pure-Kotlin solution. The first step we talk about is the migration of the Toolbox
+                business logic to Kotlin using Regex wizardry and reimplementing methods with the help of Kotlin’s
+                auto-converter.
+
+                Victor then sheds some light on replacing the embedded web user interface with Compose for Desktop
+                (https://www.jetbrains.com/lp/compose/), and the benefits Toolbox gained from it: reducing the load of
+                having to serialize a lot of objects, being able to use the same language when implementing a full
+                feature front to back, library reuse, and better performance. We learn that this transition only took 6
+                months, while still being able to ship new features to Toolbox at the same time, and why the team chose
+                Kotlin on the JVM instead of Kotlin/Native.
+
+                With React and Compose for Desktop both being modern declarative UI frameworks, Victor also talks more
+                about how concepts and vocabulary transfers between the two (https://tigeroakes.com/posts/react-to...),
+                lowering the barrier of entry for people who want to build native user interfaces and already have web
+                development experience. We also learn more about how Toolbox moved design primitives and UI components
+                from the CSS to the Compose layout system, among other topics.
+
+                Seb also compliments Hadi on the Ktor 2.0 presentation (https://www.youtube.com/watch?v=mye9N...) from
+                the Kotlin 2021 Premier Online Event (https://pages.jetbrains.com/kotlin-pr...).
+            </itunes:summary>
+            <itunes:subtitle>Victor Kropp tells us the story of moving JetBrai…</itunes:subtitle>
+            <description>Victor Kropp tells us the story of moving JetBrains Toolbox from C++ to 100% Kotlin. Victor
+                (https://twitter.com/kropp) leads the Toolbox team at JetBrains, a small app that is the single entry
+                point for developing with JetBrains IDEs, which you can download at
+                https://www.jetbrains.com/toolbox-app/. It allows you to automatically download and update your IDEs,
+                and open all your projects with a single click.
+
+                Victor shares the story of how toolbox came to be – from its humble beginnings as an internal Hackathon
+                project back in 2015, to an app serving 1 million monthly active users. Together, we dive into the tech
+                stack of Toolbox and its evolution. We learn about the initial tech stack: C++ for the business logic
+                and JavaScript and React for the user interface. Victor shares the challenges and benefits of using this
+                stack – from hiring to UI visuals.
+
+                We learn why Toolbox took the big step of migrating from C++ to Kotlin, from the ability to reuse code
+                in the IntelliJ platform to developer ergonomics. Victor takes us through the multi-step process of how
+                they arrived at a pure-Kotlin solution. The first step we talk about is the migration of the Toolbox
+                business logic to Kotlin using Regex wizardry and reimplementing methods with the help of Kotlin’s
+                auto-converter.
+
+                Victor then sheds some light on replacing the embedded web user interface with Compose for Desktop
+                (https://www.jetbrains.com/lp/compose/), and the benefits Toolbox gained from it: reducing the load of
+                having to serialize a lot of objects, being able to use the same language when implementing a full
+                feature front to back, library reuse, and better performance. We learn that this transition only took 6
+                months, while still being able to ship new features to Toolbox at the same time, and why the team chose
+                Kotlin on the JVM instead of Kotlin/Native.
+
+                With React and Compose for Desktop both being modern declarative UI frameworks, Victor also talks more
+                about how concepts and vocabulary transfers between the two (https://tigeroakes.com/posts/react-to...),
+                lowering the barrier of entry for people who want to build native user interfaces and already have web
+                development experience. We also learn more about how Toolbox moved design primitives and UI components
+                from the CSS to the Compose layout system, among other topics.
+
+                Seb also compliments Hadi on the Ktor 2.0 presentation (https://www.youtube.com/watch?v=mye9N...) from
+                the Kotlin 2021 Premier Online Event (https://pages.jetbrains.com/kotlin-pr...).
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1168303783-user-38099918-moving-1m-users-to-kotlin-compose-jb-toolbox.mp3"
+                       length="43261700"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-hFj7kv78xyFDYKME-x4fP5w-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1158114307</guid>
+            <title>What goes into a Kotlin Release</title>
+            <pubDate>Thu, 11 Nov 2021 15:18:23 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/what-goes-into-a-kotlin-release-talking-kotlin-106</link>
+            <itunes:duration>00:37:35</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>We sit down with Marina Shishkina, team lead for the Release and Automation Team in Kotlin.
+                Her team coordinates the whole release procedure for new versions of the Kotlin programming language.
+                Marina shares her story of how she moved from being a Quality Assurance Engineer to leading the Release
+                Team, working on increasing the quality of Kotlin releases.
+            </itunes:summary>
+            <itunes:subtitle>We sit down with Marina Shishkina, team lead for …</itunes:subtitle>
+            <description>We sit down with Marina Shishkina, team lead for the Release and Automation Team in Kotlin. Her
+                team coordinates the whole release procedure for new versions of the Kotlin programming language. Marina
+                shares her story of how she moved from being a Quality Assurance Engineer to leading the Release Team,
+                working on increasing the quality of Kotlin releases.
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1158114307-user-38099918-what-goes-into-a-kotlin-release-talking-kotlin-106.mp3"
+                       length="36089102"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-PrAlhkpByYY6RUlk-o5zUSw-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1143725359</guid>
+            <title>From Java to Kotlin</title>
+            <pubDate>Tue, 19 Oct 2021 16:45:00 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/from-java-to-kotlin</link>
+            <itunes:duration>00:46:43</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>In this episode we talk to Nat Pryce and Duncan McGregor about the new &quot;Java to Kotlin:
+                A Refactoring Guidebook&quot; and their experience of helping companies and independent developers to
+                migrate to Kotlin.
+            </itunes:summary>
+            <itunes:subtitle>In this episode we talk to Nat Pryce and Duncan M…</itunes:subtitle>
+            <description>In this episode we talk to Nat Pryce and Duncan McGregor about the new &quot;Java to Kotlin: A
+                Refactoring Guidebook&quot; and their experience of helping companies and independent developers to
+                migrate to Kotlin.
+            </description>
+            <enclosure type="audio/mpeg"
+                       url="https://feeds.soundcloud.com/stream/1143725359-user-38099918-from-java-to-kotlin.mp3"
+                       length="44854960"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-VqAWkfGzRXz4R6Wt-1yKmXQ-t3000x3000.jpg"/>
+        </item>
+    </channel>
+</rss>

@@ -49,8 +49,9 @@ class FeedEntryDataFetcherTest {
                     description
                 }
                 ... on TalkingKotlin {
-                    podcastLogoUrl
-                    tags
+                    thumbnailUrl
+                    summary
+                    duration
                 }
                 ... on KotlinWeekly {
                     __typename
@@ -105,9 +106,9 @@ class FeedEntryDataFetcherTest {
         assertEquals(dummyTalkingKotlinEntry.title, context.read("data.feedEntries[3].title"))
         assertEquals(dummyTalkingKotlinEntry.publishTime, context.read<String>("data.feedEntries[3].publishTime").toInstant())
         assertEquals(dummyTalkingKotlinEntry.contentUrl, context.read("data.feedEntries[3].contentUrl"))
-        assertEquals(dummyTalkingKotlinEntry.podcastLogoUrl, context.read("data.feedEntries[3].podcastLogoUrl"))
-        assertEquals(dummyTalkingKotlinEntry.tags[0], context.read("data.feedEntries[3].tags[0]"))
-        assertEquals(dummyTalkingKotlinEntry.tags[1], context.read("data.feedEntries[3].tags[1]"))
+        assertEquals(dummyTalkingKotlinEntry.thumbnailUrl, context.read("data.feedEntries[3].thumbnailUrl"))
+        assertEquals(dummyTalkingKotlinEntry.summary, context.read("data.feedEntries[3].summary"))
+        assertEquals(dummyTalkingKotlinEntry.duration, context.read("data.feedEntries[3].duration"))
     }
 
     @Test

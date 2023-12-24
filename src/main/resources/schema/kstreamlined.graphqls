@@ -75,10 +75,12 @@ type TalkingKotlin implements FeedEntry {
   publishTime: Instant!
   "Url of the content."
   contentUrl: String!
-  "Url of the podcast logo."
-  podcastLogoUrl: String!
-  "Tags of the episode."
-  tags: [String!]!
+  "Url of the podcast thumbnail."
+  thumbnailUrl: String!
+  "Summary of the podcast."
+  summary: String!
+  "Duration of the podcast."
+  duration: String!
 }
 
 type KotlinWeekly implements FeedEntry {

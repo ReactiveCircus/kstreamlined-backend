@@ -1,6 +1,5 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.client.dto.Link
 import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin
 import org.junit.jupiter.api.Test
@@ -14,28 +13,20 @@ class TalkingKotlinEntryMapperTest {
         val expected = TalkingKotlin(
             id = "id",
             title = "Podcast title",
-            publishTime = Instant.parse("2022-06-27T22:00:00Z"),
+            publishTime = Instant.parse("2022-11-22T16:30:09Z"),
             contentUrl = "url",
-            podcastLogoUrl = TalkingKotlinLogoUrl,
-            tags = listOf(
-                "tag1",
-                "tag2",
-            ),
+            thumbnailUrl = "image-url",
+            summary = "summary",
+            duration = "43min.",
         )
         val actual = TalkingKotlinItem(
-            id = "id",
+            guid = "id",
             title = "Podcast title",
-            link = Link(
-                href = "url",
-                rel = "alternate",
-                type = "text/html",
-                title = "Podcast title",
-            ),
-            published = "2022-06-28T00:00:00+02:00",
-            categories = listOf(
-                TalkingKotlinItem.Category("tag1"),
-                TalkingKotlinItem.Category("tag2"),
-            ),
+            pubDate = "Tue, 22 Nov 2022 16:30:09 +0000",
+            link = "url",
+            duration = "00:43:14",
+            summary = "summary",
+            image = TalkingKotlinItem.Image(href = "image-url"),
         ).toTalkingKotlinEntry()
 
         assertEquals(expected, actual)

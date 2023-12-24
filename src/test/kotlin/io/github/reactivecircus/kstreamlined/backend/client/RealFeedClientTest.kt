@@ -200,42 +200,29 @@ class RealFeedClientTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockTalkingKotlinRssResponse),
-                headers = headersOf(HttpHeaders.ContentType, "application/xml")
+                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
             )
         }
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
         val expected = listOf(
             TalkingKotlinItem(
-                id = "https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta",
+                guid = "tag:soundcloud,2010:tracks/1295949565",
                 title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta",
-                link = Link(
-                    href = "https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/",
-                    rel = "alternate",
-                    type = "text/html",
-                    title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta",
-                ),
-                published = "2022-06-28T00:00:00+02:00",
-                categories = listOf(
-                    TalkingKotlinItem.Category("Arrow"),
-                    TalkingKotlinItem.Category("Code Quality"),
-                ),
+                link = "https://soundcloud.com/user-38099918/arrow-analysis",
+                pubDate = "Tue, 28 Jun 2022 16:00:27 +0000",
+                summary = "We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language.",
+                duration = "00:57:44",
+                image = TalkingKotlinItem.Image(href = "https://i1.sndcdn.com/artworks-yEP8SdbEZOJcmVay-AWlLHQ-t3000x3000.jpg"),
             ),
             TalkingKotlinItem(
-                id = "https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin",
+                guid = "tag:soundcloud,2010:tracks/1253069788",
                 title = "70 Billion Events per Day – Adobe & Kotlin",
-                link = Link(
-                    href = "https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/",
-                    rel = "alternate",
-                    type = "text/html",
-                    title = "70 Billion Events per Day – Adobe & Kotlin",
-                ),
-                published = "2022-04-19T00:00:00+02:00",
-                categories = listOf(
-                    TalkingKotlinItem.Category("Kotlin Multiplatform"),
-                    TalkingKotlinItem.Category("Ktor"),
-                    TalkingKotlinItem.Category("Adobe"),
-                ),
+                link = "https://soundcloud.com/user-38099918/70-billion-events-per-day-adobe-kotlin",
+                pubDate = "Tue, 19 Apr 2022 16:00:24 +0000",
+                summary = "We talked to Rares Vlasceanu and Catalin Costache from Adobe about how they handle 70 000 000 000 events per day with the help of Kotlin and Ktor.",
+                duration = "00:51:09",
+                image = TalkingKotlinItem.Image(href = "https://i1.sndcdn.com/artworks-ANd7JtyjHYkhAUsQ-XU8I0Q-t3000x3000.jpg"),
             ),
         )
 

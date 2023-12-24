@@ -1,42 +1,58 @@
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator>
-    <link href="https://talkingkotlin.com/feed.xml" rel="self" type="application/atom+xml"/>
-    <link href="https://talkingkotlin.com/" rel="alternate" type="text/html"/>
-    <updated>2022-06-28T17:16:47+02:00</updated>
-    <id>https://talkingkotlin.com/feed.xml</id>
-    <title type="html">Talking Kotlin</title>
-    <subtitle>A Podcast on Kotlin and more</subtitle>
-    <entry>
-        <title type="html">Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta</title>
-        <link href="https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/" rel="alternate" type="text/html" title="Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta"/>
-        <published>2022-06-28T00:00:00+02:00</published>
-        <updated>2022-06-28T00:00:00+02:00</updated>
-        <id>https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta</id>
-        <content type="html" xml:base="https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Arrow"/>
-        <category term="Code Quality"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/arrow-analisys.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/arrow-analisys.png"/>
-    </entry>
-    <entry>
-        <title type="html">70 Billion Events per Day – Adobe &amp; Kotlin</title>
-        <link href="https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/" rel="alternate" type="text/html" title="70 Billion Events per Day – Adobe &amp; Kotlin"/>
-        <published>2022-04-19T00:00:00+02:00</published>
-        <updated>2022-04-19T00:00:00+02:00</updated>
-        <id>https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin</id>
-        <content type="html" xml:base="https://talkingkotlin.com/70-billion-events-per-day-adobe-and-kotlin/"/>
-        <author>
-            <name/>
-        </author>
-        <category term="Kotlin Multiplatform"/>
-        <category term="Ktor"/>
-        <category term="Adobe"/>
-        <summary type="html"/>
-        <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://talkingkotlin.com/Adobe.png"/>
-        <media:content xmlns:media="http://search.yahoo.com/mrss/" medium="image" url="https://talkingkotlin.com/Adobe.png"/>
-    </entry>
-</feed>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <atom:link href="https://feeds.soundcloud.com/users/soundcloud:users:280353173/sounds.rss" rel="self" type="application/rss+xml"/>
+        <atom:link href="https://feeds.soundcloud.com/users/soundcloud:users:280353173/sounds.rss?before=302359364" rel="next" type="application/rss+xml"/>
+        <title>Talking Kotlin</title>
+        <link>http://talkingkotlin.com</link>
+        <pubDate>Wed, 13 Dec 2023 17:08:33 +0000</pubDate>
+        <lastBuildDate>Wed, 13 Dec 2023 17:08:33 +0000</lastBuildDate>
+        <ttl>60</ttl>
+        <language>en</language>
+        <copyright>All rights reserved</copyright>
+        <webMaster>feeds@soundcloud.com (SoundCloud Feeds)</webMaster>
+        <description>A bimonthly podcast that covers the Kotlin programming language by JetBrains, as well as related technologies. Hosted by Hadi Hariri</description>
+        <itunes:subtitle>A bimonthly podcast that covers the Kotlin progra…</itunes:subtitle>
+        <itunes:owner>
+            <itunes:name>Talking Kotlin</itunes:name>
+            <itunes:email>hadihariri@gmail.com</itunes:email>
+        </itunes:owner>
+        <itunes:author>A Podcast on Kotlin and more</itunes:author>
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:image href="https://i1.sndcdn.com/avatars-000289370353-di6ese-original.jpg"/>
+        <image>
+            <url>https://i1.sndcdn.com/avatars-000289370353-di6ese-original.jpg</url>
+            <title>Talking Kotlin</title>
+            <link>http://talkingkotlin.com</link>
+        </image>
+        <itunes:category text="Technology"/>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1295949565</guid>
+            <title>Turbocharging Kotlin: Arrow Analysis, Optics &amp; Meta</title>
+            <pubDate>Tue, 28 Jun 2022 16:00:27 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/arrow-analysis</link>
+            <itunes:duration>00:57:44</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language.</itunes:summary>
+            <itunes:subtitle>We chat with Raul, Simon, and Alejandro to learn …</itunes:subtitle>
+            <description>We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language.</description>
+            <enclosure type="audio/mpeg" url="https://feeds.soundcloud.com/stream/1295949565-user-38099918-arrow-analysis.mp3" length="55432671"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-yEP8SdbEZOJcmVay-AWlLHQ-t3000x3000.jpg"/>
+        </item>
+        <item>
+            <guid isPermaLink="false">tag:soundcloud,2010:tracks/1253069788</guid>
+            <title>70 Billion Events per Day – Adobe &amp; Kotlin</title>
+            <pubDate>Tue, 19 Apr 2022 16:00:24 +0000</pubDate>
+            <link>https://soundcloud.com/user-38099918/70-billion-events-per-day-adobe-kotlin</link>
+            <itunes:duration>00:51:09</itunes:duration>
+            <itunes:author>A Podcast on Kotlin and more</itunes:author>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:summary>We talked to Rares Vlasceanu and Catalin Costache from Adobe about how they handle 70 000 000 000 events per day with the help of Kotlin and Ktor.</itunes:summary>
+            <itunes:subtitle>We talked to Rares Vlasceanu and Catalin Costache…</itunes:subtitle>
+            <description>We talked to Rares Vlasceanu and Catalin Costache from Adobe about how they handle 70 000 000 000 events per day with the help of Kotlin and Ktor.</description>
+            <enclosure type="audio/mpeg" url="https://feeds.soundcloud.com/stream/1253069788-user-38099918-70-billion-events-per-day-adobe-kotlin.mp3" length="49113128"/>
+            <itunes:image href="https://i1.sndcdn.com/artworks-ANd7JtyjHYkhAUsQ-XU8I0Q-t3000x3000.jpg"/>
+        </item>
+    </channel>
+</rss>

@@ -4,29 +4,41 @@ import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
-@XmlSerialName("feed", Namespace.atom, "")
+@XmlSerialName("rss", "", "")
 @Serializable
 data class TalkingKotlinRss(
-    val entries: List<TalkingKotlinItem>,
+    val channel: TalkingKotlinChannel,
 )
 
-@XmlSerialName("entry", Namespace.atom, "")
+@XmlSerialName("channel", "", "")
+@Serializable
+data class TalkingKotlinChannel(
+    val items: List<TalkingKotlinItem>,
+)
+
+@XmlSerialName("item", "", "")
 @Serializable
 data class TalkingKotlinItem(
     @XmlElement(true)
-    val id: String,
+    val guid: String,
     @XmlElement(true)
     val title: String,
-    @XmlSerialName("link", Namespace.atom, "")
-    val link: Link,
     @XmlElement(true)
-    val published: String,
-    val categories: List<Category>,
+    val pubDate: String,
+    @XmlElement(true)
+    val link: String,
+    @XmlElement(true)
+    @XmlSerialName(value = "duration", namespace = Namespace.itunes, prefix = "")
+    val duration: String,
+    @XmlElement(true)
+    @XmlSerialName(value = "summary", namespace = Namespace.itunes, prefix = "")
+    val summary: String,
+    val image: Image,
 ) {
-    @XmlSerialName("category", Namespace.atom, "")
+    @XmlSerialName("image", Namespace.itunes, "")
     @Serializable
-    data class Category(
+    data class Image(
         @XmlElement(false)
-        val term: String
+        val href: String,
     )
 }

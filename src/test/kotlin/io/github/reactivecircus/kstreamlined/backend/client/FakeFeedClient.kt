@@ -117,19 +117,13 @@ val DummyKotlinYouTubeItem = KotlinYouTubeItem(
 )
 
 val DummyTalkingKotlinItem = TalkingKotlinItem(
-    id = "https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta",
+    guid = "tag:soundcloud,2010:tracks/1295949565",
     title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta",
-    link = Link(
-        href = "https://talkingkotlin.com/turbocharging-kotlin-arrow-analysis-optics-meta/",
-        rel = "alternate",
-        type = "text/html",
-        title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta",
-    ),
-    published = "2022-06-28T00:00:00+02:00",
-    categories = listOf(
-        TalkingKotlinItem.Category("Arrow"),
-        TalkingKotlinItem.Category("Code Quality"),
-    ),
+    link = "https://soundcloud.com/user-38099918/arrow-analysis",
+    pubDate = "Tue, 28 Jun 2022 16:00:27 +0000",
+    summary = "We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language.",
+    duration = "00:57:44",
+    image = TalkingKotlinItem.Image(href = "https://i1.sndcdn.com/artworks-yEP8SdbEZOJcmVay-AWlLHQ-t3000x3000.jpg"),
 )
 
 val DummyKotlinWeeklyItem = KotlinWeeklyItem(
