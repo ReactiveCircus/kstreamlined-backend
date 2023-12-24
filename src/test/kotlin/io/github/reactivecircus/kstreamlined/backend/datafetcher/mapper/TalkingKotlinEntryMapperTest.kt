@@ -15,6 +15,7 @@ class TalkingKotlinEntryMapperTest {
             title = "Podcast title",
             publishTime = Instant.parse("2022-11-22T16:30:09Z"),
             contentUrl = "url",
+            audioUrl = "audio-url",
             thumbnailUrl = "image-url",
             summary = "summary",
             duration = "43min.",
@@ -26,6 +27,7 @@ class TalkingKotlinEntryMapperTest {
             link = "url",
             duration = "00:43:14",
             summary = "summary",
+            enclosure = TalkingKotlinItem.Enclosure(url = "audio-url"),
             image = TalkingKotlinItem.Image(href = "image-url"),
         ).toTalkingKotlinEntry()
 

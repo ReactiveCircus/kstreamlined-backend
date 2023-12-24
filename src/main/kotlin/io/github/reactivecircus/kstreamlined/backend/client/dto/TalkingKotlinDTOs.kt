@@ -33,8 +33,16 @@ data class TalkingKotlinItem(
     @XmlElement(true)
     @XmlSerialName(value = "summary", namespace = Namespace.itunes, prefix = "")
     val summary: String,
+    val enclosure: Enclosure,
     val image: Image,
 ) {
+    @XmlSerialName("enclosure", "", "")
+    @Serializable
+    data class Enclosure(
+        @XmlElement(false)
+        val url: String,
+    )
+
     @XmlSerialName("image", Namespace.itunes, "")
     @Serializable
     data class Image(

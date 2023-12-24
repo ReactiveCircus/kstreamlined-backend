@@ -49,6 +49,7 @@ class FeedEntryDataFetcherTest {
                     description
                 }
                 ... on TalkingKotlin {
+                    audioUrl
                     thumbnailUrl
                     summary
                     duration

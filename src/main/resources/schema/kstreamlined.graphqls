@@ -75,6 +75,8 @@ type TalkingKotlin implements FeedEntry {
   publishTime: Instant!
   "Url of the content."
   contentUrl: String!
+  "Url of the podcast audio file."
+  audioUrl: String!
   "Url of the podcast thumbnail."
   thumbnailUrl: String!
   "Summary of the podcast."

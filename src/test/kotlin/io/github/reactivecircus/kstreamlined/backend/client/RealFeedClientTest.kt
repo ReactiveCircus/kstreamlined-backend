@@ -213,6 +213,7 @@ class RealFeedClientTest {
                 pubDate = "Tue, 28 Jun 2022 16:00:27 +0000",
                 summary = "We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language.",
                 duration = "00:57:44",
+                enclosure = TalkingKotlinItem.Enclosure(url = "https://feeds.soundcloud.com/stream/1295949565-user-38099918-arrow-analysis.mp3"),
                 image = TalkingKotlinItem.Image(href = "https://i1.sndcdn.com/artworks-yEP8SdbEZOJcmVay-AWlLHQ-t3000x3000.jpg"),
             ),
             TalkingKotlinItem(
@@ -222,6 +223,7 @@ class RealFeedClientTest {
                 pubDate = "Tue, 19 Apr 2022 16:00:24 +0000",
                 summary = "We talked to Rares Vlasceanu and Catalin Costache from Adobe about how they handle 70 000 000 000 events per day with the help of Kotlin and Ktor.",
                 duration = "00:51:09",
+                enclosure = TalkingKotlinItem.Enclosure(url = "https://feeds.soundcloud.com/stream/1253069788-user-38099918-70-billion-events-per-day-adobe-kotlin.mp3"),
                 image = TalkingKotlinItem.Image(href = "https://i1.sndcdn.com/artworks-ANd7JtyjHYkhAUsQ-XU8I0Q-t3000x3000.jpg"),
             ),
         )

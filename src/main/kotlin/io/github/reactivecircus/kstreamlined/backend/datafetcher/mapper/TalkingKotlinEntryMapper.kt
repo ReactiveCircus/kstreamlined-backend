@@ -15,6 +15,7 @@ fun TalkingKotlinItem.toTalkingKotlinEntry(): TalkingKotlin {
             .toInstant(),
         contentUrl = link,
         thumbnailUrl = image.href,
+        audioUrl = enclosure.url,
         summary = summary,
         duration = duration.toFormattedDuration(),
     )
