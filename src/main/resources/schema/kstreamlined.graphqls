@@ -4,7 +4,7 @@ type Query {
   "Returns list of all available feed sources."
   feedSources: [FeedSource!]!
   "Returns list of entries for a Kotlin Weekly issue."
-  kotlinWeeklyIssue(url: String!): [KotlinWeeklyIssueEntry]!
+  kotlinWeeklyIssue(url: String!): [KotlinWeeklyIssueEntry!]!
 }
 
 type FeedSource {
