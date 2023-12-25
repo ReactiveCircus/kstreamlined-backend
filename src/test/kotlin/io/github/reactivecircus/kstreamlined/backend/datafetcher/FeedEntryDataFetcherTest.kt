@@ -107,6 +107,7 @@ class FeedEntryDataFetcherTest {
         assertEquals(dummyTalkingKotlinEntry.title, context.read("data.feedEntries[3].title"))
         assertEquals(dummyTalkingKotlinEntry.publishTime, context.read<String>("data.feedEntries[3].publishTime").toInstant())
         assertEquals(dummyTalkingKotlinEntry.contentUrl, context.read("data.feedEntries[3].contentUrl"))
+        assertEquals(dummyTalkingKotlinEntry.audioUrl, context.read("data.feedEntries[3].audioUrl"))
         assertEquals(dummyTalkingKotlinEntry.thumbnailUrl, context.read("data.feedEntries[3].thumbnailUrl"))
         assertEquals(dummyTalkingKotlinEntry.summary, context.read("data.feedEntries[3].summary"))
         assertEquals(dummyTalkingKotlinEntry.duration, context.read("data.feedEntries[3].duration"))
