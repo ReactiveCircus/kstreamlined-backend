@@ -45,7 +45,11 @@ dependencies {
     implementation(libs.ktor.serialization.xml)
     implementation(libs.apacheCommonsText)
     implementation(libs.apacheCommonsLang3)
+    implementation(libs.apacheCommonsNet)
     implementation(libs.caffeine)
+    implementation(libs.scrapeit)
+    implementation(libs.jsoup)
+    implementation(libs.xalan)
 
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(kotlin("test"))

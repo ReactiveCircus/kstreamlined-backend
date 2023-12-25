@@ -1,0 +1,919 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!doctype html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraph.org/schema/">
+  <head>
+    <meta property="og:title" content="Kotlin Weekly #386">
+    <meta property="fb:page_id" content="43929265776">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="referrer" content="origin">
+    <!-- NAME: 1 COLUMN -->
+    <!--[if gte mso 15]>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kotlin Weekly #386</title>
+    <style type="text/css">
+      p{
+      margin:10px 0;
+      padding:0;
+      }
+      table{
+      border-collapse:collapse;
+      }
+      h1,h2,h3,h4,h5,h6{
+      display:block;
+      margin:0;
+      padding:0;
+      }
+      img,a img{
+      border:0;
+      height:auto;
+      outline:none;
+      text-decoration:none;
+      }
+      body,#bodyTable,#bodyCell{
+      height:100%;
+      margin:0;
+      padding:0;
+      width:100%;
+      }
+      .mcnPreviewText{
+      display:none !important;
+      }
+      #outlook a{
+      padding:0;
+      }
+      img{
+      -ms-interpolation-mode:bicubic;
+      }
+      table{
+      mso-table-lspace:0pt;
+      mso-table-rspace:0pt;
+      }
+      .ReadMsgBody{
+      width:100%;
+      }
+      .ExternalClass{
+      width:100%;
+      }
+      p,a,li,td,blockquote{
+      mso-line-height-rule:exactly;
+      }
+      a[href^=tel],a[href^=sms]{
+      color:inherit;
+      cursor:default;
+      text-decoration:none;
+      }
+      p,a,li,td,body,table,blockquote{
+      -ms-text-size-adjust:100%;
+      -webkit-text-size-adjust:100%;
+      }
+      .ExternalClass,.ExternalClass p,.ExternalClass td,.ExternalClass div,.ExternalClass span,.ExternalClass font{
+      line-height:100%;
+      }
+      a[x-apple-data-detectors]{
+      color:inherit !important;
+      text-decoration:none !important;
+      font-size:inherit !important;
+      font-family:inherit !important;
+      font-weight:inherit !important;
+      line-height:inherit !important;
+      }
+      #bodyCell{
+      padding:10px;
+      }
+      .templateContainer{
+      max-width:600px !important;
+      }
+      a.mcnButton{
+      display:block;
+      }
+      .mcnImage,.mcnRetinaImage{
+      vertical-align:bottom;
+      }
+      .mcnTextContent{
+      word-break:break-word;
+      }
+      .mcnTextContent img{
+      height:auto !important;
+      }
+      .mcnDividerBlock{
+      table-layout:fixed !important;
+      }
+      body,#bodyTable{
+      background-color:#FAFAFA;
+      }
+      #bodyCell{
+      border-top:0;
+      }
+      .templateContainer{
+      border:0;
+      }
+      h1{
+      color:#202020;
+      font-family:Helvetica;
+      font-size:26px;
+      font-style:normal;
+      font-weight:bold;
+      line-height:125%;
+      letter-spacing:normal;
+      text-align:left;
+      }
+      h2{
+      color:#202020;
+      font-family:Helvetica;
+      font-size:22px;
+      font-style:normal;
+      font-weight:bold;
+      line-height:125%;
+      letter-spacing:normal;
+      text-align:left;
+      }
+      h3{
+      color:#202020;
+      font-family:Helvetica;
+      font-size:20px;
+      font-style:normal;
+      font-weight:bold;
+      line-height:125%;
+      letter-spacing:normal;
+      text-align:left;
+      }
+      h4{
+      color:#202020;
+      font-family:Helvetica;
+      font-size:18px;
+      font-style:normal;
+      font-weight:bold;
+      line-height:125%;
+      letter-spacing:normal;
+      text-align:left;
+      }
+      #templatePreheader{
+      background-color:#FAFAFA;
+      background-image:none;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:cover;
+      border-top:0;
+      border-bottom:0;
+      padding-top:9px;
+      padding-bottom:9px;
+      }
+      #templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent p{
+      color:#656565;
+      font-family:Helvetica;
+      font-size:12px;
+      line-height:150%;
+      text-align:left;
+      }
+      #templatePreheader .mcnTextContent a,#templatePreheader .mcnTextContent p a{
+      color:#656565;
+      font-weight:normal;
+      text-decoration:underline;
+      }
+      #templateHeader{
+      background-color:#FFFFFF;
+      background-image:none;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:cover;
+      border-top:0;
+      border-bottom:0;
+      padding-top:9px;
+      padding-bottom:0;
+      }
+      #templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+      color:#202020;
+      font-family:Helvetica;
+      font-size:16px;
+      line-height:150%;
+      text-align:left;
+      }
+      #templateHeader .mcnTextContent a,#templateHeader .mcnTextContent p a{
+      color:#007C89;
+      font-weight:normal;
+      text-decoration:underline;
+      }
+      #templateBody{
+      background-color:#FFFFFF;
+      background-image:none;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:cover;
+      border-top:0;
+      border-bottom:2px solid #EAEAEA;
+      padding-top:0;
+      padding-bottom:9px;
+      }
+      #templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+      color:#202020;
+      font-family:Helvetica;
+      font-size:16px;
+      line-height:150%;
+      text-align:left;
+      }
+      #templateBody .mcnTextContent a,#templateBody .mcnTextContent p a{
+      color:#007C89;
+      font-weight:normal;
+      text-decoration:underline;
+      }
+      #templateFooter{
+      background-color:#FAFAFA;
+      background-image:none;
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:cover;
+      border-top:0;
+      border-bottom:0;
+      padding-top:9px;
+      padding-bottom:9px;
+      }
+      #templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+      color:#656565;
+      font-family:Helvetica;
+      font-size:12px;
+      line-height:150%;
+      text-align:center;
+      }
+      #templateFooter .mcnTextContent a,#templateFooter .mcnTextContent p a{
+      color:#656565;
+      font-weight:normal;
+      text-decoration:underline;
+      }
+      @media only screen and (min-width:768px){
+      .templateContainer{
+      width:600px !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      body,table,td,p,a,li,blockquote{
+      -webkit-text-size-adjust:none !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      body{
+      width:100% !important;
+      min-width:100% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnRetinaImage{
+      max-width:100% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnImage{
+      width:100% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnCartContainer,.mcnCaptionTopContent,.mcnRecContentContainer,.mcnCaptionBottomContent,.mcnTextContentContainer,.mcnBoxedTextContentContainer,.mcnImageGroupContentContainer,.mcnCaptionLeftTextContentContainer,.mcnCaptionRightTextContentContainer,.mcnCaptionLeftImageContentContainer,.mcnCaptionRightImageContentContainer,.mcnImageCardLeftTextContentContainer,.mcnImageCardRightTextContentContainer,.mcnImageCardLeftImageContentContainer,.mcnImageCardRightImageContentContainer{
+      max-width:100% !important;
+      width:100% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnBoxedTextContentContainer{
+      min-width:100% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnImageGroupContent{
+      padding:9px !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnCaptionLeftContentOuter .mcnTextContent,.mcnCaptionRightContentOuter .mcnTextContent{
+      padding-top:9px !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnImageCardTopImageContent,.mcnCaptionBottomContent:last-child .mcnCaptionBottomImageContent,.mcnCaptionBlockInner .mcnCaptionTopContent:last-child .mcnTextContent{
+      padding-top:18px !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnImageCardBottomImageContent{
+      padding-bottom:9px !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnImageGroupBlockInner{
+      padding-top:0 !important;
+      padding-bottom:0 !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnImageGroupBlockOuter{
+      padding-top:9px !important;
+      padding-bottom:9px !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnTextContent,.mcnBoxedTextContentColumn{
+      padding-right:18px !important;
+      padding-left:18px !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnImageCardLeftImageContent,.mcnImageCardRightImageContent{
+      padding-right:18px !important;
+      padding-bottom:0 !important;
+      padding-left:18px !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcpreview-image-uploader{
+      display:none !important;
+      width:100% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      h1{
+      font-size:22px !important;
+      line-height:125% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      h2{
+      font-size:20px !important;
+      line-height:125% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      h3{
+      font-size:18px !important;
+      line-height:125% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      h4{
+      font-size:16px !important;
+      line-height:150% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      .mcnBoxedTextContentContainer .mcnTextContent,.mcnBoxedTextContentContainer .mcnTextContent p{
+      font-size:14px !important;
+      line-height:150% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      #templatePreheader{
+      display:block !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      #templatePreheader .mcnTextContent,#templatePreheader .mcnTextContent p{
+      font-size:14px !important;
+      line-height:150% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      #templateHeader .mcnTextContent,#templateHeader .mcnTextContent p{
+      font-size:16px !important;
+      line-height:150% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      #templateBody .mcnTextContent,#templateBody .mcnTextContent p{
+      font-size:16px !important;
+      line-height:150% !important;
+      }
+      }       @media only screen and (max-width: 480px){
+      #templateFooter .mcnTextContent,#templateFooter .mcnTextContent p{
+      font-size:14px !important;
+      line-height:150% !important;
+      }
+      }
+    </style>
+    <link rel="stylesheet" href="https://us12.campaign-archive.com/css/archivebar-desktop.css" mc:nocompile>
+    <script>!function(){function o(n,i){if(n&&i)for(var r in i)i.hasOwnProperty(r)&&(void 0===n[r]?n[r]=i[r]:n[r].constructor===Object&&i[r].constructor===Object?o(n[r],i[r]):n[r]=i[r])}try{var n=decodeURIComponent("%7B%0A%22ResourceTiming%22%3A%7B%0A%22comment%22%3A%20%22Clear%20RT%20Buffer%20on%20mPulse%20beacon%22%2C%0A%22clearOnBeacon%22%3A%20true%0A%7D%2C%0A%22AutoXHR%22%3A%7B%0A%22comment%22%3A%20%22Monitor%20XHRs%20requested%20using%20FETCH%22%2C%0A%22monitorFetch%22%3A%20true%2C%0A%22comment%22%3A%20%22Start%20Monitoring%20SPAs%20from%20Click%22%2C%0A%22spaStartFromClick%22%3A%20true%0A%7D%2C%0A%22PageParams%22%3A%7B%0A%22comment%22%3A%20%22Monitor%20all%20SPA%20XHRs%22%2C%0A%22spaXhr%22%3A%20%22all%22%0A%7D%0A%7D%0A");if(n.length>0&&window.JSON&&"function"==typeof window.JSON.parse){var i=JSON.parse(n);void 0!==window.BOOMR_config?o(window.BOOMR_config,i):window.BOOMR_config=i}}catch(r){window.console&&"function"==typeof window.console.error&&console.error("mPulse: Could not parse configuration",r)}}();</script>
+    <script>!function(a){var e="https://s.go-mpulse.net/boomerang/",t="addEventListener";if("True"=="True")a.BOOMR_config=a.BOOMR_config||{},a.BOOMR_config.PageParams=a.BOOMR_config.PageParams||{},a.BOOMR_config.PageParams.pci=!0,e="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="QAT5G-9HZLF-7EDMX-YMVCJ-QZJDA",function(){function n(e){a.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!a.BOOMR||!a.BOOMR.version&&!a.BOOMR.snippetExecuted){a.BOOMR=a.BOOMR||{},a.BOOMR.snippetExecuted=!0;var i,_,o,r=document.createElement("iframe");if(a[t])a[t]("load",n,!1);else if(a.attachEvent)a.attachEvent("onload",n);r.src="javascript:void(0)",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="width:0;height:0;border:0;display:none;",o=document.getElementsByTagName("script")[0],o.parentNode.insertBefore(r,o);try{_=r.contentWindow.document}catch(O){i=document.domain,r.src="javascript:var d=document.open();d.domain='"+i+"';void(0);",_=r.contentWindow.document}_.open()._l=function(){var a=this.createElement("script");if(i)this.domain=i;a.id="boomr-if-as",a.src=e+"QAT5G-9HZLF-7EDMX-YMVCJ-QZJDA",BOOMR_lstart=(new Date).getTime(),this.body.appendChild(a)},_.write("<bo"+'dy onload="document._l();">'),_.close()}}(),"400".length>0)if(a&&"performance"in a&&a.performance&&"function"==typeof a.performance.setResourceTimingBufferSize)a.performance.setResourceTimingBufferSize(400);!function(){if(BOOMR=a.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var e=""=="true"?1:0,t="",n="zxeyisixa47a6zmjgfjq-f-4df06b094-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,_={"ak.v":"36","ak.cp":"616281","ak.ai":parseInt("255430",10),"ak.ol":"0","ak.cr":1,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"9512294","ak.r":40932,"ak.a2":e,"ak.m":"x","ak.n":"essl","ak.bpcip":"120.230.94.0","ak.cport":36995,"ak.gh":"23.56.236.40","ak.quicv":"","ak.tlsv":"tls1.2","ak.0rtt":"","ak.csrc":"-","ak.acc":"reno","ak.t":"1703489875","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==uLEXY3rHnnThPHxg/HPicLani8dbFH28d1997tfMtTPMZDkafDKTzHRNI/MQ8ZlV7DAiHlNz7cV5swJswnTVbzeFzYsB1ZpqpnY3gZ5WgNF4sv0G4N7WmwJAH/E7h00jhrynHMYsVqvD85b/dkTx1JclFeuhScN3GBXTFR1uOr4ER86kJb0sKopwjdfanf4BF+K7aE7Oyl8FnZJVNDwSD1eaLS3PGaNu40IUOIP9Cm0QJB+Kr+auF/3R6NuRC/7Wq0/UzstnzYIe0Lr+2jGqchLTYAjP87hpWWiIa7GpJFKKC1XwoDHwI2EBZnAJtifzNqtKkP9yde+9JGGhg3CTDtAjuABE8UHj7cdVPZlwWVXz4f2XVJeE2CfeDsKBfbIfxSOK6QBg8l+/Wt3T5w+AZuDIXANAj7Gi/9vLEuDyCZI=","ak.pv":"89","ak.dpoabenc":"","ak.tf":i};if(""!==t)_["ak.ruds"]=t;var o={i:!1,av:function(e){var t="http.initiator";if(e&&(!e[t]||"spa_hard"===e[t]))_["ak.feo"]=void 0!==a.aFeoApplied?1:0,BOOMR.addVar(_)},rv:function(){var a=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(a)}};BOOMR.plugins.AK={akVars:_,akDNSPreFetchDomain:n,init:function(){if(!o.i){var a=BOOMR.subscribe;a("before_beacon",o.av,null,null),a("onbeacon",o.rv,null,null),o.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script>
+  </head>
+  <body id="archivebody">
+    <div id="awesomewrap">
+      <div id="awesomeshare">
+        <div id="zclipwrap">
+          <div class="copy-container"> <label for="clipboardSource">Campaign URL</label> <span id="copyURL"> <input id="clipboardSource" name="shorturl" style="margin-top:6px;" type="text" value="https://mailchi.mp/kotlinweekly/kotlin-weekly-386" class="av-text"> <a id="copyToClipboard" href="javascript:;">Copy</a> </span> </div>
+        </div>
+        <ul id="awesomesocial">
+          <li class="twt">
+            <div> <a title="Share on Twitter" target="_blank" href="https://twitter.com/share?url=https%3A%2F%2Fmailchi.mp%2Fkotlinweekly%2Fkotlin-weekly-386" rel="noopener noreferrer">Twitter <b>0 <i>tweets</i></b></a> </div>
+          </li>
+        </ul>
+      </div>
+      <ul id="awesomebar">
+        <li> <a href="http://eepurl.com/hvsv8D" title="Subscribe to List" target="_blank" rel="noopener noreferrer">Subscribe</a> </li>
+        <li><a href="https://us12.campaign-archive.com/home/?u=f39692e245b94f7fb693b6d82&amp;id=93b2272cb6" title="View Past Issues" target="_blank" rel="noopener noreferrer">Past Issues</a></li>
+        <li class="float-r"><a class="rss" target="_blank" href="https://us12.campaign-archive.com/feed?u=f39692e245b94f7fb693b6d82&amp;id=93b2272cb6" title="subscribe to the email archive feed" rel="noopener noreferrer">RSS</a></li>
+        <li class="float-r more">
+          <a href="javascript:;" data-to-toggle="#translate">Translate</a> 
+          <ul id="translate">
+            <li> <a rel="nofollow" title="English" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|en&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">English</a> </li>
+            <li> <a rel="nofollow" title="العربية" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ar&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">العربية</a> </li>
+            <li> <a rel="nofollow" title="Afrikaans" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|af&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Afrikaans</a> </li>
+            <li> <a rel="nofollow" title="беларуская мова" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|be&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">беларуская мова</a> </li>
+            <li> <a rel="nofollow" title="български" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|bg&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">български</a> </li>
+            <li> <a rel="nofollow" title="català" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ca&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">català</a> </li>
+            <li> <a rel="nofollow" title="中文（简体）" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|zh-CN&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">中文（简体）</a> </li>
+            <li> <a rel="nofollow" title="中文（繁體）" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|zh-TW&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">中文（繁體）</a> </li>
+            <li> <a rel="nofollow" title="Hrvatski" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|hr&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Hrvatski</a> </li>
+            <li> <a rel="nofollow" title="Česky" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|cs&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Česky</a> </li>
+            <li> <a rel="nofollow" title="Dansk" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|da&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Dansk</a> </li>
+            <li> <a rel="nofollow" title="eesti&amp;nbsp;keel" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|et&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">eesti&nbsp;keel</a> </li>
+            <li> <a rel="nofollow" title="Nederlands" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|nl&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Nederlands</a> </li>
+            <li> <a rel="nofollow" title="Suomi" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|fi&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Suomi</a> </li>
+            <li> <a rel="nofollow" title="Fran&amp;ccedil;ais" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|fr&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Fran&ccedil;ais</a> </li>
+            <li> <a rel="nofollow" title="Deutsch" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|de&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Deutsch</a> </li>
+            <li> <a rel="nofollow" title="&amp;Epsilon;&amp;lambda;&amp;lambda;&amp;eta;&amp;nu;&amp;iota;&amp;kappa;ή" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|el&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">&Epsilon;&lambda;&lambda;&eta;&nu;&iota;&kappa;ή</a> </li>
+            <li> <a rel="nofollow" title="हिन्दी" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|hi&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">हिन्दी</a> </li>
+            <li> <a rel="nofollow" title="Magyar" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|hu&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Magyar</a> </li>
+            <li> <a rel="nofollow" title="Gaeilge" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ga&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Gaeilge</a> </li>
+            <li> <a rel="nofollow" title="Indonesia" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|id&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Indonesia</a> </li>
+            <li> <a rel="nofollow" title="íslenska" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|is&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">íslenska</a> </li>
+            <li> <a rel="nofollow" title="Italiano" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|it&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Italiano</a> </li>
+            <li> <a rel="nofollow" title="日本語" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ja&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">日本語</a> </li>
+            <li> <a rel="nofollow" title="ភាសាខ្មែរ" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|km&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">ភាសាខ្មែរ</a> </li>
+            <li> <a rel="nofollow" title="한국어" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ko&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">한국어</a> </li>
+            <li> <a rel="nofollow" title="македонски&amp;nbsp;јазик" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|mk&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">македонски&nbsp;јазик</a> </li>
+            <li> <a rel="nofollow" title="بهاس ملايو" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ms&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">بهاس ملايو</a> </li>
+            <li> <a rel="nofollow" title="Malti" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|mt&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Malti</a> </li>
+            <li> <a rel="nofollow" title="Norsk" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|no&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Norsk</a> </li>
+            <li> <a rel="nofollow" title="Polski" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|pl&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Polski</a> </li>
+            <li> <a rel="nofollow" title="Portugu&amp;ecirc;s" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|pt&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Portugu&ecirc;s</a> </li>
+            <li> <a rel="nofollow" title="Portugu&amp;ecirc;s&amp;nbsp;-&amp;nbsp;Portugal" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|pt-PT&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Portugu&ecirc;s&nbsp;-&nbsp;Portugal</a> </li>
+            <li> <a rel="nofollow" title="Rom&amp;acirc;nă" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ro&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Rom&acirc;nă</a> </li>
+            <li> <a rel="nofollow" title="Русский" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ru&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Русский</a> </li>
+            <li> <a rel="nofollow" title="Espa&amp;ntilde;ol" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|es&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Espa&ntilde;ol</a> </li>
+            <li> <a rel="nofollow" title="Kiswahili" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sw&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Kiswahili</a> </li>
+            <li> <a rel="nofollow" title="Svenska" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sv&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Svenska</a> </li>
+            <li> <a rel="nofollow" title="עברית" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|iw&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">עברית</a> </li>
+            <li> <a rel="nofollow" title="Lietuvių" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|lt&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Lietuvių</a> </li>
+            <li> <a rel="nofollow" title="latviešu" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|lv&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">latviešu</a> </li>
+            <li> <a rel="nofollow" title="slovenčina" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sk&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">slovenčina</a> </li>
+            <li> <a rel="nofollow" title="slovenščina" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sl&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">slovenščina</a> </li>
+            <li> <a rel="nofollow" title="српски" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|sr&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">српски</a> </li>
+            <li> <a rel="nofollow" title="தமிழ்" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|ta&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">தமிழ்</a> </li>
+            <li> <a rel="nofollow" title="ภาษาไทย" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|th&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">ภาษาไทย</a> </li>
+            <li> <a rel="nofollow" title="Türkçe" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|tr&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Türkçe</a> </li>
+            <li> <a rel="nofollow" title="Filipino" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|tl&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Filipino</a> </li>
+            <li> <a rel="nofollow" title="украї́нська" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|uk&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">украї́нська</a> </li>
+            <li> <a rel="nofollow" title="Tiếng&amp;nbsp;Việt" href="http://translate.google.com/translate?hl=auto&amp;langpair=auto|vi&amp;u=https%3A%2F%2Fus12.campaign-archive.com%2F%3Fu%3Df39692e245b94f7fb693b6d82%26id%3Da79430a190">Tiếng&nbsp;Việt</a> </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <body style="height: 100%;margin: 0;padding: 0;width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FAFAFA;">
+      <!---->
+      <center>
+        <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;height: 100%;margin: 0;padding: 0;width: 100%;background-color: #FAFAFA;">
+          <tr>
+            <td align="center" valign="top" id="bodyCell" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;height: 100%;margin: 0;padding: 10px;width: 100%;border-top: 0;">
+              <!-- BEGIN TEMPLATE // -->
+              <!--[if (gte mso 9)|(IE)]>
+              <table align="center" border="0" cellspacing="0" cellpadding="0" width="600" style="width:600px;">
+                <tr>
+                  <td align="center" valign="top" width="600" style="width:600px;">
+                    <![endif]-->
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;border: 0;max-width: 600px !important;">
+                      <tr>
+                        <td valign="top" id="templatePreheader" style="background:#FAFAFA none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FAFAFA;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 9px;padding-bottom: 9px;"></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" id="templateHeader" style="background:#FFFFFF none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 9px;padding-bottom: 0;">
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageCardBlock" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <tbody class="mcnImageCardBlockOuter">
+                              <tr>
+                                <td class="mcnImageCardBlockInner" valign="top" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                  <table align="right" border="0" cellpadding="0" cellspacing="0" class="mcnImageCardBottomContent" width="100%" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                    <tbody>
+                                      <tr>
+                                        <td class="mcnImageCardBottomImageContent" align="left" valign="top" style="padding-top: 0px;padding-right: 0px;padding-bottom: 0;padding-left: 0px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                          <img alt="" src="https://mcusercontent.com/f39692e245b94f7fb693b6d82/images/10becd43-0739-8b7e-9591-035124842821.png" width="564" style="max-width: 1200px;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;vertical-align: bottom;" class="mcnImage">
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td class="mcnTextContent" valign="top" style="padding: 9px 18px;color: #F2F2F2;font-family: Helvetica;font-size: 14px;font-weight: normal;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;line-height: 150%;" width="546">
+                                          &nbsp;
+                                          <div id="gtx-trans" style="position: absolute; ">
+                                            <div class="gtx-trans-icon">&nbsp;</div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top" id="templateBody" style="background:#FFFFFF none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 2px solid #EAEAEA;padding-top: 0;padding-bottom: 9px;">
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <tbody class="mcnTextBlockOuter">
+                              <tr>
+                                <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                  <!--[if mso]>
+                                  <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                                    <tr>
+                                      <![endif]-->
+                                      <!--[if mso]>
+                                      <td valign="top" width="600" style="width:600px;">
+                                        <![endif]-->
+                                        <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                                          <tbody>
+                                            <tr>
+                                              <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
+                                                <h1 style="text-align: center;display: block;margin: 0;padding: 0;color: #202020;font-family: Helvetica;font-size: 26px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: normal;"><span style="font-size:18px"><strong><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif">ISSUE</span></strong> <span style="color:#FFFFFF"><span style="background-color:#7874b4; margin:20px 5px 20px 5px; padding:5px 5px 5px 5px">#386</span></span></span></h1>
+                                                <div style="text-align: center; line-height: 50%; margin:10px 0px 0px 0px;"><span style="color:#D3D3D3"><span style="font-size:12px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif">24th of December 2023</span></span></span><br>
+                                                  &nbsp;
+                                                </div>
+                                                <div style="overflow: hidden;">
+                                                  <div style="
+                                                    width:30%;
+                                                    float:left">
+                                                    <p style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;"><br>
+                                                      <img data-file-id="2573165" height="45" src="https://gallery.mailchimp.com/f39692e245b94f7fb693b6d82/images/b61142be-473c-436a-84ad-8338e13e31da.png" style="border: 0px;width: 45px;height: 45px;margin: 0px;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="45"><br>
+                                                      <strong><span style="font-size:11px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><span style="color:#FFFFFF"><span style="background-color:#7874b4; padding:5px 5px 5px 5px">Announcements</span></span></span></span></strong>
+                                                    </p>
+                                                  </div>
+                                                  <div style="
+                                                    width:70%;
+                                                    float:left;
+                                                    "><br>
+                                                    <a href="https://blog.jetbrains.com/amper/2023/12/amper-update-december-2023/" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#7874b4">Amper Update – December 2023</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">Last month JetBrains introduced Amper, a tool to improve the project configuration user experience. Marton Braun gives us an update about its state in December 2023.</span><br>
+                                                    <a href="blog.jetbrains.com" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#7874b4; font-size:11px">blog.jetbrains.com</span></strong></a><br>
+                                                    <br>
+                                                    <a href="https://blog.cloud-inject.io/koin-2023-highlights" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#7874b4">Koin Wrapped- Recapping the 2023 Milestones of Our Kotlin Integration Framework</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">In this post, the Koin crew wraps up all the milestones and roadmap achieved in 2023.</span><br>
+                                                    <a href="blog.cloud-inject.io" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#7874b4; font-size:11px">blog.cloud-inject.io</span></strong></a>
+                                                  </div>
+                                                </div>
+                                                <div style="overflow: hidden;">
+                                                  <div style="
+                                                    width:30%;
+                                                    float:left">
+                                                    <p style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;"><br>
+                                                      <img data-file-id="2573169" height="64" src="https://gallery.mailchimp.com/f39692e245b94f7fb693b6d82/images/aecc15c5-3b55-4f56-b171-6c933eabb173.png" style="border: 0px initial;width: 65px;height: 64px;margin: 0px;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="65"><br>
+                                                      <strong><span style="font-size:11px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><span style="color:#FFFFFF"><span style="background-color:#f1646c; padding:5px 5px 5px 5px">Articles</span></span></span></span></strong>
+                                                    </p>
+                                                  </div>
+                                                  <div style="
+                                                    width:70%;
+                                                    float:left;
+                                                    "><br>
+                                                    <a href="https://towardsdev.com/how-to-use-the-cucumber-framework-to-test-application-use-cases-48b4f21ee0d0" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#f1646c">How to Use the Cucumber Framework to Test Application Use Cases</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">Matthias Schenk writes today about Cucumber, a framework that can be used in application development to verify the correct behavior of the application.</span><br>
+                                                    <a href="towardsdev.com" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#f1646c; font-size:11px">towardsdev.com</span></strong></a><br>
+                                                    <br>
+                                                    <a href="https://funkymuse.dev/posts/create-data-store-kmp/" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#f1646c">Jetpack Preferences DataStore in Kotlin Multiplatform (KMP)</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">FunkyMuse put up an article showcasing how to read and write preferences on multiple platforms when using the KMP DataStore library.</span><br>
+                                                    <a href="funkymuse.dev" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#f1646c; font-size:11px">funkymuse.dev</span></strong></a>
+                                                  </div>
+                                                </div>
+                                                <div style="overflow: hidden;">
+                                                  <div style="
+                                                    width:30%;
+                                                    float:left">
+                                                    <p style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;"><br>
+                                                      <img data-file-id="2573205" height="65" src="https://gallery.mailchimp.com/f39692e245b94f7fb693b6d82/images/57e35131-d16d-4d0c-a6a6-ff0c005d0c16.png" style="border: 0px initial;width: 65px;height: 65px;margin: 0px;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="65"><br>
+                                                      <strong><span style="font-size:11px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><span style="color:#FFFFFF"><span style="background-color:#79c5b4; padding:5px 5px 5px 5px">Android</span></span></span></span></strong>
+                                                    </p>
+                                                  </div>
+                                                  <div style="
+                                                    width:70%;
+                                                    float:left;
+                                                    "><br>
+                                                    <a href="https://dev.to/marlonlom/using-launcher-and-themed-icons-in-android-studio-the-manual-way-1h2a" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#79c5b4">Using launcher and themed icons in Android Studio, the manual way</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">Marlon Lòpez describes how we can use the launcher and the themed icons in Android Studio.</span><br>
+                                                    <a href="dev.to" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#79c5b4; font-size:11px">dev.to</span></strong></a>
+                                                  </div>
+                                                </div>
+                                                <div style="overflow: hidden;">
+                                                  <div style="
+                                                    width:30%;
+                                                    float:left">
+                                                    <p style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;"><br>
+                                                      <img data-file-id="2573213" height="45" src="https://gallery.mailchimp.com/f39692e245b94f7fb693b6d82/images/1190a3e2-9a27-4e7b-851e-20983326e25f.png" style="border: 0px initial;width: 45px;height: 45px;margin: 0px;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="45"><br>
+                                                      <strong><span style="font-size:11px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><span style="color:#FFFFFF"><span style="background-color:#639fcb; padding:5px 5px 5px 5px">Videos</span></span></span></span></strong>
+                                                    </p>
+                                                  </div>
+                                                  <div style="
+                                                    width:70%;
+                                                    float:left;
+                                                    "><br>
+                                                    <a href="https://www.youtube.com/watch?v=sG60644C47I" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#639fcb">Setting Sail with Compose Multiplatform by Isuru Rajapakse</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">Isuru Rajapakse talks at the DevFest Sri Lanka about Compose Multiplatform.</span><br>
+                                                    <a href="www.youtube.com" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#639fcb; font-size:11px">www.youtube.com</span></strong></a><br>
+                                                    <br>
+                                                    <a href="https://www.youtube.com/watch?v=htvpwOKYhNs" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#639fcb">Developer Experience and Kotlin Lenses</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">In his next video, Duncan McGregor keeps talking about Developer Experience and Kotlin lenses.</span><br>
+                                                    <a href="www.youtube.com" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#639fcb; font-size:11px">www.youtube.com</span></strong></a><br>
+                                                    <br>
+                                                    <a href="https://www.youtube.com/watch?v=a32Otwx7c0w" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#639fcb">Network-Resilient Applications with Store5 | Talking Kotlin</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">In this chapter of Talking Kotlin, Mike Nakhimovich, Yigit Boyar, and Matthew Ramotar talk about Store, a Kotlin Multiplatform library for building network-resilient applications.</span><br>
+                                                    <a href="www.youtube.com" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#639fcb; font-size:11px">www.youtube.com</span></strong></a>
+                                                  </div>
+                                                </div>
+                                                <div style="overflow: hidden;">
+                                                  <div style="
+                                                    width:30%;
+                                                    float:left">
+                                                    <p style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;"><br>
+                                                      <img data-file-id="2573205" height="45" src="https://gallery.mailchimp.com/f39692e245b94f7fb693b6d82/images/4837807f-7f56-4f5d-841a-784404090b26.png" style="border: 0px initial;width: 45px;height: 45px;margin: 0px;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="45"><br>
+                                                      <strong><span style="font-size:11px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><span style="color:#FFFFFF"><span style="background-color:#800000; padding:5px 5px 5px 5px">Libraries</span></span></span></span></strong>
+                                                    </p>
+                                                  </div>
+                                                  <div style="
+                                                    width:70%;
+                                                    float:left;
+                                                    "><br>
+                                                    <a href="https://github.com/Ashampoo/kim" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#800000">Kim - Kotlin Image Metadata</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">Kim is a Kotlin image metadata manipulation library for Kotlin Multiplatform.</span><br>
+                                                    <a href="github.com" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#800000; font-size:11px">github.com</span></strong></a><br>
+                                                    <br>
+                                                    <a href="https://github.com/saveourtool/diktat" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#800000">DiKTat</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">DiKTat is a strict coding standard for Kotlin, consisting of a collection of Kotlin code style rules implemented as Abstract Syntax Tree (AST) visitors built on top of KTlint.</span><br>
+                                                    <a href="github.com" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#800000; font-size:11px">github.com</span></strong></a><br>
+                                                    <br>
+                                                    <a href="https://github.com/failgood/failgood" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#800000">FailGood</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">Failgood is a test runner for Kotlin focusing on simplicity, usability and speed.</span><br>
+                                                    <a href="github.com" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#800000; font-size:11px">github.com</span></strong></a><br>
+                                                    <br>
+                                                    <a href="https://github.com/StefanOltmann/exif-viewer" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><span style="font-size:16px"><span style="font-family:helvetica neue,helvetica,arial,verdana,sans-serif"><strong><span style="color:#800000">exif-viewer</span></strong></span></span></a><br>
+                                                    <span style="font-size:14px">Free online EXIF Viewer built with Kotlin/WASM.</span><br>
+                                                    <a href="github.com" style="text-decoration: none;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;" target="_blank"><strong><span style="color:#800000; font-size:11px">github.com</span></strong></a>
+                                                  </div>
+                                                </div>
+                                                <p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;"><u><strong>Contribute</strong></u></p>
+                                                <p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">We rely on sponsors to offer quality content every Sunday. If you would like to submit a sponsored link&nbsp;<a href="mailto:mailinglist@kotlinweekly.net?subject=Sponsoring%20for%20Kotlin%20Weekly" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;text-decoration: underline;">contact us</a>.</p>
+                                                <p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">If you want to submit an article for the next issue, please do also&nbsp;<a href="mailto:mailinglist@kotlinweekly.net?subject=Link%20for%20submission%20-%20Kotlin%20Weekly" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;text-decoration: underline;">drop us an email</a>.<br>
+                                                  &nbsp;
+                                                </p>
+                                                <p style="text-align: center;margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #202020;font-family: Helvetica;font-size: 16px;line-height: 150%;"><a href="https://www.jetbrains.com/?utm_source=kotlinweekly&utm_medium=newsletter&utm_campaign=homepage-footer-link" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #007C89;font-weight: normal;text-decoration: underline;"><img data-file-id="2573274" height="111" src="https://mcusercontent.com/f39692e245b94f7fb693b6d82/images/5054868d-f359-45f9-b178-f519a1d5b477.png" style="border: 0px;width: 111px;height: 111px;margin: 0px;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="111"><br>
+                                                  Thanks to JetBrains for their support!</a>
+                                                </p>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                        <!--[if mso]>
+                                      </td>
+                                      <![endif]-->
+                                      <!--[if mso]>
+                                    </tr>
+                                  </table>
+                                  <![endif]-->
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top" id="templateFooter" style="background:#FAFAFA none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FAFAFA;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 9px;padding-bottom: 9px;">
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !important;">
+                            <tbody class="mcnDividerBlockOuter">
+                              <tr>
+                                <td class="mcnDividerBlockInner" style="min-width: 100%;padding: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                  <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px solid #505050;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                    <tbody>
+                                      <tr>
+                                        <td style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                          <span></span>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <!--
+                                    <td class="mcnDividerBlockInner" style="padding: 18px;">
+                                    <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+                                    -->
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <tbody class="mcnFollowBlockOuter">
+                              <tr>
+                                <td align="center" valign="top" style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowBlockInner">
+                                  <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowContentContainer" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                    <tbody>
+                                      <tr>
+                                        <td align="center" style="padding-left: 9px;padding-right: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowContent">
+                                            <tbody>
+                                              <tr>
+                                                <td align="center" valign="top" style="padding-top: 9px;padding-right: 9px;padding-left: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                  <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                    <tbody>
+                                                      <tr>
+                                                        <td align="center" valign="top" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                          <!--[if mso]>
+                                                          <table align="center" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                              <![endif]-->
+                                                              <!--[if mso]>
+                                                              <td align="center" valign="top">
+                                                                <![endif]-->
+                                                                <table align="left" border="0" cellpadding="0" cellspacing="0" style="display: inline;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td valign="top" style="padding-right: 10px;padding-bottom: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowContentItemContainer">
+                                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowContentItem" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                          <tbody>
+                                                                            <tr>
+                                                                              <td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                <table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                  <tbody>
+                                                                                    <tr>
+                                                                                      <td align="center" valign="middle" width="24" class="mcnFollowIconContent" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                        <a href="http://www.twitter.com/kotlinweekly" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><img src="https://cdn-images.mailchimp.com/icons/social-block-v2/color-twitter-48.png" alt="Twitter" style="display: block;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="24" width="24" class=""></a>
+                                                                                      </td>
+                                                                                    </tr>
+                                                                                  </tbody>
+                                                                                </table>
+                                                                              </td>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                      </td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                                <!--[if mso]>
+                                                              </td>
+                                                              <![endif]-->
+                                                              <!--[if mso]>
+                                                              <td align="center" valign="top">
+                                                                <![endif]-->
+                                                                <table align="left" border="0" cellpadding="0" cellspacing="0" style="display: inline;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td valign="top" style="padding-right: 10px;padding-bottom: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowContentItemContainer">
+                                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowContentItem" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                          <tbody>
+                                                                            <tr>
+                                                                              <td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                <table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                  <tbody>
+                                                                                    <tr>
+                                                                                      <td align="center" valign="middle" width="24" class="mcnFollowIconContent" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                        <a href="https://www.facebook.com/kotlinweekly/" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><img src="https://cdn-images.mailchimp.com/icons/social-block-v2/color-facebook-48.png" alt="Facebook" style="display: block;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="24" width="24" class=""></a>
+                                                                                      </td>
+                                                                                    </tr>
+                                                                                  </tbody>
+                                                                                </table>
+                                                                              </td>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                      </td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                                <!--[if mso]>
+                                                              </td>
+                                                              <![endif]-->
+                                                              <!--[if mso]>
+                                                              <td align="center" valign="top">
+                                                                <![endif]-->
+                                                                <table align="left" border="0" cellpadding="0" cellspacing="0" style="display: inline;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td valign="top" style="padding-right: 0;padding-bottom: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" class="mcnFollowContentItemContainer">
+                                                                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnFollowContentItem" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                          <tbody>
+                                                                            <tr>
+                                                                              <td align="left" valign="middle" style="padding-top: 5px;padding-right: 10px;padding-bottom: 5px;padding-left: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                <table align="left" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                  <tbody>
+                                                                                    <tr>
+                                                                                      <td align="center" valign="middle" width="24" class="mcnFollowIconContent" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                                                                        <a href="http://www.kotlinweekly.net" target="_blank" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"><img src="https://cdn-images.mailchimp.com/icons/social-block-v2/color-link-48.png" alt="Website" style="display: block;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" height="24" width="24" class=""></a>
+                                                                                      </td>
+                                                                                    </tr>
+                                                                                  </tbody>
+                                                                                </table>
+                                                                              </td>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                      </td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                                <!--[if mso]>
+                                                              </td>
+                                                              <![endif]-->
+                                                              <!--[if mso]>
+                                                            </tr>
+                                                          </table>
+                                                          <![endif]-->
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                            <tbody class="mcnTextBlockOuter">
+                              <tr>
+                                <td valign="top" class="mcnTextBlockInner" style="padding-top: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                  <!--[if mso]>
+                                  <table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+                                    <tr>
+                                      <![endif]-->
+                                      <!--[if mso]>
+                                      <td valign="top" width="600" style="width:600px;">
+                                        <![endif]-->
+                                        <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width: 100%;min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;" width="100%" class="mcnTextContentContainer">
+                                          <tbody>
+                                            <tr>
+                                              <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #656565;font-family: Helvetica;font-size: 12px;line-height: 150%;text-align: center;">
+                                                <em>Copyright © 2023 Kotlin Weekly, All rights reserved.</em><br>
+                                                <br>
+                                                <br>
+                                                Want to change how you receive these emails?<br>
+                                                You can <a href="https://kotlinweekly.us12.list-manage.com/profile?u=f39692e245b94f7fb693b6d82&id=93b2272cb6&e=[UNIQID]&c=a79430a190" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #656565;font-weight: normal;text-decoration: underline;">update your preferences</a> or <a href="https://kotlinweekly.us12.list-manage.com/unsubscribe?u=f39692e245b94f7fb693b6d82&id=93b2272cb6&e=[UNIQID]&c=a79430a190" style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #656565;font-weight: normal;text-decoration: underline;">unsubscribe from this list</a><br>
+                                                <br>
+                                                <a href="http://www.mailchimp.com/email-referral/?utm_source=freemium_newsletter&utm_medium=email&utm_campaign=referral_marketing&aid=f39692e245b94f7fb693b6d82&afl=1"><img src="https://cdn-images.mailchimp.com/monkey_rewards/intuit-mc-rewards-2.png" border="0" alt="Email Marketing Powered by Mailchimp" title="Mailchimp Email Marketing" width="137" height="53" style="max-width: 100%; height: auto;"></a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                        <!--[if mso]>
+                                      </td>
+                                      <![endif]-->
+                                      <!--[if mso]>
+                                    </tr>
+                                  </table>
+                                  <![endif]-->
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnDividerBlock" style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;table-layout: fixed !important;">
+                            <tbody class="mcnDividerBlockOuter">
+                              <tr>
+                                <td class="mcnDividerBlockInner" style="min-width: 100%;padding: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                  <table class="mcnDividerContent" border="0" cellpadding="0" cellspacing="0" width="100%" style="min-width: 100%;border-top: 2px solid #505050;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                    <tbody>
+                                      <tr>
+                                        <td style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
+                                          <span></span>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <!--
+                                    <td class="mcnDividerBlockInner" style="padding: 18px;">
+                                    <hr class="mcnDividerContent" style="border-bottom-color:none; border-left-color:none; border-right-color:none; border-bottom-width:0; border-left-width:0; border-right-width:0; margin-top:0; margin-right:0; margin-bottom:0; margin-left:0;" />
+                                    -->
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]>
+                  </td>
+                </tr>
+              </table>
+              <![endif]-->
+              <!-- // END TEMPLATE -->
+            </td>
+          </tr>
+        </table>
+      </center>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script><script type="text/javascript">
+    $(document).ready(function() {
+        document.getElementById("copyToClipboard").addEventListener("click", function () {
+            var input = document.getElementById("clipboardSource");
+            input.select();
+            var successful = document.execCommand("copy");
+            if (successful) {
+                alert('Copied "' + input.value + '" to your clipboard.');
+            } else {
+                throw new Error("Failed to copy text (verify caller was in the context of an event handler)");
+            }
+        });
+    
+        $('li.more > a').click(function(){
+            var toToggle = $($(this).attr('data-to-toggle'));
+            if(toToggle.is(':visible')){
+                toToggle.slideUp('fast');
+                $(this).removeClass('is-active');
+                if ($('#awesomebar').find('.is-active').length < 1){
+                    $('#awesomebar').removeClass('sub-active');
+                }
+            } else {
+                toToggle.slideDown('fast');
+                $(this).addClass('is-active');
+                $('#awesomebar').addClass('sub-active');
+            }
+            return false;
+        });
+    
+    });
+  </script></body> 
+</html>

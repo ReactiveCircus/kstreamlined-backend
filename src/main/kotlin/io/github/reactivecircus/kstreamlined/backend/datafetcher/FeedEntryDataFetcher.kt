@@ -32,7 +32,7 @@ import java.time.Duration
 
 @DgsComponent
 class FeedEntryDataFetcher(
-    private val feedClient: FeedClient,
+    private val client: FeedClient,
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
     private val kotlinBlogCacheContext = object : CacheContext<KotlinBlogItem> {
@@ -71,19 +71,19 @@ class FeedEntryDataFetcher(
             async(coroutineDispatcher) {
                 when (source) {
                     FeedSourceKey.KOTLIN_BLOG -> with(kotlinBlogCacheContext) {
-                        feedClient.loadKotlinBlogFeed().map { it.toKotlinBlogEntry() }
+                        client.loadKotlinBlogFeed().map { it.toKotlinBlogEntry() }
                     }
 
                     FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> with(kotlinYouTubeCacheContext) {
-                        feedClient.loadKotlinYouTubeFeed().map { it.toKotlinYouTubeEntry() }
+                        client.loadKotlinYouTubeFeed().map { it.toKotlinYouTubeEntry() }
                     }
 
                     FeedSourceKey.TALKING_KOTLIN_PODCAST -> with(talkingKotlinCacheContext) {
-                        feedClient.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry() }
+                        client.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry() }
                     }
 
                     FeedSourceKey.KOTLIN_WEEKLY -> with(kotlinWeeklyCacheContext) {
-                        feedClient.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry() }
+                        client.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry() }
                     }
                 }
             }
