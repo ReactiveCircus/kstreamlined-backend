@@ -1,7 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.client
 
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntry
-import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntryType
+import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntryGroup
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
@@ -36,10 +36,10 @@ class RealKotlinWeeklyIssueClient(
                     withAttribute = "style" to "overflow: hidden;"
                     findAll {
                         forEach { section ->
-                            val type = section.div {
+                            val group = section.div {
                                 findFirst { text }
                             }.uppercase().let {
-                                KotlinWeeklyIssueEntryType.entries.find { type -> it == type.name } ?: return@forEach
+                                KotlinWeeklyIssueEntryGroup.entries.find { type -> it == type.name } ?: return@forEach
                             }
 
                             val titleWithLinkPairs = mutableListOf<Pair<String, String>>()
@@ -75,7 +75,7 @@ class RealKotlinWeeklyIssueClient(
                             titleWithLinkPairs.forEachIndexed { index, pair ->
                                 add(
                                     KotlinWeeklyIssueEntry(
-                                        type = type,
+                                        group = group,
                                         title = pair.first,
                                         url = pair.second,
                                         summary = summaries[index],

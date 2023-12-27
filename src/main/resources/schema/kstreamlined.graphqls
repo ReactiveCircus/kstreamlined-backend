@@ -109,11 +109,11 @@ type KotlinWeeklyIssueEntry {
   url: String!
   "Url of the issue entry source."
   source: String!
-  "Type of the issue entry."
-  type: KotlinWeeklyIssueEntryType!
+  "Group of the issue entry."
+  group: KotlinWeeklyIssueEntryGroup!
 }
 
-enum KotlinWeeklyIssueEntryType {
+enum KotlinWeeklyIssueEntryGroup {
   "Announcements."
   ANNOUNCEMENTS
   "Articles."

@@ -30,7 +30,7 @@ class KotlinWeeklyIssueDataFetcherTest {
                 summary
                 url
                 source
-                type
+                group
             }
         }
     """.trimIndent()
@@ -52,30 +52,30 @@ class KotlinWeeklyIssueDataFetcherTest {
         assertEquals(DummyKotlinWeeklyIssueEntries[0].summary, context.read("data.kotlinWeeklyIssue[0].summary"))
         assertEquals(DummyKotlinWeeklyIssueEntries[0].url, context.read("data.kotlinWeeklyIssue[0].url"))
         assertEquals(DummyKotlinWeeklyIssueEntries[0].source, context.read("data.kotlinWeeklyIssue[0].source"))
-        assertEquals(DummyKotlinWeeklyIssueEntries[0].type.name, context.read("data.kotlinWeeklyIssue[0].type"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[0].group.name, context.read("data.kotlinWeeklyIssue[0].group"))
 
         assertEquals(DummyKotlinWeeklyIssueEntries[1].title, context.read("data.kotlinWeeklyIssue[1].title"))
         assertEquals(DummyKotlinWeeklyIssueEntries[1].summary, context.read("data.kotlinWeeklyIssue[1].summary"))
         assertEquals(DummyKotlinWeeklyIssueEntries[1].url, context.read("data.kotlinWeeklyIssue[1].url"))
         assertEquals(DummyKotlinWeeklyIssueEntries[1].source, context.read("data.kotlinWeeklyIssue[1].source"))
-        assertEquals(DummyKotlinWeeklyIssueEntries[1].type.name, context.read("data.kotlinWeeklyIssue[1].type"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[1].group.name, context.read("data.kotlinWeeklyIssue[1].group"))
 
         assertEquals(DummyKotlinWeeklyIssueEntries[2].title, context.read("data.kotlinWeeklyIssue[2].title"))
         assertEquals(DummyKotlinWeeklyIssueEntries[2].summary, context.read("data.kotlinWeeklyIssue[2].summary"))
         assertEquals(DummyKotlinWeeklyIssueEntries[2].url, context.read("data.kotlinWeeklyIssue[2].url"))
         assertEquals(DummyKotlinWeeklyIssueEntries[2].source, context.read("data.kotlinWeeklyIssue[2].source"))
-        assertEquals(DummyKotlinWeeklyIssueEntries[2].type.name, context.read("data.kotlinWeeklyIssue[2].type"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[2].group.name, context.read("data.kotlinWeeklyIssue[2].group"))
 
         assertEquals(DummyKotlinWeeklyIssueEntries[3].title, context.read("data.kotlinWeeklyIssue[3].title"))
         assertEquals(DummyKotlinWeeklyIssueEntries[3].summary, context.read("data.kotlinWeeklyIssue[3].summary"))
         assertEquals(DummyKotlinWeeklyIssueEntries[3].url, context.read("data.kotlinWeeklyIssue[3].url"))
         assertEquals(DummyKotlinWeeklyIssueEntries[3].source, context.read("data.kotlinWeeklyIssue[3].source"))
-        assertEquals(DummyKotlinWeeklyIssueEntries[3].type.name, context.read("data.kotlinWeeklyIssue[3].type"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[3].group.name, context.read("data.kotlinWeeklyIssue[3].group"))
 
         assertEquals(DummyKotlinWeeklyIssueEntries[4].title, context.read("data.kotlinWeeklyIssue[4].title"))
         assertEquals(DummyKotlinWeeklyIssueEntries[4].summary, context.read("data.kotlinWeeklyIssue[4].summary"))
         assertEquals(DummyKotlinWeeklyIssueEntries[4].url, context.read("data.kotlinWeeklyIssue[4].url"))
         assertEquals(DummyKotlinWeeklyIssueEntries[4].source, context.read("data.kotlinWeeklyIssue[4].source"))
-        assertEquals(DummyKotlinWeeklyIssueEntries[4].type.name, context.read("data.kotlinWeeklyIssue[4].type"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[4].group.name, context.read("data.kotlinWeeklyIssue[4].group"))
     }
 }
