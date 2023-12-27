@@ -56,6 +56,7 @@ class FeedEntryDataFetcherTest {
                 }
                 ... on KotlinWeekly {
                     __typename
+                    issueNumber
                 }
             }
         }
@@ -85,6 +86,7 @@ class FeedEntryDataFetcherTest {
         assertEquals(dummyKotlinWeeklyEntry.title, context.read("data.feedEntries[0].title"))
         assertEquals(dummyKotlinWeeklyEntry.publishTime, context.read<String>("data.feedEntries[0].publishTime").toInstant())
         assertEquals(dummyKotlinWeeklyEntry.contentUrl, context.read("data.feedEntries[0].contentUrl"))
+        assertEquals(dummyKotlinWeeklyEntry.issueNumber, context.read("data.feedEntries[0].issueNumber"))
 
         val dummyKotlinBlogEntry = DummyKotlinBlogItem.toKotlinBlogEntry()
         assertEquals(dummyKotlinBlogEntry.id, context.read("data.feedEntries[1].id"))

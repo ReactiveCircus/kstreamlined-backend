@@ -96,6 +96,8 @@ type KotlinWeekly implements FeedEntry {
   publishTime: Instant!
   "Url of the content."
   contentUrl: String!
+  "Issue number."
+  issueNumber: Int!
 }
 
 type KotlinWeeklyIssueEntry {

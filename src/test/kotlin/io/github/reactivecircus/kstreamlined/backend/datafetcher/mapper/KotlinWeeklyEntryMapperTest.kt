@@ -15,6 +15,7 @@ class KotlinWeeklyEntryMapperTest {
             title = "Kotlin Weekly #381",
             publishTime = Instant.parse("2023-11-19T09:13:00Z"),
             contentUrl = "https://mailchi.mp/kotlinweekly/kotlin-weekly-381",
+            issueNumber = 381,
         )
         val actual = KotlinWeeklyItem(
             title = "Kotlin Weekly #381",

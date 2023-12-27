@@ -13,5 +13,6 @@ fun KotlinWeeklyItem.toKotlinWeeklyEntry(): KotlinWeekly {
             .parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME)
             .toInstant(),
         contentUrl = link,
+        issueNumber = title.substringAfter("#").toInt(),
     )
 }
