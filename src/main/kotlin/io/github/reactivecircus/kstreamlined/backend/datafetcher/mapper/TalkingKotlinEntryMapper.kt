@@ -16,9 +16,14 @@ fun TalkingKotlinItem.toTalkingKotlinEntry(): TalkingKotlin {
         contentUrl = link,
         thumbnailUrl = image.href,
         audioUrl = enclosure.url,
-        summary = summary,
+        summary = summary.sanitize(),
         duration = duration.toFormattedDuration(),
     )
+}
+
+private fun String.sanitize(): String {
+    return replace(Regex("[\n\r]+"), " ")
+        .replace(Regex("\\s+"), " ")
 }
 
 private fun String.toFormattedDuration(): String {

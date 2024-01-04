@@ -17,7 +17,7 @@ class TalkingKotlinEntryMapperTest {
             contentUrl = "url",
             audioUrl = "audio-url",
             thumbnailUrl = "image-url",
-            summary = "summary",
+            summary = "summary line 1 line 2 line 3",
             duration = "43min.",
         )
         val actual = TalkingKotlinItem(
@@ -26,7 +26,7 @@ class TalkingKotlinEntryMapperTest {
             pubDate = "Tue, 22 Nov 2022 16:30:09 +0000",
             link = "url",
             duration = "00:43:14",
-            summary = "summary",
+            summary = "summary line 1\n\n line 2 \r\n   line 3",
             enclosure = TalkingKotlinItem.Enclosure(url = "audio-url"),
             image = TalkingKotlinItem.Image(href = "image-url"),
         ).toTalkingKotlinEntry()
