@@ -28,7 +28,8 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '21'
-      - uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v3-beta
         with:
           gradle-home-cache-cleanup: true
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
       - run: ./gradlew assemble check --no-configuration-cache
