@@ -4,7 +4,7 @@ spring-boot = "3.2.2"
 spring-dependencyManagement = "1.1.4"
 jib = "3.4.0"
 ktor = "2.3.8"
-dgsBom = "8.2.4"
+dgsBom = "8.2.5"
 dgsCodegen = "6.1.4"
 detekt = "1.23.5"
 apacheCommonsText = "1.11.0"
@@ -14,7 +14,7 @@ caffeine = "3.1.8"
 scrapeit = "1.3.0-alpha.2"
 jsoup = "1.17.2"
 xalan = "2.7.3"
-toolchainsResolver = "0.7.0"
+toolchainsResolver = "0.8.0"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
