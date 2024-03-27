@@ -79,7 +79,7 @@ tasks.withType<Test>().configureEach {
 configurations.configureEach {
     resolutionStrategy.eachDependency {
         if (this@configureEach.name == "detekt" && requested.group == "org.jetbrains.kotlin") {
-            useVersion("1.9.22")
+            useVersion("1.9.23")
         }
     }
 }
