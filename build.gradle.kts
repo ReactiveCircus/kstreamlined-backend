@@ -62,7 +62,6 @@ kotlin {
         vendor.set(JvmVendorSpec.AZUL)
     }
     compilerOptions {
-        languageVersion.set(KotlinVersion.KOTLIN_1_9) // TODO enable once tests pass with K2
         freeCompilerArgs.addAll(
             "-opt-in=kotlin.RequiresOptIn",
             "-Xjsr305=strict",
