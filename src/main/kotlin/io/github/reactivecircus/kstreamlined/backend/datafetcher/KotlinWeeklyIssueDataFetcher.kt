@@ -16,7 +16,7 @@ class KotlinWeeklyIssueDataFetcher(
 ) {
     private val cache: Cache<String, List<KotlinWeeklyIssueEntry>> = Caffeine
         .newBuilder()
-        .expireAfterAccess(Duration.ofHours(1))
+        .expireAfterWrite(Duration.ofHours(1))
         .build()
 
     @DgsQuery(field = DgsConstants.QUERY.KotlinWeeklyIssue)

@@ -38,28 +38,28 @@ class FeedEntryDataFetcher(
     private val kotlinBlogCacheContext = object : CacheContext<KotlinBlogItem> {
         override val cache: Cache<Unit, List<KotlinBlogItem>> = Caffeine
             .newBuilder()
-            .expireAfterAccess(Duration.ofHours(1))
+            .expireAfterWrite(Duration.ofHours(1))
             .build()
     }
 
     private val kotlinYouTubeCacheContext = object : CacheContext<KotlinYouTubeItem> {
         override val cache: Cache<Unit, List<KotlinYouTubeItem>> = Caffeine
             .newBuilder()
-            .expireAfterAccess(Duration.ofHours(1))
+            .expireAfterWrite(Duration.ofHours(1))
             .build()
     }
 
     private val talkingKotlinCacheContext = object : CacheContext<TalkingKotlinItem> {
         override val cache: Cache<Unit, List<TalkingKotlinItem>> = Caffeine
             .newBuilder()
-            .expireAfterAccess(Duration.ofHours(1))
+            .expireAfterWrite(Duration.ofHours(1))
             .build()
     }
 
     private val kotlinWeeklyCacheContext = object : CacheContext<KotlinWeeklyItem> {
         override val cache: Cache<Unit, List<KotlinWeeklyItem>> = Caffeine
             .newBuilder()
-            .expireAfterAccess(Duration.ofHours(1))
+            .expireAfterWrite(Duration.ofHours(1))
             .build()
     }
 
