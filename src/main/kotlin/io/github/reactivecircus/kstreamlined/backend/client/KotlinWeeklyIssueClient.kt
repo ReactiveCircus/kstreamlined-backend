@@ -51,11 +51,13 @@ class RealKotlinWeeklyIssueClient(
                                     a {
                                         findAll {
                                             forEach {
-                                                it.eachHref.first().let { url ->
-                                                    if (it.text != url) {
-                                                        titleWithLinkPairs.add(it.text to url)
-                                                    } else {
-                                                        sources.add(url)
+                                                if (!it.attribute("style").contains("underline")) {
+                                                    it.eachHref.first().let { url ->
+                                                        if (it.children.any { it.hasAttribute("style") }) {
+                                                            titleWithLinkPairs.add(it.text to url)
+                                                        } else {
+                                                            sources.add(url)
+                                                        }
                                                     }
                                                 }
                                             }
