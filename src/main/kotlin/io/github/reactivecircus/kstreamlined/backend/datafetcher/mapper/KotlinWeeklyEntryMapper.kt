@@ -13,6 +13,9 @@ fun KotlinWeeklyItem.toKotlinWeeklyEntry(): KotlinWeekly {
             .parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME)
             .toInstant(),
         contentUrl = link,
-        issueNumber = title.substringAfter("#").toInt(),
+        issueNumber = issueNumberRegex.find(title)?.groupValues?.get(1)?.toInt()
+            ?: error("Issue number not found in title: $title")
     )
 }
+
+private val issueNumberRegex = Regex("#(\\d+)")
