@@ -89,6 +89,15 @@ class RealKotlinWeeklyIssueClient(
                     }
                 }
             }
+        }.deduplicate()
+    }
+
+    private fun List<KotlinWeeklyIssueEntry>.deduplicate(): List<KotlinWeeklyIssueEntry> {
+        val seen = mutableSetOf<Pair<String, String>>()
+        return filter { entry ->
+            val duplicate = (entry.title to entry.url) in seen
+            seen.add((entry.title to entry.url))
+            !duplicate
         }
     }
 
