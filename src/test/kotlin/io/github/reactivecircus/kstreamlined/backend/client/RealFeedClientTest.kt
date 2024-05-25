@@ -17,9 +17,8 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 class RealFeedClientTest {
 
@@ -65,7 +64,7 @@ class RealFeedClientTest {
         )
 
         with(fakeKotlinBlogCacheContext()) {
-            assertEquals(expected, feedClient.loadKotlinBlogFeed())
+            assert(feedClient.loadKotlinBlogFeed() == expected)
         }
     }
 
@@ -76,7 +75,7 @@ class RealFeedClientTest {
         }
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
-        assertThrows<ClientRequestException> {
+        assertFailsWith<ClientRequestException> {
             with(fakeKotlinBlogCacheContext()) {
                 feedClient.loadKotlinBlogFeed()
             }
@@ -177,7 +176,7 @@ class RealFeedClientTest {
         )
 
         with(fakeKotlinYouTubeCacheContext()) {
-            assertEquals(expected, feedClient.loadKotlinYouTubeFeed())
+            assert(feedClient.loadKotlinYouTubeFeed() == expected)
         }
     }
 
@@ -188,7 +187,7 @@ class RealFeedClientTest {
         }
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
-        assertThrows<ClientRequestException> {
+        assertFailsWith<ClientRequestException> {
             with(fakeKotlinYouTubeCacheContext()) {
                 feedClient.loadKotlinYouTubeFeed()
             }
@@ -229,7 +228,7 @@ class RealFeedClientTest {
         )
 
         with(fakeTalkingKotlinCacheContext()) {
-            assertEquals(expected, feedClient.loadTalkingKotlinFeed())
+            assert(feedClient.loadTalkingKotlinFeed() == expected)
         }
     }
 
@@ -240,7 +239,7 @@ class RealFeedClientTest {
         }
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
-        assertThrows<ClientRequestException> {
+        assertFailsWith<ClientRequestException> {
             with(fakeTalkingKotlinCacheContext()) {
                 feedClient.loadTalkingKotlinFeed()
             }
@@ -273,7 +272,7 @@ class RealFeedClientTest {
         )
 
         with(fakeKotlinWeeklyCacheContext()) {
-            assertEquals(expected, feedClient.loadKotlinWeeklyFeed())
+            assert(feedClient.loadKotlinWeeklyFeed() == expected)
         }
     }
 
@@ -284,7 +283,7 @@ class RealFeedClientTest {
         }
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
-        assertThrows<ClientRequestException> {
+        assertFailsWith<ClientRequestException> {
             with(fakeKotlinWeeklyCacheContext()) {
                 feedClient.loadKotlinWeeklyFeed()
             }

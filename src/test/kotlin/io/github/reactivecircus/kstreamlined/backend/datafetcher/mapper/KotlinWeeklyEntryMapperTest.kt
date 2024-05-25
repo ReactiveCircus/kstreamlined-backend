@@ -2,10 +2,9 @@ package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.time.Instant
-import kotlin.test.assertEquals
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 class KotlinWeeklyEntryMapperTest {
 
@@ -25,12 +24,12 @@ class KotlinWeeklyEntryMapperTest {
             pubDate = "Sun, 28 Apr 2024 23:44:56 +0000",
         ).toKotlinWeeklyEntry()
 
-        assertEquals(expected, actual)
+        assert(expected == actual)
     }
 
     @Test
     fun `toKotlinWeeklyEntry() throws exception when issueNumber not found in title`() {
-        assertThrows<IllegalStateException> {
+        assertFailsWith<IllegalStateException> {
             KotlinWeeklyItem(
                 title = "Kotlin Weekly X",
                 link = "https://mailchi.mp/kotlinweekly/kotlin-weekly-381",

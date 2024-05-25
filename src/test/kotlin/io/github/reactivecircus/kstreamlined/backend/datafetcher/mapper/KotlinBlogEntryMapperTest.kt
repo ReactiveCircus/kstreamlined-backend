@@ -2,9 +2,8 @@ package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
 import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog
-import org.junit.jupiter.api.Test
 import java.time.Instant
-import kotlin.test.assertEquals
+import kotlin.test.Test
 
 class KotlinBlogEntryMapperTest {
 
@@ -27,7 +26,7 @@ class KotlinBlogEntryMapperTest {
             description = "description",
         ).toKotlinBlogEntry()
 
-        assertEquals(expected, actual)
+        assert(expected == actual)
     }
 
     @Test
@@ -49,6 +48,6 @@ class KotlinBlogEntryMapperTest {
             description = "description",
         ).toKotlinBlogEntry()
 
-        assertEquals(expected, actual)
+        assert(expected == actual)
     }
 }

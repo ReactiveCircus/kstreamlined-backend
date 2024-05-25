@@ -6,8 +6,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.headersOf
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
+import kotlin.test.Test
 
 class FullResponseParserTest {
 
@@ -34,7 +33,7 @@ class FullResponseParserTest {
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
         with(fakeKotlinBlogCacheContext()) {
-            assertEquals(12, feedClient.loadKotlinBlogFeed().size)
+            assert(feedClient.loadKotlinBlogFeed().size == 12)
         }
     }
 
@@ -49,7 +48,7 @@ class FullResponseParserTest {
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
         with(fakeKotlinYouTubeCacheContext()) {
-            assertEquals(15, feedClient.loadKotlinYouTubeFeed().size)
+            assert(feedClient.loadKotlinYouTubeFeed().size == 15)
         }
     }
 
@@ -64,7 +63,7 @@ class FullResponseParserTest {
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
         with(fakeTalkingKotlinCacheContext()) {
-            assertEquals(10, feedClient.loadTalkingKotlinFeed().size)
+            assert(feedClient.loadTalkingKotlinFeed().size == 10)
         }
     }
 
@@ -79,7 +78,7 @@ class FullResponseParserTest {
         val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
 
         with(fakeKotlinWeeklyCacheContext()) {
-            assertEquals(3, feedClient.loadKotlinWeeklyFeed().size)
+            assert(feedClient.loadKotlinWeeklyFeed().size == 3)
         }
     }
 }

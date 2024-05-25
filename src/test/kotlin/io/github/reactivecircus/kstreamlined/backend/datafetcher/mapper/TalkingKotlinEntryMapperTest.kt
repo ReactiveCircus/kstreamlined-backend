@@ -2,9 +2,8 @@ package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
 import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin
-import org.junit.jupiter.api.Test
 import java.time.Instant
-import kotlin.test.assertEquals
+import kotlin.test.Test
 
 class TalkingKotlinEntryMapperTest {
 
@@ -31,6 +30,6 @@ class TalkingKotlinEntryMapperTest {
             image = TalkingKotlinItem.Image(href = "image-url"),
         ).toTalkingKotlinEntry()
 
-        assertEquals(expected, actual)
+        assert(expected == actual)
     }
 }

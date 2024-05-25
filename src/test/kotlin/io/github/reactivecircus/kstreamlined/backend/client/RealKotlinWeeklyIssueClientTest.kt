@@ -9,9 +9,8 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 class RealKotlinWeeklyIssueClientTest {
 
@@ -112,7 +111,7 @@ class RealKotlinWeeklyIssueClientTest {
             ),
         )
 
-        assertEquals(expected, kotlinWeeklyIssueClient.loadKotlinWeeklyIssue("url"))
+        assert(kotlinWeeklyIssueClient.loadKotlinWeeklyIssue("url") == expected)
     }
 
     @Test
@@ -122,7 +121,7 @@ class RealKotlinWeeklyIssueClientTest {
         }
         val kotlinWeeklyIssueClient = RealKotlinWeeklyIssueClient(mockEngine)
 
-        assertThrows<ClientRequestException> {
+        assertFailsWith<ClientRequestException> {
             kotlinWeeklyIssueClient.loadKotlinWeeklyIssue("url")
         }
     }

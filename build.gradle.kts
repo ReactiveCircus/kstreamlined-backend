@@ -1,12 +1,12 @@
 import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.powerAssert)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependencyManagement)
     alias(libs.plugins.dgsCodegen)
