@@ -1,6 +1,7 @@
 import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -29,7 +30,7 @@ tasks.withType<GenerateJavaTask>().configureEach {
 
 jib {
     to.image = "australia-southeast1-docker.pkg.dev/kstreamlined-backend/kstreamlined/kstreamlined-api"
-    from.image = "azul/zulu-openjdk:21"
+    from.image = "azul/zulu-openjdk:22"
 }
 
 tasks.withType<BuildImageTask>().configureEach {
@@ -58,7 +59,7 @@ dependencies {
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(22))
         vendor.set(JvmVendorSpec.AZUL)
     }
     compilerOptions {
@@ -90,6 +91,7 @@ detekt {
     allRules = true
 }
 tasks.withType<Detekt>().configureEach {
+    jvmTarget = JvmTarget.JVM_21.target
     reports {
         html.outputLocation.set(file("build/reports/detekt/${project.name}.html"))
     }

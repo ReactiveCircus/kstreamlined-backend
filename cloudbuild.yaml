@@ -1,7 +1,7 @@
 steps:
 
 # build and push the container image
-- name: azul/zulu-openjdk:21-latest
+- name: azul/zulu-openjdk:22-latest
   args: [ './gradlew', 'jib', '--image=${_CONTAINER_IMAGE}:latest', '--no-configuration-cache' ]
 
 # deploy container image to Cloud Run
