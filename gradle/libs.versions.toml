@@ -1,10 +1,10 @@
 [versions]
 kotlin = "2.0.0"
-spring-boot = "3.3.0"
+spring-boot = "3.3.1"
 spring-dependencyManagement = "1.1.5"
 jib = "3.4.3"
-ktor = "2.3.11"
-dgsBom = "9.0.0"
+ktor = "2.3.12"
+dgsBom = "9.0.1"
 dgsCodegen = "6.2.1"
 detekt = "1.23.6"
 apacheCommonsText = "1.12.0"
