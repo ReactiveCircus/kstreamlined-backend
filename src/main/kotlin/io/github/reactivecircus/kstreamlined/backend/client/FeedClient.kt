@@ -55,8 +55,10 @@ class RealFeedClient(
         install(ContentNegotiation) {
             val format = DefaultXml.copy {
                 policy = DefaultXmlSerializationPolicy(
-                    pedantic = false,
-                    unknownChildHandler = XmlConfig.IGNORING_UNKNOWN_CHILD_HANDLER
+                    DefaultXmlSerializationPolicy.Builder().apply {
+                        pedantic = false
+                        unknownChildHandler = XmlConfig.IGNORING_UNKNOWN_CHILD_HANDLER
+                    }.build()
                 )
             }
 
