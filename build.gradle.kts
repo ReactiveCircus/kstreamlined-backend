@@ -1,6 +1,7 @@
 import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.getSupportedKotlinVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -76,10 +77,10 @@ tasks.withType<Test>().configureEach {
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
 }
 
-configurations.configureEach {
+configurations.matching { it.name == "detekt" }.configureEach {
     resolutionStrategy.eachDependency {
-        if (this@configureEach.name == "detekt" && requested.group == "org.jetbrains.kotlin") {
-            useVersion("1.9.23")
+        if (requested.group == "org.jetbrains.kotlin") {
+            useVersion(getSupportedKotlinVersion())
         }
     }
 }
