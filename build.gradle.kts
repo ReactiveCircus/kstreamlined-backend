@@ -35,12 +35,11 @@ graalvmNative {
     }
     binaries.named("main") {
         buildArgs(
-            "--strict-image-heap",
             "-march=native",
             "-R:MaxHeapSize=10m",
         )
         javaLauncher = javaToolchains.launcherFor {
-            languageVersion.set(JavaLanguageVersion.of(21))
+            languageVersion.set(JavaLanguageVersion.of(22))
             vendor.set(JvmVendorSpec.GRAAL_VM)
         }
     }

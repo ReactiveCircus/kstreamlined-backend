@@ -1,6 +1,5 @@
 package io.github.reactivecircus.kstreamlined.backend
 
-import com.netflix.graphql.dgs.webflux.autoconfiguration.DgsWebfluxConfigurationProperties
 import io.github.reactivecircus.kstreamlined.backend.client.ClientConfigs
 import io.github.reactivecircus.kstreamlined.backend.client.FeedClient
 import io.github.reactivecircus.kstreamlined.backend.client.KotlinWeeklyIssueClient
@@ -8,20 +7,11 @@ import io.github.reactivecircus.kstreamlined.backend.client.RealFeedClient
 import io.github.reactivecircus.kstreamlined.backend.client.RealKotlinWeeklyIssueClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
-import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.ImportRuntimeHints
 
 @Configuration
-@ImportRuntimeHints(KStreamlinedRuntimeHints::class)
-@RegisterReflectionForBinding(
-    DgsWebfluxConfigurationProperties::class,
-    DgsWebfluxConfigurationProperties.DgsWebsocketConfigurationProperties::class,
-    DgsWebfluxConfigurationProperties.DgsGraphiQLConfigurationProperties::class,
-    DgsWebfluxConfigurationProperties.DgsSchemaJsonConfigurationProperties::class,
-)
 class KSConfiguration {
 
     @Bean
