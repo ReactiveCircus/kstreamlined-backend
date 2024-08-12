@@ -31,13 +31,11 @@ graalvmNative {
         enabled.set(true)
     }
     binaries.configureEach {
-        resources.autodetect()
-    }
-    binaries.named("main") {
         javaLauncher = javaToolchains.launcherFor {
             languageVersion.set(JavaLanguageVersion.of(22))
             vendor.set(JvmVendorSpec.GRAAL_VM)
         }
+        resources.autodetect()
     }
 }
 
@@ -52,26 +50,6 @@ jib {
 
 tasks.withType<BuildImageTask>().configureEach {
     notCompatibleWithConfigurationCache("Jib Gradle plugin does not support configuration cache.")
-}
-
-dependencies {
-    implementation(libs.spring.boot.starter)
-    implementation(libs.dgs.starter)
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
-    implementation(libs.ktor.client.contentNegotiation)
-    implementation(libs.ktor.serialization.xml)
-    implementation(libs.apacheCommonsText)
-    implementation(libs.apacheCommonsLang3)
-    implementation(libs.apacheCommonsNet)
-    implementation(libs.caffeine)
-    implementation(libs.scrapeit)
-    implementation(libs.jsoup)
-    implementation(libs.xalan)
-
-    testImplementation(libs.spring.boot.starter.test)
-    testImplementation(kotlin("test"))
-    testImplementation(libs.ktor.client.mock)
 }
 
 kotlin {
@@ -115,8 +93,22 @@ tasks.withType<Detekt>().configureEach {
 }
 dependencies.add("detektPlugins", libs.detektFormatting)
 
-fun Project.envOrProp(name: String): String {
-    return providers.environmentVariable(name).orNull
-        ?: providers.gradleProperty(name).orNull
-        ?: throw GradleException("Missing environment variable or system property $name")
+dependencies {
+    implementation(libs.spring.boot.starter)
+    implementation(libs.dgs.starter)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.contentNegotiation)
+    implementation(libs.ktor.serialization.xml)
+    implementation(libs.apacheCommonsText)
+    implementation(libs.apacheCommonsLang3)
+    implementation(libs.apacheCommonsNet)
+    implementation(libs.caffeine)
+    implementation(libs.scrapeit)
+    implementation(libs.jsoup)
+    implementation(libs.xalan)
+
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(kotlin("test"))
+    testImplementation(libs.ktor.client.mock)
 }
