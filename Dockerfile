@@ -1,5 +1,5 @@
 # Build stage
-FROM ghcr.io/graalvm/graalvm-community:22 as builder
+FROM ghcr.io/graalvm/graalvm-community:22 as build
 
 WORKDIR /app
 
