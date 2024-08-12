@@ -34,10 +34,6 @@ graalvmNative {
         resources.autodetect()
     }
     binaries.named("main") {
-        buildArgs(
-            "-march=native",
-            "-R:MaxHeapSize=10m",
-        )
         javaLauncher = javaToolchains.launcherFor {
             languageVersion.set(JavaLanguageVersion.of(22))
             vendor.set(JvmVendorSpec.GRAAL_VM)
