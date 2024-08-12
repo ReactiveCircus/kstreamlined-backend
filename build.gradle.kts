@@ -1,4 +1,3 @@
-import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.getSupportedKotlinVersion
@@ -12,7 +11,6 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependencyManagement)
     alias(libs.plugins.dgsCodegen)
-    alias(libs.plugins.jib)
     alias(libs.plugins.detekt)
     alias(libs.plugins.graalvmNative)
 }
@@ -43,18 +41,9 @@ tasks.withType<GenerateJavaTask>().configureEach {
     packageName = "io.github.reactivecircus.kstreamlined.backend.schema.generated"
 }
 
-jib {
-    to.image = "australia-southeast1-docker.pkg.dev/kstreamlined-backend/kstreamlined/kstreamlined-api"
-    from.image = "azul/zulu-openjdk:22"
-}
-
-tasks.withType<BuildImageTask>().configureEach {
-    notCompatibleWithConfigurationCache("Jib Gradle plugin does not support configuration cache.")
-}
-
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(22))
         vendor.set(JvmVendorSpec.AZUL)
     }
     compilerOptions {

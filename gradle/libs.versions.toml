@@ -2,7 +2,6 @@
 kotlin = "2.0.10"
 spring-boot = "3.3.2"
 spring-dependencyManagement = "1.1.6"
-jib = "3.4.3"
 ktor = "3.0.0-beta-2"
 dgsBom = "9.0.4"
 dgsCodegen = "6.2.2"
@@ -26,7 +25,6 @@ spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependencyManagement = { id = "io.spring.dependency-management", version.ref = "spring-dependencyManagement" }
 dgsCodegen = { id = "com.netflix.dgs.codegen", version.ref = "dgsCodegen" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-jib = { id = "com.google.cloud.tools.jib", version.ref = "jib" }
 graalvmNative = { id = "org.graalvm.buildtools.native", version.ref = "graalvmNative" }
 
 [libraries]

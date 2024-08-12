@@ -49,6 +49,22 @@ To assemble an executable jar archive:
 ./gradlew bootJar
 ```
 
+## GraalVM Native Image
+
+Make sure the required version of GraalVM JDK is installed.
+
+To compile a native executable:
+
+```
+./gradlew nativeCompile --no-configuration-cache
+```
+
+To run the native executable:
+
+```
+./gradlew nativeRun --no-configuration-cache
+```
+
 ## License
 
 ```
