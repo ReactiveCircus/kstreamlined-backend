@@ -1,4 +1,3 @@
-import com.google.cloud.tools.jib.gradle.BuildImageTask
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.getSupportedKotlinVersion
@@ -12,8 +11,8 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependencyManagement)
     alias(libs.plugins.dgsCodegen)
-    alias(libs.plugins.jib)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.graalvmNative)
 }
 
 group = "io.github.reactivecircus.kstreamlined.backend"
@@ -25,42 +24,26 @@ dependencyManagement {
     }
 }
 
+graalvmNative {
+    metadataRepository {
+        enabled.set(true)
+    }
+    binaries.configureEach {
+        javaLauncher = javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(22))
+            vendor.set(JvmVendorSpec.GRAAL_VM)
+        }
+        resources.autodetect()
+    }
+}
+
 tasks.withType<GenerateJavaTask>().configureEach {
     packageName = "io.github.reactivecircus.kstreamlined.backend.schema.generated"
 }
 
-jib {
-    to.image = "australia-southeast1-docker.pkg.dev/kstreamlined-backend/kstreamlined/kstreamlined-api"
-    from.image = "azul/zulu-openjdk:22"
-}
-
-tasks.withType<BuildImageTask>().configureEach {
-    notCompatibleWithConfigurationCache("Jib Gradle plugin does not support configuration cache.")
-}
-
-dependencies {
-    implementation(libs.spring.boot.starter)
-    implementation(libs.dgs.starter)
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
-    implementation(libs.ktor.client.contentNegotiation)
-    implementation(libs.ktor.serialization.xml)
-    implementation(libs.apacheCommonsText)
-    implementation(libs.apacheCommonsLang3)
-    implementation(libs.apacheCommonsNet)
-    implementation(libs.caffeine)
-    implementation(libs.scrapeit)
-    implementation(libs.jsoup)
-    implementation(libs.xalan)
-
-    testImplementation(libs.spring.boot.starter.test)
-    testImplementation(kotlin("test"))
-    testImplementation(libs.ktor.client.mock)
-}
-
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(22))
         vendor.set(JvmVendorSpec.AZUL)
     }
     compilerOptions {
@@ -99,8 +82,22 @@ tasks.withType<Detekt>().configureEach {
 }
 dependencies.add("detektPlugins", libs.detektFormatting)
 
-fun Project.envOrProp(name: String): String {
-    return providers.environmentVariable(name).orNull
-        ?: providers.gradleProperty(name).orNull
-        ?: throw GradleException("Missing environment variable or system property $name")
+dependencies {
+    implementation(libs.spring.boot.starter)
+    implementation(libs.dgs.starter)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.contentNegotiation)
+    implementation(libs.ktor.serialization.xml)
+    implementation(libs.apacheCommonsText)
+    implementation(libs.apacheCommonsLang3)
+    implementation(libs.apacheCommonsNet)
+    implementation(libs.caffeine)
+    implementation(libs.scrapeit)
+    implementation(libs.jsoup)
+    implementation(libs.xalan)
+
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(kotlin("test"))
+    testImplementation(libs.ktor.client.mock)
 }
