@@ -56,7 +56,7 @@ jobs:
       - uses: docker/login-action@v3
         # TODO move down
         with:
-          registry: $REGION-docker.pkg.dev
+          registry: ${{ env.REGION }}-docker.pkg.dev
           username: _json_key
           password: ${{ secrets.GAR_JSON_KEY }}
       - run: ./gradlew nativeCompile --no-configuration-cache
@@ -70,4 +70,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: $CONTAINER_IMAGE:${{ github.sha }}
+          tags: ${{ env.CONTAINER_IMAGE }}:${{ github.sha }}
