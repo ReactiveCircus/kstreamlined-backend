@@ -1,17 +1,7 @@
-# Build stage
-FROM ghcr.io/graalvm/graalvm-community:22 as build
-
-WORKDIR /app
-
-COPY . /app
-
-RUN ./gradlew nativeCompile --no-configuration-cache
-
-# Runtime stage
 FROM scratch
 
-COPY --from=build /app/build/native/nativeCompile/kstreamlined-backend /app
+COPY build/native/nativeCompile/kstreamlined-backend /app/kstreamlined-backend
 
-ENTRYPOINT ["/app/"]
+ENTRYPOINT ["/app/kstreamlined-backend"]
 
 EXPOSE 8000
