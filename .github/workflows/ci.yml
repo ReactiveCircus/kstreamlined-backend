@@ -51,16 +51,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-#      - uses: graalvm/setup-graalvm@v1
-#        with:
-#          distribution: 'graalvm-community'
-#          java-version: '22'
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          distribution: 'graalvm-community'
+          java-version: '22'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: gradle/actions/setup-gradle@v4
 
-#      - name: Build GraalVM native executable
-#        run: ./gradlew nativeCompile --no-configuration-cache
+      - name: Build GraalVM native executable
+        run: ./gradlew nativeCompile --no-configuration-cache
 
       - uses: docker/setup-buildx-action@v3
 
