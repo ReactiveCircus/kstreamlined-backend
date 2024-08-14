@@ -35,8 +35,8 @@ jobs:
       - run: ./gradlew assemble check
   deploy:
     name: Build and push container image to Google Artifact Registry, deploy to Cloud Run
-#    needs: [ assemble-and-check ]
-#    if: github.ref == 'refs/heads/main'
+    needs: [ assemble-and-check ]
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
       CONTAINER_IMAGE: ${{ secrets.GCP_CONTAINER_IMAGE }}
@@ -58,8 +58,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: gradle/actions/setup-gradle@v4
-        with:
-          cache-read-only: false # TODO remove
 
       - name: Build GraalVM native executable
         run: ./gradlew nativeCompile --no-configuration-cache
