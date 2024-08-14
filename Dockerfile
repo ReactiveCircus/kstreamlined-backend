@@ -8,7 +8,7 @@ COPY . .
 RUN ./gradlew nativeCompile --no-configuration-cache
 
 # Runtime stage
-FROM docker.io/oraclelinux:8-slim
+FROM alpine:latest
 
 COPY --from=build /app/build/native/nativeCompile/kstreamlined-backend /app/kstreamlined-backend
 
