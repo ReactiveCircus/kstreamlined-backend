@@ -43,7 +43,7 @@ jobs:
       REGION: ${{ secrets.GCP_REGION }}
       SERVICE_NAME: ${{ secrets.GCP_SERVICE_NAME }}
       CPU: 4
-      MEMORY: 2Gi
+      MEMORY: 8Gi
       MIN_INSTANCES: 0
       MAX_INSTANCES: 4
       REQUEST_TIMEOUT: 30s
