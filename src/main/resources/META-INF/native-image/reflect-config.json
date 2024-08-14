@@ -148,7 +148,7 @@
   "name":"com.fasterxml.jackson.core.ObjectCodec",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getJsonFactory","parameterTypes":[] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.ResolvedType"] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.TypeReference"] }]
+  "methods":[{"name":"getJsonFactory","parameterTypes":[] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.ResolvedType"] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.TypeReference"] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","java.lang.Class"] }]
 },
 {
   "name":"com.fasterxml.jackson.core.TreeCodec",
@@ -1551,10 +1551,6 @@
 {
   "name":"java.util.concurrent.atomic.Striped64",
   "fields":[{"name":"base"}, {"name":"cellsBusy"}]
-},
-{
-  "name":"java.util.concurrent.atomic.Striped64$Cell",
-  "fields":[{"name":"value"}]
 },
 {
   "name":"java.util.function.Consumer"
@@ -4284,8 +4280,28 @@
   "fields":[{"name":"winner"}]
 },
 {
+  "name":"reactor.core.publisher.FluxGenerate$GenerateSubscription",
+  "fields":[{"name":"requested"}]
+},
+{
   "name":"reactor.core.publisher.FluxIterable$IterableSubscription",
   "fields":[{"name":"requested"}]
+},
+{
+  "name":"reactor.core.publisher.FluxLimitRequest$FluxLimitRequestSubscriber",
+  "fields":[{"name":"requestRemaining"}]
+},
+{
+  "name":"reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber",
+  "fields":[{"name":"requested"}]
+},
+{
+  "name":"reactor.core.publisher.FluxSubscribeOn$SubscribeOnSubscriber",
+  "fields":[{"name":"requested"}, {"name":"s"}, {"name":"thread"}]
+},
+{
+  "name":"reactor.core.publisher.FluxUsing$UsingFuseableSubscriber",
+  "fields":[{"name":"wip"}]
 },
 {
   "name":"reactor.core.publisher.Hooks"
@@ -4324,6 +4340,10 @@
 {
   "name":"reactor.core.publisher.MonoNext$NextSubscriber",
   "fields":[{"name":"wip"}]
+},
+{
+  "name":"reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber",
+  "fields":[{"name":"requested"}, {"name":"s"}, {"name":"thread"}]
 },
 {
   "name":"reactor.core.publisher.MonoWhen$WhenCoordinator",
@@ -4370,6 +4390,10 @@
   "fields":[{"name":"markCount"}]
 },
 {
+  "name":"reactor.core.scheduler.WorkerTask",
+  "fields":[{"name":"future"}, {"name":"parent"}, {"name":"thread"}]
+},
+{
   "name":"reactor.netty.channel.ChannelOperations",
   "fields":[{"name":"outboundSubscription"}]
 },
@@ -4380,6 +4404,10 @@
 {
   "name":"reactor.netty.channel.FluxReceive",
   "fields":[{"name":"receiverCancel"}]
+},
+{
+  "name":"reactor.netty.channel.MonoSendMany$SendManyInner",
+  "fields":[{"name":"s"}, {"name":"wip"}]
 },
 {
   "name":"reactor.netty.contextpropagation.ChannelContextAccessor"
@@ -4428,6 +4456,14 @@
 },
 {
   "name":"reactor.tools.agent.ReactorDebugAgent"
+},
+{
+  "name":"reactor.util.concurrent.SpscArrayQueueConsumer",
+  "fields":[{"name":"consumerIndex"}]
+},
+{
+  "name":"reactor.util.concurrent.SpscArrayQueueProducer",
+  "fields":[{"name":"producerIndex"}]
 },
 {
   "name":"reactor.util.context.ReactorContextAccessor"
