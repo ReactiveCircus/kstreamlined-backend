@@ -959,7 +959,7 @@
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly",
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getIssueNumber","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntry",
@@ -974,7 +974,7 @@
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin",
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getDuration","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getSummary","parameterTypes":[] }, {"name":"getThumbnailUrl","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+  "methods":[{"name":"getAudioUrl","parameterTypes":[] }, {"name":"getContentUrl","parameterTypes":[] }, {"name":"getDuration","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getSummary","parameterTypes":[] }, {"name":"getThumbnailUrl","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
 },
 {
   "name":"io.ktor.client.HttpClient",

@@ -58,6 +58,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false # TODO remove
 
       - name: Build GraalVM native executable
         run: ./gradlew nativeCompile --no-configuration-cache
