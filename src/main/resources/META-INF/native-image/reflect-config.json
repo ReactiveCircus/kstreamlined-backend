@@ -945,36 +945,36 @@
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSource",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getDescription","parameterTypes":[] }, {"name":"getKey","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey"
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getDescription","parameterTypes":[] }, {"name":"getFeaturedImageUrl","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getIssueNumber","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntry",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getGroup","parameterTypes":[] }, {"name":"getSource","parameterTypes":[] }, {"name":"getSummary","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }, {"name":"getUrl","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getDescription","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getThumbnailUrl","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getAudioUrl","parameterTypes":[] }, {"name":"getContentUrl","parameterTypes":[] }, {"name":"getDuration","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getSummary","parameterTypes":[] }, {"name":"getThumbnailUrl","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.ktor.client.HttpClient",
