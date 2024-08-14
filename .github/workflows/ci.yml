@@ -80,7 +80,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.CONTAINER_IMAGE }}:${{ env.SHA_SHORT }},${{ env.CONTAINER_IMAGE }}:latest
+          labels: build=${{ env.SHA_SHORT }}
+          tags: ${{ env.CONTAINER_IMAGE }}:latest
 
       - uses: google-github-actions/auth@v2
         with:
@@ -91,7 +92,7 @@ jobs:
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE_NAME }} \
-            --image ${{ env.CONTAINER_IMAGE }}:${{ env.SHA_SHORT }} \
+            --image ${{ env.CONTAINER_IMAGE }}:latest \
             --region ${{ env.REGION }} \
             --cpu ${{ env.CPU }} \
             --memory ${{ env.MEMORY }} \
