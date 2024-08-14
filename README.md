@@ -16,6 +16,7 @@ Currently supported feed sources:
 - [Spring Boot](https://github.com/spring-projects/spring-boot)
 - [Netflix DGS Framework](https://netflix.github.io/dgs/)
 - [Ktor (client)](https://ktor.io/)
+- [GraalVM](https://www.graalvm.org/)
 
 ## Building and running locally
 
@@ -37,7 +38,7 @@ To run the service as a Spring Boot application:
 ./gradlew bootRun
 ```
 
-The GraphQL playground is available at
+The GraphQL playground is available at:
 
 ```
 http://localhost:8000/graphiql
