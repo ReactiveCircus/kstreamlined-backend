@@ -8,7 +8,7 @@ COPY . .
 RUN ./gradlew nativeCompile --no-configuration-cache
 
 # Runtime stage
-FROM alpine:latest
+FROM ubuntu:latest
 
 COPY --from=build /app/build/native/nativeCompile/kstreamlined-backend /app/kstreamlined-backend
 
