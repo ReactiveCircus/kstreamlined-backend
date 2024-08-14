@@ -98,3 +98,17 @@ jobs:
             --max-instances ${{ env.MAX_INSTANCES }} \
             --platform managed \
             --allow-unauthenticated
+
+      - name: Cleanup old images
+        run: |
+          # Get all images except the most recent 2
+          IMAGES_TO_DELETE=$(gcloud artifacts docker images list ${{ env.CONTAINER_IMAGE }} \
+            --format="get(DIGEST)" \
+            --sort-by="~CREATE_TIME" | tail -n +3)
+  
+          # Delete the older images
+          for DIGEST in $IMAGES_TO_DELETE; do
+            gcloud artifacts docker images delete ${{ env.CONTAINER_IMAGE }}@$DIGEST \
+              --delete-tags \
+              --quiet
+          done
