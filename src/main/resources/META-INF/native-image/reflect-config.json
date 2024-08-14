@@ -945,36 +945,36 @@
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSource",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getDescription","parameterTypes":[] }, {"name":"getKey","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey"
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getDescription","parameterTypes":[] }, {"name":"getFeaturedImageUrl","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntry",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getGroup","parameterTypes":[] }, {"name":"getSource","parameterTypes":[] }, {"name":"getSummary","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }, {"name":"getUrl","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getDescription","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getThumbnailUrl","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin",
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getContentUrl","parameterTypes":[] }, {"name":"getDuration","parameterTypes":[] }, {"name":"getId","parameterTypes":[] }, {"name":"getPublishTime","parameterTypes":[] }, {"name":"getSummary","parameterTypes":[] }, {"name":"getThumbnailUrl","parameterTypes":[] }, {"name":"getTitle","parameterTypes":[] }]
+    "allDeclaredFields":true,
+    "allDeclaredMethods":true
 },
 {
   "name":"io.ktor.client.HttpClient",
@@ -4280,8 +4280,28 @@
   "fields":[{"name":"winner"}]
 },
 {
+  "name":"reactor.core.publisher.FluxGenerate$GenerateSubscription",
+  "fields":[{"name":"requested"}]
+},
+{
   "name":"reactor.core.publisher.FluxIterable$IterableSubscription",
   "fields":[{"name":"requested"}]
+},
+{
+  "name":"reactor.core.publisher.FluxLimitRequest$FluxLimitRequestSubscriber",
+  "fields":[{"name":"requestRemaining"}]
+},
+{
+  "name":"reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber",
+  "fields":[{"name":"requested"}]
+},
+{
+  "name":"reactor.core.publisher.FluxSubscribeOn$SubscribeOnSubscriber",
+  "fields":[{"name":"requested"}, {"name":"s"}, {"name":"thread"}]
+},
+{
+  "name":"reactor.core.publisher.FluxUsing$UsingFuseableSubscriber",
+  "fields":[{"name":"wip"}]
 },
 {
   "name":"reactor.core.publisher.Hooks"
@@ -4320,6 +4340,10 @@
 {
   "name":"reactor.core.publisher.MonoNext$NextSubscriber",
   "fields":[{"name":"wip"}]
+},
+{
+  "name":"reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber",
+  "fields":[{"name":"requested"}, {"name":"s"}, {"name":"thread"}]
 },
 {
   "name":"reactor.core.publisher.MonoWhen$WhenCoordinator",
@@ -4366,6 +4390,10 @@
   "fields":[{"name":"markCount"}]
 },
 {
+  "name":"reactor.core.scheduler.WorkerTask",
+  "fields":[{"name":"future"}, {"name":"parent"}, {"name":"thread"}]
+},
+{
   "name":"reactor.netty.channel.ChannelOperations",
   "fields":[{"name":"outboundSubscription"}]
 },
@@ -4376,6 +4404,10 @@
 {
   "name":"reactor.netty.channel.FluxReceive",
   "fields":[{"name":"receiverCancel"}]
+},
+{
+  "name":"reactor.netty.channel.MonoSendMany$SendManyInner",
+  "fields":[{"name":"s"}, {"name":"wip"}]
 },
 {
   "name":"reactor.netty.contextpropagation.ChannelContextAccessor"
@@ -4424,6 +4456,14 @@
 },
 {
   "name":"reactor.tools.agent.ReactorDebugAgent"
+},
+{
+  "name":"reactor.util.concurrent.SpscArrayQueueConsumer",
+  "fields":[{"name":"consumerIndex"}]
+},
+{
+  "name":"reactor.util.concurrent.SpscArrayQueueProducer",
+  "fields":[{"name":"producerIndex"}]
 },
 {
   "name":"reactor.util.context.ReactorContextAccessor"

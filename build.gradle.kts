@@ -34,6 +34,9 @@ graalvmNative {
             vendor.set(JvmVendorSpec.GRAAL_VM)
         }
         resources.autodetect()
+        buildArgs(
+            "-R:MaxHeapSize=100m",
+        )
     }
 }
 
