@@ -1,56 +1,79 @@
 package io.github.reactivecircus.kstreamlined.backend
 
-import io.github.reactivecircus.kstreamlined.backend.client.ClientConfigs
-import io.github.reactivecircus.kstreamlined.backend.client.FeedClient
-import io.github.reactivecircus.kstreamlined.backend.client.KotlinWeeklyIssueClient
-import io.github.reactivecircus.kstreamlined.backend.client.RealFeedClient
-import io.github.reactivecircus.kstreamlined.backend.client.RealKotlinWeeklyIssueClient
+import io.github.reactivecircus.kstreamlined.backend.datasource.DataLoader
+import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig
+import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.RealFeedDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeeklyIssueDataSource
+import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
 import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.cio.CIO
+import io.ktor.client.engine.okhttp.OkHttp
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 @Configuration
 class KSConfiguration {
 
     @Bean
-    fun feedClient(
+    fun feedDataSource(
         engine: HttpClientEngine,
-        clientConfigs: ClientConfigs,
-    ): FeedClient {
-        return RealFeedClient(
+        dataSourceConfig: FeedDataSourceConfig,
+        redisClient: RedisClient,
+    ): FeedDataSource {
+        return RealFeedDataSource(
             engine = engine,
-            clientConfigs = clientConfigs,
+            dataSourceConfig = dataSourceConfig,
+            cacheConfig = DataLoader.CacheConfig(
+                localExpiry = 10.minutes,
+                remoteExpiry = 1.hours,
+            ),
+            redisClient = redisClient,
         )
     }
 
     @Bean
-    fun kotlinWeeklyIssueClient(
+    fun feedDataSourceConfig(
+        @Value("\${ks.kotlin-blog-feed-url}") kotlinBlogFeedUrl: String,
+        @Value("\${ks.kotlin-youtube-feed-url}") kotlinYouTubeFeedUrl: String,
+        @Value("\${ks.talking-kotlin-feed-url}") talkingKotlinFeedUrl: String,
+        @Value("\${ks.kotlin-weekly-feed-url}") kotlinWeeklyFeedUrl: String,
+    ): FeedDataSourceConfig {
+        return FeedDataSourceConfig(
+            kotlinBlogFeedUrl = kotlinBlogFeedUrl,
+            kotlinYouTubeFeedUrl = kotlinYouTubeFeedUrl,
+            talkingKotlinFeedUrl = talkingKotlinFeedUrl,
+            kotlinWeeklyFeedUrl = kotlinWeeklyFeedUrl,
+        )
+    }
+
+    @Bean
+    fun kotlinWeeklyIssueDataSource(
         engine: HttpClientEngine
-    ): KotlinWeeklyIssueClient {
-        return RealKotlinWeeklyIssueClient(
+    ): KotlinWeeklyIssueDataSource {
+        return RealKotlinWeeklyIssueDataSource(
             engine = engine,
         )
     }
 
     @Bean
     fun httpClientEngine(): HttpClientEngine {
-        return CIO.create()
+        return OkHttp.create()
     }
 
     @Bean
-    fun clientConfigs(
-        @Value("\${ks.kotlin-blog-feed-url}") kotlinBlogFeedUrl: String,
-        @Value("\${ks.kotlin-youtube-feed-url}") kotlinYouTubeFeedUrl: String,
-        @Value("\${ks.talking-kotlin-feed-url}") talkingKotlinFeedUrl: String,
-        @Value("\${ks.kotlin-weekly-feed-url}") kotlinWeeklyFeedUrl: String,
-    ): ClientConfigs {
-        return ClientConfigs(
-            kotlinBlogFeedUrl = kotlinBlogFeedUrl,
-            kotlinYouTubeFeedUrl = kotlinYouTubeFeedUrl,
-            talkingKotlinFeedUrl = talkingKotlinFeedUrl,
-            kotlinWeeklyFeedUrl = kotlinWeeklyFeedUrl,
+    fun redisClient(
+        engine: HttpClientEngine,
+        @Value("\${KS_REDIS_REST_URL}") redisUrl: String,
+        @Value("\${KS_REDIS_REST_TOKEN}") redisToken: String,
+    ): RedisClient {
+        return RedisClient(
+            engine = engine,
+            url = redisUrl,
+            token = redisToken,
         )
     }
 }

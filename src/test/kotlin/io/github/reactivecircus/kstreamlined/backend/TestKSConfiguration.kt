@@ -1,9 +1,11 @@
 package io.github.reactivecircus.kstreamlined.backend
 
-import io.github.reactivecircus.kstreamlined.backend.client.FakeFeedClient
-import io.github.reactivecircus.kstreamlined.backend.client.FakeKotlinWeeklyIssueClient
-import io.github.reactivecircus.kstreamlined.backend.client.FeedClient
-import io.github.reactivecircus.kstreamlined.backend.client.KotlinWeeklyIssueClient
+import io.github.reactivecircus.kstreamlined.backend.datasource.FakeFeedDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.FakeKotlinWeeklyIssueDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.NoOpRedisClient
+import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -11,12 +13,17 @@ import org.springframework.context.annotation.Configuration
 class TestKSConfiguration {
 
     @Bean
-    fun feedClient(): FeedClient {
-        return FakeFeedClient
+    fun feedDataSource(): FeedDataSource {
+        return FakeFeedDataSource
     }
 
     @Bean
-    fun kotlinWeeklyIssueClient(): KotlinWeeklyIssueClient {
-        return FakeKotlinWeeklyIssueClient
+    fun kotlinWeeklyIssueDataSource(): KotlinWeeklyIssueDataSource {
+        return FakeKotlinWeeklyIssueDataSource
+    }
+
+    @Bean
+    fun redisClient(): RedisClient {
+        return NoOpRedisClient
     }
 }

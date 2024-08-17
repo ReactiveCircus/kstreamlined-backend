@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.scalar
+package io.github.reactivecircus.kstreamlined.backend.datafetcher.scalar
 
 import com.netflix.graphql.dgs.DgsScalar
 import graphql.GraphQLContext

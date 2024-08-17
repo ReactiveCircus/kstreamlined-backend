@@ -700,6 +700,30 @@
   "name":"com.sendgrid.SendGrid"
 },
 {
+  "name":"com.sun.crypto.provider.AESCipher$General",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.ARCFOURCipher",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.ChaCha20Cipher$ChaCha20Poly1305",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.DESCipher",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.DESedeCipher",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.DHParameters",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"com.sun.crypto.provider.GaloisCounterMode$AESGCM",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -709,6 +733,10 @@
 },
 {
   "name":"com.sun.crypto.provider.HmacCore$HmacSHA384",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.TlsMasterSecretGenerator",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -830,7 +858,7 @@
   "name":"io.github.reactivecircus.kstreamlined.backend.KSConfiguration",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"clientConfigs","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.lang.String"] }, {"name":"feedClient","parameterTypes":["io.ktor.client.engine.HttpClientEngine","io.github.reactivecircus.kstreamlined.backend.client.ClientConfigs"] }, {"name":"httpClientEngine","parameterTypes":[] }, {"name":"kotlinWeeklyIssueClient","parameterTypes":["io.ktor.client.engine.HttpClientEngine"] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"feedDataSource","parameterTypes":["io.ktor.client.engine.HttpClientEngine","io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig","io.github.reactivecircus.kstreamlined.backend.redis.RedisClient"] }, {"name":"feedDataSourceConfig","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.lang.String"] }, {"name":"httpClientEngine","parameterTypes":[] }, {"name":"kotlinWeeklyIssueDataSource","parameterTypes":["io.ktor.client.engine.HttpClientEngine"] }, {"name":"redisClient","parameterTypes":["io.ktor.client.engine.HttpClientEngine","java.lang.String","java.lang.String"] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.KSConfiguration$$SpringCGLIB$$0",
@@ -849,75 +877,11 @@
   "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
 },
 {
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.ClientConfigs",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"close","parameterTypes":[] }, {"name":"shutdown","parameterTypes":[] }]
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.FeedClient",
-  "queryAllDeclaredMethods":true,
-  "queryAllPublicMethods":true
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.KotlinWeeklyIssueClient",
-  "queryAllDeclaredMethods":true,
-  "queryAllPublicMethods":true
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.RealFeedClient",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"close","parameterTypes":[] }, {"name":"loadKotlinBlogFeed","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.client.CacheContext","kotlin.coroutines.Continuation"] }, {"name":"loadKotlinWeeklyFeed","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.client.CacheContext","kotlin.coroutines.Continuation"] }, {"name":"loadKotlinYouTubeFeed","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.client.CacheContext","kotlin.coroutines.Continuation"] }, {"name":"loadTalkingKotlinFeed","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.client.CacheContext","kotlin.coroutines.Continuation"] }, {"name":"shutdown","parameterTypes":[] }]
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.RealKotlinWeeklyIssueClient",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"close","parameterTypes":[] }, {"name":"loadKotlinWeeklyIssue","parameterTypes":["java.lang.String","kotlin.coroutines.Continuation"] }, {"name":"shutdown","parameterTypes":[] }]
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogRss",
-  "fields":[{"name":"Companion"}]
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogRss$Companion",
-  "methods":[{"name":"serializer","parameterTypes":[] }]
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyRss",
-  "fields":[{"name":"Companion"}]
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyRss$Companion",
-  "methods":[{"name":"serializer","parameterTypes":[] }]
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinRss",
-  "fields":[{"name":"Companion"}]
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinRss$Companion",
-  "methods":[{"name":"serializer","parameterTypes":[] }]
-},
-{
   "name":"io.github.reactivecircus.kstreamlined.backend.datafetcher.FeedEntryDataFetcher",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.client.FeedClient"] }, {"name":"feedEntries","parameterTypes":["java.util.List","kotlin.coroutines.Continuation"] }, {"name":"resolveFeedEntry$kstreamlined_backend","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry"] }]
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.datafetcher.FeedEntryDataFetcher$kotlinBlogCacheContext$1"
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.datafetcher.FeedEntryDataFetcher$kotlinWeeklyCacheContext$1"
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.datafetcher.FeedEntryDataFetcher$kotlinYouTubeCacheContext$1"
-},
-{
-  "name":"io.github.reactivecircus.kstreamlined.backend.datafetcher.FeedEntryDataFetcher$talkingKotlinCacheContext$1"
+  "methods":[{"name":"<init>","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource"] }, {"name":"feedEntries","parameterTypes":["java.util.List","kotlin.coroutines.Continuation"] }, {"name":"resolveFeedEntry$kstreamlined_backend","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry"] }]
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.datafetcher.FeedSourceDataFetcher",
@@ -931,14 +895,72 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.client.KotlinWeeklyIssueClient"] }, {"name":"kotlinWeeklyIssue","parameterTypes":["java.lang.String","kotlin.coroutines.Continuation"] }]
+  "methods":[{"name":"<init>","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource"] }, {"name":"kotlinWeeklyIssue","parameterTypes":["java.lang.String","kotlin.coroutines.Continuation"] }]
 },
 {
-  "name":"io.github.reactivecircus.kstreamlined.backend.scalar.InstantScalar",
+  "name":"io.github.reactivecircus.kstreamlined.backend.datafetcher.scalar.InstantScalar",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"parseLiteral","parameterTypes":["graphql.language.Value","graphql.execution.CoercedVariables","graphql.GraphQLContext","java.util.Locale"] }, {"name":"parseValue","parameterTypes":["java.lang.Object","graphql.GraphQLContext","java.util.Locale"] }, {"name":"serialize","parameterTypes":["java.lang.Object","graphql.GraphQLContext","java.util.Locale"] }]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"close","parameterTypes":[] }, {"name":"shutdown","parameterTypes":[] }]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource",
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.RealFeedDataSource",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"close","parameterTypes":[] }, {"name":"loadKotlinBlogFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadKotlinWeeklyFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadKotlinYouTubeFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadTalkingKotlinFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"shutdown","parameterTypes":[] }]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeeklyIssueDataSource",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"close","parameterTypes":[] }, {"name":"loadKotlinWeeklyIssue","parameterTypes":["java.lang.String","kotlin.coroutines.Continuation"] }, {"name":"shutdown","parameterTypes":[] }]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogRss",
+  "fields":[{"name":"Companion"}]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogRss$Companion",
+  "methods":[{"name":"serializer","parameterTypes":[] }]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinWeeklyRss",
+  "fields":[{"name":"Companion"}]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinWeeklyRss$Companion",
+  "methods":[{"name":"serializer","parameterTypes":[] }]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinRss",
+  "fields":[{"name":"Companion"}]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinRss$Companion",
+  "methods":[{"name":"serializer","parameterTypes":[] }]
+},
+{
+  "name":"io.github.reactivecircus.kstreamlined.backend.redis.RedisClient",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"close","parameterTypes":[] }, {"name":"shutdown","parameterTypes":[] }]
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry"
@@ -996,34 +1018,26 @@
   "methods":[{"name":"getDispatcher","parameterTypes":[] }, {"name":"install","parameterTypes":["io.ktor.client.HttpClient"] }]
 },
 {
-  "name":"io.ktor.client.engine.cio.CIOEngine",
+  "name":"io.ktor.client.engine.okhttp.OkHttpEngine",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"execute","parameterTypes":["io.ktor.client.request.HttpRequestData","kotlin.coroutines.Continuation"] }, {"name":"getConfig","parameterTypes":[] }, {"name":"getCoroutineContext","parameterTypes":[] }, {"name":"getSupportedCapabilities","parameterTypes":[] }]
 },
 {
-  "name":"io.ktor.client.engine.cio.Endpoint",
-  "fields":[{"name":"connections"}]
+  "name":"io.ktor.client.plugins.DefaultResponseValidationKt$addDefaultResponseValidation$1$1"
+},
+{
+  "name":"io.ktor.client.plugins.HttpCallValidatorKt"
+},
+{
+  "name":"io.ktor.client.plugins.HttpCallValidatorKt$HttpCallValidator$2$2"
 },
 {
   "name":"io.ktor.client.plugins.internal.ByteChannelReplay",
   "fields":[{"name":"content"}]
 },
 {
-  "name":"io.ktor.network.selector.InterestSuspensionsMap",
-  "fields":[{"name":"acceptHandlerReference"}, {"name":"connectHandlerReference"}, {"name":"readHandlerReference"}, {"name":"writeHandlerReference"}]
-},
-{
-  "name":"io.ktor.network.selector.LockFreeMPSCQueue",
-  "fields":[{"name":"_cur"}]
-},
-{
-  "name":"io.ktor.network.selector.LockFreeMPSCQueueCore",
-  "fields":[{"name":"_next"}, {"name":"_state"}]
-},
-{
-  "name":"io.ktor.network.selector.SelectableBase",
-  "fields":[{"name":"_interestedOps"}]
+  "name":"io.ktor.serialization.kotlinx.json.KotlinxSerializationJsonExtensionProvider"
 },
 {
   "name":"io.ktor.util.collections.CopyOnWriteHashMap",
@@ -1036,10 +1050,6 @@
 {
   "name":"io.ktor.utils.io.InternalAPI",
   "queryAllDeclaredMethods":true
-},
-{
-  "name":"io.ktor.utils.io.pool.DefaultPool",
-  "fields":[{"name":"top"}]
 },
 {
   "name":"io.micrometer.context.ContextRegistry",
@@ -1184,6 +1194,10 @@
 {
   "name":"io.netty.util.ReferenceCountUtil",
   "queryAllDeclaredMethods":true
+},
+{
+  "name":"io.netty.util.ResourceLeakDetector$DefaultResourceLeak",
+  "fields":[{"name":"droppedRecords"}, {"name":"head"}]
 },
 {
   "name":"io.netty.util.concurrent.DefaultPromise",
@@ -1444,9 +1458,6 @@
   "name":"java.net.SocketPermission"
 },
 {
-  "name":"java.net.StandardSocketOptions"
-},
-{
   "name":"java.net.URLPermission",
   "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.lang.String"] }]
 },
@@ -1508,6 +1519,11 @@
 },
 {
   "name":"java.util.Date"
+},
+{
+  "name":"java.util.LinkedHashMap",
+  "allDeclaredClasses":true,
+  "fields":[{"name":"Companion"}]
 },
 {
   "name":"java.util.List"
@@ -1672,6 +1688,9 @@
   "name":"kotlin.coroutines.Continuation"
 },
 {
+  "name":"kotlin.coroutines.jvm.internal.BaseContinuationImpl"
+},
+{
   "name":"kotlin.coroutines.jvm.internal.DebugMetadata",
   "queryAllDeclaredMethods":true
 },
@@ -1734,6 +1753,9 @@
   "queryAllPublicMethods":true
 },
 {
+  "name":"kotlinx.coroutines.DispatchedTask"
+},
+{
   "name":"kotlinx.coroutines.EventLoopImplBase",
   "fields":[{"name":"_delayed$volatile"}, {"name":"_isCompleted$volatile"}, {"name":"_queue$volatile"}]
 },
@@ -1750,19 +1772,11 @@
   "fields":[{"name":"_exceptionsHolder$volatile"}, {"name":"_isCompleting$volatile"}, {"name":"_rootCause$volatile"}]
 },
 {
-  "name":"kotlinx.coroutines.channels.BufferedChannel",
-  "fields":[{"name":"_closeCause$volatile"}, {"name":"bufferEnd$volatile"}, {"name":"bufferEndSegment$volatile"}, {"name":"closeHandler$volatile"}, {"name":"completedExpandBuffersAndPauseFlag$volatile"}, {"name":"receiveSegment$volatile"}, {"name":"receivers$volatile"}, {"name":"sendSegment$volatile"}, {"name":"sendersAndCloseStatus$volatile"}]
-},
-{
   "name":"kotlinx.coroutines.flow.Flow"
 },
 {
   "name":"kotlinx.coroutines.internal.AtomicOp",
   "fields":[{"name":"_consensus$volatile"}]
-},
-{
-  "name":"kotlinx.coroutines.internal.ConcurrentLinkedListNode",
-  "fields":[{"name":"_next$volatile"}, {"name":"_prev$volatile"}]
 },
 {
   "name":"kotlinx.coroutines.internal.DispatchedContinuation",
@@ -1771,6 +1785,9 @@
 {
   "name":"kotlinx.coroutines.internal.LimitedDispatcher",
   "fields":[{"name":"runningWorkers$volatile"}]
+},
+{
+  "name":"kotlinx.coroutines.internal.LimitedDispatcher$Worker"
 },
 {
   "name":"kotlinx.coroutines.internal.LockFreeLinkedListNode",
@@ -1783,10 +1800,6 @@
 {
   "name":"kotlinx.coroutines.internal.LockFreeTaskQueueCore",
   "fields":[{"name":"_next$volatile"}, {"name":"_state$volatile"}]
-},
-{
-  "name":"kotlinx.coroutines.internal.Segment",
-  "fields":[{"name":"cleanedAndPointers$volatile"}]
 },
 {
   "name":"kotlinx.coroutines.internal.ThreadSafeHeap",
@@ -1804,12 +1817,11 @@
   "fields":[{"name":"workerCtl$volatile"}]
 },
 {
-  "name":"kotlinx.coroutines.scheduling.WorkQueue",
-  "fields":[{"name":"blockingTasksInBuffer$volatile"}, {"name":"consumerIndex$volatile"}, {"name":"lastScheduledTask$volatile"}, {"name":"producerIndex$volatile"}]
+  "name":"kotlinx.coroutines.scheduling.TaskImpl"
 },
 {
-  "name":"kotlinx.coroutines.sync.SemaphoreImpl",
-  "fields":[{"name":"_availablePermits$volatile"}, {"name":"deqIdx$volatile"}, {"name":"enqIdx$volatile"}, {"name":"head$volatile"}, {"name":"tail$volatile"}]
+  "name":"kotlinx.coroutines.scheduling.WorkQueue",
+  "fields":[{"name":"blockingTasksInBuffer$volatile"}, {"name":"consumerIndex$volatile"}, {"name":"lastScheduledTask$volatile"}, {"name":"producerIndex$volatile"}]
 },
 {
   "name":"kotlinx.io.RefCountingCopyTracker",
@@ -3748,6 +3760,7 @@
 {
   "name":"org.springframework.graphql.server.support.SerializableGraphQlRequest",
   "allDeclaredFields":true,
+  "allDeclaredClasses":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
   "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"setOperationName","parameterTypes":["java.lang.String"] }, {"name":"setQuery","parameterTypes":["java.lang.String"] }, {"name":"setVariables","parameterTypes":["java.util.Map"] }]
@@ -4280,28 +4293,8 @@
   "fields":[{"name":"winner"}]
 },
 {
-  "name":"reactor.core.publisher.FluxGenerate$GenerateSubscription",
-  "fields":[{"name":"requested"}]
-},
-{
   "name":"reactor.core.publisher.FluxIterable$IterableSubscription",
   "fields":[{"name":"requested"}]
-},
-{
-  "name":"reactor.core.publisher.FluxLimitRequest$FluxLimitRequestSubscriber",
-  "fields":[{"name":"requestRemaining"}]
-},
-{
-  "name":"reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber",
-  "fields":[{"name":"requested"}]
-},
-{
-  "name":"reactor.core.publisher.FluxSubscribeOn$SubscribeOnSubscriber",
-  "fields":[{"name":"requested"}, {"name":"s"}, {"name":"thread"}]
-},
-{
-  "name":"reactor.core.publisher.FluxUsing$UsingFuseableSubscriber",
-  "fields":[{"name":"wip"}]
 },
 {
   "name":"reactor.core.publisher.Hooks"
@@ -4340,10 +4333,6 @@
 {
   "name":"reactor.core.publisher.MonoNext$NextSubscriber",
   "fields":[{"name":"wip"}]
-},
-{
-  "name":"reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber",
-  "fields":[{"name":"requested"}, {"name":"s"}, {"name":"thread"}]
 },
 {
   "name":"reactor.core.publisher.MonoWhen$WhenCoordinator",
@@ -4390,10 +4379,6 @@
   "fields":[{"name":"markCount"}]
 },
 {
-  "name":"reactor.core.scheduler.WorkerTask",
-  "fields":[{"name":"future"}, {"name":"parent"}, {"name":"thread"}]
-},
-{
   "name":"reactor.netty.channel.ChannelOperations",
   "fields":[{"name":"outboundSubscription"}]
 },
@@ -4404,10 +4389,6 @@
 {
   "name":"reactor.netty.channel.FluxReceive",
   "fields":[{"name":"receiverCancel"}]
-},
-{
-  "name":"reactor.netty.channel.MonoSendMany$SendManyInner",
-  "fields":[{"name":"s"}, {"name":"wip"}]
 },
 {
   "name":"reactor.netty.contextpropagation.ChannelContextAccessor"
@@ -4458,14 +4439,6 @@
   "name":"reactor.tools.agent.ReactorDebugAgent"
 },
 {
-  "name":"reactor.util.concurrent.SpscArrayQueueConsumer",
-  "fields":[{"name":"consumerIndex"}]
-},
-{
-  "name":"reactor.util.concurrent.SpscArrayQueueProducer",
-  "fields":[{"name":"producerIndex"}]
-},
-{
   "name":"reactor.util.context.ReactorContextAccessor"
 },
 {
@@ -4486,11 +4459,23 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"sun.security.provider.DSA$SHA224withDSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.provider.DSA$SHA256withDSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.provider.NativePRNG",
   "methods":[{"name":"<init>","parameterTypes":["java.security.SecureRandomParameters"] }]
 },
 {
   "name":"sun.security.provider.SHA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.provider.SHA2$SHA224",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -4502,6 +4487,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"sun.security.provider.SHA5$SHA512",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.provider.X509Factory",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
@@ -4510,11 +4499,27 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"sun.security.rsa.PSSParameters",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.rsa.RSAKeyFactory$Legacy",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"sun.security.rsa.RSAPSSSignature",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.rsa.RSASignature$SHA224withRSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
   "name":"sun.security.rsa.RSASignature$SHA256withRSA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.security.ssl.SSLContextImpl$TLSContext",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -4561,6 +4566,10 @@
 },
 {
   "name":"sun.security.x509.NetscapeCertTypeExtension",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+},
+{
+  "name":"sun.security.x509.OCSPNoCheckExtension",
   "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
 },
 {

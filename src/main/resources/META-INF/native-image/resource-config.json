@@ -151,7 +151,7 @@
   }, {
     "pattern":"\\Qio/github/reactivecircus/kstreamlined/backend/datafetcher/KotlinWeeklyIssueDataFetcher.class\\E"
   }, {
-    "pattern":"\\Qio/github/reactivecircus/kstreamlined/backend/scalar/InstantScalar.class\\E"
+    "pattern":"\\Qio/github/reactivecircus/kstreamlined/backend/datafetcher/scalar/InstantScalar.class\\E"
   }, {
     "pattern":"\\Qkotlin/Metadata.class\\E"
   }, {
@@ -464,6 +464,10 @@
     "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt74b/nfc.nrm\\E"
   }, {
     "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt74b/nfkc.nrm\\E"
+  }, {
+    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt74b/uprops.icu\\E"
+  }, {
+    "pattern":"java.base:\\Qsun/net/idn/uidna.spp\\E"
   }, {
     "pattern":"java.xml:\\Qjdk/xml/internal/jdkcatalog/JDKCatalog.xml\\E"
   }, {

@@ -1,6 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTubeItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter

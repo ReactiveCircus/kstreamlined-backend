@@ -1,13 +1,13 @@
-package io.github.reactivecircus.kstreamlined.backend.client
+package io.github.reactivecircus.kstreamlined.backend.datasource
 
-import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
-import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinWeeklyItem
-import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeAuthor
-import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinYouTubeItem
-import io.github.reactivecircus.kstreamlined.backend.client.dto.Link
-import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaCommunity
-import io.github.reactivecircus.kstreamlined.backend.client.dto.MediaGroup
-import io.github.reactivecircus.kstreamlined.backend.client.dto.TalkingKotlinItem
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinWeeklyItem
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTubeAuthor
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTubeItem
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.Link
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaCommunity
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaGroup
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
@@ -19,8 +19,9 @@ import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
+import kotlin.time.Duration.Companion.seconds
 
-class RealFeedClientTest {
+class RealFeedDataSourceTest {
 
     private val mockKotlinBlogRssResponse =
         javaClass.classLoader.getResource("kotlin_blog_rss_response_sample.xml")?.readText()!!
@@ -34,15 +35,25 @@ class RealFeedClientTest {
     private val mockKotlinWeeklyRssResponse =
         javaClass.classLoader.getResource("kotlin_weekly_rss_response_sample.xml")?.readText()!!
 
+    private val cacheConfig = DataLoader.CacheConfig(
+        localExpiry = 0.seconds,
+        remoteExpiry = 0.seconds,
+    )
+
     @Test
-    fun `loadKotlinBlogFeed() returns KotlinBlogItems when API call was successful`() = runBlocking {
+    fun `loadKotlinBlogFeed() returns KotlinBlogItems when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinBlogRssResponse),
                 headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
             )
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
         val expected = listOf(
             KotlinBlogItem(
@@ -63,34 +74,40 @@ class RealFeedClientTest {
             ),
         )
 
-        with(fakeKotlinBlogCacheContext()) {
-            assert(feedClient.loadKotlinBlogFeed() == expected)
-        }
+        assert(feedDataSource.loadKotlinBlogFeed() == expected)
     }
 
     @Test
-    fun `loadKotlinBlogFeed() throws exception when API call failed`(): Unit = runBlocking {
+    fun `loadKotlinBlogFeed() throws exception when API call fails`(): Unit = runBlocking {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
         assertFailsWith<ClientRequestException> {
-            with(fakeKotlinBlogCacheContext()) {
-                feedClient.loadKotlinBlogFeed()
-            }
+            feedDataSource.loadKotlinBlogFeed()
         }
     }
 
     @Test
-    fun `loadKotlinYouTubeFeed() returns KotlinYouTubeItems when API call was successful`() = runBlocking {
+    fun `loadKotlinYouTubeFeed() returns KotlinYouTubeItems when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinYouTubeRssResponse),
                 headers = headersOf(HttpHeaders.ContentType, "application/xml")
             )
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
         val expected = listOf(
             KotlinYouTubeItem(
@@ -175,34 +192,40 @@ class RealFeedClientTest {
             ),
         )
 
-        with(fakeKotlinYouTubeCacheContext()) {
-            assert(feedClient.loadKotlinYouTubeFeed() == expected)
-        }
+        assert(feedDataSource.loadKotlinYouTubeFeed() == expected)
     }
 
     @Test
-    fun `loadKotlinYouTubeFeed() throws exception when API call failed`(): Unit = runBlocking {
+    fun `loadKotlinYouTubeFeed() throws exception when API call fails`(): Unit = runBlocking {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
         assertFailsWith<ClientRequestException> {
-            with(fakeKotlinYouTubeCacheContext()) {
-                feedClient.loadKotlinYouTubeFeed()
-            }
+            feedDataSource.loadKotlinYouTubeFeed()
         }
     }
 
     @Test
-    fun `loadTalkingKotlinFeed() returns TalkingKotlinItems when API call was successful`() = runBlocking {
+    fun `loadTalkingKotlinFeed() returns TalkingKotlinItems when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockTalkingKotlinRssResponse),
                 headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
             )
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
         val expected = listOf(
             TalkingKotlinItem(
@@ -227,34 +250,40 @@ class RealFeedClientTest {
             ),
         )
 
-        with(fakeTalkingKotlinCacheContext()) {
-            assert(feedClient.loadTalkingKotlinFeed() == expected)
-        }
+        assert(feedDataSource.loadTalkingKotlinFeed() == expected)
     }
 
     @Test
-    fun `loadTalkingKotlinFeed() throws exception when API call failed`(): Unit = runBlocking {
+    fun `loadTalkingKotlinFeed() throws exception when API call fails`(): Unit = runBlocking {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
         assertFailsWith<ClientRequestException> {
-            with(fakeTalkingKotlinCacheContext()) {
-                feedClient.loadTalkingKotlinFeed()
-            }
+            feedDataSource.loadTalkingKotlinFeed()
         }
     }
 
     @Test
-    fun `loadKotlinWeeklyFeed() returns KotlinWeeklyItems when API call was successful`() = runBlocking {
+    fun `loadKotlinWeeklyFeed() returns KotlinWeeklyItems when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinWeeklyRssResponse),
                 headers = headersOf(HttpHeaders.ContentType, "text/xml")
             )
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
         val expected = listOf(
             KotlinWeeklyItem(
@@ -271,22 +300,23 @@ class RealFeedClientTest {
             ),
         )
 
-        with(fakeKotlinWeeklyCacheContext()) {
-            assert(feedClient.loadKotlinWeeklyFeed() == expected)
-        }
+        assert(feedDataSource.loadKotlinWeeklyFeed() == expected)
     }
 
     @Test
-    fun `loadKotlinWeeklyFeed() throws exception when API call failed`(): Unit = runBlocking {
+    fun `loadKotlinWeeklyFeed() throws exception when API call fails`(): Unit = runBlocking {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
         assertFailsWith<ClientRequestException> {
-            with(fakeKotlinWeeklyCacheContext()) {
-                feedClient.loadKotlinWeeklyFeed()
-            }
+            feedDataSource.loadKotlinWeeklyFeed()
         }
     }
 }

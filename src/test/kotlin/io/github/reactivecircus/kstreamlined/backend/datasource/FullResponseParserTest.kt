@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.client
+package io.github.reactivecircus.kstreamlined.backend.datasource
 
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
@@ -7,6 +7,7 @@ import io.ktor.http.headersOf
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
 
 class FullResponseParserTest {
 
@@ -22,6 +23,11 @@ class FullResponseParserTest {
     private val mockKotlinWeeklyRssResponse =
         javaClass.classLoader.getResource("kotlin_weekly_rss_response_full.xml")?.readText()!!
 
+    private val cacheConfig = DataLoader.CacheConfig(
+        localExpiry = 0.seconds,
+        remoteExpiry = 0.seconds,
+    )
+
     @Test
     fun `can parse Kotlin Blog RSS feed`() = runBlocking {
         val mockEngine = MockEngine {
@@ -30,11 +36,14 @@ class FullResponseParserTest {
                 headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
             )
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
-        with(fakeKotlinBlogCacheContext()) {
-            assert(feedClient.loadKotlinBlogFeed().size == 12)
-        }
+        assert(feedDataSource.loadKotlinBlogFeed().size == 12)
     }
 
     @Test
@@ -45,11 +54,14 @@ class FullResponseParserTest {
                 headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
             )
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
-        with(fakeKotlinYouTubeCacheContext()) {
-            assert(feedClient.loadKotlinYouTubeFeed().size == 15)
-        }
+        assert(feedDataSource.loadKotlinYouTubeFeed().size == 15)
     }
 
     @Test
@@ -60,11 +72,14 @@ class FullResponseParserTest {
                 headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
             )
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
-        with(fakeTalkingKotlinCacheContext()) {
-            assert(feedClient.loadTalkingKotlinFeed().size == 10)
-        }
+        assert(feedDataSource.loadTalkingKotlinFeed().size == 10)
     }
 
     @Test
@@ -75,10 +90,13 @@ class FullResponseParserTest {
                 headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
             )
         }
-        val feedClient = RealFeedClient(mockEngine, TestClientConfigs)
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+        )
 
-        with(fakeKotlinWeeklyCacheContext()) {
-            assert(feedClient.loadKotlinWeeklyFeed().size == 3)
-        }
+        assert(feedDataSource.loadKotlinWeeklyFeed().size == 3)
     }
 }

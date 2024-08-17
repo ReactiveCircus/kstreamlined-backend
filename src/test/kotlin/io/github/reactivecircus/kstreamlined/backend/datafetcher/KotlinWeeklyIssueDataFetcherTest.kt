@@ -3,10 +3,10 @@ package io.github.reactivecircus.kstreamlined.backend.datafetcher
 import com.netflix.graphql.dgs.DgsQueryExecutor
 import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration
 import io.github.reactivecircus.kstreamlined.backend.TestKSConfiguration
-import io.github.reactivecircus.kstreamlined.backend.client.DummyKotlinWeeklyIssueEntries
-import io.github.reactivecircus.kstreamlined.backend.client.FakeKotlinWeeklyIssueClient
-import io.github.reactivecircus.kstreamlined.backend.client.KotlinWeeklyIssueClient
-import io.github.reactivecircus.kstreamlined.backend.scalar.InstantScalar
+import io.github.reactivecircus.kstreamlined.backend.datafetcher.scalar.InstantScalar
+import io.github.reactivecircus.kstreamlined.backend.datasource.DummyKotlinWeeklyIssueEntries
+import io.github.reactivecircus.kstreamlined.backend.datasource.FakeKotlinWeeklyIssueDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
@@ -20,7 +20,7 @@ class KotlinWeeklyIssueDataFetcherTest {
     private lateinit var dgsQueryExecutor: DgsQueryExecutor
 
     @Autowired
-    private lateinit var kotlinWeeklyIssueClient: KotlinWeeklyIssueClient
+    private lateinit var kotlinWeeklyIssueDataSource: KotlinWeeklyIssueDataSource
 
     private val kotlinWeeklyIssueQuery = """
         query KotlinWeeklyIssue(${"$"}url: String!) {
@@ -35,8 +35,8 @@ class KotlinWeeklyIssueDataFetcherTest {
     """.trimIndent()
 
     @Test
-    fun `kotlinWeeklyIssue(url) query returns expected kotlin weekly issue entries when operation was successful`() {
-        (kotlinWeeklyIssueClient as FakeKotlinWeeklyIssueClient).nextKotlinWeeklyIssueResponse = {
+    fun `kotlinWeeklyIssue(url) query returns expected kotlin weekly issue entries when operation succeeds`() {
+        (kotlinWeeklyIssueDataSource as FakeKotlinWeeklyIssueDataSource).nextKotlinWeeklyIssueResponse = {
             DummyKotlinWeeklyIssueEntries
         }
 
