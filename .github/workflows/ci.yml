@@ -36,8 +36,8 @@ jobs:
 
   deploy:
     name: Build and push container image to Google Artifact Registry, deploy to Cloud Run
-#    needs: [ assemble-and-check ]
-#    if: github.ref == 'refs/heads/main'
+    needs: [ assemble-and-check ]
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
