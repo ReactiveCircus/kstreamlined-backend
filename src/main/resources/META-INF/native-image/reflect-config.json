@@ -148,7 +148,7 @@
   "name":"com.fasterxml.jackson.core.ObjectCodec",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getJsonFactory","parameterTypes":[] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.ResolvedType"] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.TypeReference"] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","java.lang.Class"] }]
+  "methods":[{"name":"getJsonFactory","parameterTypes":[] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.ResolvedType"] }, {"name":"readValues","parameterTypes":["com.fasterxml.jackson.core.JsonParser","com.fasterxml.jackson.core.type.TypeReference"] }]
 },
 {
   "name":"com.fasterxml.jackson.core.TreeCodec",
@@ -331,7 +331,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["com.netflix.graphql.dgs.autoconfig.DgsConfigurationProperties","com.netflix.graphql.dgs.autoconfig.DgsDataloaderConfigurationProperties"] }, {"name":"dataFetcherExceptionHandler","parameterTypes":[] }, {"name":"defaultFieldVisibility","parameterTypes":[] }, {"name":"defaultQueryValueCustomizer","parameterTypes":[] }, {"name":"defaultReloadSchemaIndicator","parameterTypes":["org.springframework.core.env.Environment"] }, {"name":"dgsDataLoaderInstrumentationDataLoaderCustomizer","parameterTypes":["java.util.List"] }, {"name":"dgsDataLoaderOptionsProvider","parameterTypes":[] }, {"name":"dgsDataLoaderProvider","parameterTypes":["org.springframework.context.ApplicationContext","com.netflix.graphql.dgs.DgsDataLoaderOptionsProvider","java.util.concurrent.ScheduledExecutorService","java.util.List","java.util.List"] }, {"name":"dgsMicrometerContextRegistry","parameterTypes":[] }, {"name":"dgsScheduledExecutorService","parameterTypes":[] }, {"name":"dgsSchemaProvider","parameterTypes":["org.springframework.context.ApplicationContext","java.util.Optional","java.util.Optional","java.util.Optional","org.springframework.beans.factory.ObjectProvider","java.util.List","java.util.Optional","com.netflix.graphql.dgs.internal.EntityFetcherRegistry","java.util.Optional","com.netflix.graphql.dgs.internal.method.MethodDataFetcherFactory"] }, {"name":"dgsWrapWithContextDataLoaderCustomizer","parameterTypes":[] }, {"name":"entityFetcherRegistry","parameterTypes":[] }, {"name":"flowReactiveDataFetcherResultProcessor","parameterTypes":[] }, {"name":"fluxReactiveDataFetcherResultProcessor","parameterTypes":[] }, {"name":"graphQLContextBuilder","parameterTypes":["java.util.Optional","java.util.Optional"] }, {"name":"graphQLContextContributionInstrumentation","parameterTypes":["org.springframework.beans.factory.ObjectProvider"] }, {"name":"graphqlJavaErrorInstrumentation","parameterTypes":[] }, {"name":"methodDataFetcherFactory","parameterTypes":["org.springframework.beans.factory.ObjectProvider","java.util.Optional"] }, {"name":"monoReactiveDataFetcherResultProcessor","parameterTypes":[] }, {"name":"schema","parameterTypes":["com.netflix.graphql.dgs.internal.DgsSchemaProvider","graphql.schema.visibility.GraphqlFieldVisibility"] }]
+  "methods":[{"name":"<init>","parameterTypes":["com.netflix.graphql.dgs.autoconfig.DgsConfigurationProperties","com.netflix.graphql.dgs.autoconfig.DgsDataloaderConfigurationProperties"] }, {"name":"dataFetcherExceptionHandler","parameterTypes":[] }, {"name":"defaultQueryValueCustomizer","parameterTypes":[] }, {"name":"defaultReloadSchemaIndicator","parameterTypes":["org.springframework.core.env.Environment"] }, {"name":"dgsDataLoaderInstrumentationDataLoaderCustomizer","parameterTypes":["java.util.List"] }, {"name":"dgsDataLoaderOptionsProvider","parameterTypes":[] }, {"name":"dgsDataLoaderProvider","parameterTypes":["org.springframework.context.ApplicationContext","com.netflix.graphql.dgs.DgsDataLoaderOptionsProvider","java.util.concurrent.ScheduledExecutorService","java.util.List","java.util.List"] }, {"name":"dgsMicrometerContextRegistry","parameterTypes":[] }, {"name":"dgsScheduledExecutorService","parameterTypes":[] }, {"name":"dgsSchemaProvider","parameterTypes":["org.springframework.context.ApplicationContext","java.util.Optional","java.util.Optional","java.util.Optional","org.springframework.beans.factory.ObjectProvider","java.util.List","java.util.Optional","com.netflix.graphql.dgs.internal.EntityFetcherRegistry","java.util.Optional","com.netflix.graphql.dgs.internal.method.MethodDataFetcherFactory"] }, {"name":"dgsWrapWithContextDataLoaderCustomizer","parameterTypes":[] }, {"name":"entityFetcherRegistry","parameterTypes":[] }, {"name":"flowReactiveDataFetcherResultProcessor","parameterTypes":[] }, {"name":"fluxReactiveDataFetcherResultProcessor","parameterTypes":[] }, {"name":"graphQLContextBuilder","parameterTypes":["java.util.Optional","java.util.Optional"] }, {"name":"graphQLContextContributionInstrumentation","parameterTypes":["org.springframework.beans.factory.ObjectProvider"] }, {"name":"graphqlJavaErrorInstrumentation","parameterTypes":[] }, {"name":"methodDataFetcherFactory","parameterTypes":["org.springframework.beans.factory.ObjectProvider","java.util.Optional"] }, {"name":"monoReactiveDataFetcherResultProcessor","parameterTypes":[] }, {"name":"schema","parameterTypes":["com.netflix.graphql.dgs.internal.DgsSchemaProvider","graphql.schema.visibility.GraphqlFieldVisibility"] }]
 },
 {
   "name":"com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration$Companion"
@@ -357,31 +357,8 @@
   "name":"com.netflix.graphql.dgs.autoconfig.DgsInputArgumentConfiguration",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"coroutineArgumentResolver","parameterTypes":[] }, {"name":"dataFetchingEnvironmentArgumentResolver","parameterTypes":[] }, {"name":"defaultInputObjectMapper","parameterTypes":[] }, {"name":"fallbackEnvironmentArgumentResolver","parameterTypes":["com.netflix.graphql.dgs.internal.InputObjectMapper"] }, {"name":"inputArgumentResolver","parameterTypes":["com.netflix.graphql.dgs.internal.InputObjectMapper"] }, {"name":"setBeanFactory","parameterTypes":["org.springframework.beans.factory.BeanFactory"] }]
-},
-{
-  "name":"com.netflix.graphql.dgs.autoconfig.DgsInputArgumentConfiguration$$SpringCGLIB$$0",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "fields":[{"name":"CGLIB$FACTORY_DATA"}],
-  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"CGLIB$SET_STATIC_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }, {"name":"CGLIB$SET_THREAD_CALLBACKS","parameterTypes":["org.springframework.cglib.proxy.Callback[]"] }]
-},
-{
-  "name":"com.netflix.graphql.dgs.autoconfig.DgsInputArgumentConfiguration$$SpringCGLIB$$FastClass$$0",
-  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
-},
-{
-  "name":"com.netflix.graphql.dgs.autoconfig.DgsInputArgumentConfiguration$$SpringCGLIB$$FastClass$$1",
-  "methods":[{"name":"<init>","parameterTypes":["java.lang.Class"] }]
-},
-{
-  "name":"com.netflix.graphql.dgs.conditionals.ConditionalOnJava21",
-  "queryAllDeclaredMethods":true
-},
-{
-  "name":"com.netflix.graphql.dgs.conditionals.Java21Condition",
-  "methods":[{"name":"<init>","parameterTypes":[] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"coroutineArgumentResolver","parameterTypes":[] }, {"name":"dataFetchingEnvironmentArgumentResolver","parameterTypes":[] }, {"name":"defaultInputObjectMapper","parameterTypes":[] }, {"name":"fallbackEnvironmentArgumentResolver","parameterTypes":["com.netflix.graphql.dgs.internal.InputObjectMapper"] }, {"name":"inputArgumentResolver","parameterTypes":["com.netflix.graphql.dgs.internal.InputObjectMapper"] }]
 },
 {
   "name":"com.netflix.graphql.dgs.context.DgsCustomContextBuilder"
@@ -815,15 +792,7 @@
   "name":"graphql.schema.idl.TypeDefinitionRegistry"
 },
 {
-  "name":"graphql.schema.visibility.DefaultGraphqlFieldVisibility",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "methods":[{"name":"close","parameterTypes":[] }, {"name":"getFieldDefinition","parameterTypes":["graphql.schema.GraphQLFieldsContainer","java.lang.String"] }, {"name":"getFieldDefinition","parameterTypes":["graphql.schema.GraphQLInputFieldsContainer","java.lang.String"] }, {"name":"getFieldDefinitions","parameterTypes":["graphql.schema.GraphQLFieldsContainer"] }, {"name":"getFieldDefinitions","parameterTypes":["graphql.schema.GraphQLInputFieldsContainer"] }, {"name":"shutdown","parameterTypes":[] }]
-},
-{
-  "name":"graphql.schema.visibility.GraphqlFieldVisibility",
-  "queryAllDeclaredMethods":true,
-  "queryAllPublicMethods":true
+  "name":"graphql.schema.visibility.GraphqlFieldVisibility"
 },
 {
   "name":"groovy.lang.MetaClass"
@@ -1022,15 +991,6 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "methods":[{"name":"close","parameterTypes":[] }, {"name":"execute","parameterTypes":["io.ktor.client.request.HttpRequestData","kotlin.coroutines.Continuation"] }, {"name":"getConfig","parameterTypes":[] }, {"name":"getCoroutineContext","parameterTypes":[] }, {"name":"getSupportedCapabilities","parameterTypes":[] }]
-},
-{
-  "name":"io.ktor.client.plugins.DefaultResponseValidationKt$addDefaultResponseValidation$1$1"
-},
-{
-  "name":"io.ktor.client.plugins.HttpCallValidatorKt"
-},
-{
-  "name":"io.ktor.client.plugins.HttpCallValidatorKt$HttpCallValidator$2$2"
 },
 {
   "name":"io.ktor.client.plugins.internal.ByteChannelReplay",
@@ -1535,6 +1495,10 @@
   "name":"java.util.PropertyPermission"
 },
 {
+  "name":"java.util.SortedSet",
+  "methods":[{"name":"getFirst","parameterTypes":[] }]
+},
+{
   "name":"java.util.concurrent.Executor"
 },
 {
@@ -1548,6 +1512,10 @@
 {
   "name":"java.util.concurrent.ForkJoinTask",
   "fields":[{"name":"aux"}, {"name":"status"}]
+},
+{
+  "name":"java.util.concurrent.Future",
+  "methods":[{"name":"state","parameterTypes":[] }]
 },
 {
   "name":"java.util.concurrent.ScheduledExecutorService"
@@ -2237,6 +2205,10 @@
   "queryAllDeclaredMethods":true
 },
 {
+  "name":"org.springframework.boot.autoconfigure.condition.ConditionalOnJava",
+  "queryAllDeclaredMethods":true
+},
+{
   "name":"org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean",
   "queryAllDeclaredMethods":true
 },
@@ -2281,6 +2253,10 @@
   "name":"org.springframework.boot.autoconfigure.condition.OnClassCondition",
   "queryAllDeclaredConstructors":true,
   "queryAllPublicConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"org.springframework.boot.autoconfigure.condition.OnJavaCondition",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -2395,10 +2371,17 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"getInspection","parameterTypes":[] }]
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"getInspection","parameterTypes":[] }, {"name":"getIntrospection","parameterTypes":[] }]
 },
 {
   "name":"org.springframework.boot.autoconfigure.graphql.GraphQlProperties$Schema$Inspection",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"setEnabled","parameterTypes":["boolean"] }]
+},
+{
+  "name":"org.springframework.boot.autoconfigure.graphql.GraphQlProperties$Schema$Introspection",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
@@ -3293,6 +3276,9 @@
 {
   "name":"org.springframework.boot.ssl.SslBundles",
   "queryAllPublicMethods":true
+},
+{
+  "name":"org.springframework.boot.system.JavaVersion"
 },
 {
   "name":"org.springframework.boot.task.SimpleAsyncTaskExecutorBuilder",
