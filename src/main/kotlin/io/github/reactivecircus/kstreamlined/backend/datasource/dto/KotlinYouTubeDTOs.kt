@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.client.dto
+package io.github.reactivecircus.kstreamlined.backend.datasource.dto
 
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement

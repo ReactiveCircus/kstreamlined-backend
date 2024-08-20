@@ -1,6 +1,6 @@
-package io.github.reactivecircus.kstreamlined.backend.client
+package io.github.reactivecircus.kstreamlined.backend.datasource
 
-val TestClientConfigs = ClientConfigs(
+val TestFeedDataSourceConfig = FeedDataSourceConfig(
     kotlinBlogFeedUrl = "",
     kotlinYouTubeFeedUrl = "",
     talkingKotlinFeedUrl = "",

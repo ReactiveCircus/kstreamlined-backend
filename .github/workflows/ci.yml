@@ -80,6 +80,7 @@ jobs:
         run: |
           gcloud run deploy ${{ vars.SERVICE_NAME }} \
             --image ${{ vars.CONTAINER_IMAGE }}:${{ env.SHA_SHORT }} \
+            --update-secrets=KS_REDIS_REST_URL=redis-rest-url:latest,KS_REDIS_REST_TOKEN=redis-rest-token:latest \
             --region ${{ secrets.GCP_REGION }} \
             --cpu ${{ vars.CONTAINER_CPU }} \
             --memory ${{ vars.CONTAINER_MEMORY }} \

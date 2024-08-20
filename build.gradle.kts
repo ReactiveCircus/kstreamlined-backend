@@ -22,6 +22,7 @@ dependencyManagement {
     imports {
         mavenBom(libs.dgs.bom.get().toString())
     }
+    applyMavenExclusions(false)
 }
 
 graalvmNative {
@@ -40,6 +41,18 @@ graalvmNative {
     }
 }
 
+tasks.bootRun {
+    environment(
+        envVar("KS_REDIS_REST_URL"),
+        envVar("KS_REDIS_REST_TOKEN"),
+    )
+}
+
+fun envVar(name: String): Pair<String, String> {
+    return name to (providers.environmentVariable(name).orElse(providers.gradleProperty(name)).orNull
+        ?: error("Missing environment variable or Gradle property: $name"))
+}
+
 tasks.withType<GenerateJavaTask>().configureEach {
     packageName = "io.github.reactivecircus.kstreamlined.backend.schema.generated"
 }
@@ -51,9 +64,7 @@ kotlin {
     }
     compilerOptions {
         freeCompilerArgs.addAll(
-            "-opt-in=kotlin.RequiresOptIn",
             "-Xjsr305=strict",
-            "-Xcontext-receivers",
         )
     }
 }
@@ -89,8 +100,9 @@ dependencies {
     implementation(libs.spring.boot.starter)
     implementation(libs.dgs.starter)
     implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
+    implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.client.contentNegotiation)
+    implementation(libs.ktor.serialization.json)
     implementation(libs.ktor.serialization.xml)
     implementation(libs.apacheCommonsText)
     implementation(libs.apacheCommonsLang3)
@@ -100,7 +112,7 @@ dependencies {
     implementation(libs.jsoup)
     implementation(libs.xalan)
 
-    testImplementation(libs.spring.boot.starter.test)
     testImplementation(kotlin("test"))
+    testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.ktor.client.mock)
 }

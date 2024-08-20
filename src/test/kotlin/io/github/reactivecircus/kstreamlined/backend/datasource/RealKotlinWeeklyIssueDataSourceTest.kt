@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.client
+package io.github.reactivecircus.kstreamlined.backend.datasource
 
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntry
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntryGroup
@@ -12,17 +12,17 @@ import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
-class RealKotlinWeeklyIssueClientTest {
+class RealKotlinWeeklyIssueDataSourceTest {
 
     private val mockKotlinWeeklyIssueResponse =
         javaClass.classLoader.getResource("kotlin_weekly_issue_sample.html")?.readText()!!
 
     @Test
-    fun `loadKotlinWeeklyIssue(url) returns KotlinWeeklyIssueEntry when API call was successful`() = runBlocking {
+    fun `loadKotlinWeeklyIssue(url) returns KotlinWeeklyIssueEntry when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine {
             respond(content = ByteReadChannel(mockKotlinWeeklyIssueResponse))
         }
-        val kotlinWeeklyIssueClient = RealKotlinWeeklyIssueClient(mockEngine)
+        val kotlinWeeklyIssueDataSource = RealKotlinWeeklyIssueDataSource(mockEngine)
 
         val expected = listOf(
             KotlinWeeklyIssueEntry(
@@ -111,18 +111,18 @@ class RealKotlinWeeklyIssueClientTest {
             ),
         )
 
-        assert(kotlinWeeklyIssueClient.loadKotlinWeeklyIssue("url") == expected)
+        assert(kotlinWeeklyIssueDataSource.loadKotlinWeeklyIssue("url") == expected)
     }
 
     @Test
-    fun `loadKotlinWeeklyIssue(url) throws exception when API call failed`(): Unit = runBlocking {
+    fun `loadKotlinWeeklyIssue(url) throws exception when API call fails`(): Unit = runBlocking {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }
-        val kotlinWeeklyIssueClient = RealKotlinWeeklyIssueClient(mockEngine)
+        val kotlinWeeklyIssueDataSource = RealKotlinWeeklyIssueDataSource(mockEngine)
 
         assertFailsWith<ClientRequestException> {
-            kotlinWeeklyIssueClient.loadKotlinWeeklyIssue("url")
+            kotlinWeeklyIssueDataSource.loadKotlinWeeklyIssue("url")
         }
     }
 }

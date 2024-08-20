@@ -1,9 +1,9 @@
-package io.github.reactivecircus.kstreamlined.backend.client
+package io.github.reactivecircus.kstreamlined.backend.datasource
 
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntry
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntryGroup
 
-object FakeKotlinWeeklyIssueClient : KotlinWeeklyIssueClient {
+object FakeKotlinWeeklyIssueDataSource : KotlinWeeklyIssueDataSource {
 
     var nextKotlinWeeklyIssueResponse: () -> List<KotlinWeeklyIssueEntry> = {
         DummyKotlinWeeklyIssueEntries

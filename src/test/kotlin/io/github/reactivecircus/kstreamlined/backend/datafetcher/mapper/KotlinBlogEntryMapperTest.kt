@@ -1,6 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.client.dto.KotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog
 import java.time.Instant
 import kotlin.test.Test

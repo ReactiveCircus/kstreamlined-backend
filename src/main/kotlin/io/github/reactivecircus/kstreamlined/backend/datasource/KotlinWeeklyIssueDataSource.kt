@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.client
+package io.github.reactivecircus.kstreamlined.backend.datasource
 
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntry
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntryGroup
@@ -13,13 +13,13 @@ import it.skrape.selects.html5.a
 import it.skrape.selects.html5.div
 import it.skrape.selects.html5.span
 
-interface KotlinWeeklyIssueClient {
+interface KotlinWeeklyIssueDataSource {
     suspend fun loadKotlinWeeklyIssue(url: String): List<KotlinWeeklyIssueEntry>
 }
 
-class RealKotlinWeeklyIssueClient(
+class RealKotlinWeeklyIssueDataSource(
     engine: HttpClientEngine,
-) : KotlinWeeklyIssueClient {
+) : KotlinWeeklyIssueDataSource {
 
     private val httpClient = HttpClient(engine) {
         expectSuccess = true

@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.client.dto
+package io.github.reactivecircus.kstreamlined.backend.datasource.dto
 
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
@@ -6,25 +6,29 @@ import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
 @XmlSerialName("rss", "", "")
 @Serializable
-data class KotlinWeeklyRss(
-    val channel: KotlinWeeklyChannel,
+data class KotlinBlogRss(
+    val channel: KotlinBlogChannel,
 )
 
 @XmlSerialName("channel", "", "")
 @Serializable
-data class KotlinWeeklyChannel(
-    val items: List<KotlinWeeklyItem>,
+data class KotlinBlogChannel(
+    val items: List<KotlinBlogItem>,
 )
 
 @XmlSerialName("item", "", "")
 @Serializable
-data class KotlinWeeklyItem(
+data class KotlinBlogItem(
     @XmlElement(true)
     val title: String,
     @XmlElement(true)
     val link: String,
     @XmlElement(true)
+    val pubDate: String,
+    @XmlElement(true)
+    val featuredImage: String?,
+    @XmlElement(true)
     val guid: String,
     @XmlElement(true)
-    val pubDate: String,
+    val description: String,
 )
