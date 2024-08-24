@@ -61,6 +61,12 @@ class FeedEntryDataFetcherTest {
         }
     """.trimIndent()
 
+    private val syncFeedsMutation = """
+        mutation SyncFeeds {
+            syncFeeds
+        }
+    """.trimIndent()
+
     @Test
     fun `feedEntries() query returns expected feed entries ordered by publish time when operation succeeds`() {
         (feedDataSource as FakeFeedDataSource).nextKotlinBlogFeedResponse = {
@@ -171,6 +177,46 @@ class FeedEntryDataFetcherTest {
         assert(context.read<String>("data.feedEntries[1].contentUrl") == dummyKotlinYouTubeEntry.contentUrl)
         assert(context.read<String>("data.feedEntries[1].thumbnailUrl") == dummyKotlinYouTubeEntry.thumbnailUrl)
         assert(context.read<String>("data.feedEntries[1].description") == dummyKotlinYouTubeEntry.description)
+    }
+
+    @Test
+    fun `syncFeeds mutation returns true when operation succeeds`() {
+        (feedDataSource as FakeFeedDataSource).nextKotlinBlogFeedResponse = {
+            listOf(DummyKotlinBlogItem)
+        }
+        (feedDataSource as FakeFeedDataSource).nextKotlinYouTubeFeedResponse = {
+            listOf(DummyKotlinYouTubeItem)
+        }
+        (feedDataSource as FakeFeedDataSource).nextTalkingKotlinFeedResponse = {
+            listOf(DummyTalkingKotlinItem)
+        }
+        (feedDataSource as FakeFeedDataSource).nextKotlinWeeklyFeedResponse = {
+            listOf(DummyKotlinWeeklyItem)
+        }
+
+        val context = dgsQueryExecutor.executeAndGetDocumentContext(syncFeedsMutation)
+
+        assert(context.read<Boolean>("data.syncFeeds") == true)
+    }
+
+    @Test
+    fun `syncFeeds mutation returns error response when failed to load data from any feed sources`() {
+        (feedDataSource as FakeFeedDataSource).nextKotlinBlogFeedResponse = {
+            throw GraphqlErrorException.newErrorException().build()
+        }
+        (feedDataSource as FakeFeedDataSource).nextKotlinYouTubeFeedResponse = {
+            listOf(DummyKotlinYouTubeItem)
+        }
+        (feedDataSource as FakeFeedDataSource).nextTalkingKotlinFeedResponse = {
+            listOf(DummyTalkingKotlinItem)
+        }
+        (feedDataSource as FakeFeedDataSource).nextKotlinWeeklyFeedResponse = {
+            listOf(DummyKotlinWeeklyItem)
+        }
+
+        val result = dgsQueryExecutor.execute(syncFeedsMutation)
+
+        assert(result.errors[0].extensions["errorType"] == "INTERNAL")
     }
 
     private fun String.toInstant(): Instant = Instant.parse(this)

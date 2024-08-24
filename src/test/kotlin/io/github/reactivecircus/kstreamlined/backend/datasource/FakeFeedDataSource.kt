@@ -27,19 +27,19 @@ object FakeFeedDataSource : FeedDataSource {
         listOf(DummyKotlinWeeklyItem)
     }
 
-    override suspend fun loadKotlinBlogFeed(): List<KotlinBlogItem> {
+    override suspend fun loadKotlinBlogFeed(skipCache: Boolean): List<KotlinBlogItem> {
         return nextKotlinBlogFeedResponse()
     }
 
-    override suspend fun loadKotlinYouTubeFeed(): List<KotlinYouTubeItem> {
+    override suspend fun loadKotlinYouTubeFeed(skipCache: Boolean): List<KotlinYouTubeItem> {
         return nextKotlinYouTubeFeedResponse()
     }
 
-    override suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem> {
+    override suspend fun loadTalkingKotlinFeed(skipCache: Boolean): List<TalkingKotlinItem> {
         return nextTalkingKotlinFeedResponse()
     }
 
-    override suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem> {
+    override suspend fun loadKotlinWeeklyFeed(skipCache: Boolean): List<KotlinWeeklyItem> {
         return nextKotlinWeeklyFeedResponse()
     }
 }

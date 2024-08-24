@@ -1,6 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher
 
 import com.netflix.graphql.dgs.DgsComponent
+import com.netflix.graphql.dgs.DgsMutation
 import com.netflix.graphql.dgs.DgsQuery
 import com.netflix.graphql.dgs.DgsTypeResolver
 import com.netflix.graphql.dgs.InputArgument
@@ -58,6 +59,32 @@ class FeedEntryDataFetcher(
             .sortedByDescending {
                 it.publishTime
             }
+    }
+
+    @DgsMutation(field = DgsConstants.MUTATION.SyncFeeds)
+    suspend fun syncFeeds(): Boolean = coroutineScope {
+        FeedSourceKey.entries.map { source ->
+            async(coroutineDispatcher) {
+                when (source) {
+                    FeedSourceKey.KOTLIN_BLOG -> {
+                        dataSource.loadKotlinBlogFeed(skipCache = true)
+                    }
+
+                    FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> {
+                        dataSource.loadKotlinYouTubeFeed(skipCache = true)
+                    }
+
+                    FeedSourceKey.TALKING_KOTLIN_PODCAST -> {
+                        dataSource.loadTalkingKotlinFeed(skipCache = true)
+                    }
+
+                    FeedSourceKey.KOTLIN_WEEKLY -> {
+                        dataSource.loadKotlinWeeklyFeed(skipCache = true)
+                    }
+                }
+            }
+        }.awaitAll()
+        true
     }
 
     @DgsTypeResolver(name = DgsConstants.FEEDENTRY.TYPE_NAME)

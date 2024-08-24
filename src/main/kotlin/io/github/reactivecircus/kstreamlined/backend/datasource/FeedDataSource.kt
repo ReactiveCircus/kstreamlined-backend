@@ -26,10 +26,10 @@ import nl.adaptivity.xmlutil.serialization.XmlConfig
 import org.apache.commons.text.StringEscapeUtils
 
 interface FeedDataSource {
-    suspend fun loadKotlinBlogFeed(): List<KotlinBlogItem>
-    suspend fun loadKotlinYouTubeFeed(): List<KotlinYouTubeItem>
-    suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem>
-    suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem>
+    suspend fun loadKotlinBlogFeed(skipCache: Boolean = false): List<KotlinBlogItem>
+    suspend fun loadKotlinYouTubeFeed(skipCache: Boolean = false): List<KotlinYouTubeItem>
+    suspend fun loadTalkingKotlinFeed(skipCache: Boolean = false): List<TalkingKotlinItem>
+    suspend fun loadKotlinWeeklyFeed(skipCache: Boolean = false): List<KotlinWeeklyItem>
 }
 
 class FeedDataSourceConfig(
@@ -73,8 +73,8 @@ class RealFeedDataSource(
         }
     }
 
-    override suspend fun loadKotlinBlogFeed(): List<KotlinBlogItem> {
-        return kotlinBlogFeedDataLoader.load("kotlin-blog") {
+    override suspend fun loadKotlinBlogFeed(skipCache: Boolean): List<KotlinBlogItem> {
+        return kotlinBlogFeedDataLoader.load("kotlin-blog", sotOnly = skipCache) {
             httpClient.get(dataSourceConfig.kotlinBlogFeedUrl).body<KotlinBlogRss>().channel.items.map {
                 it.copy(
                     description = StringEscapeUtils.unescapeXml(it.description).trim()
@@ -83,16 +83,16 @@ class RealFeedDataSource(
         }
     }
 
-    override suspend fun loadKotlinYouTubeFeed(): List<KotlinYouTubeItem> {
-        return kotlinYouTubeFeedDataLoader.load("kotlin-youtube") {
+    override suspend fun loadKotlinYouTubeFeed(skipCache: Boolean): List<KotlinYouTubeItem> {
+        return kotlinYouTubeFeedDataLoader.load("kotlin-youtube", sotOnly = skipCache) {
             httpClient.get(dataSourceConfig.kotlinYouTubeFeedUrl).bodyAsText().let {
                 DefaultXml.decodeFromString<KotlinYouTubeRss>(it.replace("&(?!.{2,4};)".toRegex(), "&amp;")).entries
             }
         }
     }
 
-    override suspend fun loadTalkingKotlinFeed(): List<TalkingKotlinItem> {
-        return talkingKotlinFeedDataLoader.load("talking-kotlin") {
+    override suspend fun loadTalkingKotlinFeed(skipCache: Boolean): List<TalkingKotlinItem> {
+        return talkingKotlinFeedDataLoader.load("talking-kotlin", sotOnly = skipCache) {
             httpClient.get(dataSourceConfig.talkingKotlinFeedUrl).body<TalkingKotlinRss>().channel.items
                 .take(TalkingKotlinFeedSize)
                 .map {
@@ -103,8 +103,8 @@ class RealFeedDataSource(
         }
     }
 
-    override suspend fun loadKotlinWeeklyFeed(): List<KotlinWeeklyItem> {
-        return kotlinWeeklyFeedDataLoader.load("kotlin-weekly") {
+    override suspend fun loadKotlinWeeklyFeed(skipCache: Boolean): List<KotlinWeeklyItem> {
+        return kotlinWeeklyFeedDataLoader.load("kotlin-weekly", sotOnly = skipCache) {
             httpClient.get(dataSourceConfig.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items
         }
     }

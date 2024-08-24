@@ -23,8 +23,11 @@ class DataLoader<T : Any> private constructor(
     @Suppress("ReturnCount")
     suspend fun load(
         key: String,
+        sotOnly: Boolean = false,
         sot: suspend () -> List<T>
     ): List<T> {
+        if (sotOnly) return loadFromSot(key, sot)
+
         // L1 cache - local
         val l1Value = localCache.getIfPresent(key)
         if (l1Value != null) {
@@ -40,6 +43,10 @@ class DataLoader<T : Any> private constructor(
         }
 
         // Source of truth
+        return loadFromSot(key, sot)
+    }
+
+    private suspend fun loadFromSot(key: String, sot: suspend () -> List<T>): List<T> {
         val sotValue = sot()
         localCache.put(key, sotValue)
         redisClient.set(
