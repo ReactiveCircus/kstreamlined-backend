@@ -297,6 +297,10 @@
   "name":"com.netflix.graphql.dgs.DgsFederationResolver"
 },
 {
+  "name":"com.netflix.graphql.dgs.DgsMutation",
+  "queryAllDeclaredMethods":true
+},
+{
   "name":"com.netflix.graphql.dgs.DgsQuery",
   "queryAllDeclaredMethods":true
 },
@@ -850,7 +854,7 @@
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"<init>","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource"] }, {"name":"feedEntries","parameterTypes":["java.util.List","kotlin.coroutines.Continuation"] }, {"name":"resolveFeedEntry$kstreamlined_backend","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry"] }]
+  "methods":[{"name":"<init>","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource"] }, {"name":"feedEntries","parameterTypes":["java.util.List","kotlin.coroutines.Continuation"] }, {"name":"resolveFeedEntry$kstreamlined_backend","parameterTypes":["io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry"] }, {"name":"syncFeeds","parameterTypes":["kotlin.coroutines.Continuation"] }]
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.datafetcher.FeedSourceDataFetcher",
@@ -893,7 +897,7 @@
   "name":"io.github.reactivecircus.kstreamlined.backend.datasource.RealFeedDataSource",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"close","parameterTypes":[] }, {"name":"loadKotlinBlogFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadKotlinWeeklyFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadKotlinYouTubeFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadTalkingKotlinFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"shutdown","parameterTypes":[] }]
+  "methods":[{"name":"close","parameterTypes":[] }, {"name":"loadKotlinBlogFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadKotlinBlogFeed","parameterTypes":["boolean","kotlin.coroutines.Continuation"] }, {"name":"loadKotlinWeeklyFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadKotlinWeeklyFeed","parameterTypes":["boolean","kotlin.coroutines.Continuation"] }, {"name":"loadKotlinYouTubeFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadKotlinYouTubeFeed","parameterTypes":["boolean","kotlin.coroutines.Continuation"] }, {"name":"loadTalkingKotlinFeed","parameterTypes":["kotlin.coroutines.Continuation"] }, {"name":"loadTalkingKotlinFeed","parameterTypes":["boolean","kotlin.coroutines.Continuation"] }, {"name":"shutdown","parameterTypes":[] }]
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeeklyIssueDataSource",
@@ -936,36 +940,36 @@
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSource",
-    "allDeclaredFields":true,
-    "allDeclaredMethods":true
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey"
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog",
-    "allDeclaredFields":true,
-    "allDeclaredMethods":true
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly",
-    "allDeclaredFields":true,
-    "allDeclaredMethods":true
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntry",
-    "allDeclaredFields":true,
-    "allDeclaredMethods":true
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube",
-    "allDeclaredFields":true,
-    "allDeclaredMethods":true
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin",
-    "allDeclaredFields":true,
-    "allDeclaredMethods":true
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true
 },
 {
   "name":"io.ktor.client.HttpClient",
@@ -1298,7 +1302,7 @@
 },
 {
   "name":"java.io.Console",
-  "methods":[{"name":"isTerminal","parameterTypes":[] }]
+  "methods":[{"name":"charset","parameterTypes":[] }, {"name":"isTerminal","parameterTypes":[] }]
 },
 {
   "name":"java.io.FileDescriptor"
@@ -1323,7 +1327,7 @@
 {
   "name":"java.lang.Class",
   "queryAllDeclaredMethods":true,
-  "methods":[{"name":"getPermittedSubclasses","parameterTypes":[] }, {"name":"getRecordComponents","parameterTypes":[] }, {"name":"isRecord","parameterTypes":[] }, {"name":"isSealed","parameterTypes":[] }]
+  "methods":[{"name":"accessFlags","parameterTypes":[] }, {"name":"getPermittedSubclasses","parameterTypes":[] }, {"name":"getRecordComponents","parameterTypes":[] }, {"name":"isRecord","parameterTypes":[] }, {"name":"isSealed","parameterTypes":[] }]
 },
 {
   "name":"java.lang.ClassLoader",
@@ -1472,7 +1476,12 @@
   "name":"java.security.interfaces.RSAPublicKey"
 },
 {
-  "name":"java.time.Duration"
+  "name":"java.text.NumberFormat",
+  "methods":[{"name":"isStrict","parameterTypes":[] }]
+},
+{
+  "name":"java.time.Duration",
+  "methods":[{"name":"isPositive","parameterTypes":[] }]
 },
 {
   "name":"java.time.DurationEditor"
@@ -1562,6 +1571,9 @@
 },
 {
   "name":"javax.inject.Named"
+},
+{
+  "name":"javax.inject.Qualifier"
 },
 {
   "name":"javax.money.MonetaryAmount"

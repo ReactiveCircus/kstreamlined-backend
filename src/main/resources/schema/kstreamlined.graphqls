@@ -7,6 +7,11 @@ type Query {
   kotlinWeeklyIssue(url: String!): [KotlinWeeklyIssueEntry!]!
 }
 
+type Mutation {
+  "Syncs feeds from all sources."
+  syncFeeds: Boolean!
+}
+
 type FeedSource {
   "Unique identifier of the feed source."
   key: FeedSourceKey!

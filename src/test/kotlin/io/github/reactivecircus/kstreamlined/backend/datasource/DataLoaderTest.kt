@@ -129,6 +129,34 @@ class DataLoaderTest {
         assert(redisMockEngine.responseHistory.last().statusCode == HttpStatusCode.OK)
     }
 
+    @Test
+    fun `skips both local and remote caches when loading with sotOnly = true`() = runBlocking {
+        localCache.put("key", listOf(1, 2))
+
+        val redisMockEngine = MockEngine {
+            if (it.url.encodedPath.contains("get")) {
+                respond(content = "{ \"result\": \"[1, 2, 3]\" }")
+            } else {
+                respond(content = "{ \"result\": \"OK\" }")
+            }
+        }
+        val dataLoader = createDataLoader(
+            localCache = localCache,
+            remoteCacheExpiry = 1.hours,
+            redisMockEngine = redisMockEngine,
+        )
+
+        dataLoader.load("key", sotOnly = true) {
+            listOf(1, 2, 3, 4)
+        }
+
+        assert(localCache.getIfPresent("key") == listOf(1, 2, 3, 4))
+        assert(redisMockEngine.requestHistory.last().url.pathSegments.last() == "key")
+        assert(redisMockEngine.requestHistory.last().url.encodedQuery == "EX=${1.hours.inWholeSeconds}")
+        assert(redisMockEngine.requestHistory.last().body.toString() == "TextContent[application/json] \"[1,2,3,4]\"")
+        assert(redisMockEngine.responseHistory.last().statusCode == HttpStatusCode.OK)
+    }
+
     private fun createDataLoader(
         localCache: Cache<String, List<Int>>,
         remoteCacheExpiry: Duration = 1.days,
