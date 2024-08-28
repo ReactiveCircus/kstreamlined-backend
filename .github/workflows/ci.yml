@@ -52,7 +52,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Build GraalVM native executable
-        run: ./gradlew nativeCompile --no-configuration-cache
+        run: ./gradlew nativeCompile
 
       - uses: docker/login-action@v3
         with:

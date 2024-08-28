@@ -1,6 +1,8 @@
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.getSupportedKotlinVersion
+import org.graalvm.buildtools.gradle.tasks.BuildNativeImageTask
+import org.graalvm.buildtools.gradle.tasks.GenerateResourcesConfigFile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -41,6 +43,14 @@ graalvmNative {
     }
 }
 
+tasks.withType<BuildNativeImageTask>().configureEach {
+    notCompatibleWithConfigurationCache("GraalVM plugin is not compatible with configuration cache.")
+}
+
+tasks.withType<GenerateResourcesConfigFile>().configureEach {
+    notCompatibleWithConfigurationCache("GraalVM plugin is not compatible with configuration cache.")
+}
+
 tasks.bootRun {
     environment(
         envVar("KS_REDIS_REST_URL"),
@@ -77,6 +87,7 @@ tasks.withType<Test>().configureEach {
 configurations.matching { it.name == "detekt" }.configureEach {
     resolutionStrategy.eachDependency {
         if (requested.group == "org.jetbrains.kotlin") {
+            @Suppress("UnstableApiUsage")
             useVersion(getSupportedKotlinVersion())
         }
     }
