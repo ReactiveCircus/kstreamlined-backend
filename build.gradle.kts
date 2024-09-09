@@ -24,7 +24,6 @@ dependencyManagement {
     imports {
         mavenBom(libs.dgs.bom.get().toString())
     }
-    applyMavenExclusions(false)
 }
 
 graalvmNative {
