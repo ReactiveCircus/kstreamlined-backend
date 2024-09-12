@@ -123,7 +123,7 @@ class DataLoaderTest {
         }
 
         assert(localCache.getIfPresent("key") == listOf(1, 2, 3))
-        assert(redisMockEngine.requestHistory.last().url.pathSegments.last() == "key")
+        assert(redisMockEngine.requestHistory.last().url.segments.last() == "key")
         assert(redisMockEngine.requestHistory.last().url.encodedQuery == "EX=${1.hours.inWholeSeconds}")
         assert(redisMockEngine.requestHistory.last().body.toString() == "TextContent[application/json] \"[1,2,3]\"")
         assert(redisMockEngine.responseHistory.last().statusCode == HttpStatusCode.OK)
@@ -151,7 +151,7 @@ class DataLoaderTest {
         }
 
         assert(localCache.getIfPresent("key") == listOf(1, 2, 3, 4))
-        assert(redisMockEngine.requestHistory.last().url.pathSegments.last() == "key")
+        assert(redisMockEngine.requestHistory.last().url.segments.last() == "key")
         assert(redisMockEngine.requestHistory.last().url.encodedQuery == "EX=${1.hours.inWholeSeconds}")
         assert(redisMockEngine.requestHistory.last().body.toString() == "TextContent[application/json] \"[1,2,3,4]\"")
         assert(redisMockEngine.responseHistory.last().statusCode == HttpStatusCode.OK)
