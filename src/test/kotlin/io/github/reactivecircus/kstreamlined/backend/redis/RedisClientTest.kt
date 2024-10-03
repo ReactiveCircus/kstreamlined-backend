@@ -71,7 +71,7 @@ class RedisClientTest {
 
         redisClient.set("a", "3", keyExpirySeconds = 10)
 
-        assert(mockEngine.requestHistory[0].url.pathSegments.last() == "a")
+        assert(mockEngine.requestHistory[0].url.rawSegments.last() == "a")
         assert(mockEngine.requestHistory[0].url.encodedQuery == "EX=10")
         assert(mockEngine.requestHistory[0].body.toString() == "TextContent[application/json] \"3\"")
         assert(mockEngine.responseHistory[0].statusCode == HttpStatusCode.OK)
@@ -86,7 +86,7 @@ class RedisClientTest {
 
         redisClient.set("a", "3")
 
-        assert(mockEngine.requestHistory[0].url.pathSegments.last() == "a")
+        assert(mockEngine.requestHistory[0].url.rawSegments.last() == "a")
         assert(mockEngine.requestHistory[0].url.encodedQuery == "EX=3600")
         assert(mockEngine.requestHistory[0].body.toString() == "TextContent[application/json] \"3\"")
         assert(mockEngine.responseHistory[0].statusCode == HttpStatusCode.InternalServerError)
