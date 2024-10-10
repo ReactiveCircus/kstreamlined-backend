@@ -14,7 +14,7 @@ class RedisClientTest {
     @Test
     fun `get(key) returns result when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine { request ->
-            when (request.url.pathSegments.last()) {
+            when (request.url.rawSegments.last()) {
                 "a" -> respond(content = "{ \"result\": null }")
                 "b" -> respond(content = "{ \"result\": 3 }")
                 "c" -> respond(content = "{ \"result\": \"foo\" }")
