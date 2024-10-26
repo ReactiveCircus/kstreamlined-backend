@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.21"
-spring-boot = "3.3.4"
+spring-boot = "3.3.5"
 spring-dependencyManagement = "1.1.6"
 ktor = "3.0.0"
 dgsBom = "9.1.3"
