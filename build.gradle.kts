@@ -114,13 +114,8 @@ dependencies {
     implementation(libs.ktor.client.contentNegotiation)
     implementation(libs.ktor.serialization.json)
     implementation(libs.ktor.serialization.xml)
-    implementation(libs.apacheCommonsText)
-    implementation(libs.apacheCommonsLang3)
-    implementation(libs.apacheCommonsNet)
     implementation(libs.caffeine)
     implementation(libs.scrapeit)
-    implementation(libs.jsoup)
-    implementation(libs.xalan)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.spring.boot.starter.test)
