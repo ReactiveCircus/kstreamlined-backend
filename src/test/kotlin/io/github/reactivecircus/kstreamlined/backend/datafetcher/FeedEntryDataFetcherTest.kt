@@ -1,7 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher
 
 import com.netflix.graphql.dgs.DgsQueryExecutor
-import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration
 import graphql.GraphqlErrorException
 import io.github.reactivecircus.kstreamlined.backend.TestKSConfiguration
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinBlogEntry
@@ -17,12 +16,14 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.FakeFeedDataSour
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
 import java.time.Instant
 import kotlin.test.Test
 
-@SpringBootTest(classes = [DgsAutoConfiguration::class, FeedEntryDataFetcher::class, InstantScalar::class])
+@SpringBootTest(classes = [FeedEntryDataFetcher::class, InstantScalar::class])
+@EnableAutoConfiguration
 @ContextConfiguration(classes = [TestKSConfiguration::class])
 class FeedEntryDataFetcherTest {
 
