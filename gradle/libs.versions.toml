@@ -1,9 +1,9 @@
 [versions]
 kotlin = "2.1.0"
-spring-boot = "3.3.5"
-spring-dependencyManagement = "1.1.6"
+spring-boot = "3.4.1"
+spring-dependencyManagement = "1.1.7"
 ktor = "3.0.3"
-dgsBom = "10.0.0"
+dgsBom = "10.0.1"
 dgsCodegen = "7.0.3"
 detekt = "1.23.7"
 graalvmNative = "0.10.4"
