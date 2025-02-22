@@ -67,10 +67,6 @@ tasks.withType<GenerateJavaTask>().configureEach {
 }
 
 kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(22)) // TODO update once Kotlin supports Java 23
-        vendor.set(JvmVendorSpec.AZUL)
-    }
     compilerOptions {
         freeCompilerArgs.addAll(
             "-Xjsr305=strict",
@@ -86,7 +82,6 @@ tasks.withType<Test>().configureEach {
 configurations.matching { it.name == "detekt" }.configureEach {
     resolutionStrategy.eachDependency {
         if (requested.group == "org.jetbrains.kotlin") {
-            @Suppress("UnstableApiUsage")
             useVersion(getSupportedKotlinVersion())
         }
     }
