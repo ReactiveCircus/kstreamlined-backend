@@ -32,7 +32,7 @@ graalvmNative {
     }
     binaries.configureEach {
         javaLauncher = javaToolchains.launcherFor {
-            languageVersion.set(JavaLanguageVersion.of(23))
+            languageVersion.set(JavaLanguageVersion.of(24))
             vendor.set(JvmVendorSpec.GRAAL_VM)
         }
         resources.autodetect()
@@ -68,10 +68,16 @@ tasks.withType<GenerateJavaTask>().configureEach {
 
 kotlin {
     compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
         freeCompilerArgs.addAll(
             "-Xjsr305=strict",
         )
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 tasks.withType<Test>().configureEach {
@@ -94,7 +100,7 @@ detekt {
     allRules = true
 }
 tasks.withType<Detekt>().configureEach {
-    jvmTarget = JvmTarget.JVM_22.target
+    jvmTarget = JvmTarget.JVM_21.target
     reports {
         html.outputLocation.set(file("build/reports/detekt/${project.name}.html"))
     }
