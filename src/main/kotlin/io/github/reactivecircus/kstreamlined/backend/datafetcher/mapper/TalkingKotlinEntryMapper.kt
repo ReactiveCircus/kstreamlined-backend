@@ -1,12 +1,18 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem
+import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.ContentFormat
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin
 import java.time.Duration
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 fun TalkingKotlinItem.toTalkingKotlinEntry(): TalkingKotlin {
+    val rawSummary = summary.sanitize()
+    val parsedDoc = tryParseHtml(rawSummary)
+    val summaryFormat = if (parsedDoc != null) ContentFormat.HTML else ContentFormat.TEXT
+    val summaryPlainText = parsedDoc?.text()
+
     return TalkingKotlin(
         id = guid,
         title = title,
@@ -16,7 +22,9 @@ fun TalkingKotlinItem.toTalkingKotlinEntry(): TalkingKotlin {
         contentUrl = link,
         thumbnailUrl = image.href,
         audioUrl = enclosure.url,
-        summary = summary.sanitize(),
+        summary = rawSummary,
+        summaryFormat = summaryFormat,
+        summaryPlainText = summaryPlainText,
         duration = duration.toFormattedDuration(),
     )
 }

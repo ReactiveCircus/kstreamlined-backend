@@ -10,6 +10,7 @@ graalvmNative = "0.10.6"
 caffeine = "3.2.0"
 scrapeit = "1.3.0-alpha.2"
 toolchainsResolver = "0.10.0"
+ksoup = "0.2.2"
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -36,3 +37,4 @@ dgs-bom = { module = "com.netflix.graphql.dgs:graphql-dgs-platform-dependencies"
 dgs-starter = { module = "com.netflix.graphql.dgs:dgs-starter"}
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
 scrapeit = { module = "it.skrape:skrapeit", version.ref = "scrapeit" }
+ksoup = { module = "com.fleeksoft.ksoup:ksoup", version.ref = "ksoup" }

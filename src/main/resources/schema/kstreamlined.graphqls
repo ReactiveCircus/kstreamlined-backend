@@ -88,6 +88,10 @@ type TalkingKotlin implements FeedEntry {
   thumbnailUrl: String!
   "Summary of the podcast."
   summary: String!
+  "Format of the summary content."
+  summaryFormat: ContentFormat!
+  "Plain text version of the summary. Available only if `summaryFormat` is `HTML`, `null` otherwise."
+  summaryPlainText: String
   "Duration of the podcast."
   duration: String!
 }
@@ -129,6 +133,13 @@ enum KotlinWeeklyIssueEntryGroup {
   VIDEOS
   "Libraries."
   LIBRARIES
+}
+
+enum ContentFormat {
+  "Plain text format."
+  TEXT
+  "HTML format."
+  HTML
 }
 
 "ISO 8601 instant."
