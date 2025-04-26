@@ -52,6 +52,8 @@ class FeedEntryDataFetcherTest {
                     audioUrl
                     thumbnailUrl
                     summary
+                    summaryFormat
+                    summaryPlainText
                     duration
                 }
                 ... on KotlinWeekly {
@@ -118,6 +120,8 @@ class FeedEntryDataFetcherTest {
         assert(context.read<String>("data.feedEntries[3].audioUrl") == dummyTalkingKotlinEntry.audioUrl)
         assert(context.read<String>("data.feedEntries[3].thumbnailUrl") == dummyTalkingKotlinEntry.thumbnailUrl)
         assert(context.read<String>("data.feedEntries[3].summary") == dummyTalkingKotlinEntry.summary)
+        assert(context.read<String>("data.feedEntries[3].summaryFormat") == dummyTalkingKotlinEntry.summaryFormat.name)
+        assert(context.read<String>("data.feedEntries[3].summaryPlainText") == dummyTalkingKotlinEntry.summaryPlainText)
         assert(context.read<String>("data.feedEntries[3].duration") == dummyTalkingKotlinEntry.duration)
     }
 
