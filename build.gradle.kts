@@ -117,7 +117,6 @@ dependencies {
     implementation(libs.ktor.serialization.xml)
     implementation(libs.caffeine)
     implementation(libs.scrapeit)
-    implementation(libs.ksoup)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.spring.boot.starter.test)
