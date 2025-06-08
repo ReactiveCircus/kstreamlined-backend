@@ -18,6 +18,18 @@ Currently supported feed sources:
 - [Ktor (client)](https://ktor.io/)
 - [GraalVM](https://www.graalvm.org/)
 
+## Local dev environment
+
+Setup the required environment variables:
+
+```
+KS_REDIS_REST_URL
+KS_REDIS_REST_TOKEN
+KS_GCLOUD_PROJECT_ID
+```
+
+Run `gcloud auth application-default login` to authenticate Firestore.
+
 ## Building and running locally
 
 To compile the project:

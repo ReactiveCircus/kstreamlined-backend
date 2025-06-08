@@ -1,5 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datasource.dto
 
+import io.github.reactivecircus.kstreamlined.backend.NoArg
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 
@@ -11,6 +12,7 @@ object Namespace {
     const val itunes = "http://www.itunes.com/dtds/podcast-1.0.dtd"
 }
 
+@NoArg
 @Serializable
 data class Link(
     @XmlElement(false)

@@ -1,5 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datasource.dto
 
+import io.github.reactivecircus.kstreamlined.backend.NoArg
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
@@ -16,6 +17,7 @@ data class KotlinBlogChannel(
     val items: List<KotlinBlogItem>,
 )
 
+@NoArg
 @XmlSerialName("item", "", "")
 @Serializable
 data class KotlinBlogItem(

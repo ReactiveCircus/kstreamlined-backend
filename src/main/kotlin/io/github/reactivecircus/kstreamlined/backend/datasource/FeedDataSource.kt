@@ -44,6 +44,7 @@ class RealFeedDataSource(
     private val dataSourceConfig: FeedDataSourceConfig,
     cacheConfig: DataLoader.CacheConfig,
     redisClient: RedisClient,
+    private val feedPersister: FeedPersister,
 ) : FeedDataSource {
     private val kotlinBlogFeedDataLoader = DataLoader.of(cacheConfig, redisClient, KotlinBlogItem.serializer())
     private val kotlinYouTubeFeedDataLoader = DataLoader.of(cacheConfig, redisClient, KotlinYouTubeItem.serializer())
@@ -74,43 +75,82 @@ class RealFeedDataSource(
     }
 
     override suspend fun loadKotlinBlogFeed(skipCache: Boolean): List<KotlinBlogItem> {
-        return kotlinBlogFeedDataLoader.load("kotlin-blog", sotOnly = skipCache) {
-            httpClient.get(dataSourceConfig.kotlinBlogFeedUrl).body<KotlinBlogRss>().channel.items.map {
-                it.copy(
-                    description = StringEscapeUtils.unescapeXml(it.description).trim()
-                )
-            }
+        return kotlinBlogFeedDataLoader.load(CacheKey.KotlinBlog, sotOnly = skipCache) {
+            feedSot(
+                localSource = { feedPersister.loadKotlinBlogItems() },
+                persistToLocal = {
+                    feedPersister.saveKotlinBlogItems(it)
+                },
+                remoteSource = {
+                    httpClient.get(dataSourceConfig.kotlinBlogFeedUrl).body<KotlinBlogRss>().channel.items.map {
+                        it.copy(
+                            description = StringEscapeUtils.unescapeXml(it.description).trim()
+                        )
+                    }
+                },
+            )
         }
     }
 
     override suspend fun loadKotlinYouTubeFeed(skipCache: Boolean): List<KotlinYouTubeItem> {
-        return kotlinYouTubeFeedDataLoader.load("kotlin-youtube", sotOnly = skipCache) {
-            httpClient.get(dataSourceConfig.kotlinYouTubeFeedUrl).bodyAsText().let {
-                DefaultXml.decodeFromString<KotlinYouTubeRss>(it.replace("&(?!.{2,4};)".toRegex(), "&amp;")).entries
-            }
+        return kotlinYouTubeFeedDataLoader.load(CacheKey.KotlinYouTube, sotOnly = skipCache) {
+            feedSot(
+                localSource = { feedPersister.loadKotlinYouTubeItems() },
+                persistToLocal = {
+                    feedPersister.saveKotlinYouTubeItems(it)
+                },
+                remoteSource = {
+                    httpClient.get(dataSourceConfig.kotlinYouTubeFeedUrl).bodyAsText().let {
+                        DefaultXml.decodeFromString<KotlinYouTubeRss>(
+                            it.replace("&(?!.{2,4};)".toRegex(), "&amp;")
+                        ).entries
+                    }
+                },
+            )
         }
     }
 
     override suspend fun loadTalkingKotlinFeed(skipCache: Boolean): List<TalkingKotlinItem> {
-        return talkingKotlinFeedDataLoader.load("talking-kotlin", sotOnly = skipCache) {
-            httpClient.get(dataSourceConfig.talkingKotlinFeedUrl).body<TalkingKotlinRss>().channel.items
-                .take(TalkingKotlinFeedSize)
-                .map {
-                    it.copy(
-                        summary = StringEscapeUtils.unescapeXml(it.summary).trim()
-                    )
-                }
+        return talkingKotlinFeedDataLoader.load(CacheKey.TalkingKotlin, sotOnly = skipCache) {
+            feedSot(
+                localSource = { feedPersister.loadTalkingKotlinItems() },
+                persistToLocal = {
+                    feedPersister.saveTalkingKotlinItems(it)
+                },
+                remoteSource = {
+                    httpClient.get(dataSourceConfig.talkingKotlinFeedUrl).body<TalkingKotlinRss>().channel.items
+                        .map {
+                            it.copy(
+                                summary = StringEscapeUtils.unescapeXml(it.summary).trim()
+                            )
+                        }
+                },
+            )
         }
     }
 
     override suspend fun loadKotlinWeeklyFeed(skipCache: Boolean): List<KotlinWeeklyItem> {
-        return kotlinWeeklyFeedDataLoader.load("kotlin-weekly", sotOnly = skipCache) {
-            httpClient.get(dataSourceConfig.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items
+        return kotlinWeeklyFeedDataLoader.load(CacheKey.KotlinWeekly, sotOnly = skipCache) {
+            feedSot(
+                localSource = { feedPersister.loadKotlinWeeklyItems() },
+                persistToLocal = {
+                    feedPersister.saveKotlinWeeklyItems(it)
+                },
+                remoteSource = {
+                    httpClient.get(dataSourceConfig.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items
+                },
+            )
         }
+    }
+
+    private object CacheKey {
+        const val KotlinBlog = "kotlin-blog"
+        const val KotlinYouTube = "kotlin-youtube"
+        const val TalkingKotlin = "talking-kotlin"
+        const val KotlinWeekly = "kotlin-weekly"
     }
 
     companion object {
         private const val HttpTimeoutMillis = 30_000L
-        private const val TalkingKotlinFeedSize = 10
     }
 }

@@ -1,5 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datasource.dto
 
+import io.github.reactivecircus.kstreamlined.backend.NoArg
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
@@ -16,6 +17,7 @@ data class TalkingKotlinChannel(
     val items: List<TalkingKotlinItem>,
 )
 
+@NoArg
 @XmlSerialName("item", "", "")
 @Serializable
 data class TalkingKotlinItem(
@@ -36,6 +38,7 @@ data class TalkingKotlinItem(
     val enclosure: Enclosure,
     val image: Image,
 ) {
+    @NoArg
     @XmlSerialName("enclosure", "", "")
     @Serializable
     data class Enclosure(
@@ -43,6 +46,7 @@ data class TalkingKotlinItem(
         val url: String,
     )
 
+    @NoArg
     @XmlSerialName("image", Namespace.itunes, "")
     @Serializable
     data class Image(

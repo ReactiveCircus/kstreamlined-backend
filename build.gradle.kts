@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.powerAssert)
+    alias(libs.plugins.kotlin.noArg)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependencyManagement)
     alias(libs.plugins.dgsCodegen)
@@ -19,6 +20,10 @@ plugins {
 
 group = "io.github.reactivecircus.kstreamlined.backend"
 version = "0.0.1-SNAPSHOT"
+
+noArg {
+    annotation("io.github.reactivecircus.kstreamlined.backend.NoArg")
+}
 
 dependencyManagement {
     imports {
@@ -54,6 +59,7 @@ tasks.bootRun {
     environment(
         envVar("KS_REDIS_REST_URL"),
         envVar("KS_REDIS_REST_TOKEN"),
+        envVar("KS_GCLOUD_PROJECT_ID"),
     )
 }
 
@@ -115,6 +121,7 @@ dependencies {
     implementation(libs.ktor.client.contentNegotiation)
     implementation(libs.ktor.serialization.json)
     implementation(libs.ktor.serialization.xml)
+    implementation(libs.gcloud.firestore)
     implementation(libs.caffeine)
     implementation(libs.scrapeit)
 

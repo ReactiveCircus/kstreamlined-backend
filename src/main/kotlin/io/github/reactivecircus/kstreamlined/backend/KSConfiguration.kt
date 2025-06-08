@@ -1,8 +1,13 @@
 package io.github.reactivecircus.kstreamlined.backend
 
+import com.google.auth.oauth2.GoogleCredentials
+import com.google.cloud.firestore.Firestore
+import com.google.cloud.firestore.FirestoreOptions
 import io.github.reactivecircus.kstreamlined.backend.datasource.DataLoader
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig
+import io.github.reactivecircus.kstreamlined.backend.datasource.FeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.FirestoreFeedPersister
 import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.RealFeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeeklyIssueDataSource
@@ -23,6 +28,7 @@ class KSConfiguration {
         engine: HttpClientEngine,
         dataSourceConfig: FeedDataSourceConfig,
         redisClient: RedisClient,
+        feedPersister: FeedPersister,
     ): FeedDataSource {
         return RealFeedDataSource(
             engine = engine,
@@ -32,6 +38,7 @@ class KSConfiguration {
                 remoteExpiry = 1.hours,
             ),
             redisClient = redisClient,
+            feedPersister = feedPersister,
         )
     }
 
@@ -48,6 +55,13 @@ class KSConfiguration {
             talkingKotlinFeedUrl = talkingKotlinFeedUrl,
             kotlinWeeklyFeedUrl = kotlinWeeklyFeedUrl,
         )
+    }
+
+    @Bean
+    fun feedPersister(
+        firestore: Firestore,
+    ): FeedPersister {
+        return FirestoreFeedPersister(firestore = firestore)
     }
 
     @Bean
@@ -75,5 +89,16 @@ class KSConfiguration {
             url = redisUrl,
             token = redisToken,
         )
+    }
+
+    @Bean
+    fun firestore(
+        @Value("\${KS_GCLOUD_PROJECT_ID}") projectId: String,
+    ): Firestore {
+        val firestoreOptions = FirestoreOptions.newBuilder()
+            .setProjectId(projectId)
+            .setCredentials(GoogleCredentials.getApplicationDefault())
+            .build()
+        return firestoreOptions.service
     }
 }

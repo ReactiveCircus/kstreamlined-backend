@@ -34,7 +34,7 @@ class DataLoader<T : Any> private constructor(
             return l1Value
         }
 
-        // L1 cache - remote (Redis)
+        // L2 cache - remote (Redis)
         val l2Value = redisClient.get(key)
         if (l2Value != null) {
             val value = DefaultJson.decodeFromString(listSerializer, l2Value)
