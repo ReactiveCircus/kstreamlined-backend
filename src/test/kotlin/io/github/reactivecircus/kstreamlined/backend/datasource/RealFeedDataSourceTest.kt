@@ -40,6 +40,8 @@ class RealFeedDataSourceTest {
         remoteExpiry = 0.seconds,
     )
 
+    private val feedPersister = FakeFeedPersister()
+
     @Test
     fun `loadKotlinBlogFeed() returns KotlinBlogItems when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine {
@@ -53,6 +55,7 @@ class RealFeedDataSourceTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         val expected = listOf(
@@ -75,6 +78,7 @@ class RealFeedDataSourceTest {
         )
 
         assert(feedDataSource.loadKotlinBlogFeed() == expected)
+        assert(feedPersister.loadKotlinBlogItems() == expected)
     }
 
     @Test
@@ -87,6 +91,7 @@ class RealFeedDataSourceTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         assertFailsWith<ClientRequestException> {
@@ -107,6 +112,7 @@ class RealFeedDataSourceTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         val expected = listOf(
@@ -193,6 +199,7 @@ class RealFeedDataSourceTest {
         )
 
         assert(feedDataSource.loadKotlinYouTubeFeed() == expected)
+        assert(feedPersister.loadKotlinYouTubeItems() == expected)
     }
 
     @Test
@@ -205,6 +212,7 @@ class RealFeedDataSourceTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         assertFailsWith<ClientRequestException> {
@@ -225,6 +233,7 @@ class RealFeedDataSourceTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         val expected = listOf(
@@ -251,6 +260,7 @@ class RealFeedDataSourceTest {
         )
 
         assert(feedDataSource.loadTalkingKotlinFeed() == expected)
+        assert(feedPersister.loadTalkingKotlinItems() == expected)
     }
 
     @Test
@@ -263,6 +273,7 @@ class RealFeedDataSourceTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         assertFailsWith<ClientRequestException> {
@@ -283,6 +294,7 @@ class RealFeedDataSourceTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         val expected = listOf(
@@ -301,6 +313,7 @@ class RealFeedDataSourceTest {
         )
 
         assert(feedDataSource.loadKotlinWeeklyFeed() == expected)
+        assert(feedPersister.loadKotlinWeeklyItems() == expected)
     }
 
     @Test
@@ -313,6 +326,7 @@ class RealFeedDataSourceTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         assertFailsWith<ClientRequestException> {

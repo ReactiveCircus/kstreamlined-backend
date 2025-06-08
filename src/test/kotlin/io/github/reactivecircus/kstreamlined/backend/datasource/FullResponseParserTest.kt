@@ -28,6 +28,8 @@ class FullResponseParserTest {
         remoteExpiry = 0.seconds,
     )
 
+    private val feedPersister = FakeFeedPersister()
+
     @Test
     fun `can parse Kotlin Blog RSS feed`() = runBlocking {
         val mockEngine = MockEngine {
@@ -41,6 +43,7 @@ class FullResponseParserTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         assert(feedDataSource.loadKotlinBlogFeed().size == 12)
@@ -59,6 +62,7 @@ class FullResponseParserTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         assert(feedDataSource.loadKotlinYouTubeFeed().size == 15)
@@ -77,6 +81,7 @@ class FullResponseParserTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         assert(feedDataSource.loadTalkingKotlinFeed().size == 10)
@@ -95,6 +100,7 @@ class FullResponseParserTest {
             dataSourceConfig = TestFeedDataSourceConfig,
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
         )
 
         assert(feedDataSource.loadKotlinWeeklyFeed().size == 3)

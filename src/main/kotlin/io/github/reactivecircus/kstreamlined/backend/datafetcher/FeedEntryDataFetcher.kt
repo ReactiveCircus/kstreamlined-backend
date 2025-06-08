@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlin.time.measureTimedValue
 
 @DgsComponent
 class FeedEntryDataFetcher(
@@ -31,34 +32,37 @@ class FeedEntryDataFetcher(
 
     @DgsQuery(field = DgsConstants.QUERY.FeedEntries)
     suspend fun feedEntries(@InputArgument filters: List<FeedSourceKey>?): List<FeedEntry> = coroutineScope {
-        FeedSourceKey.entries.filter {
-            filters == null || filters.contains(it)
-        }.map { source ->
-            async(coroutineDispatcher) {
-                when (source) {
-                    FeedSourceKey.KOTLIN_BLOG -> {
-                        dataSource.loadKotlinBlogFeed().map { it.toKotlinBlogEntry() }
-                    }
+        val (value, time) = measureTimedValue {
+            FeedSourceKey.entries.filter {
+                filters == null || filters.contains(it)
+            }.map { source ->
+                async(coroutineDispatcher) {
+                    when (source) {
+                        FeedSourceKey.KOTLIN_BLOG -> {
+                            dataSource.loadKotlinBlogFeed().map { it.toKotlinBlogEntry() }
+                        }
 
-                    FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> {
-                        dataSource.loadKotlinYouTubeFeed().map { it.toKotlinYouTubeEntry() }
-                    }
+                        FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> {
+                            dataSource.loadKotlinYouTubeFeed().map { it.toKotlinYouTubeEntry() }
+                        }
 
-                    FeedSourceKey.TALKING_KOTLIN_PODCAST -> {
-                        dataSource.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry() }
-                    }
+                        FeedSourceKey.TALKING_KOTLIN_PODCAST -> {
+                            dataSource.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry() }
+                        }
 
-                    FeedSourceKey.KOTLIN_WEEKLY -> {
-                        dataSource.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry() }
+                        FeedSourceKey.KOTLIN_WEEKLY -> {
+                            dataSource.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry() }
+                        }
                     }
                 }
             }
+                .awaitAll()
+                .flatten()
+                .sortedByDescending {
+                    it.publishTime
+                }
         }
-            .awaitAll()
-            .flatten()
-            .sortedByDescending {
-                it.publishTime
-            }
+        value
     }
 
     @DgsMutation(field = DgsConstants.MUTATION.SyncFeeds)

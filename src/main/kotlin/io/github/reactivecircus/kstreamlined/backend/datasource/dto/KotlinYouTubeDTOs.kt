@@ -1,5 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datasource.dto
 
+import io.github.reactivecircus.kstreamlined.backend.NoArg
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
@@ -25,6 +26,7 @@ data class KotlinYouTubeRss(
     val entries: List<KotlinYouTubeItem>,
 )
 
+@NoArg
 @XmlSerialName("author", Namespace.atom, "")
 @Serializable
 data class KotlinYouTubeAuthor(
@@ -34,6 +36,7 @@ data class KotlinYouTubeAuthor(
     val uri: String,
 )
 
+@NoArg
 @XmlSerialName("group", Namespace.media, "")
 @Serializable
 data class MediaGroup(
@@ -47,6 +50,7 @@ data class MediaGroup(
     val description: String,
     val community: MediaCommunity,
 ) {
+    @NoArg
     @XmlSerialName("content", Namespace.media, "")
     @Serializable
     data class Content(
@@ -60,6 +64,7 @@ data class MediaGroup(
         val height: String,
     )
 
+    @NoArg
     @XmlSerialName("thumbnail", Namespace.media, "")
     @Serializable
     data class Thumbnail(
@@ -72,12 +77,14 @@ data class MediaGroup(
     )
 }
 
+@NoArg
 @XmlSerialName("community", Namespace.media, "")
 @Serializable
 data class MediaCommunity(
     val starRating: StarRating,
     val statistics: Statistics,
 ) {
+    @NoArg
     @XmlSerialName("starRating", Namespace.media, "")
     @Serializable
     data class StarRating(
@@ -91,6 +98,7 @@ data class MediaCommunity(
         val max: String,
     )
 
+    @NoArg
     @XmlSerialName("statistics", Namespace.media, "")
     @Serializable
     data class Statistics(
@@ -99,6 +107,7 @@ data class MediaCommunity(
     )
 }
 
+@NoArg
 @XmlSerialName("entry", Namespace.atom, "")
 @Serializable
 data class KotlinYouTubeItem(
