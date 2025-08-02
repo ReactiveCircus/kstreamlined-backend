@@ -50,8 +50,12 @@ jobs:
           java-version: '24'
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - uses: gradle/actions/setup-gradle@v4
+
       - name: Build GraalVM native executable
         run: ./gradlew nativeCompile
+        env:
+          JAVA_TOOL_OPTIONS: -XX:+UseParallelGC -Xmx2g -Xms2g
 
       - uses: docker/login-action@v3
         with:
