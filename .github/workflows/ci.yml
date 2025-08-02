@@ -55,7 +55,7 @@ jobs:
           cache-disabled: true
 
       - name: Build GraalVM native executable
-        run: ./gradlew nativeCompile
+        run: ./gradlew nativeCompile --max-workers=2
         env:
           GRADLE_OPTS: "-XX:+UseSerialGC -Xmx2g -Xms2g"
 
