@@ -43,6 +43,7 @@ graalvmNative {
         resources.autodetect()
         buildArgs(
             "-R:MaxHeapSize=100m",
+            "-J-Xmx7g"
         )
     }
 }
