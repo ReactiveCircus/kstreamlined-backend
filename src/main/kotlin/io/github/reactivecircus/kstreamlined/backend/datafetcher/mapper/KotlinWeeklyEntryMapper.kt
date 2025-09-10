@@ -6,6 +6,8 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 fun KotlinWeeklyItem.toKotlinWeeklyEntry(): KotlinWeekly {
+    val issueNumber = linkIssueNumberRegex.find(link)?.groupValues?.get(1)?.toInt()
+        ?: error("Issue number not found in link: $link")
     return KotlinWeekly(
         id = guid,
         title = title,
@@ -13,9 +15,8 @@ fun KotlinWeeklyItem.toKotlinWeeklyEntry(): KotlinWeekly {
             .parse(pubDate, DateTimeFormatter.RFC_1123_DATE_TIME)
             .toInstant(),
         contentUrl = link,
-        issueNumber = issueNumberRegex.find(title)?.groupValues?.get(1)?.toInt()
-            ?: error("Issue number not found in title: $title")
+        issueNumber = issueNumber,
     )
 }
 
-private val issueNumberRegex = Regex("#(\\d+)")
+private val linkIssueNumberRegex = Regex("kotlin-weekly-(\\d+)", RegexOption.IGNORE_CASE)

@@ -28,12 +28,12 @@ class KotlinWeeklyEntryMapperTest {
     }
 
     @Test
-    fun `toKotlinWeeklyEntry() throws exception when issueNumber not found in title`() {
+    fun `toKotlinWeeklyEntry() throws exception when issueNumber not found in link`() {
         assertFailsWith<IllegalStateException> {
             KotlinWeeklyItem(
                 title = "Kotlin Weekly X",
-                link = "https://mailchi.mp/kotlinweekly/kotlin-weekly-381",
-                guid = "https://mailchi.mp/kotlinweekly/kotlin-weekly-381",
+                link = "https://mailchi.mp/kotlinweekly/random-newsletter",
+                guid = "https://mailchi.mp/kotlinweekly/random-newsletter",
                 pubDate = "Sun, 19 Nov 2023 09:13:00 +0000",
             ).toKotlinWeeklyEntry()
         }
