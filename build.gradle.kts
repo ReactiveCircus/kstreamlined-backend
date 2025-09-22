@@ -37,7 +37,7 @@ graalvmNative {
     }
     binaries.configureEach {
         javaLauncher = javaToolchains.launcherFor {
-            languageVersion.set(JavaLanguageVersion.of(24))
+            languageVersion.set(JavaLanguageVersion.of(25))
             vendor.set(JvmVendorSpec.GRAAL_VM)
         }
         resources.autodetect()
