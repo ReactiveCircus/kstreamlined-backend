@@ -10,7 +10,6 @@ import java.time.Instant
 import kotlin.test.Test
 
 class KotlinYouTubeEntryMapperTest {
-
     @Test
     fun `toKotlinYouTubeEntry() converts KotlinYouTubeItem to KotlinYouTube`() {
         val expected = KotlinYouTube(
@@ -53,7 +52,7 @@ class KotlinYouTubeEntryMapperTest {
                     ),
                     statistics = MediaCommunity.Statistics(views = "1000"),
                 ),
-            )
+            ),
         ).toKotlinYouTubeEntry()
 
         assert(expected == actual)

@@ -26,7 +26,6 @@ import kotlin.test.Test
 @EnableAutoConfiguration
 @ContextConfiguration(classes = [TestKSConfiguration::class])
 class FeedEntryDataFetcherTest {
-
     @Autowired
     private lateinit var dgsQueryExecutor: DgsQueryExecutor
 
@@ -105,7 +104,9 @@ class FeedEntryDataFetcherTest {
         val dummyKotlinYouTubeEntry = DummyKotlinYouTubeItem.toKotlinYouTubeEntry()
         assert(context.read<String>("data.feedEntries[2].id") == dummyKotlinYouTubeEntry.id)
         assert(context.read<String>("data.feedEntries[2].title") == dummyKotlinYouTubeEntry.title)
-        assert(context.read<String>("data.feedEntries[2].publishTime").toInstant() == dummyKotlinYouTubeEntry.publishTime)
+        assert(
+            context.read<String>("data.feedEntries[2].publishTime").toInstant() == dummyKotlinYouTubeEntry.publishTime,
+        )
         assert(context.read<String>("data.feedEntries[2].contentUrl") == dummyKotlinYouTubeEntry.contentUrl)
         assert(context.read<String>("data.feedEntries[2].thumbnailUrl") == dummyKotlinYouTubeEntry.thumbnailUrl)
         assert(context.read<String>("data.feedEntries[2].description") == dummyKotlinYouTubeEntry.description)
@@ -113,7 +114,9 @@ class FeedEntryDataFetcherTest {
         val dummyTalkingKotlinEntry = DummyTalkingKotlinItem.toTalkingKotlinEntry()
         assert(context.read<String>("data.feedEntries[3].id") == dummyTalkingKotlinEntry.id)
         assert(context.read<String>("data.feedEntries[3].title") == dummyTalkingKotlinEntry.title)
-        assert(context.read<String>("data.feedEntries[3].publishTime").toInstant() == dummyTalkingKotlinEntry.publishTime)
+        assert(
+            context.read<String>("data.feedEntries[3].publishTime").toInstant() == dummyTalkingKotlinEntry.publishTime,
+        )
         assert(context.read<String>("data.feedEntries[3].contentUrl") == dummyTalkingKotlinEntry.contentUrl)
         assert(context.read<String>("data.feedEntries[3].audioUrl") == dummyTalkingKotlinEntry.audioUrl)
         assert(context.read<String>("data.feedEntries[3].thumbnailUrl") == dummyTalkingKotlinEntry.thumbnailUrl)
@@ -174,7 +177,9 @@ class FeedEntryDataFetcherTest {
         val dummyKotlinYouTubeEntry = DummyKotlinYouTubeItem.toKotlinYouTubeEntry()
         assert(context.read<String>("data.feedEntries[1].id") == dummyKotlinYouTubeEntry.id)
         assert(context.read<String>("data.feedEntries[1].title") == dummyKotlinYouTubeEntry.title)
-        assert(context.read<String>("data.feedEntries[1].publishTime").toInstant() == dummyKotlinYouTubeEntry.publishTime)
+        assert(
+            context.read<String>("data.feedEntries[1].publishTime").toInstant() == dummyKotlinYouTubeEntry.publishTime,
+        )
         assert(context.read<String>("data.feedEntries[1].contentUrl") == dummyKotlinYouTubeEntry.contentUrl)
         assert(context.read<String>("data.feedEntries[1].thumbnailUrl") == dummyKotlinYouTubeEntry.thumbnailUrl)
         assert(context.read<String>("data.feedEntries[1].description") == dummyKotlinYouTubeEntry.description)

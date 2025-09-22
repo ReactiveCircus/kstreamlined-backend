@@ -22,7 +22,6 @@ import kotlin.time.Duration.Companion.minutes
 
 @Configuration
 class KSConfiguration {
-
     @Bean
     fun feedDataSource(
         engine: HttpClientEngine,

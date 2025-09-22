@@ -5,7 +5,6 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class FeedSotTest {
-
     @Test
     fun `feedSot returns persisted remote data from local source`() = runBlocking {
         val remoteData = listOf("item1", "item2")
@@ -16,7 +15,7 @@ class FeedSotTest {
             persistToLocal = { newData ->
                 localData.addAll(newData)
             },
-            remoteSource = { remoteData }
+            remoteSource = { remoteData },
         )
 
         assert(result == listOf("item0", "item1", "item2"))
@@ -28,7 +27,7 @@ class FeedSotTest {
             feedSot(
                 localSource = { null },
                 persistToLocal = {},
-                remoteSource = { emptyList() }
+                remoteSource = { emptyList() },
             )
         }
         assert(exception.message == "Local source returned null.")

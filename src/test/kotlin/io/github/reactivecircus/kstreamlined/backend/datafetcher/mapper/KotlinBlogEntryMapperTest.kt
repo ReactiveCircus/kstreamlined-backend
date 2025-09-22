@@ -6,7 +6,6 @@ import java.time.Instant
 import kotlin.test.Test
 
 class KotlinBlogEntryMapperTest {
-
     @Test
     fun `toKotlinBlogEntry() converts KotlinBlogItem to KotlinBlog`() {
         val expected = KotlinBlog(

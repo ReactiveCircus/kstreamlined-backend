@@ -6,7 +6,6 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTub
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem
 
 class FakeFeedPersister : FeedPersister {
-
     private val kotlinBlogItems = mutableMapOf<String, KotlinBlogItem>()
     private val kotlinYouTubeItems = mutableMapOf<String, KotlinYouTubeItem>()
     private val talkingKotlinItems = mutableMapOf<String, TalkingKotlinItem>()

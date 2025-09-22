@@ -11,22 +11,25 @@ import java.time.format.DateTimeFormatter
 
 interface FeedPersister {
     fun loadKotlinBlogItems(): List<KotlinBlogItem>?
+
     fun saveKotlinBlogItems(items: List<KotlinBlogItem>)
 
     fun loadKotlinYouTubeItems(): List<KotlinYouTubeItem>?
+
     fun saveKotlinYouTubeItems(items: List<KotlinYouTubeItem>)
 
     fun loadTalkingKotlinItems(): List<TalkingKotlinItem>?
+
     fun saveTalkingKotlinItems(items: List<TalkingKotlinItem>)
 
     fun loadKotlinWeeklyItems(): List<KotlinWeeklyItem>?
+
     fun saveKotlinWeeklyItems(items: List<KotlinWeeklyItem>)
 }
 
 class FirestoreFeedPersister(
     private val firestore: Firestore,
 ) : FeedPersister {
-
     override fun loadKotlinBlogItems(): List<KotlinBlogItem>? {
         return firestore.collection(FeedKey.KotlinBlog).get().get().map {
             it.toObject(KotlinBlogItem::class.java)

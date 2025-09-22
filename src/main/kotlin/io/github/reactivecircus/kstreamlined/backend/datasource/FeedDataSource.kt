@@ -27,8 +27,11 @@ import org.apache.commons.text.StringEscapeUtils
 
 interface FeedDataSource {
     suspend fun loadKotlinBlogFeed(skipCache: Boolean = false): List<KotlinBlogItem>
+
     suspend fun loadKotlinYouTubeFeed(skipCache: Boolean = false): List<KotlinYouTubeItem>
+
     suspend fun loadTalkingKotlinFeed(skipCache: Boolean = false): List<TalkingKotlinItem>
+
     suspend fun loadKotlinWeeklyFeed(skipCache: Boolean = false): List<KotlinWeeklyItem>
 }
 
@@ -60,7 +63,7 @@ class RealFeedDataSource(
                     DefaultXmlSerializationPolicy.Builder().apply {
                         pedantic = false
                         unknownChildHandler = XmlConfig.IGNORING_UNKNOWN_CHILD_HANDLER
-                    }.build()
+                    }.build(),
                 )
             }
 
@@ -84,7 +87,7 @@ class RealFeedDataSource(
                 remoteSource = {
                     httpClient.get(dataSourceConfig.kotlinBlogFeedUrl).body<KotlinBlogRss>().channel.items.map {
                         it.copy(
-                            description = StringEscapeUtils.unescapeXml(it.description).trim()
+                            description = StringEscapeUtils.unescapeXml(it.description).trim(),
                         )
                     }
                 },
@@ -102,7 +105,7 @@ class RealFeedDataSource(
                 remoteSource = {
                     httpClient.get(dataSourceConfig.kotlinYouTubeFeedUrl).bodyAsText().let {
                         DefaultXml.decodeFromString<KotlinYouTubeRss>(
-                            it.replace("&(?!.{2,4};)".toRegex(), "&amp;")
+                            it.replace("&(?!.{2,4};)".toRegex(), "&amp;"),
                         ).entries
                     }
                 },
@@ -121,7 +124,7 @@ class RealFeedDataSource(
                     httpClient.get(dataSourceConfig.talkingKotlinFeedUrl).body<TalkingKotlinRss>().channel.items
                         .map {
                             it.copy(
-                                summary = StringEscapeUtils.unescapeXml(it.summary).trim()
+                                summary = StringEscapeUtils.unescapeXml(it.summary).trim(),
                             )
                         }
                 },

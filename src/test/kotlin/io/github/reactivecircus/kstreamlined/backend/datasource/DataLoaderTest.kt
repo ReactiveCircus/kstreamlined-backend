@@ -17,7 +17,6 @@ import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.hours
 
 class DataLoaderTest {
-
     private val localCache = Caffeine.newBuilder().build<String, List<Int>>()
 
     @Test
@@ -169,6 +168,6 @@ class DataLoaderTest {
             url = "",
             token = "",
         ),
-        serializer = Int.serializer()
+        serializer = Int.serializer(),
     )
 }

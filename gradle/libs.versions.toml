@@ -6,7 +6,7 @@ ktor = "3.1.3"
 dgsBom = "10.4.0"
 dgsCodegen = "8.1.1"
 gcloud-firestore = "3.33.0"
-detekt = "1.23.8"
+detekt = "2.0.0-alpha.0"
 graalvmNative = "0.11.0"
 caffeine = "3.2.2"
 scrapeit = "1.3.0-alpha.2"
@@ -21,11 +21,11 @@ kotlin-noArg = { id = "org.jetbrains.kotlin.plugin.noarg", version.ref = "kotlin
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependencyManagement = { id = "io.spring.dependency-management", version.ref = "spring-dependencyManagement" }
 dgsCodegen = { id = "com.netflix.dgs.codegen", version.ref = "dgsCodegen" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 graalvmNative = { id = "org.graalvm.buildtools.native", version.ref = "graalvmNative" }
 
 [libraries]
-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detektKtlintWrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt"}
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter-webflux" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

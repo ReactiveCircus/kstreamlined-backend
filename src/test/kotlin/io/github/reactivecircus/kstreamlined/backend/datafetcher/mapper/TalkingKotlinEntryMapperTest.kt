@@ -6,7 +6,6 @@ import java.time.Instant
 import kotlin.test.Test
 
 class TalkingKotlinEntryMapperTest {
-
     @Test
     fun `toTalkingKotlinEntry() converts TalkingKotlinItem to TalkingKotlin`() {
         val expected = TalkingKotlin(

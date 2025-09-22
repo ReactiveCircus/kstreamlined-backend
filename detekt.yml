@@ -6,10 +6,26 @@ complexity:
   TooManyFunctions:
     excludes: ["**/test/**"]
 
-formatting:
+ktlint:
   ArgumentListWrapping:
     excludes: [ '**/test/**' ]
+  ChainMethodContinuation:
+    active: false
+  ClassSignature:
+    active: false
+  FunctionExpressionBody:
+    active: false
+  FunctionSignature:
+    active: false
   MaximumLineLength:
+    active: false
+  MultilineExpressionWrapping:
+    active: false
+  PropertyName:
+    constantNamingStyle: 'pascal_case'
+  StringTemplateIndent:
+    active: false
+  TrailingCommaOnDeclarationSite:
     active: false
 
 naming:

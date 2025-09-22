@@ -7,7 +7,6 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class KotlinWeeklyEntryMapperTest {
-
     @Test
     fun `toKotlinWeeklyEntry() converts KotlinWeeklyItem to KotlinWeekly`() {
         val expected = KotlinWeekly(

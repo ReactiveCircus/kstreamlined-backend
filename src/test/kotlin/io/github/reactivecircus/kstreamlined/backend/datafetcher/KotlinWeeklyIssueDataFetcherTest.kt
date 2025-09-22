@@ -16,7 +16,6 @@ import kotlin.test.Test
 @EnableAutoConfiguration
 @ContextConfiguration(classes = [TestKSConfiguration::class])
 class KotlinWeeklyIssueDataFetcherTest {
-
     @Autowired
     private lateinit var dgsQueryExecutor: DgsQueryExecutor
 

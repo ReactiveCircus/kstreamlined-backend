@@ -20,7 +20,6 @@ interface KotlinWeeklyIssueDataSource {
 class RealKotlinWeeklyIssueDataSource(
     engine: HttpClientEngine,
 ) : KotlinWeeklyIssueDataSource {
-
     private val httpClient = HttpClient(engine) {
         expectSuccess = true
         install(HttpTimeout) {
@@ -82,7 +81,7 @@ class RealKotlinWeeklyIssueDataSource(
                                         url = pair.second,
                                         summary = summaries[index],
                                         source = sources[index],
-                                    )
+                                    ),
                                 )
                             }
                         }

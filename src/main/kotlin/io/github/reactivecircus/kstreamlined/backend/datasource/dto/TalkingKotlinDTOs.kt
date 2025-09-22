@@ -30,10 +30,10 @@ data class TalkingKotlinItem(
     @XmlElement(true)
     val link: String,
     @XmlElement(true)
-    @XmlSerialName(value = "duration", namespace = Namespace.itunes, prefix = "")
+    @XmlSerialName(value = "duration", namespace = Namespace.Itunes, prefix = "")
     val duration: String,
     @XmlElement(true)
-    @XmlSerialName(value = "summary", namespace = Namespace.itunes, prefix = "")
+    @XmlSerialName(value = "summary", namespace = Namespace.Itunes, prefix = "")
     val summary: String,
     val enclosure: Enclosure,
     val image: Image,
@@ -47,7 +47,7 @@ data class TalkingKotlinItem(
     )
 
     @NoArg
-    @XmlSerialName("image", Namespace.itunes, "")
+    @XmlSerialName("image", Namespace.Itunes, "")
     @Serializable
     data class Image(
         @XmlElement(false)

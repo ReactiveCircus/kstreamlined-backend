@@ -4,7 +4,6 @@ import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.Kotl
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeeklyIssueEntryGroup
 
 object FakeKotlinWeeklyIssueDataSource : KotlinWeeklyIssueDataSource {
-
     var nextKotlinWeeklyIssueResponse: () -> List<KotlinWeeklyIssueEntry> = {
         DummyKotlinWeeklyIssueEntries
     }

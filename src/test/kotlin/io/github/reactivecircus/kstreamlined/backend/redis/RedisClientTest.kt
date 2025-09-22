@@ -10,7 +10,6 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class RedisClientTest {
-
     @Test
     fun `get(key) returns result when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine { request ->
@@ -21,13 +20,13 @@ class RedisClientTest {
                 "d" -> respond(
                     content = """
                         { "result": "[\"a\",\"b\",\"c\"]" }
-                    """.trimIndent()
+                    """.trimIndent(),
                 )
 
                 else -> respond(
                     content = """
                         { "result": "{\"key\": \"value\"}" }
-                    """.trimIndent()
+                    """.trimIndent(),
                 )
             }
         }

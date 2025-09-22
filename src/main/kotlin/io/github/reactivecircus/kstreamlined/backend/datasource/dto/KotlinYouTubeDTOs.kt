@@ -5,29 +5,29 @@ import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
-@XmlSerialName("feed", Namespace.atom, "")
+@XmlSerialName("feed", Namespace.Atom, "")
 @Serializable
 data class KotlinYouTubeRss(
-    @XmlSerialName("link", Namespace.atom, "")
+    @XmlSerialName("link", Namespace.Atom, "")
     val links: List<Link>,
     @XmlElement(true)
-    @XmlSerialName(value = "id", namespace = Namespace.atom, prefix = "")
+    @XmlSerialName(value = "id", namespace = Namespace.Atom, prefix = "")
     val id: String,
     @XmlElement(true)
-    @XmlSerialName(value = "channelId", namespace = Namespace.yt, prefix = "")
+    @XmlSerialName(value = "channelId", namespace = Namespace.Yt, prefix = "")
     val channelId: String,
     @XmlElement(true)
-    @XmlSerialName(value = "title", namespace = Namespace.atom, prefix = "")
+    @XmlSerialName(value = "title", namespace = Namespace.Atom, prefix = "")
     val title: String,
     val author: KotlinYouTubeAuthor,
     @XmlElement(true)
-    @XmlSerialName(value = "published", namespace = Namespace.atom, prefix = "")
+    @XmlSerialName(value = "published", namespace = Namespace.Atom, prefix = "")
     val published: String,
     val entries: List<KotlinYouTubeItem>,
 )
 
 @NoArg
-@XmlSerialName("author", Namespace.atom, "")
+@XmlSerialName("author", Namespace.Atom, "")
 @Serializable
 data class KotlinYouTubeAuthor(
     @XmlElement(true)
@@ -37,21 +37,21 @@ data class KotlinYouTubeAuthor(
 )
 
 @NoArg
-@XmlSerialName("group", Namespace.media, "")
+@XmlSerialName("group", Namespace.Aedia, "")
 @Serializable
 data class MediaGroup(
     @XmlElement(true)
-    @XmlSerialName(value = "title", namespace = Namespace.media, prefix = "")
+    @XmlSerialName(value = "title", namespace = Namespace.Aedia, prefix = "")
     val title: String,
     val content: Content,
     val thumbnail: Thumbnail,
     @XmlElement(true)
-    @XmlSerialName(value = "description", namespace = Namespace.media, prefix = "")
+    @XmlSerialName(value = "description", namespace = Namespace.Aedia, prefix = "")
     val description: String,
     val community: MediaCommunity,
 ) {
     @NoArg
-    @XmlSerialName("content", Namespace.media, "")
+    @XmlSerialName("content", Namespace.Aedia, "")
     @Serializable
     data class Content(
         @XmlElement(false)
@@ -65,7 +65,7 @@ data class MediaGroup(
     )
 
     @NoArg
-    @XmlSerialName("thumbnail", Namespace.media, "")
+    @XmlSerialName("thumbnail", Namespace.Aedia, "")
     @Serializable
     data class Thumbnail(
         @XmlElement(false)
@@ -78,14 +78,14 @@ data class MediaGroup(
 }
 
 @NoArg
-@XmlSerialName("community", Namespace.media, "")
+@XmlSerialName("community", Namespace.Aedia, "")
 @Serializable
 data class MediaCommunity(
     val starRating: StarRating,
     val statistics: Statistics,
 ) {
     @NoArg
-    @XmlSerialName("starRating", Namespace.media, "")
+    @XmlSerialName("starRating", Namespace.Aedia, "")
     @Serializable
     data class StarRating(
         @XmlElement(false)
@@ -99,7 +99,7 @@ data class MediaCommunity(
     )
 
     @NoArg
-    @XmlSerialName("statistics", Namespace.media, "")
+    @XmlSerialName("statistics", Namespace.Aedia, "")
     @Serializable
     data class Statistics(
         @XmlElement(false)
@@ -108,20 +108,20 @@ data class MediaCommunity(
 }
 
 @NoArg
-@XmlSerialName("entry", Namespace.atom, "")
+@XmlSerialName("entry", Namespace.Atom, "")
 @Serializable
 data class KotlinYouTubeItem(
     @XmlElement(true)
     val id: String,
     @XmlElement(true)
-    @XmlSerialName(value = "videoId", namespace = Namespace.yt, prefix = "")
+    @XmlSerialName(value = "videoId", namespace = Namespace.Yt, prefix = "")
     val videoId: String,
     @XmlElement(true)
-    @XmlSerialName(value = "channelId", namespace = Namespace.yt, prefix = "")
+    @XmlSerialName(value = "channelId", namespace = Namespace.Yt, prefix = "")
     val channelId: String,
     @XmlElement(true)
     val title: String,
-    @XmlSerialName(value = "link", namespace = Namespace.atom, prefix = "")
+    @XmlSerialName(value = "link", namespace = Namespace.Atom, prefix = "")
     val link: Link,
     val author: KotlinYouTubeAuthor,
     @XmlElement(true)

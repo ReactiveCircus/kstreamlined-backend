@@ -10,7 +10,6 @@ import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
 class FullResponseParserTest {
-
     private val mockKotlinBlogRssResponse =
         javaClass.classLoader.getResource("kotlin_blog_rss_response_full.xml")?.readText()!!
 
@@ -35,7 +34,7 @@ class FullResponseParserTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinBlogRssResponse),
-                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
+                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml"),
             )
         }
         val feedDataSource = RealFeedDataSource(
@@ -54,7 +53,7 @@ class FullResponseParserTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinYouTubeRssResponse),
-                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
+                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml"),
             )
         }
         val feedDataSource = RealFeedDataSource(
@@ -73,7 +72,7 @@ class FullResponseParserTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockTalkingKotlinRssResponse),
-                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
+                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml"),
             )
         }
         val feedDataSource = RealFeedDataSource(
@@ -92,7 +91,7 @@ class FullResponseParserTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinWeeklyRssResponse),
-                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml")
+                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml"),
             )
         }
         val feedDataSource = RealFeedDataSource(

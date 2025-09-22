@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class TestKSConfiguration {
-
     @Bean
     fun feedDataSource(): FeedDataSource {
         return FakeFeedDataSource

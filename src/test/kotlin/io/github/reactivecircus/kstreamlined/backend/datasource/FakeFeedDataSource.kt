@@ -10,7 +10,6 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaGroup
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem
 
 object FakeFeedDataSource : FeedDataSource {
-
     var nextKotlinBlogFeedResponse: () -> List<KotlinBlogItem> = {
         listOf(DummyKotlinBlogItem)
     }

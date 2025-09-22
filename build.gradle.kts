@@ -1,6 +1,6 @@
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.getSupportedKotlinVersion
+import dev.detekt.gradle.Detekt
+import dev.detekt.gradle.plugin.getSupportedKotlinVersion
 import org.graalvm.buildtools.gradle.tasks.BuildNativeImageTask
 import org.graalvm.buildtools.gradle.tasks.GenerateResourcesConfigFile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -105,15 +105,17 @@ detekt {
     source.setFrom(files("src/"))
     config.setFrom(files("${project.rootDir}/detekt.yml"))
     buildUponDefaultConfig = true
-    allRules = true
 }
 tasks.withType<Detekt>().configureEach {
     jvmTarget = JvmTarget.JVM_21.target
     reports {
+        xml.required.set(false)
+        sarif.required.set(false)
+        md.required.set(false)
         html.outputLocation.set(file("build/reports/detekt/${project.name}.html"))
     }
 }
-dependencies.add("detektPlugins", libs.detektFormatting)
+dependencies.add("detektPlugins", libs.detektKtlintWrapper)
 
 dependencies {
     implementation(libs.spring.boot.starter)

@@ -13,7 +13,6 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 class RealKotlinWeeklyIssueDataSourceTest {
-
     private val mockKotlinWeeklyIssueResponse =
         javaClass.classLoader.getResource("kotlin_weekly_issue_sample.html")?.readText()!!
 

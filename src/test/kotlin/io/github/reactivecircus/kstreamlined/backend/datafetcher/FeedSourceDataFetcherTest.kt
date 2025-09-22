@@ -14,7 +14,6 @@ import kotlin.test.Test
 @EnableAutoConfiguration
 @ContextConfiguration(classes = [TestKSConfiguration::class])
 class FeedSourceDataFetcherTest {
-
     @Autowired
     private lateinit var dgsQueryExecutor: DgsQueryExecutor
 

@@ -8,7 +8,6 @@ import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.Feed
 
 @DgsComponent
 class FeedSourceDataFetcher {
-
     @DgsQuery(field = DgsConstants.QUERY.FeedSources)
     suspend fun feedSources(): List<FeedSource> {
         return FeedSourceKey.entries.map {
