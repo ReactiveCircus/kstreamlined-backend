@@ -2,7 +2,7 @@
 kotlin = "2.2.21"
 spring-boot = "3.5.7"
 spring-dependencyManagement = "1.1.7"
-ktor = "3.3.1"
+ktor = "3.3.2"
 dgsBom = "10.4.0"
 dgsCodegen = "8.1.1"
 kotlinxSerializationBom = "1.9.0"
