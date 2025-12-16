@@ -4,6 +4,7 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinWeekly
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly
 import java.time.Instant
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class KotlinWeeklyEntryMapperTest {
@@ -23,7 +24,7 @@ class KotlinWeeklyEntryMapperTest {
             pubDate = "Sun, 28 Apr 2024 23:44:56 +0000",
         ).toKotlinWeeklyEntry()
 
-        assert(expected == actual)
+        assertEquals(expected, actual)
     }
 
     @Test

@@ -3,6 +3,7 @@ import dev.detekt.gradle.Detekt
 import dev.detekt.gradle.plugin.getSupportedKotlinVersion
 import org.graalvm.buildtools.gradle.tasks.BuildNativeImageTask
 import org.graalvm.buildtools.gradle.tasks.GenerateResourcesConfigFile
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -117,6 +118,19 @@ tasks.withType<Detekt>().configureEach {
     }
 }
 dependencies.add("detektPlugins", libs.detektKtlintWrapper)
+
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
+powerAssert {
+    functions.set(
+        listOf(
+            "kotlin.assert",
+            "kotlin.test.assertEquals",
+            "kotlin.test.assertTrue",
+            "kotlin.test.assertFalse",
+            "kotlin.test.assertNull",
+        )
+    )
+}
 
 dependencies {
     implementation(libs.spring.boot.starter)

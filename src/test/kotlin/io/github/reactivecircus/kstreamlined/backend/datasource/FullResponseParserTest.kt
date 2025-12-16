@@ -7,6 +7,7 @@ import io.ktor.http.headersOf
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.seconds
 
 class FullResponseParserTest {
@@ -45,7 +46,7 @@ class FullResponseParserTest {
             feedPersister = feedPersister,
         )
 
-        assert(feedDataSource.loadKotlinBlogFeed().size == 12)
+        assertEquals(12, feedDataSource.loadKotlinBlogFeed().size)
     }
 
     @Test
@@ -64,7 +65,7 @@ class FullResponseParserTest {
             feedPersister = feedPersister,
         )
 
-        assert(feedDataSource.loadKotlinYouTubeFeed().size == 15)
+        assertEquals(15, feedDataSource.loadKotlinYouTubeFeed().size)
     }
 
     @Test
@@ -83,7 +84,7 @@ class FullResponseParserTest {
             feedPersister = feedPersister,
         )
 
-        assert(feedDataSource.loadTalkingKotlinFeed().size == 10)
+        assertEquals(10, feedDataSource.loadTalkingKotlinFeed().size)
     }
 
     @Test
@@ -102,6 +103,6 @@ class FullResponseParserTest {
             feedPersister = feedPersister,
         )
 
-        assert(feedDataSource.loadKotlinWeeklyFeed().size == 3)
+        assertEquals(3, feedDataSource.loadKotlinWeeklyFeed().size)
     }
 }

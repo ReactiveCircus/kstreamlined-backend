@@ -2,6 +2,7 @@ package io.github.reactivecircus.kstreamlined.backend.datasource
 
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class FeedSotTest {
@@ -18,7 +19,7 @@ class FeedSotTest {
             remoteSource = { remoteData },
         )
 
-        assert(result == listOf("item0", "item1", "item2"))
+        assertEquals(listOf("item0", "item1", "item2"), result)
     }
 
     @Test
@@ -30,6 +31,6 @@ class FeedSotTest {
                 remoteSource = { emptyList() },
             )
         }
-        assert(exception.message == "Local source returned null.")
+        assertEquals("Local source returned null.", exception.message)
     }
 }

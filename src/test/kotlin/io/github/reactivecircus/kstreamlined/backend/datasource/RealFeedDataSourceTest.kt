@@ -18,6 +18,7 @@ import io.ktor.http.headersOf
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.time.Duration.Companion.seconds
 
@@ -76,8 +77,8 @@ class RealFeedDataSourceTest {
             ),
         )
 
-        assert(feedDataSource.loadKotlinBlogFeed() == expected)
-        assert(feedPersister.loadKotlinBlogItems() == expected)
+        assertEquals(expected, feedDataSource.loadKotlinBlogFeed())
+        assertEquals(expected, feedPersister.loadKotlinBlogItems())
     }
 
     @Test
@@ -197,8 +198,8 @@ class RealFeedDataSourceTest {
             ),
         )
 
-        assert(feedDataSource.loadKotlinYouTubeFeed() == expected)
-        assert(feedPersister.loadKotlinYouTubeItems() == expected)
+        assertEquals(expected, feedDataSource.loadKotlinYouTubeFeed())
+        assertEquals(expected, feedPersister.loadKotlinYouTubeItems())
     }
 
     @Test
@@ -258,8 +259,8 @@ class RealFeedDataSourceTest {
             ),
         )
 
-        assert(feedDataSource.loadTalkingKotlinFeed() == expected)
-        assert(feedPersister.loadTalkingKotlinItems() == expected)
+        assertEquals(expected, feedDataSource.loadTalkingKotlinFeed())
+        assertEquals(expected, feedPersister.loadTalkingKotlinItems())
     }
 
     @Test
@@ -311,8 +312,8 @@ class RealFeedDataSourceTest {
             ),
         )
 
-        assert(feedDataSource.loadKotlinWeeklyFeed() == expected)
-        assert(feedPersister.loadKotlinWeeklyItems() == expected)
+        assertEquals(expected, feedDataSource.loadKotlinWeeklyFeed())
+        assertEquals(expected, feedPersister.loadKotlinWeeklyItems())
     }
 
     @Test

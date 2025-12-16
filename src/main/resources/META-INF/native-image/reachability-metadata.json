@@ -151,6 +151,37 @@
       ]
     },
     {
+      "type": "com.github.benmanes.caffeine.cache.PSWMS",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "com.github.benmanes.caffeine.cache.SSSMS",
+      "fields": [
+        {
+          "name": "maximum"
+        },
+        {
+          "name": "weightedSize"
+        }
+      ]
+    },
+    {
+      "type": "com.github.benmanes.caffeine.cache.SSSMSW",
+      "fields": [
+        {
+          "name": "FACTORY"
+        },
+        {
+          "name": "expiresAfterWriteNanos"
+        }
+      ]
+    },
+    {
       "type": "com.github.benmanes.caffeine.cache.SSW",
       "fields": [
         {
@@ -158,6 +189,14 @@
         },
         {
           "name": "expiresAfterWriteNanos"
+        }
+      ]
+    },
+    {
+      "type": "com.github.benmanes.caffeine.cache.StripedBuffer",
+      "fields": [
+        {
+          "name": "tableBusy"
         }
       ]
     },
@@ -283,7 +322,7 @@
         {
           "name": "setAuthorization",
           "parameterTypes": [
-            "java.lang.String"
+            "java.util.List"
           ]
         },
         {
@@ -1282,6 +1321,12 @@
       "type": "graphql.execution.preparsed.PreparsedDocumentProvider"
     },
     {
+      "type": "graphql.execution.preparsed.persisted.ApolloPersistedQuerySupport"
+    },
+    {
+      "type": "graphql.execution.preparsed.persisted.PersistedQuerySupport"
+    },
+    {
       "type": "graphql.schema.Coercing"
     },
     {
@@ -1298,6 +1343,63 @@
     },
     {
       "type": "groovy.lang.MetaClass"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.APQConfiguration",
+      "methods": [
+        {
+          "name": "preparsedDocumentProvider",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.APQConfiguration$$SpringCGLIB$$0",
+      "fields": [
+        {
+          "name": "$$beanFactory"
+        },
+        {
+          "name": "CGLIB$CALLBACK_FILTER"
+        },
+        {
+          "name": "CGLIB$FACTORY_DATA"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "CGLIB$SET_STATIC_CALLBACKS",
+          "parameterTypes": [
+            "org.springframework.cglib.proxy.Callback[]"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.APQConfiguration$$SpringCGLIB$$FastClass$$0",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Class"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.APQConfiguration$$SpringCGLIB$$FastClass$$1",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.Class"
+          ]
+        }
+      ]
     },
     {
       "type": "io.github.reactivecircus.kstreamlined.backend.KSBackendApplication",
@@ -2852,6 +2954,9 @@
     },
     {
       "type": "io.netty.util.ReferenceCountUtil"
+    },
+    {
+      "type": "io.netty.util.ResourceLeakDetector$DefaultResourceLeak"
     },
     {
       "type": "io.netty.util.concurrent.DefaultPromise"
@@ -7532,6 +7637,9 @@
     },
     {
       "glob": "io/github/reactivecircus/kstreamlined/backend"
+    },
+    {
+      "glob": "io/github/reactivecircus/kstreamlined/backend/APQConfiguration.class"
     },
     {
       "glob": "io/github/reactivecircus/kstreamlined/backend/KSConfiguration.class"

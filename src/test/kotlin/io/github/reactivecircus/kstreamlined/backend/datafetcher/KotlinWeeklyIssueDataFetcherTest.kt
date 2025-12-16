@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 @SpringBootTest(classes = [KotlinWeeklyIssueDataFetcher::class, InstantScalar::class])
 @EnableAutoConfiguration
@@ -45,36 +46,66 @@ class KotlinWeeklyIssueDataFetcherTest {
             mapOf("url" to "https://mailchi.mp/kotlinweekly/kotlin-weekly-386"),
         )
 
-        assert(context.read<Int>("data.kotlinWeeklyIssue.size()") == 5)
+        assertEquals(5, context.read<Int>("data.kotlinWeeklyIssue.size()"))
 
-        assert(context.read<String>("data.kotlinWeeklyIssue[0].title") == DummyKotlinWeeklyIssueEntries[0].title)
-        assert(context.read<String>("data.kotlinWeeklyIssue[0].summary") == DummyKotlinWeeklyIssueEntries[0].summary)
-        assert(context.read<String>("data.kotlinWeeklyIssue[0].url") == DummyKotlinWeeklyIssueEntries[0].url)
-        assert(context.read<String>("data.kotlinWeeklyIssue[0].source") == DummyKotlinWeeklyIssueEntries[0].source)
-        assert(context.read<String>("data.kotlinWeeklyIssue[0].group") == DummyKotlinWeeklyIssueEntries[0].group.name)
+        assertEquals(DummyKotlinWeeklyIssueEntries[0].title, context.read<String>("data.kotlinWeeklyIssue[0].title"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[0].summary,
+            context.read<String>("data.kotlinWeeklyIssue[0].summary"),
+        )
+        assertEquals(DummyKotlinWeeklyIssueEntries[0].url, context.read<String>("data.kotlinWeeklyIssue[0].url"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[0].source, context.read<String>("data.kotlinWeeklyIssue[0].source"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[0].group.name,
+            context.read<String>("data.kotlinWeeklyIssue[0].group"),
+        )
 
-        assert(context.read<String>("data.kotlinWeeklyIssue[1].title") == DummyKotlinWeeklyIssueEntries[1].title)
-        assert(context.read<String>("data.kotlinWeeklyIssue[1].summary") == DummyKotlinWeeklyIssueEntries[1].summary)
-        assert(context.read<String>("data.kotlinWeeklyIssue[1].url") == DummyKotlinWeeklyIssueEntries[1].url)
-        assert(context.read<String>("data.kotlinWeeklyIssue[1].source") == DummyKotlinWeeklyIssueEntries[1].source)
-        assert(context.read<String>("data.kotlinWeeklyIssue[1].group") == DummyKotlinWeeklyIssueEntries[1].group.name)
+        assertEquals(DummyKotlinWeeklyIssueEntries[1].title, context.read<String>("data.kotlinWeeklyIssue[1].title"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[1].summary,
+            context.read<String>("data.kotlinWeeklyIssue[1].summary"),
+        )
+        assertEquals(DummyKotlinWeeklyIssueEntries[1].url, context.read<String>("data.kotlinWeeklyIssue[1].url"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[1].source, context.read<String>("data.kotlinWeeklyIssue[1].source"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[1].group.name,
+            context.read<String>("data.kotlinWeeklyIssue[1].group"),
+        )
 
-        assert(context.read<String>("data.kotlinWeeklyIssue[2].title") == DummyKotlinWeeklyIssueEntries[2].title)
-        assert(context.read<String>("data.kotlinWeeklyIssue[2].summary") == DummyKotlinWeeklyIssueEntries[2].summary)
-        assert(context.read<String>("data.kotlinWeeklyIssue[2].url") == DummyKotlinWeeklyIssueEntries[2].url)
-        assert(context.read<String>("data.kotlinWeeklyIssue[2].source") == DummyKotlinWeeklyIssueEntries[2].source)
-        assert(context.read<String>("data.kotlinWeeklyIssue[2].group") == DummyKotlinWeeklyIssueEntries[2].group.name)
+        assertEquals(DummyKotlinWeeklyIssueEntries[2].title, context.read<String>("data.kotlinWeeklyIssue[2].title"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[2].summary,
+            context.read<String>("data.kotlinWeeklyIssue[2].summary"),
+        )
+        assertEquals(DummyKotlinWeeklyIssueEntries[2].url, context.read<String>("data.kotlinWeeklyIssue[2].url"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[2].source, context.read<String>("data.kotlinWeeklyIssue[2].source"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[2].group.name,
+            context.read<String>("data.kotlinWeeklyIssue[2].group"),
+        )
 
-        assert(context.read<String>("data.kotlinWeeklyIssue[3].title") == DummyKotlinWeeklyIssueEntries[3].title)
-        assert(context.read<String>("data.kotlinWeeklyIssue[3].summary") == DummyKotlinWeeklyIssueEntries[3].summary)
-        assert(context.read<String>("data.kotlinWeeklyIssue[3].url") == DummyKotlinWeeklyIssueEntries[3].url)
-        assert(context.read<String>("data.kotlinWeeklyIssue[3].source") == DummyKotlinWeeklyIssueEntries[3].source)
-        assert(context.read<String>("data.kotlinWeeklyIssue[3].group") == DummyKotlinWeeklyIssueEntries[3].group.name)
+        assertEquals(DummyKotlinWeeklyIssueEntries[3].title, context.read<String>("data.kotlinWeeklyIssue[3].title"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[3].summary,
+            context.read<String>("data.kotlinWeeklyIssue[3].summary"),
+        )
+        assertEquals(DummyKotlinWeeklyIssueEntries[3].url, context.read<String>("data.kotlinWeeklyIssue[3].url"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[3].source, context.read<String>("data.kotlinWeeklyIssue[3].source"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[3].group.name,
+            context.read<String>("data.kotlinWeeklyIssue[3].group"),
+        )
 
-        assert(context.read<String>("data.kotlinWeeklyIssue[4].title") == DummyKotlinWeeklyIssueEntries[4].title)
-        assert(context.read<String>("data.kotlinWeeklyIssue[4].summary") == DummyKotlinWeeklyIssueEntries[4].summary)
-        assert(context.read<String>("data.kotlinWeeklyIssue[4].url") == DummyKotlinWeeklyIssueEntries[4].url)
-        assert(context.read<String>("data.kotlinWeeklyIssue[4].source") == DummyKotlinWeeklyIssueEntries[4].source)
-        assert(context.read<String>("data.kotlinWeeklyIssue[4].group") == DummyKotlinWeeklyIssueEntries[4].group.name)
+        assertEquals(DummyKotlinWeeklyIssueEntries[4].title, context.read<String>("data.kotlinWeeklyIssue[4].title"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[4].summary,
+            context.read<String>("data.kotlinWeeklyIssue[4].summary"),
+        )
+        assertEquals(DummyKotlinWeeklyIssueEntries[4].url, context.read<String>("data.kotlinWeeklyIssue[4].url"))
+        assertEquals(DummyKotlinWeeklyIssueEntries[4].source, context.read<String>("data.kotlinWeeklyIssue[4].source"))
+        assertEquals(
+            DummyKotlinWeeklyIssueEntries[4].group.name,
+            context.read<String>("data.kotlinWeeklyIssue[4].group"),
+        )
     }
 }

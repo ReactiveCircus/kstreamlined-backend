@@ -4,6 +4,7 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogIt
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog
 import java.time.Instant
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class KotlinBlogEntryMapperTest {
     @Test
@@ -25,7 +26,7 @@ class KotlinBlogEntryMapperTest {
             description = "description",
         ).toKotlinBlogEntry()
 
-        assert(expected == actual)
+        assertEquals(expected, actual)
     }
 
     @Test
