@@ -123,13 +123,7 @@
       ]
     },
     {
-      "type": "com.github.benmanes.caffeine.cache.BoundedLocalCache$BoundedLocalManualCache"
-    },
-    {
       "type": "com.github.benmanes.caffeine.cache.Cache"
-    },
-    {
-      "type": "com.github.benmanes.caffeine.cache.LocalManualCache"
     },
     {
       "type": "com.github.benmanes.caffeine.cache.PS",
@@ -328,7 +322,7 @@
         {
           "name": "setAuthorization",
           "parameterTypes": [
-            "java.util.List"
+            "java.lang.String"
           ]
         },
         {
@@ -609,169 +603,6 @@
     },
     {
       "type": "com.netflix.graphql.dgs.ReloadSchemaIndicator"
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.AutomatedPersistedQueryCacheAdapter"
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.AutomatedPersistedQueryCaffeineCache"
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "apqSourceBuilderCustomizer",
-          "parameterTypes": [
-            "java.util.Optional",
-            "java.util.Optional"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$APQBasicCaffeineCacheConfiguration",
-      "methods": [
-        {
-          "name": "meteredPersistedQueryCache",
-          "parameterTypes": [
-            "com.github.benmanes.caffeine.cache.Cache"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$APQBasicCaffeineCacheConfiguration$$SpringCGLIB$$0",
-      "fields": [
-        {
-          "name": "$$beanFactory"
-        },
-        {
-          "name": "CGLIB$CALLBACK_FILTER"
-        },
-        {
-          "name": "CGLIB$FACTORY_DATA"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "CGLIB$SET_STATIC_CALLBACKS",
-          "parameterTypes": [
-            "org.springframework.cglib.proxy.Callback[]"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$APQBasicCaffeineCacheConfiguration$$SpringCGLIB$$FastClass$$0",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "java.lang.Class"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$APQBasicCaffeineCacheConfiguration$$SpringCGLIB$$FastClass$$1",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "java.lang.Class"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$APQCaffeineCacheConfiguration",
-      "methods": [
-        {
-          "name": "apqCaffeineCache",
-          "parameterTypes": [
-            "com.netflix.graphql.dgs.apq.DgsAPQSupportProperties"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$APQCaffeineCacheConfiguration$$SpringCGLIB$$0",
-      "fields": [
-        {
-          "name": "$$beanFactory"
-        },
-        {
-          "name": "CGLIB$CALLBACK_FILTER"
-        },
-        {
-          "name": "CGLIB$FACTORY_DATA"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "CGLIB$SET_STATIC_CALLBACKS",
-          "parameterTypes": [
-            "org.springframework.cglib.proxy.Callback[]"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$APQCaffeineCacheConfiguration$$SpringCGLIB$$FastClass$$0",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "java.lang.Class"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$APQCaffeineCacheConfiguration$$SpringCGLIB$$FastClass$$1",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "java.lang.Class"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$APQMicrometerMeteredCaffeineCacheConfiguration"
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration$Companion"
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportProperties",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "boolean",
-            "com.netflix.graphql.dgs.apq.DgsAPQSupportProperties$DgsAPQDefaultCaffeineCacheProperties",
-            "int",
-            "kotlin.jvm.internal.DefaultConstructorMarker"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.netflix.graphql.dgs.apq.DgsAPQSupportProperties$DgsAPQDefaultCaffeineCacheProperties"
     },
     {
       "type": "com.netflix.graphql.dgs.autoconfig.DgsConfigurationProperties",
@@ -1487,13 +1318,13 @@
       "type": "graphql.execution.instrumentation.SimplePerformantInstrumentation"
     },
     {
-      "type": "graphql.execution.preparsed.PreparsedDocumentEntry"
-    },
-    {
       "type": "graphql.execution.preparsed.PreparsedDocumentProvider"
     },
     {
-      "type": "graphql.execution.preparsed.persisted.PersistedQueryCache"
+      "type": "graphql.execution.preparsed.persisted.ApolloPersistedQuerySupport"
+    },
+    {
+      "type": "graphql.execution.preparsed.persisted.PersistedQuerySupport"
     },
     {
       "type": "graphql.schema.Coercing"
@@ -1575,6 +1406,10 @@
           "parameterTypes": [
             "io.ktor.client.engine.HttpClientEngine"
           ]
+        },
+        {
+          "name": "preparsedDocumentProvider",
+          "parameterTypes": []
         },
         {
           "name": "redisClient",
@@ -2996,9 +2831,6 @@
       "type": "io.micrometer.core.instrument.MeterRegistry"
     },
     {
-      "type": "io.micrometer.core.instrument.MeterRegistry::class"
-    },
-    {
       "type": "io.micrometer.observation.contextpropagation.ObservationThreadLocalAccessor"
     },
     {
@@ -3069,9 +2901,6 @@
     },
     {
       "type": "io.netty.util.ReferenceCountUtil"
-    },
-    {
-      "type": "io.netty.util.ResourceLeakDetector$DefaultResourceLeak"
     },
     {
       "type": "io.netty.util.concurrent.DefaultPromise"
@@ -4046,9 +3875,6 @@
     },
     {
       "type": "org.jboss.logging.Logger"
-    },
-    {
-      "type": "org.jspecify.annotations.NullMarked"
     },
     {
       "type": "org.osgi.framework.FrameworkUtil"
@@ -7386,16 +7212,6 @@
     {
       "type": {
         "lambda": {
-          "declaringClass": "com.netflix.graphql.dgs.apq.DgsAPQSupportAutoConfiguration",
-          "interfaces": [
-            "org.springframework.boot.graphql.autoconfigure.GraphQlSourceBuilderCustomizer"
-          ]
-        }
-      }
-    },
-    {
-      "type": {
-        "lambda": {
           "declaringClass": "com.netflix.graphql.dgs.springgraphql.autoconfig.DgsSpringGraphQLAutoConfiguration",
           "interfaces": [
             "com.netflix.graphql.dgs.ReloadSchemaIndicator"
@@ -7654,18 +7470,6 @@
     },
     {
       "glob": "com/netflix/graphql/dgs/DgsScalar.class"
-    },
-    {
-      "glob": "com/netflix/graphql/dgs/apq/DgsAPQSupportAutoConfiguration$APQBasicCaffeineCacheConfiguration.class"
-    },
-    {
-      "glob": "com/netflix/graphql/dgs/apq/DgsAPQSupportAutoConfiguration$APQCaffeineCacheConfiguration.class"
-    },
-    {
-      "glob": "com/netflix/graphql/dgs/apq/DgsAPQSupportAutoConfiguration$APQMicrometerMeteredCaffeineCacheConfiguration.class"
-    },
-    {
-      "glob": "com/netflix/graphql/dgs/apq/DgsAPQSupportAutoConfiguration$Companion.class"
     },
     {
       "glob": "com/netflix/graphql/dgs/apq/DgsAPQSupportAutoConfiguration.class"

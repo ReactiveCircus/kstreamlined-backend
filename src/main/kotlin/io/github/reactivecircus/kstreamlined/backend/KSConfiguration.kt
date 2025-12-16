@@ -1,8 +1,13 @@
 package io.github.reactivecircus.kstreamlined.backend
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.Firestore
 import com.google.cloud.firestore.FirestoreOptions
+import com.netflix.graphql.dgs.apq.AutomatedPersistedQueryCaffeineCache
+import com.netflix.graphql.dgs.apq.DgsAPQSupportProperties
+import graphql.execution.preparsed.PreparsedDocumentProvider
+import graphql.execution.preparsed.persisted.ApolloPersistedQuerySupport
 import io.github.reactivecircus.kstreamlined.backend.datasource.DataLoader
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig
@@ -99,5 +104,13 @@ class KSConfiguration {
             .setCredentials(GoogleCredentials.getApplicationDefault())
             .build()
         return firestoreOptions.service
+    }
+
+    @Bean
+    fun preparsedDocumentProvider(): PreparsedDocumentProvider {
+        val spec = DgsAPQSupportProperties.DgsAPQDefaultCaffeineCacheProperties().caffeineSpec
+        return ApolloPersistedQuerySupport(
+            AutomatedPersistedQueryCaffeineCache(Caffeine.from(spec).build()),
+        )
     }
 }

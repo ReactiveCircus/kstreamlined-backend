@@ -4,11 +4,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.context.annotation.Import
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBody
 import java.security.MessageDigest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -57,13 +58,10 @@ class ApolloPersistedQueriesTest {
             .bodyValue(requestBody)
             .exchange()
             .expectStatus().isOk
-            .expectBody(String::class.java)
+            .expectBody<String>()
             .consumeWith { response ->
                 val body = response.responseBody
-                assertTrue(
-                    body?.contains("PersistedQueryNotFound") == true,
-                    "Expected PersistedQueryNotFound error, got: $body",
-                )
+                assertEquals(body?.contains("PersistedQueryNotFound"), true)
             }
     }
 
@@ -93,8 +91,8 @@ class ApolloPersistedQueriesTest {
             .expectBody(String::class.java)
             .consumeWith { response ->
                 val body = response.responseBody
-                assertTrue(body?.contains("feedSources") == true, "Registration should return feedSources: $body")
-                assertFalse(body?.contains("errors") == true, "Registration should not have errors: $body")
+                assertEquals(body?.contains("feedSources"), true)
+                assertNotEquals(body?.contains("errors"), true)
             }
 
         // Second request: retrieve by hash only (no query body)
@@ -115,11 +113,11 @@ class ApolloPersistedQueriesTest {
             .bodyValue(retrieveRequestBody)
             .exchange()
             .expectStatus().isOk
-            .expectBody(String::class.java)
+            .expectBody<String>()
             .consumeWith { response ->
                 val body = response.responseBody
-                assertTrue(body?.contains("feedSources") == true, "Retrieval by hash should return feedSources: $body")
-                assertFalse(body?.contains("errors") == true, "Retrieval should not have errors: $body")
+                assertEquals(body?.contains("feedSources"), true)
+                assertNotEquals(body?.contains("errors"), true)
             }
     }
 
