@@ -11,6 +11,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.serialization.builtins.serializer
 import java.io.IOException
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
@@ -29,7 +30,7 @@ class DataLoaderTest {
             suspendCancellableCoroutine {}
         }
 
-        assert(result == listOf(1, 2, 3))
+        assertEquals(listOf(1, 2, 3), result)
     }
 
     @Test
@@ -43,7 +44,7 @@ class DataLoaderTest {
             suspendCancellableCoroutine {}
         }
 
-        assert(result == listOf(1, 2, 3))
+        assertEquals(listOf(1, 2, 3), result)
     }
 
     @Test
@@ -99,7 +100,7 @@ class DataLoaderTest {
             suspendCancellableCoroutine {}
         }
 
-        assert(localCache.getIfPresent("key") == listOf(1, 2, 3))
+        assertEquals(listOf(1, 2, 3), localCache.getIfPresent("key"))
     }
 
     @Test
@@ -121,11 +122,11 @@ class DataLoaderTest {
             listOf(1, 2, 3)
         }
 
-        assert(localCache.getIfPresent("key") == listOf(1, 2, 3))
-        assert(redisMockEngine.requestHistory.last().url.segments.last() == "key")
-        assert(redisMockEngine.requestHistory.last().url.encodedQuery == "EX=${1.hours.inWholeSeconds}")
-        assert(redisMockEngine.requestHistory.last().body.toString() == "TextContent[application/json] \"[1,2,3]\"")
-        assert(redisMockEngine.responseHistory.last().statusCode == HttpStatusCode.OK)
+        assertEquals(listOf(1, 2, 3), localCache.getIfPresent("key"))
+        assertEquals("key", redisMockEngine.requestHistory.last().url.segments.last())
+        assertEquals("EX=${1.hours.inWholeSeconds}", redisMockEngine.requestHistory.last().url.encodedQuery)
+        assertEquals("TextContent[application/json] \"[1,2,3]\"", redisMockEngine.requestHistory.last().body.toString())
+        assertEquals(HttpStatusCode.OK, redisMockEngine.responseHistory.last().statusCode)
     }
 
     @Test
@@ -149,11 +150,14 @@ class DataLoaderTest {
             listOf(1, 2, 3, 4)
         }
 
-        assert(localCache.getIfPresent("key") == listOf(1, 2, 3, 4))
-        assert(redisMockEngine.requestHistory.last().url.segments.last() == "key")
-        assert(redisMockEngine.requestHistory.last().url.encodedQuery == "EX=${1.hours.inWholeSeconds}")
-        assert(redisMockEngine.requestHistory.last().body.toString() == "TextContent[application/json] \"[1,2,3,4]\"")
-        assert(redisMockEngine.responseHistory.last().statusCode == HttpStatusCode.OK)
+        assertEquals(listOf(1, 2, 3, 4), localCache.getIfPresent("key"))
+        assertEquals("key", redisMockEngine.requestHistory.last().url.segments.last())
+        assertEquals("EX=${1.hours.inWholeSeconds}", redisMockEngine.requestHistory.last().url.encodedQuery)
+        assertEquals(
+            "TextContent[application/json] \"[1,2,3,4]\"",
+            redisMockEngine.requestHistory.last().body.toString(),
+        )
+        assertEquals(HttpStatusCode.OK, redisMockEngine.responseHistory.last().statusCode)
     }
 
     private fun createDataLoader(

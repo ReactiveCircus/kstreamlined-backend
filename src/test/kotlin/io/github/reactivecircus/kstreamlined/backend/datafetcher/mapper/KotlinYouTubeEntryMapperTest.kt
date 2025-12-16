@@ -8,6 +8,7 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaGroup
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube
 import java.time.Instant
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class KotlinYouTubeEntryMapperTest {
     @Test
@@ -55,6 +56,6 @@ class KotlinYouTubeEntryMapperTest {
             ),
         ).toKotlinYouTubeEntry()
 
-        assert(expected == actual)
+        assertEquals(expected, actual)
     }
 }

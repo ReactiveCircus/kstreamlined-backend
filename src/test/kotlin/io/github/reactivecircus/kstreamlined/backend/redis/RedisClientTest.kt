@@ -7,7 +7,9 @@ import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 
 class RedisClientTest {
     @Test
@@ -32,11 +34,11 @@ class RedisClientTest {
         }
         val redisClient = createRedisClient(mockEngine)
 
-        assert(redisClient.get("a") == null)
-        assert(redisClient.get("b") == "3")
-        assert(redisClient.get("c") == "foo")
-        assert(redisClient.get("d") == "[\"a\",\"b\",\"c\"]")
-        assert(redisClient.get("e") == "{\"key\": \"value\"}")
+        assertNull(redisClient.get("a"))
+        assertEquals("3", redisClient.get("b"))
+        assertEquals("foo", redisClient.get("c"))
+        assertEquals("[\"a\",\"b\",\"c\"]", redisClient.get("d"))
+        assertEquals("{\"key\": \"value\"}", redisClient.get("e"))
     }
 
     @Test
@@ -70,10 +72,10 @@ class RedisClientTest {
 
         redisClient.set("a", "3", keyExpirySeconds = 10)
 
-        assert(mockEngine.requestHistory[0].url.rawSegments.last() == "a")
-        assert(mockEngine.requestHistory[0].url.encodedQuery == "EX=10")
-        assert(mockEngine.requestHistory[0].body.toString() == "TextContent[application/json] \"3\"")
-        assert(mockEngine.responseHistory[0].statusCode == HttpStatusCode.OK)
+        assertEquals("a", mockEngine.requestHistory[0].url.rawSegments.last())
+        assertEquals("EX=10", mockEngine.requestHistory[0].url.encodedQuery)
+        assertEquals("TextContent[application/json] \"3\"", mockEngine.requestHistory[0].body.toString())
+        assertEquals(HttpStatusCode.OK, mockEngine.responseHistory[0].statusCode)
     }
 
     @Test
@@ -85,10 +87,10 @@ class RedisClientTest {
 
         redisClient.set("a", "3")
 
-        assert(mockEngine.requestHistory[0].url.rawSegments.last() == "a")
-        assert(mockEngine.requestHistory[0].url.encodedQuery == "EX=3600")
-        assert(mockEngine.requestHistory[0].body.toString() == "TextContent[application/json] \"3\"")
-        assert(mockEngine.responseHistory[0].statusCode == HttpStatusCode.InternalServerError)
+        assertEquals("a", mockEngine.requestHistory[0].url.rawSegments.last())
+        assertEquals("EX=3600", mockEngine.requestHistory[0].url.encodedQuery)
+        assertEquals("TextContent[application/json] \"3\"", mockEngine.requestHistory[0].body.toString())
+        assertEquals(HttpStatusCode.InternalServerError, mockEngine.responseHistory[0].statusCode)
     }
 
     @Test

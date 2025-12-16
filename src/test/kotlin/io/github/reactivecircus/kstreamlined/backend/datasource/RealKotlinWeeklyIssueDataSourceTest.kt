@@ -10,6 +10,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class RealKotlinWeeklyIssueDataSourceTest {
@@ -110,7 +111,7 @@ class RealKotlinWeeklyIssueDataSourceTest {
             ),
         )
 
-        assert(kotlinWeeklyIssueDataSource.loadKotlinWeeklyIssue("url") == expected)
+        assertEquals(expected, kotlinWeeklyIssueDataSource.loadKotlinWeeklyIssue("url"))
     }
 
     @Test

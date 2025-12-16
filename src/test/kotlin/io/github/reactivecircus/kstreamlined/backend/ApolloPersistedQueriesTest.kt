@@ -7,6 +7,8 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import java.security.MessageDigest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -58,9 +60,10 @@ class ApolloPersistedQueriesTest {
             .expectBody(String::class.java)
             .consumeWith { response ->
                 val body = response.responseBody
-                assert(body?.contains("PersistedQueryNotFound") == true) {
-                    "Expected PersistedQueryNotFound error, got: $body"
-                }
+                assertTrue(
+                    body?.contains("PersistedQueryNotFound") == true,
+                    "Expected PersistedQueryNotFound error, got: $body",
+                )
             }
     }
 
@@ -90,12 +93,8 @@ class ApolloPersistedQueriesTest {
             .expectBody(String::class.java)
             .consumeWith { response ->
                 val body = response.responseBody
-                assert(body?.contains("feedSources") == true) {
-                    "Registration should return feedSources: $body"
-                }
-                assert(body?.contains("errors") != true) {
-                    "Registration should not have errors: $body"
-                }
+                assertTrue(body?.contains("feedSources") == true, "Registration should return feedSources: $body")
+                assertFalse(body?.contains("errors") == true, "Registration should not have errors: $body")
             }
 
         // Second request: retrieve by hash only (no query body)
@@ -119,12 +118,8 @@ class ApolloPersistedQueriesTest {
             .expectBody(String::class.java)
             .consumeWith { response ->
                 val body = response.responseBody
-                assert(body?.contains("feedSources") == true) {
-                    "Retrieval by hash should return feedSources: $body"
-                }
-                assert(body?.contains("errors") != true) {
-                    "Retrieval should not have errors: $body"
-                }
+                assertTrue(body?.contains("feedSources") == true, "Retrieval by hash should return feedSources: $body")
+                assertFalse(body?.contains("errors") == true, "Retrieval should not have errors: $body")
             }
     }
 

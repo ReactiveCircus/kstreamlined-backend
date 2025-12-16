@@ -4,6 +4,7 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotli
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin
 import java.time.Instant
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class TalkingKotlinEntryMapperTest {
     @Test
@@ -29,6 +30,6 @@ class TalkingKotlinEntryMapperTest {
             image = TalkingKotlinItem.Image(href = "image-url"),
         ).toTalkingKotlinEntry()
 
-        assert(expected == actual)
+        assertEquals(expected, actual)
     }
 }

@@ -118,6 +118,18 @@ tasks.withType<Detekt>().configureEach {
 }
 dependencies.add("detektPlugins", libs.detektKtlintWrapper)
 
+powerAssert {
+    functions.set(
+        listOf(
+            "kotlin.assert",
+            "kotlin.test.assertEquals",
+            "kotlin.test.assertTrue",
+            "kotlin.test.assertFalse",
+            "kotlin.test.assertNull",
+        )
+    )
+}
+
 dependencies {
     implementation(libs.spring.boot.starter)
     implementation(libs.dgs.starter)
