@@ -1,8 +1,11 @@
 package io.github.reactivecircus.kstreamlined.backend
 
+import io.github.reactivecircus.kstreamlined.backend.datafetcher.FeedSourceDataFetcher
+import io.github.reactivecircus.kstreamlined.backend.datafetcher.scalar.InstantScalar
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.server.LocalServerPort
-import org.springframework.context.annotation.Import
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 import java.security.MessageDigest
@@ -13,9 +16,10 @@ import kotlin.test.assertNotEquals
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    classes = [KSBackendApplication::class],
+    classes = [FeedSourceDataFetcher::class, InstantScalar::class],
 )
-@Import(TestKSConfiguration::class)
+@EnableAutoConfiguration
+@ContextConfiguration(classes = [TestKSConfiguration::class, APQConfiguration::class])
 class ApolloPersistedQueriesTest {
     @LocalServerPort
     private val port: Int = 0
