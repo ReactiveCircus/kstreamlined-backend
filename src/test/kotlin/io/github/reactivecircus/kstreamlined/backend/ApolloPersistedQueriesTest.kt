@@ -18,7 +18,7 @@ import kotlin.test.assertNotEquals
 @Import(TestKSConfiguration::class)
 class ApolloPersistedQueriesTest {
     @LocalServerPort
-    private var port: Int = 0
+    private val port: Int = 0
 
     private lateinit var webTestClient: WebTestClient
 
