@@ -6,23 +6,27 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.NoOpRedisClient
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
+import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 
-@Configuration
+@TestConfiguration
 class TestKSConfiguration {
     @Bean
-    fun feedDataSource(): FeedDataSource {
+    @Primary
+    fun testFeedDataSource(): FeedDataSource {
         return FakeFeedDataSource
     }
 
     @Bean
-    fun kotlinWeeklyIssueDataSource(): KotlinWeeklyIssueDataSource {
+    @Primary
+    fun testKotlinWeeklyIssueDataSource(): KotlinWeeklyIssueDataSource {
         return FakeKotlinWeeklyIssueDataSource
     }
 
     @Bean
-    fun redisClient(): RedisClient {
+    @Primary
+    fun testRedisClient(): RedisClient {
         return NoOpRedisClient
     }
 }
