@@ -1,8 +1,8 @@
 [versions]
 kotlin = "2.3.0"
-spring-boot = "4.0.1"
+spring-boot = "4.0.2"
 spring-dependencyManagement = "1.1.7"
-ktor = "3.3.3"
+ktor = "3.4.0"
 dgsBom = "11.1.0"
 dgsCodegen = "8.3.0"
 kotlinxSerializationBom = "1.10.0"
