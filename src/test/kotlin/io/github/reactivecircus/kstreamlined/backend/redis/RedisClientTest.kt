@@ -17,8 +17,11 @@ class RedisClientTest {
         val mockEngine = MockEngine { request ->
             when (request.url.rawSegments.last()) {
                 "a" -> respond(content = "{ \"result\": null }")
+
                 "b" -> respond(content = "{ \"result\": 3 }")
+
                 "c" -> respond(content = "{ \"result\": \"foo\" }")
+
                 "d" -> respond(
                     content = """
                         { "result": "[\"a\",\"b\",\"c\"]" }
