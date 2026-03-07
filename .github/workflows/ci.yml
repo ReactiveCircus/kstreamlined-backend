@@ -55,7 +55,7 @@ jobs:
       - name: Build GraalVM native executable
         run: ./gradlew nativeCompile
 
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           registry: ${{ secrets.GCP_REGION }}-docker.pkg.dev
           username: _json_key
@@ -65,7 +65,7 @@ jobs:
         run: echo "SHA_SHORT=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
 
       - name: Build and push container image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           push: true
