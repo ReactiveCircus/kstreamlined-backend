@@ -66,6 +66,10 @@ tasks.bootRun {
     )
 }
 
+tasks.named<UpdateDaemonJvm>("updateDaemonJvm") {
+    languageVersion.set(JavaLanguageVersion.of(25))
+}
+
 fun envVar(name: String): Pair<String, String> {
     return name to (providers.environmentVariable(name).orElse(providers.gradleProperty(name)).orNull
         ?: error("Missing environment variable or Gradle property: $name"))
