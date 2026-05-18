@@ -29,6 +29,7 @@ noArg {
 dependencyManagement {
     imports {
         mavenBom(libs.dgs.bom.get().toString())
+        mavenBom(libs.kotlinx.coroutines.bom.get().toString())
         mavenBom(libs.kotlinx.serialization.bom.get().toString())
     }
 }
