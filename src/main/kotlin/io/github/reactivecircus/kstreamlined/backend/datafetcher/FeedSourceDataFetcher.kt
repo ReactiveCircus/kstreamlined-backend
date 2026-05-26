@@ -37,7 +37,7 @@ internal object FeedSourceTitle {
 
 internal object FeedSourceDescription {
     const val KotlinBlog = "Latest news from the official Kotlin Blog"
-    const val KotlinYouTube = "The official YouTube channel of the Kotlin programming language"
-    const val TalkingKotlin = "Technical show discussing everything Kotlin, hosted by Hadi and Sebastian"
-    const val KotlinWeekly = "Weekly community Kotlin newsletter, hosted by Enrique"
+    const val KotlinYouTube = "Videos from the official Kotlin YouTube channel"
+    const val TalkingKotlin = "Podcast on Kotlin and more by JetBrains"
+    const val KotlinWeekly = "Weekly community Kotlin newsletter"
 }
