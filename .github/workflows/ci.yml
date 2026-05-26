@@ -19,7 +19,7 @@ env:
 jobs:
   assemble-and-check:
     name: Build executable jar, run unit tests and static analysis
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v6
@@ -41,7 +41,7 @@ jobs:
     name: Build and push container image to Google Artifact Registry, deploy to Cloud Run
     needs: [ assemble-and-check ]
     if: github.ref == 'refs/heads/main'
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v6
