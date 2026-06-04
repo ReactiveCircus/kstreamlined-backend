@@ -85,7 +85,6 @@ kotlin {
         jvmTarget.set(JvmTarget.JVM_21)
         freeCompilerArgs.addAll(
             "-Xjsr305=strict",
-            "-Xannotation-default-target=param-property", // see https://youtrack.jetbrains.com/issue/KT-73255
         )
     }
 }
