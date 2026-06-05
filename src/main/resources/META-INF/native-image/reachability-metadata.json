@@ -322,7 +322,7 @@
         {
           "name": "setAuthorization",
           "parameterTypes": [
-            "java.util.List"
+            "java.lang.String"
           ]
         },
         {
@@ -539,6 +539,36 @@
       "type": "com.google.gson.Gson"
     },
     {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$Builder"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$EnforceNamingStyle"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$EnumType"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$FieldPresence"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$JsonFormat"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$MessageEncoding"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$RepeatedFieldEncoding"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$Utf8Validation"
+    },
+    {
+      "type": "com.google.protobuf.DescriptorProtos$FeatureSet$VisibilityFeature$DefaultSymbolVisibility"
+    },
+    {
       "type": "com.google.protobuf.ExtensionRegistry",
       "methods": [
         {
@@ -551,7 +581,18 @@
       "type": "com.google.protobuf.Message"
     },
     {
-      "type": "com.google.protobuf.RuntimeVersion"
+      "type": "com.google.protobuf.RuntimeVersion",
+      "fields": [
+        {
+          "name": "MAJOR"
+        },
+        {
+          "name": "MINOR"
+        },
+        {
+          "name": "PATCH"
+        }
+      ]
     },
     {
       "type": "com.jcraft.jzlib.JZlib"
@@ -616,11 +657,15 @@
             "com.netflix.graphql.dgs.autoconfig.DgsConfigurationProperties$DgsPreparsedDocumentProviderConfigurationProperties",
             "com.netflix.graphql.dgs.autoconfig.DgsConfigurationProperties$DgsIntrospectionConfigurationProperties",
             "com.netflix.graphql.dgs.autoconfig.DgsConfigurationProperties$DgsStrictModeProperties",
+            "com.netflix.graphql.dgs.autoconfig.DgsConfigurationProperties$DgsFederationProperties",
             "int",
             "kotlin.jvm.internal.DefaultConstructorMarker"
           ]
         }
       ]
+    },
+    {
+      "type": "com.netflix.graphql.dgs.autoconfig.DgsConfigurationProperties$DgsFederationProperties"
     },
     {
       "type": "com.netflix.graphql.dgs.autoconfig.DgsConfigurationProperties$DgsIntrospectionConfigurationProperties"
@@ -749,6 +794,9 @@
       "type": "com.netflix.graphql.dgs.internal.InputObjectMapper"
     },
     {
+      "type": "com.netflix.graphql.dgs.internal.Jackson3DgsJsonMapper"
+    },
+    {
       "type": "com.netflix.graphql.dgs.internal.MonoDataFetcherResultProcessor"
     },
     {
@@ -777,6 +825,9 @@
     },
     {
       "type": "com.netflix.graphql.dgs.internal.method.SourceArgumentResolver"
+    },
+    {
+      "type": "com.netflix.graphql.dgs.json.DgsJsonMapper"
     },
     {
       "type": "com.netflix.graphql.dgs.reactive.DgsReactiveCustomContextBuilderWithRequest"
@@ -822,6 +873,10 @@
           "parameterTypes": [
             "org.springframework.core.env.Environment"
           ]
+        },
+        {
+          "name": "dgsCoroutineDispatcher",
+          "parameterTypes": []
         },
         {
           "name": "dgsDataLoaderInstrumentationDataLoaderCustomizer",
@@ -930,7 +985,8 @@
           "name": "methodDataFetcherFactory",
           "parameterTypes": [
             "org.springframework.beans.factory.ObjectProvider",
-            "java.util.Optional"
+            "java.util.Optional",
+            "kotlinx.coroutines.CoroutineDispatcher"
           ]
         },
         {
@@ -953,6 +1009,7 @@
             "org.springframework.graphql.ExecutionGraphQlService",
             "com.netflix.graphql.dgs.internal.DefaultDgsGraphQLContextBuilder",
             "com.netflix.graphql.dgs.internal.DgsDataLoaderProvider",
+            "com.netflix.graphql.dgs.json.DgsJsonMapper",
             "org.springframework.beans.factory.ObjectProvider",
             "java.util.List"
           ]
@@ -988,6 +1045,19 @@
       ]
     },
     {
+      "type": "com.netflix.graphql.dgs.springgraphql.autoconfig.DgsSpringGraphQLAutoConfiguration$Jackson3DgsJsonMapperConfiguration",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "dgsJsonMapper",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "com.netflix.graphql.dgs.springgraphql.autoconfig.DgsSpringGraphQLAutoConfiguration$ReactiveConfiguration",
       "methods": [
         {
@@ -1009,7 +1079,8 @@
           "parameterTypes": [
             "org.springframework.graphql.ExecutionGraphQlService",
             "com.netflix.graphql.dgs.reactive.internal.DefaultDgsReactiveGraphQLContextBuilder",
-            "com.netflix.graphql.dgs.internal.DgsDataLoaderProvider"
+            "com.netflix.graphql.dgs.internal.DgsDataLoaderProvider",
+            "com.netflix.graphql.dgs.json.DgsJsonMapper"
           ]
         }
       ]
@@ -1542,7 +1613,7 @@
           ]
         },
         {
-          "name": "resolveFeedEntry$kstreamlined_backend",
+          "name": "resolveFeedEntry$io_github_reactivecircus_kstreamlined_backend_kstreamlined_backend",
           "parameterTypes": [
             "io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry"
           ]
@@ -2369,9 +2440,6 @@
       ]
     },
     {
-      "type": "io.grpc.binder.internal.IntentNameResolverProvider"
-    },
-    {
       "type": "io.grpc.census.InternalCensusStatsAccessor"
     },
     {
@@ -2406,12 +2474,6 @@
     },
     {
       "type": "io.grpc.internal.SerializingExecutor"
-    },
-    {
-      "type": "io.grpc.netty.NettyChannelProvider"
-    },
-    {
-      "type": "io.grpc.netty.UdsNettyChannelProvider"
     },
     {
       "type": "io.grpc.netty.shaded.io.grpc.netty.NettyChannelProvider"
@@ -2594,6 +2656,10 @@
       "jniAccessible": true
     },
     {
+      "type": "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLCredential",
+      "jniAccessible": true
+    },
+    {
       "type": "io.grpc.netty.shaded.io.netty.internal.tcnative.SSLPrivateKeyMethodDecryptTask",
       "jniAccessible": true,
       "methods": [
@@ -2734,9 +2800,6 @@
       ]
     },
     {
-      "type": "io.grpc.okhttp.OkHttpChannelProvider"
-    },
-    {
       "type": "io.grpc.override.ContextStorageOverride",
       "methods": [
         {
@@ -2750,6 +2813,9 @@
     },
     {
       "type": "io.grpc.util.OutlierDetectionLoadBalancerProvider"
+    },
+    {
+      "type": "io.grpc.util.RandomSubsettingLoadBalancerProvider"
     },
     {
       "type": "io.grpc.util.SecretRoundRobinLoadBalancerProvider$Provider",
@@ -2768,9 +2834,6 @@
     },
     {
       "type": "io.grpc.xds.ClusterManagerLoadBalancerProvider"
-    },
-    {
-      "type": "io.grpc.xds.ClusterResolverLoadBalancerProvider"
     },
     {
       "type": "io.grpc.xds.LeastRequestLoadBalancerProvider"
@@ -2893,6 +2956,9 @@
       "type": "io.netty.buffer.AdaptivePoolingAllocator$Magazine"
     },
     {
+      "type": "io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk"
+    },
+    {
       "type": "io.netty.buffer.ByteBuf"
     },
     {
@@ -2957,6 +3023,15 @@
     },
     {
       "type": "io.netty.util.ResourceLeakDetector$DefaultResourceLeak"
+    },
+    {
+      "type": "io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap"
+    },
+    {
+      "type": "io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap$Index"
+    },
+    {
+      "type": "io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap$Node"
     },
     {
       "type": "io.netty.util.concurrent.DefaultPromise"
@@ -3155,10 +3230,7 @@
       "jniAccessible": true
     },
     {
-      "type": "java.lang.Integer"
-    },
-    {
-      "type": "java.lang.Long"
+      "type": "java.lang.Iterable"
     },
     {
       "type": "java.lang.Module",
@@ -3228,7 +3300,8 @@
       ]
     },
     {
-      "type": "java.lang.Throwable"
+      "type": "java.lang.UnsupportedOperationException",
+      "jniAccessible": true
     },
     {
       "type": "java.lang.annotation.Annotation[]"
@@ -3294,6 +3367,12 @@
         {
           "name": "asByteBuffer",
           "parameterTypes": []
+        },
+        {
+          "name": "ofBuffer",
+          "parameterTypes": [
+            "java.nio.Buffer"
+          ]
         }
       ]
     },
@@ -3340,7 +3419,13 @@
       "type": "java.lang.invoke.TypeDescriptor$OfField"
     },
     {
-      "type": "java.lang.invoke.VarHandle"
+      "type": "java.lang.invoke.VarHandle",
+      "methods": [
+        {
+          "name": "acquireFence",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "java.lang.management.ManagementFactory",
@@ -3412,6 +3497,24 @@
           ]
         },
         {
+          "name": "put",
+          "parameterTypes": [
+            "int",
+            "java.nio.ByteBuffer",
+            "int",
+            "int"
+          ]
+        },
+        {
+          "name": "put",
+          "parameterTypes": [
+            "int",
+            "byte[]",
+            "int",
+            "int"
+          ]
+        },
+        {
           "name": "slice",
           "parameterTypes": [
             "int",
@@ -3463,16 +3566,31 @@
       "type": "java.time.Instant"
     },
     {
+      "type": "java.util.AbstractCollection"
+    },
+    {
+      "type": "java.util.AbstractList"
+    },
+    {
       "type": "java.util.AbstractMap"
+    },
+    {
+      "type": "java.util.Collection"
+    },
+    {
+      "type": "java.util.Collections$EmptyList"
+    },
+    {
+      "type": "java.util.Collections$SingletonList"
     },
     {
       "type": "java.util.List"
     },
     {
-      "type": "java.util.Map"
+      "type": "java.util.Optional"
     },
     {
-      "type": "java.util.Optional"
+      "type": "java.util.RandomAccess"
     },
     {
       "type": "java.util.SortedSet"
@@ -3579,7 +3697,13 @@
       "type": "kotlin.Boolean"
     },
     {
+      "type": "kotlin.Cloneable"
+    },
+    {
       "type": "kotlin.Deprecated"
+    },
+    {
+      "type": "kotlin.DeprecationLevel"
     },
     {
       "type": "kotlin.Function2"
@@ -3676,10 +3800,19 @@
       "type": "kotlin.collections.Map"
     },
     {
-      "type": "kotlin.collections.MutableMap"
+      "type": "kotlin.coroutines.AbstractCoroutineContextElement"
     },
     {
       "type": "kotlin.coroutines.Continuation"
+    },
+    {
+      "type": "kotlin.coroutines.ContinuationInterceptor"
+    },
+    {
+      "type": "kotlin.coroutines.CoroutineContext"
+    },
+    {
+      "type": "kotlin.coroutines.CoroutineContext$Element"
     },
     {
       "type": "kotlin.coroutines.jvm.internal.DebugMetadata"
@@ -3718,44 +3851,6 @@
       "type": "kotlin.reflect.jvm.internal.impl.load.java.JavaIncompatibilityRulesOverridabilityCondition"
     },
     {
-      "type": "kotlin.reflect.jvm.internal.impl.resolve.scopes.DescriptorKindFilter",
-      "fields": [
-        {
-          "name": "ALL"
-        },
-        {
-          "name": "CALLABLES"
-        },
-        {
-          "name": "CLASSIFIERS"
-        },
-        {
-          "name": "Companion"
-        },
-        {
-          "name": "FUNCTIONS"
-        },
-        {
-          "name": "NON_SINGLETON_CLASSIFIERS"
-        },
-        {
-          "name": "PACKAGES"
-        },
-        {
-          "name": "SINGLETON_CLASSIFIERS"
-        },
-        {
-          "name": "TYPE_ALIASES"
-        },
-        {
-          "name": "VALUES"
-        },
-        {
-          "name": "VARIABLES"
-        }
-      ]
-    },
-    {
       "type": "kotlinx.coroutines.AwaitAll"
     },
     {
@@ -3787,6 +3882,9 @@
     },
     {
       "type": "kotlinx.coroutines.JobSupport$Finishing"
+    },
+    {
+      "type": "kotlinx.coroutines.Unconfined"
     },
     {
       "type": "kotlinx.coroutines.flow.Flow"
@@ -3853,9 +3951,6 @@
     },
     {
       "type": "nl.adaptivity.xmlutil.serialization.XmlSerialName"
-    },
-    {
-      "type": "okhttp3.internal.connection.RealConnectionPool"
     },
     {
       "type": "org.apache.commons.logging.LogFactory"
@@ -3925,9 +4020,6 @@
     },
     {
       "type": "org.eclipse.jetty.websocket.server.ServerWebSocketContainer"
-    },
-    {
-      "type": "org.glassfish.jersey.servlet.ServletContainer"
     },
     {
       "type": "org.jboss.logging.Logger"
@@ -5749,6 +5841,15 @@
       ]
     },
     {
+      "type": "org.springframework.boot.webflux.WebFluxWebApplicationTypeDeducer",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "org.springframework.boot.webflux.autoconfigure.HttpHandlerAutoConfiguration",
       "methods": [
         {
@@ -5864,6 +5965,9 @@
           ]
         }
       ]
+    },
+    {
+      "type": "org.springframework.boot.webflux.autoconfigure.WebFluxAutoConfiguration$WebFluxValidatorRuntimeHints"
     },
     {
       "type": "org.springframework.boot.webflux.autoconfigure.WebFluxAutoConfiguration$WelcomePageConfiguration",
@@ -6108,6 +6212,9 @@
       "type": "org.springframework.core.type.classreading.MetadataReaderFactory"
     },
     {
+      "type": "org.springframework.dao.DataAccessException"
+    },
+    {
       "type": "org.springframework.data.domain.ScrollPosition"
     },
     {
@@ -6265,6 +6372,9 @@
     },
     {
       "type": "org.springframework.jmx.export.MBeanExporter"
+    },
+    {
+      "type": "org.springframework.messaging.MessagingException"
     },
     {
       "type": "org.springframework.mock.web.MockHttpServletRequest"
@@ -6597,9 +6707,6 @@
       "type": "org.springframework.web.server.session.WebSessionManager"
     },
     {
-      "type": "org.springframework.web.servlet.DispatcherServlet"
-    },
-    {
       "type": "org.webjars.WebJarAssetLocator"
     },
     {
@@ -6624,16 +6731,28 @@
       "type": "reactor.core.publisher.FluxFirstWithSignal$RaceCoordinator"
     },
     {
+      "type": "reactor.core.publisher.FluxGenerate$GenerateSubscription"
+    },
+    {
       "type": "reactor.core.publisher.FluxIterable$IterableSubscription"
     },
     {
+      "type": "reactor.core.publisher.FluxLimitRequest$FluxLimitRequestSubscriber"
+    },
+    {
       "type": "reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber"
+    },
+    {
+      "type": "reactor.core.publisher.FluxSubscribeOn$SubscribeOnSubscriber"
     },
     {
       "type": "reactor.core.publisher.FluxTimeout$TimeoutMainSubscriber"
     },
     {
       "type": "reactor.core.publisher.FluxTimeout$TimeoutTimeoutSubscriber"
+    },
+    {
+      "type": "reactor.core.publisher.FluxUsing$UsingFuseableSubscriber"
     },
     {
       "type": "reactor.core.publisher.Hooks"
@@ -6667,6 +6786,9 @@
     },
     {
       "type": "reactor.core.publisher.MonoNext$NextSubscriber"
+    },
+    {
+      "type": "reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber"
     },
     {
       "type": "reactor.core.publisher.MonoWhen$WhenCoordinator"
@@ -6708,6 +6830,9 @@
       "type": "reactor.core.scheduler.SchedulerTask"
     },
     {
+      "type": "reactor.core.scheduler.WorkerTask"
+    },
+    {
       "type": "reactor.netty.channel.ChannelOperations"
     },
     {
@@ -6715,6 +6840,9 @@
     },
     {
       "type": "reactor.netty.channel.FluxReceive"
+    },
+    {
+      "type": "reactor.netty.channel.MonoSendMany$SendManyInner"
     },
     {
       "type": "reactor.netty.contextpropagation.ChannelContextAccessor"
@@ -6751,6 +6879,12 @@
     },
     {
       "type": "reactor.tools.agent.ReactorDebugAgent"
+    },
+    {
+      "type": "reactor.util.concurrent.SpscArrayQueueConsumer"
+    },
+    {
+      "type": "reactor.util.concurrent.SpscArrayQueueProducer"
     },
     {
       "type": "reactor.util.context.ReactorContextAccessor"
@@ -6986,15 +7120,6 @@
       ]
     },
     {
-      "type": "sun.security.rsa.RSASignature$SHA384withRSA",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
       "type": "sun.security.ssl.KeyManagerFactoryImpl$SunX509",
       "methods": [
         {
@@ -7210,6 +7335,9 @@
       "type": "tools.jackson.databind.deser.KeyDeserializers[]"
     },
     {
+      "type": "tools.jackson.databind.deser.ValueDeserializerModifier[]"
+    },
+    {
       "type": "tools.jackson.databind.deser.ValueInstantiators[]"
     },
     {
@@ -7232,6 +7360,9 @@
     },
     {
       "type": "tools.jackson.dataformat.xml.XmlMapper"
+    },
+    {
+      "type": "tools.jackson.module.kotlin.KotlinModule"
     },
     {
       "type": {
@@ -7516,6 +7647,12 @@
       "glob": "banner.txt"
     },
     {
+      "glob": "ch/qos/logback/classic/logback-classic-version.properties"
+    },
+    {
+      "glob": "ch/qos/logback/core/logback-core-version.properties"
+    },
+    {
       "glob": "com/google/api/client/http/google-http-client.properties"
     },
     {
@@ -7544,6 +7681,9 @@
     },
     {
       "glob": "com/netflix/graphql/dgs/springgraphql/autoconfig/DgsSpringGraphQLAutoConfiguration$DgsTypeDefinitionConfigurerBridge.class"
+    },
+    {
+      "glob": "com/netflix/graphql/dgs/springgraphql/autoconfig/DgsSpringGraphQLAutoConfiguration$Jackson3DgsJsonMapperConfiguration.class"
     },
     {
       "glob": "com/netflix/graphql/dgs/springgraphql/autoconfig/DgsSpringGraphQLAutoConfiguration$ReactiveConfiguration.class"
@@ -7601,6 +7741,9 @@
     },
     {
       "glob": "git.properties"
+    },
+    {
+      "glob": "graphiql/index.html"
     },
     {
       "glob": "graphql"
@@ -7991,6 +8134,9 @@
     },
     {
       "glob": "org/springframework/boot/webflux/autoconfigure/WebFluxAutoConfiguration$WebFluxConfig.class"
+    },
+    {
+      "glob": "org/springframework/boot/webflux/autoconfigure/WebFluxAutoConfiguration$WebFluxValidatorRuntimeHints.class"
     },
     {
       "glob": "org/springframework/boot/webflux/autoconfigure/WebFluxAutoConfiguration$WelcomePageConfiguration.class"
