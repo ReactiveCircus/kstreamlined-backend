@@ -24,10 +24,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v6
         with:
           distribution: 'zulu'
           java-version: '25'
+          cache-jdk: true
 
       - uses: gradle/actions/setup-gradle@v6
         with:
