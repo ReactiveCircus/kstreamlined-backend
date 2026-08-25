@@ -26,6 +26,8 @@ Setup the required environment variables:
 KS_REDIS_REST_URL
 KS_REDIS_REST_TOKEN
 KS_GCLOUD_PROJECT_ID
+KS_CF_ACCOUNT_ID
+KS_CF_API_TOKEN
 ```
 
 Run `gcloud auth application-default login` to authenticate Firestore.
