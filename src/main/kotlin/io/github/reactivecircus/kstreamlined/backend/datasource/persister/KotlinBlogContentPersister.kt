@@ -1,10 +1,9 @@
 package io.github.reactivecircus.kstreamlined.backend.datasource.persister
 
-import com.google.api.gax.rpc.AlreadyExistsException
+import com.google.cloud.firestore.FieldMask
 import com.google.cloud.firestore.Firestore
 import io.github.reactivecircus.kstreamlined.backend.NoArg
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogItem
-import java.util.concurrent.ExecutionException
 
 interface KotlinBlogContentPersister {
     fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>)
@@ -29,20 +28,31 @@ class FirestoreKotlinBlogContentPersister(
     private val firestore: Firestore,
 ) : KotlinBlogContentPersister {
     override fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>) {
-        // TODO reimplement
-        items.map { item ->
-            firestore.collection(KotlinBlogContentCollectionPath)
-                .document(item.firestoreDocumentId)
-                .create(KotlinBlogContent.from(item))
-        }.forEach { create ->
-            try {
-                create.get()
-            } catch (e: ExecutionException) {
-                if (e.cause !is AlreadyExistsException) {
-                    throw e
+        val contents = items.map { item ->
+            item.firestoreDocumentId to KotlinBlogContent.from(item)
+        }
+        if (contents.isEmpty()) return
+
+        val documentReferences = contents.map { (documentId) ->
+            firestore.collection(KotlinBlogContentCollectionPath).document(documentId)
+        }
+        firestore.runTransaction { transaction ->
+            val existingDocumentIds = transaction
+                .getAll(
+                    documentReferences.toTypedArray(),
+                    FieldMask.of(*emptyArray<String>()),
+                )
+                .get()
+                .filter { it.exists() }
+                .mapTo(mutableSetOf()) { it.id }
+
+            contents.zip(documentReferences).forEach { (content, documentReference) ->
+                if (documentReference.id !in existingDocumentIds) {
+                    transaction.create(documentReference, content.second)
                 }
             }
-        }
+            null
+        }.get()
     }
 }
 
