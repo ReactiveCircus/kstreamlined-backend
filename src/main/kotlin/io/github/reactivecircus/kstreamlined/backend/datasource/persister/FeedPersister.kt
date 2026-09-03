@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.datasource
+package io.github.reactivecircus.kstreamlined.backend.datasource.persister
 
 import com.google.cloud.firestore.DocumentReference
 import com.google.cloud.firestore.Firestore
@@ -31,33 +31,33 @@ class FirestoreFeedPersister(
     private val firestore: Firestore,
 ) : FeedPersister {
     override fun loadKotlinBlogItems(): List<KotlinBlogItem>? {
-        return firestore.collection(FeedKey.KotlinBlog).get().get().map {
+        return firestore.collection(FeedCollectionPath.KotlinBlog).get().get().map {
             it.toObject(KotlinBlogItem::class.java)
         }.ifEmpty { null }
     }
 
     override fun saveKotlinBlogItems(items: List<KotlinBlogItem>) {
         batchWrite(items) { item ->
-            firestore.collection(FeedKey.KotlinBlog)
+            firestore.collection(FeedCollectionPath.KotlinBlog)
                 .document(item.firestoreDocumentId)
         }
     }
 
     override fun loadKotlinYouTubeItems(): List<KotlinYouTubeItem>? {
-        return firestore.collection(FeedKey.KotlinYouTube).get().get().map {
+        return firestore.collection(FeedCollectionPath.KotlinYouTube).get().get().map {
             it.toObject(KotlinYouTubeItem::class.java)
         }.ifEmpty { null }
     }
 
     override fun saveKotlinYouTubeItems(items: List<KotlinYouTubeItem>) {
         batchWrite(items) { item ->
-            firestore.collection(FeedKey.KotlinYouTube)
+            firestore.collection(FeedCollectionPath.KotlinYouTube)
                 .document(item.firestoreDocumentId)
         }
     }
 
     override fun loadTalkingKotlinItems(): List<TalkingKotlinItem>? {
-        return firestore.collection(FeedKey.TalkingKotlin).get().get().map {
+        return firestore.collection(FeedCollectionPath.TalkingKotlin).get().get().map {
             it.toObject(TalkingKotlinItem::class.java)
         }
             .sortedByDescending {
@@ -69,20 +69,20 @@ class FirestoreFeedPersister(
 
     override fun saveTalkingKotlinItems(items: List<TalkingKotlinItem>) {
         batchWrite(items) { item ->
-            firestore.collection(FeedKey.TalkingKotlin)
+            firestore.collection(FeedCollectionPath.TalkingKotlin)
                 .document(item.firestoreDocumentId)
         }
     }
 
     override fun loadKotlinWeeklyItems(): List<KotlinWeeklyItem>? {
-        return firestore.collection(FeedKey.KotlinWeekly).get().get().map {
+        return firestore.collection(FeedCollectionPath.KotlinWeekly).get().get().map {
             it.toObject(KotlinWeeklyItem::class.java)
         }.ifEmpty { null }
     }
 
     override fun saveKotlinWeeklyItems(items: List<KotlinWeeklyItem>) {
         batchWrite(items) { item ->
-            firestore.collection(FeedKey.KotlinWeekly)
+            firestore.collection(FeedCollectionPath.KotlinWeekly)
                 .document(item.firestoreDocumentId)
         }
     }
@@ -96,7 +96,7 @@ class FirestoreFeedPersister(
     }
 }
 
-private val KotlinBlogItem.firestoreDocumentId: String
+internal val KotlinBlogItem.firestoreDocumentId: String
     get() = guid.substringAfterLast("=")
 
 private val KotlinYouTubeItem.firestoreDocumentId: String
@@ -110,7 +110,7 @@ private val KotlinWeeklyItem.firestoreDocumentId: String
 
 private const val TalkingKotlinFeedSize = 10
 
-private object FeedKey {
+private object FeedCollectionPath {
     const val KotlinBlog = "kotlin_blog_feed"
     const val KotlinYouTube = "kotlin_youtube_feed"
     const val TalkingKotlin = "talking_kotlin_feed"

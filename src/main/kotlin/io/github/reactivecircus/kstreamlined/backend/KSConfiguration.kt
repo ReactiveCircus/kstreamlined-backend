@@ -6,11 +6,15 @@ import com.google.cloud.firestore.FirestoreOptions
 import io.github.reactivecircus.kstreamlined.backend.datasource.DataLoader
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig
-import io.github.reactivecircus.kstreamlined.backend.datasource.FeedPersister
-import io.github.reactivecircus.kstreamlined.backend.datasource.FirestoreFeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.RealFeedDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinBlogTldrDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeeklyIssueDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreFeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreKotlinBlogContentPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
@@ -28,6 +32,7 @@ class KSConfiguration {
         dataSourceConfig: FeedDataSourceConfig,
         redisClient: RedisClient,
         feedPersister: FeedPersister,
+        kotlinBlogContentPersister: KotlinBlogContentPersister,
     ): FeedDataSource {
         return RealFeedDataSource(
             engine = engine,
@@ -38,6 +43,7 @@ class KSConfiguration {
             ),
             redisClient = redisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
     }
 
@@ -61,6 +67,20 @@ class KSConfiguration {
         firestore: Firestore,
     ): FeedPersister {
         return FirestoreFeedPersister(firestore = firestore)
+    }
+
+    @Bean
+    fun kotlinBlogContentPersister(
+        firestore: Firestore,
+    ): KotlinBlogContentPersister {
+        return FirestoreKotlinBlogContentPersister(firestore = firestore)
+    }
+
+    @Bean
+    fun kotlinBlogTldrDataSource(
+        kotlinBlogContentPersister: KotlinBlogContentPersister,
+    ): KotlinBlogTldrDataSource {
+        return RealKotlinBlogTldrDataSource(kotlinBlogContentPersister = kotlinBlogContentPersister)
     }
 
     @Bean

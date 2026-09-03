@@ -8,6 +8,8 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTub
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTubeRss
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinRss
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -48,6 +50,7 @@ class RealFeedDataSource(
     cacheConfig: DataLoader.CacheConfig,
     redisClient: RedisClient,
     private val feedPersister: FeedPersister,
+    private val kotlinBlogContentPersister: KotlinBlogContentPersister,
 ) : FeedDataSource {
     private val kotlinBlogFeedDataLoader = DataLoader.of(cacheConfig, redisClient, KotlinBlogItem.serializer())
     private val kotlinYouTubeFeedDataLoader = DataLoader.of(cacheConfig, redisClient, KotlinYouTubeItem.serializer())
@@ -85,11 +88,16 @@ class RealFeedDataSource(
                     feedPersister.saveKotlinBlogItems(it)
                 },
                 remoteSource = {
-                    httpClient.get(dataSourceConfig.kotlinBlogFeedUrl).body<KotlinBlogRss>().channel.items.map {
-                        it.copy(
-                            description = StringEscapeUtils.unescapeXml(it.description).trim(),
-                        )
-                    }
+                    httpClient.get(dataSourceConfig.kotlinBlogFeedUrl).body<KotlinBlogRss>().channel.items
+                        .also {
+                            kotlinBlogContentPersister.saveMissingKotlinBlogContents(it)
+                        }
+                        .map {
+                            it.copy(
+                                description = StringEscapeUtils.unescapeXml(it.description).trim(),
+                                html = null,
+                            )
+                        }
                 },
             )
         }

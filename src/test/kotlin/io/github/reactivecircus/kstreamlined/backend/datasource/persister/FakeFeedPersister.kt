@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.datasource
+package io.github.reactivecircus.kstreamlined.backend.datasource.persister
 
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinWeeklyItem

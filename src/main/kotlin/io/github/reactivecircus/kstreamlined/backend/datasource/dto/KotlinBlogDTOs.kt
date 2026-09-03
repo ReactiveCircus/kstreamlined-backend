@@ -1,6 +1,8 @@
 package io.github.reactivecircus.kstreamlined.backend.datasource.dto
 
+import com.google.cloud.firestore.annotation.Exclude
 import io.github.reactivecircus.kstreamlined.backend.NoArg
+import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
@@ -33,4 +35,13 @@ data class KotlinBlogItem(
     val guid: String,
     @XmlElement(true)
     val description: String,
+    @Exclude
+    @XmlElement(true)
+    @XmlSerialName(
+        value = "encoded",
+        namespace = Namespace.Content,
+        prefix = "content",
+    )
+    @EncodeDefault(EncodeDefault.Mode.NEVER)
+    val html: String? = null,
 )

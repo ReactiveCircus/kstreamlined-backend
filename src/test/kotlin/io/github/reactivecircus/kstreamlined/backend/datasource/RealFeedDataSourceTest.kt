@@ -8,6 +8,9 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.dto.Link
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaCommunity
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaGroup
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FakeFeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FakeKotlinBlogContentPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContent
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
@@ -42,6 +45,8 @@ class RealFeedDataSourceTest {
 
     private val feedPersister = FakeFeedPersister()
 
+    private val kotlinBlogContentPersister = FakeKotlinBlogContentPersister()
+
     @Test
     fun `loadKotlinBlogFeed() returns KotlinBlogItems when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine {
@@ -56,6 +61,7 @@ class RealFeedDataSourceTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         val expected = listOf(
@@ -82,6 +88,40 @@ class RealFeedDataSourceTest {
     }
 
     @Test
+    fun `loadKotlinBlogFeed() persists html contents when API call succeeds`() = runBlocking {
+        val mockEngine = MockEngine {
+            respond(
+                content = ByteReadChannel(mockKotlinBlogRssResponse),
+                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml"),
+            )
+        }
+        val feedDataSource = RealFeedDataSource(
+            engine = mockEngine,
+            dataSourceConfig = TestFeedDataSourceConfig,
+            cacheConfig = cacheConfig,
+            redisClient = NoOpRedisClient,
+            feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
+        )
+
+        val expected = listOf(
+            KotlinBlogContent(
+                title = "A New Approach to Incremental Compilation in Kotlin",
+                html = "<p>In Kotlin 1.7.0, we&#8217;ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the <a href=\"https://docs.gradle.org/current/userguide/build_cache.html\">Gradle build cache</a>. Support for compilation avoidance has also been improved. All of these advancements decrease the number of necessary full-module and file recompilations, making the overall compilation time faster.</p>",
+            ),
+            KotlinBlogContent(
+                title = "Kotlin News: KotlinConf, Build Reports, DataFrame Preview, and More",
+                html = "<h2><strong>Kotlin Developer Survey is Open</strong></h2>",
+            ),
+        )
+
+        feedDataSource.loadKotlinBlogFeed()
+
+        assertEquals(true, feedPersister.loadKotlinBlogItems()?.all { it.html == null })
+        assertEquals(expected, kotlinBlogContentPersister.savedKotlinBlogContents.values.toList())
+    }
+
+    @Test
     fun `loadKotlinBlogFeed() throws exception when API call fails`(): Unit = runBlocking {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
@@ -92,6 +132,7 @@ class RealFeedDataSourceTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         assertFailsWith<ClientRequestException> {
@@ -113,6 +154,7 @@ class RealFeedDataSourceTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         val expected = listOf(
@@ -213,6 +255,7 @@ class RealFeedDataSourceTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         assertFailsWith<ClientRequestException> {
@@ -234,6 +277,7 @@ class RealFeedDataSourceTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         val expected = listOf(
@@ -274,6 +318,7 @@ class RealFeedDataSourceTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         assertFailsWith<ClientRequestException> {
@@ -295,6 +340,7 @@ class RealFeedDataSourceTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         val expected = listOf(
@@ -327,6 +373,7 @@ class RealFeedDataSourceTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         assertFailsWith<ClientRequestException> {
