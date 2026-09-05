@@ -14,7 +14,9 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeekly
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FeedPersister
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreFeedPersister
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreKotlinBlogContentPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreKotlinBlogTldrPersister
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogTldrPersister
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
@@ -74,6 +76,13 @@ class KSConfiguration {
         firestore: Firestore,
     ): KotlinBlogContentPersister {
         return FirestoreKotlinBlogContentPersister(firestore = firestore)
+    }
+
+    @Bean
+    fun kotlinBlogTldrPersister(
+        firestore: Firestore,
+    ): KotlinBlogTldrPersister {
+        return FirestoreKotlinBlogTldrPersister(firestore = firestore)
     }
 
     @Bean
