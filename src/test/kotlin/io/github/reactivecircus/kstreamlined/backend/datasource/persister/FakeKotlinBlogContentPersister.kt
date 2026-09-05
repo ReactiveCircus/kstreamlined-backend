@@ -8,6 +8,10 @@ class FakeKotlinBlogContentPersister : KotlinBlogContentPersister {
     val savedKotlinBlogContents: Map<String, KotlinBlogContent>
         get() = kotlinBlogContents.toMap()
 
+    override fun loadKotlinBlogContent(id: String): KotlinBlogContent? {
+        return kotlinBlogContents[id.firestoreDocumentId]
+    }
+
     override fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>) {
         items.forEach { item ->
             kotlinBlogContents.putIfAbsent(

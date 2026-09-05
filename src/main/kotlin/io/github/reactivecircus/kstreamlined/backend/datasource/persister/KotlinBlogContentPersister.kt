@@ -6,6 +6,8 @@ import io.github.reactivecircus.kstreamlined.backend.NoArg
 import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogItem
 
 interface KotlinBlogContentPersister {
+    fun loadKotlinBlogContent(id: String): KotlinBlogContent?
+
     fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>)
 }
 
@@ -27,6 +29,14 @@ data class KotlinBlogContent(
 class FirestoreKotlinBlogContentPersister(
     private val firestore: Firestore,
 ) : KotlinBlogContentPersister {
+    override fun loadKotlinBlogContent(id: String): KotlinBlogContent? {
+        return firestore.collection(KotlinBlogContentCollectionPath)
+            .document(id.firestoreDocumentId)
+            .get()
+            .get()
+            .toObject(KotlinBlogContent::class.java)
+    }
+
     override fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>) {
         val contents = items.map { item ->
             item.firestoreDocumentId to KotlinBlogContent.from(item)

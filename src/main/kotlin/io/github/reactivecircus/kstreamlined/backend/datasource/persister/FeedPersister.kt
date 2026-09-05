@@ -96,18 +96,6 @@ class FirestoreFeedPersister(
     }
 }
 
-internal val KotlinBlogItem.firestoreDocumentId: String
-    get() = guid.substringAfterLast("=")
-
-private val KotlinYouTubeItem.firestoreDocumentId: String
-    get() = id
-
-private val TalkingKotlinItem.firestoreDocumentId: String
-    get() = guid.replace("/", "-")
-
-private val KotlinWeeklyItem.firestoreDocumentId: String
-    get() = guid.substringAfterLast("/")
-
 private const val TalkingKotlinFeedSize = 10
 
 private object FeedCollectionPath {
