@@ -16,7 +16,7 @@ internal val KotlinYouTubeItem.firestoreDocumentId: String
     get() = id.firestoreDocumentId
 
 internal val TalkingKotlinItem.firestoreDocumentId: String
-    get() = guid.replace("/", "-").firestoreDocumentId
+    get() = guid.replace("/", "-")
 
 internal val KotlinWeeklyItem.firestoreDocumentId: String
-    get() = guid.substringAfterLast("/").firestoreDocumentId
+    get() = guid.substringAfterLast("/")
