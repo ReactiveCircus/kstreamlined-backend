@@ -75,8 +75,7 @@ class RealFeedDataSource(
             xml(format, ContentType.Text.Xml)
         }
         install(HttpTimeout) {
-            connectTimeoutMillis = HttpTimeoutMillis
-            requestTimeoutMillis = HttpTimeoutMillis
+            requestTimeoutMillis = RequestTimeoutMillis
         }
     }
 
@@ -162,6 +161,6 @@ class RealFeedDataSource(
     }
 
     companion object {
-        private const val HttpTimeoutMillis = 30_000L
+        private const val RequestTimeoutMillis = 30_000L
     }
 }

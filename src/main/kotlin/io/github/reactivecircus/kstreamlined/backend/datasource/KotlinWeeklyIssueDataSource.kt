@@ -23,8 +23,7 @@ class RealKotlinWeeklyIssueDataSource(
     private val httpClient = HttpClient(engine) {
         expectSuccess = true
         install(HttpTimeout) {
-            connectTimeoutMillis = HttpTimeoutMillis
-            requestTimeoutMillis = HttpTimeoutMillis
+            requestTimeoutMillis = RequestTimeoutMillis
         }
     }
 
@@ -101,6 +100,6 @@ class RealKotlinWeeklyIssueDataSource(
     }
 
     companion object {
-        private const val HttpTimeoutMillis = 10_000L
+        private const val RequestTimeoutMillis = 10_000L
     }
 }

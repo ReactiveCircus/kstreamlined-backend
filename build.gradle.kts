@@ -64,6 +64,7 @@ tasks.bootRun {
         envVar("KS_REDIS_REST_URL"),
         envVar("KS_REDIS_REST_TOKEN"),
         envVar("KS_GCLOUD_PROJECT_ID"),
+        envVar("KS_CF_BASE_URL"),
         envVar("KS_CF_ACCOUNT_ID"),
         envVar("KS_CF_API_TOKEN"),
     )

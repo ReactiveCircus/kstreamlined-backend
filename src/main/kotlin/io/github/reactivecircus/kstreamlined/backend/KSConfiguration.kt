@@ -3,6 +3,7 @@ package io.github.reactivecircus.kstreamlined.backend
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.Firestore
 import com.google.cloud.firestore.FirestoreOptions
+import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiClient
 import io.github.reactivecircus.kstreamlined.backend.datasource.DataLoader
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig
@@ -116,6 +117,21 @@ class KSConfiguration {
             engine = engine,
             url = redisUrl,
             token = redisToken,
+        )
+    }
+
+    @Bean
+    fun cloudflareAiClient(
+        engine: HttpClientEngine,
+        @Value("\${KS_CF_BASE_URL}") baseUrl: String,
+        @Value("\${KS_CF_ACCOUNT_ID}") accountId: String,
+        @Value("\${KS_CF_API_TOKEN}") apiToken: String,
+    ): CloudflareAiClient {
+        return CloudflareAiClient(
+            engine = engine,
+            baseUrl = baseUrl,
+            accountId = accountId,
+            apiToken = apiToken,
         )
     }
 
