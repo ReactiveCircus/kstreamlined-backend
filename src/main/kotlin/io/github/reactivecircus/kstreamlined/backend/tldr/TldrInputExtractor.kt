@@ -2,12 +2,20 @@ package io.github.reactivecircus.kstreamlined.backend.tldr
 
 import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Element
+import com.fleeksoft.ksoup.nodes.Node
+import com.fleeksoft.ksoup.nodes.TextNode
 
 object TldrInputExtractor {
     private val headingTags = setOf("h1", "h2", "h3", "h4", "h5", "h6")
-    private val paragraphTags = setOf("p", "figcaption")
     private val listTags = setOf("ul", "ol")
-    private val skippedTags = setOf("br", "hr")
+    private val blockTags = headingTags + listTags + setOf(
+        "p", "figcaption", "pre", "blockquote", "div", "section", "article", "figure",
+        "main", "header", "footer", "table", "thead", "tbody", "tfoot", "tr", "td", "th",
+        "dl", "dt", "dd", "details", "summary", "hr",
+    )
+    private val whitespace = Regex("[\\s\\u00a0]+")
+    private val horizontalWhitespace = Regex("[ \\t\\u00a0]+")
+    private val backticks = Regex("`+")
     private val codeLanguages = listOf(
         "kotlin",
         "java",
@@ -27,73 +35,100 @@ object TldrInputExtractor {
         val body = Ksoup.parseBodyFragment(html).body()
         body.select(NonContentSelector).remove()
 
-        return buildList {
-            renderChildren(body, this)
-        }.filter(String::isNotBlank)
-            .joinToString("\n\n")
+        return renderChildren(body).joinToString("\n\n") { it.text }
+    }
+
+    private fun renderChildren(parent: Element): List<Block> {
+        val output = mutableListOf<Block>()
+        val inline = StringBuilder()
+        parent.childNodes().forEach { renderNode(it, output, inline) }
+        flushInline(output, inline)
+        return output
+    }
+
+    private fun renderNode(node: Node, output: MutableList<Block>, inline: StringBuilder) {
+        when (node) {
+            is TextNode -> inline.append(node.getWholeText().replace(whitespace, " "))
+
+            is Element -> when (node.tagName().lowercase()) {
+                in blockTags -> {
+                    flushInline(output, inline)
+                    output.addAll(renderBlock(node))
+                }
+
+                "code" -> inline.append(renderInlineCode(node))
+
+                "br" -> inline.append('\n')
+
+                "img" -> inline.append(node.attr("alt").replace(whitespace, " "))
+
+                else -> node.childNodes().forEach { renderNode(it, output, inline) }
+            }
+        }
+    }
+
+    private fun flushInline(output: MutableList<Block>, inline: StringBuilder) {
+        val text = inline.toString().lineSequence()
+            .joinToString("\n") { it.replace(horizontalWhitespace, " ").trim() }
             .trim()
+        if (text.isNotBlank()) output.add(Block(text))
+        inline.clear()
     }
 
-    private fun renderChildren(parent: Element, output: MutableList<String>) {
-        parent.children().forEach { renderBlock(it, output) }
-    }
-
-    private fun renderBlock(element: Element, output: MutableList<String>) {
+    private fun renderBlock(element: Element): List<Block> {
         val tag = element.tagName().lowercase()
-        val rendered = when {
-            tag in headingTags -> renderHeading(element, tag)
-
-            tag in paragraphTags -> inlineText(element)
-
-            tag == "pre" -> renderCodeBlock(element)
-
-            tag in listTags -> renderList(element)
-
-            tag == "blockquote" -> renderBlockquote(element)
-
-            tag in skippedTags -> null
-
-            hasBlockDescendant(element) -> {
-                renderChildren(element, output)
-                null
+        return when (tag) {
+            in headingTags -> {
+                val text = renderChildren(element).joinToString(" ") { it.text }
+                if (text.isBlank()) emptyList() else listOf(Block("${"#".repeat(tag.substring(1).toInt())} $text"))
             }
 
-            else -> inlineText(element)
+            "pre" -> listOfNotNull(renderCodeBlock(element)?.let { Block(it) })
+
+            in listTags -> {
+                val text = renderList(element)
+                if (text.isBlank()) emptyList() else listOf(Block(text, isList = true))
+            }
+
+            "blockquote" -> {
+                val text = renderChildren(element).joinToString("\n") { it.text }
+                if (text.isBlank()) emptyList() else listOf(Block(text.lineSequence().joinToString("\n") { "> $it" }))
+            }
+
+            "hr" -> emptyList()
+
+            else -> renderChildren(element)
         }
-        rendered?.takeIf(String::isNotBlank)?.let(output::add)
-    }
-
-    private fun renderHeading(element: Element, tag: String): String? {
-        val level = tag.substring(1).toInt()
-        return inlineText(element)
-            .takeIf(String::isNotBlank)
-            ?.let { "${"#".repeat(level)} $it" }
-    }
-
-    private fun renderBlockquote(element: Element): String {
-        val nested = buildList {
-            renderChildren(element, this)
-        }.ifEmpty {
-            listOf(inlineText(element))
-        }
-
-        return nested.filter(String::isNotBlank)
-            .joinToString("\n")
-            .lineSequence()
-            .joinToString("\n") { "> $it" }
     }
 
     private fun renderCodeBlock(element: Element): String? {
-        val code = element.wholeText().trim('\n', '\r').trimEnd()
+        val code = element.wholeText().trim('\n', '\r')
         if (code.isBlank()) return null
 
-        return "```${detectLanguage(element)}\n$code\n```"
+        val fence = "`".repeat(backtickDelimiterLength(code).coerceAtLeast(3))
+        return "$fence${detectLanguage(element)}\n$code\n$fence"
+    }
+
+    private fun renderInlineCode(element: Element): String {
+        val code = element.text().trim()
+        if (code.isBlank()) return ""
+        val fence = "`".repeat(backtickDelimiterLength(code))
+        val padding = if (code.startsWith('`') || code.endsWith('`')) " " else ""
+        return "$fence$padding$code$padding$fence"
+    }
+
+    private fun backtickDelimiterLength(code: String): Int {
+        return (backticks.findAll(code).maxOfOrNull { it.value.length } ?: 0) + 1
     }
 
     private fun detectLanguage(element: Element): String {
         val hints = buildString {
-            element.attributes().forEach { append(it.value).append(' ') }
-            element.selectFirst("code")?.attributes()?.forEach { append(it.value).append(' ') }
+            listOfNotNull(element, element.selectFirst("code")).forEach { node ->
+                append(node.className()).append(' ')
+                append(node.attr("data-enlighter-language")).append(' ')
+                append(node.attr("data-language")).append(' ')
+                append(node.attr("lang")).append(' ')
+            }
         }.lowercase()
 
         return codeLanguagePatterns.entries
@@ -102,47 +137,42 @@ object TldrInputExtractor {
             .orEmpty()
     }
 
-    private fun renderList(list: Element, depth: Int = 0): String {
+    private fun renderList(list: Element): String {
         val ordered = list.tagName().equals("ol", ignoreCase = true)
-        val indent = "  ".repeat(depth)
 
-        return buildList {
-            list.children()
-                .filter { it.tagName().equals("li", ignoreCase = true) }
-                .forEachIndexed { index, item ->
-                    val nestedLists = item.children()
-                        .filter { it.tagName().lowercase() in listTags }
-                    val itemWithoutNestedLists = item.clone()
-                        .also { it.select("ul,ol").remove() }
-                    val marker = if (ordered) "${index + 1}. " else "- "
-
-                    inlineText(itemWithoutNestedLists)
-                        .takeIf(String::isNotBlank)
-                        ?.let { add("$indent$marker$it") }
-
-                    nestedLists.mapTo(this) { renderList(it, depth + 1) }
-                }
-        }.filter(String::isNotBlank)
+        return list.children()
+            .filter { it.tagName().equals("li", ignoreCase = true) }
+            .mapIndexedNotNull { index, item ->
+                val blocks = renderChildren(item)
+                if (blocks.isEmpty()) return@mapIndexedNotNull null
+                val marker = if (ordered) "${index + 1}. " else "- "
+                renderListItem(blocks, marker)
+            }
             .joinToString("\n")
     }
 
-    private fun hasBlockDescendant(element: Element): Boolean {
-        return element.selectFirst(BlockSelector) != null
+    private fun renderListItem(blocks: List<Block>, marker: String): String {
+        val indent = " ".repeat(marker.length)
+        return buildString {
+            blocks.forEachIndexed { index, block ->
+                if (index == 0) {
+                    append(marker)
+                    if (block.isList) {
+                        setLength(length - 1)
+                        append('\n').append(indent)
+                    }
+                } else {
+                    append(if (block.isList) "\n" else "\n\n").append(indent)
+                }
+                val indented = block.text.lineSequence()
+                    .joinToString("\n") { if (it.isBlank()) "" else "$indent$it" }
+                append(indented.removePrefix(indent))
+            }
+        }
     }
 
-    private fun inlineText(element: Element): String {
-        val clone = element.clone()
-        clone.select("code").forEach { code ->
-            code.text()
-                .takeIf(String::isNotBlank)
-                ?.let { code.text("`$it`") }
-        }
-        return clone.text().trim()
-    }
+    private class Block(val text: String, val isList: Boolean = false)
 }
 
 private const val NonContentSelector =
     "script,style,noscript,iframe,svg,form,button,nav,aside,template,[hidden],[aria-hidden=true]"
-
-private const val BlockSelector =
-    "h1,h2,h3,h4,h5,h6,p,pre,ul,ol,blockquote,div,section,article,figure,table"
