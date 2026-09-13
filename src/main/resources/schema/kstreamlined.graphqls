@@ -119,8 +119,8 @@ type KotlinWeeklyIssueEntry {
 }
 
 enum KotlinWeeklyIssueEntryGroup {
-  "Announcements."
-  ANNOUNCEMENTS
+  "News."
+  NEWS
   "Articles."
   ARTICLES
   "Android."

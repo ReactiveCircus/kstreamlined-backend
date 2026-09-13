@@ -30,14 +30,14 @@ class RealKotlinWeeklyIssueDataSourceTest {
                 summary = "Last month JetBrains introduced Amper, a tool to improve the project configuration user experience. Marton Braun gives us an update about its state in December 2023.",
                 url = "https://blog.jetbrains.com/amper/2023/12/amper-update-december-2023/",
                 source = "blog.jetbrains.com",
-                group = KotlinWeeklyIssueEntryGroup.ANNOUNCEMENTS,
+                group = KotlinWeeklyIssueEntryGroup.NEWS,
             ),
             KotlinWeeklyIssueEntry(
                 title = "Koin Wrapped- Recapping the 2023 Milestones of Our Kotlin Integration Framework",
                 summary = "In this post, the Koin crew wraps up all the milestones and roadmap achieved in 2023.",
                 url = "https://blog.cloud-inject.io/koin-2023-highlights",
                 source = "blog.cloud-inject.io",
-                group = KotlinWeeklyIssueEntryGroup.ANNOUNCEMENTS,
+                group = KotlinWeeklyIssueEntryGroup.NEWS,
             ),
             KotlinWeeklyIssueEntry(
                 title = "How to Use the Cucumber Framework to Test Application Use Cases",

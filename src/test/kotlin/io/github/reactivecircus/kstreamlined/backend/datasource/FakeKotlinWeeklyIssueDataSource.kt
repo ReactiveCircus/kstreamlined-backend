@@ -19,7 +19,7 @@ val DummyKotlinWeeklyIssueEntries = listOf(
         summary = "Last month JetBrains introduced Amper, a tool to improve the project configuration user experience. Marton Braun gives us an update about its state in December 2023.",
         url = "https://blog.jetbrains.com/amper/2023/12/amper-update-december-2023/",
         source = "blog.jetbrains.com",
-        group = KotlinWeeklyIssueEntryGroup.ANNOUNCEMENTS,
+        group = KotlinWeeklyIssueEntryGroup.NEWS,
     ),
     KotlinWeeklyIssueEntry(
         title = "How to Use the Cucumber Framework to Test Application Use Cases",

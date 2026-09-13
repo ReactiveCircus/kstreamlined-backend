@@ -2503,12 +2503,10 @@
       "type": "io.grpc.netty.shaded.io.netty.buffer.AbstractByteBufAllocator"
     },
     {
-      "type": "io.grpc.netty.shaded.io.netty.buffer.AbstractReferenceCountedByteBuf",
-      "fields": [
-        {
-          "name": "refCnt"
-        }
-      ]
+      "type": "io.grpc.netty.shaded.io.netty.buffer.AdaptivePoolingAllocator$Magazine"
+    },
+    {
+      "type": "io.grpc.netty.shaded.io.netty.buffer.AdaptivePoolingAllocator$SizeClassedChunk"
     },
     {
       "type": "io.grpc.netty.shaded.io.netty.channel.AbstractChannelHandlerContext"
@@ -2714,14 +2712,6 @@
       ]
     },
     {
-      "type": "io.grpc.netty.shaded.io.netty.util.AbstractReferenceCounted",
-      "fields": [
-        {
-          "name": "refCnt"
-        }
-      ]
-    },
-    {
       "type": "io.grpc.netty.shaded.io.netty.util.DefaultAttributeMap"
     },
     {
@@ -2734,10 +2724,35 @@
       "type": "io.grpc.netty.shaded.io.netty.util.ResourceLeakDetector$DefaultResourceLeak"
     },
     {
+      "type": "io.grpc.netty.shaded.io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap"
+    },
+    {
+      "type": "io.grpc.netty.shaded.io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap$Index"
+    },
+    {
+      "type": "io.grpc.netty.shaded.io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap$Node"
+    },
+    {
       "type": "io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise"
     },
     {
+      "type": "io.grpc.netty.shaded.io.netty.util.concurrent.MpscIntQueue$MpscAtomicIntegerArrayQueue"
+    },
+    {
       "type": "io.grpc.netty.shaded.io.netty.util.concurrent.SingleThreadEventExecutor"
+    },
+    {
+      "type": "io.grpc.netty.shaded.io.netty.util.internal.CleanerJava25$CleanableDirectBufferImpl",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "java.lang.AutoCloseable",
+            "java.nio.ByteBuffer",
+            "long"
+          ]
+        }
+      ]
     },
     {
       "type": "io.grpc.netty.shaded.io.netty.util.internal.NativeLibraryUtil",
@@ -2752,52 +2767,28 @@
       ]
     },
     {
-      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueColdProducerFields",
-      "fields": [
-        {
-          "name": "producerLimit"
-        }
-      ]
+      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueueColdProducerFields"
     },
     {
-      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueConsumerFields",
-      "fields": [
-        {
-          "name": "consumerIndex"
-        }
-      ]
+      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueueConsumerFields"
     },
     {
-      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.BaseMpscLinkedArrayQueueProducerFields",
-      "fields": [
-        {
-          "name": "producerIndex"
-        }
-      ]
+      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.atomic.BaseMpscLinkedAtomicArrayQueueProducerFields"
     },
     {
-      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueueConsumerIndexField",
-      "fields": [
-        {
-          "name": "consumerIndex"
-        }
-      ]
+      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.atomic.MpmcAtomicArrayQueueConsumerIndexField"
     },
     {
-      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerIndexField",
-      "fields": [
-        {
-          "name": "producerIndex"
-        }
-      ]
+      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.atomic.MpmcAtomicArrayQueueProducerIndexField"
     },
     {
-      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.unpadded.MpscUnpaddedArrayQueueProducerLimitField",
-      "fields": [
-        {
-          "name": "producerLimit"
-        }
-      ]
+      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.atomic.unpadded.MpscAtomicUnpaddedArrayQueueConsumerIndexField"
+    },
+    {
+      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.atomic.unpadded.MpscAtomicUnpaddedArrayQueueProducerIndexField"
+    },
+    {
+      "type": "io.grpc.netty.shaded.io.netty.util.internal.shaded.org.jctools.queues.atomic.unpadded.MpscAtomicUnpaddedArrayQueueProducerLimitField"
     },
     {
       "type": "io.grpc.override.ContextStorageOverride",
@@ -2860,13 +2851,7 @@
       "type": "io.ktor.client.HttpClient"
     },
     {
-      "type": "io.ktor.client.HttpClientConfig"
-    },
-    {
       "type": "io.ktor.client.call.HttpClientCall"
-    },
-    {
-      "type": "io.ktor.client.content.ProgressListener"
     },
     {
       "type": "io.ktor.client.engine.HttpClientEngine"
@@ -2875,61 +2860,13 @@
       "type": "io.ktor.client.engine.HttpClientEngineBase"
     },
     {
-      "type": "io.ktor.client.engine.HttpClientEngineCapability"
-    },
-    {
-      "type": "io.ktor.client.engine.HttpClientEngineConfig"
-    },
-    {
       "type": "io.ktor.client.engine.okhttp.OkHttpEngine"
-    },
-    {
-      "type": "io.ktor.client.plugins.HttpRetryDelayContext"
-    },
-    {
-      "type": "io.ktor.client.plugins.HttpRetryModifyRequestContext"
-    },
-    {
-      "type": "io.ktor.client.plugins.HttpRetryShouldRetryContext"
-    },
-    {
-      "type": "io.ktor.client.plugins.HttpSend"
-    },
-    {
-      "type": "io.ktor.client.plugins.HttpTimeoutConfig"
-    },
-    {
-      "type": "io.ktor.client.plugins.api.ClientPluginImpl"
-    },
-    {
-      "type": "io.ktor.client.plugins.api.ClientPluginInstance"
-    },
-    {
-      "type": "io.ktor.client.request.HttpRequest"
-    },
-    {
-      "type": "io.ktor.client.request.HttpRequestBuilder"
-    },
-    {
-      "type": "io.ktor.client.request.ResponseAdapter"
-    },
-    {
-      "type": "io.ktor.client.statement.HttpResponse"
-    },
-    {
-      "type": "io.ktor.http.ContentType"
     },
     {
       "type": "io.ktor.serialization.kotlinx.json.KotlinxSerializationJsonExtensionProvider"
     },
     {
-      "type": "io.ktor.util.Attributes"
-    },
-    {
       "type": "io.ktor.util.collections.CopyOnWriteHashMap"
-    },
-    {
-      "type": "io.ktor.util.reflect.TypeInfo"
     },
     {
       "type": "io.ktor.utils.io.ByteChannel"
@@ -3170,9 +3107,6 @@
       "type": "java.lang.AutoCloseable"
     },
     {
-      "type": "java.lang.BaseVirtualThread"
-    },
-    {
       "type": "java.lang.Boolean",
       "jniAccessible": true,
       "methods": [
@@ -3192,10 +3126,6 @@
       "methods": [
         {
           "name": "getModule",
-          "parameterTypes": []
-        },
-        {
-          "name": "isRecord",
           "parameterTypes": []
         },
         {
@@ -3228,9 +3158,6 @@
     {
       "type": "java.lang.IllegalArgumentException",
       "jniAccessible": true
-    },
-    {
-      "type": "java.lang.Iterable"
     },
     {
       "type": "java.lang.Module",
@@ -3316,22 +3243,10 @@
       "type": "java.lang.annotation.Repeatable"
     },
     {
-      "type": "java.lang.annotation.Retention",
-      "methods": [
-        {
-          "name": "value",
-          "parameterTypes": []
-        }
-      ]
+      "type": "java.lang.annotation.Retention"
     },
     {
-      "type": "java.lang.annotation.Target",
-      "methods": [
-        {
-          "name": "value",
-          "parameterTypes": []
-        }
-      ]
+      "type": "java.lang.annotation.Target"
     },
     {
       "type": "java.lang.constant.Constable"
@@ -3477,9 +3392,6 @@
       ]
     },
     {
-      "type": "java.nio.Bits"
-    },
-    {
       "type": "java.nio.Buffer",
       "fields": [
         {
@@ -3524,9 +3436,6 @@
       ]
     },
     {
-      "type": "java.nio.DirectByteBuffer"
-    },
-    {
       "type": "java.nio.channels.FileChannel"
     },
     {
@@ -3566,31 +3475,13 @@
       "type": "java.time.Instant"
     },
     {
-      "type": "java.util.AbstractCollection"
-    },
-    {
-      "type": "java.util.AbstractList"
-    },
-    {
       "type": "java.util.AbstractMap"
-    },
-    {
-      "type": "java.util.Collection"
-    },
-    {
-      "type": "java.util.Collections$EmptyList"
-    },
-    {
-      "type": "java.util.Collections$SingletonList"
     },
     {
       "type": "java.util.List"
     },
     {
       "type": "java.util.Optional"
-    },
-    {
-      "type": "java.util.RandomAccess"
     },
     {
       "type": "java.util.SortedSet"
@@ -3659,10 +3550,17 @@
       "type": "javax.naming.directory.InitialDirContext"
     },
     {
-      "type": "javax.net.ssl.SSLContext",
-      "fields": [
+      "type": "javax.net.ssl.SSLParameters",
+      "methods": [
         {
-          "name": "contextSpi"
+          "name": "getNamedGroups",
+          "parameterTypes": []
+        },
+        {
+          "name": "setNamedGroups",
+          "parameterTypes": [
+            "java.lang.String[]"
+          ]
         }
       ]
     },
@@ -3679,25 +3577,13 @@
       "type": "jdk.internal.loader.ClassLoaders$PlatformClassLoader"
     },
     {
-      "type": "jdk.internal.misc.Unsafe",
-      "methods": [
-        {
-          "name": "getUnsafe",
-          "parameterTypes": []
-        }
-      ]
+      "type": "jdk.internal.misc.Unsafe"
     },
     {
       "type": "kotlin.Any"
     },
     {
-      "type": "kotlin.Array"
-    },
-    {
       "type": "kotlin.Boolean"
-    },
-    {
-      "type": "kotlin.Cloneable"
     },
     {
       "type": "kotlin.Deprecated"
@@ -3706,16 +3592,7 @@
       "type": "kotlin.DeprecationLevel"
     },
     {
-      "type": "kotlin.Function2"
-    },
-    {
-      "type": "kotlin.Function3"
-    },
-    {
       "type": "kotlin.Int"
-    },
-    {
-      "type": "kotlin.Long"
     },
     {
       "type": "kotlin.Metadata",
@@ -3764,12 +3641,6 @@
       "type": "kotlin.String"
     },
     {
-      "type": "kotlin.Throwable"
-    },
-    {
-      "type": "kotlin.Unit"
-    },
-    {
       "type": "kotlin.annotation.AnnotationRetention"
     },
     {
@@ -3785,19 +3656,10 @@
       "type": "kotlin.annotation.Retention"
     },
     {
-      "type": "kotlin.annotation.Target",
-      "methods": [
-        {
-          "name": "allowedTargets",
-          "parameterTypes": []
-        }
-      ]
+      "type": "kotlin.annotation.Target"
     },
     {
       "type": "kotlin.collections.List"
-    },
-    {
-      "type": "kotlin.collections.Map"
     },
     {
       "type": "kotlin.coroutines.AbstractCoroutineContextElement"
@@ -3918,12 +3780,6 @@
     },
     {
       "type": "kotlinx.coroutines.scheduling.WorkQueue"
-    },
-    {
-      "type": "kotlinx.io.RefCountingCopyTracker"
-    },
-    {
-      "type": "kotlinx.io.Source"
     },
     {
       "type": "kotlinx.serialization.Serializable"
@@ -4988,13 +4844,7 @@
       "type": "org.springframework.boot.context.properties.NestedConfigurationProperty"
     },
     {
-      "type": "org.springframework.boot.context.properties.bind.DefaultValue",
-      "methods": [
-        {
-          "name": "value",
-          "parameterTypes": []
-        }
-      ]
+      "type": "org.springframework.boot.context.properties.bind.DefaultValue"
     },
     {
       "type": "org.springframework.boot.context.properties.bind.Name"
@@ -6731,28 +6581,16 @@
       "type": "reactor.core.publisher.FluxFirstWithSignal$RaceCoordinator"
     },
     {
-      "type": "reactor.core.publisher.FluxGenerate$GenerateSubscription"
-    },
-    {
       "type": "reactor.core.publisher.FluxIterable$IterableSubscription"
     },
     {
-      "type": "reactor.core.publisher.FluxLimitRequest$FluxLimitRequestSubscriber"
-    },
-    {
       "type": "reactor.core.publisher.FluxOnErrorReturn$ReturnSubscriber"
-    },
-    {
-      "type": "reactor.core.publisher.FluxSubscribeOn$SubscribeOnSubscriber"
     },
     {
       "type": "reactor.core.publisher.FluxTimeout$TimeoutMainSubscriber"
     },
     {
       "type": "reactor.core.publisher.FluxTimeout$TimeoutTimeoutSubscriber"
-    },
-    {
-      "type": "reactor.core.publisher.FluxUsing$UsingFuseableSubscriber"
     },
     {
       "type": "reactor.core.publisher.Hooks"
@@ -6786,9 +6624,6 @@
     },
     {
       "type": "reactor.core.publisher.MonoNext$NextSubscriber"
-    },
-    {
-      "type": "reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber"
     },
     {
       "type": "reactor.core.publisher.MonoWhen$WhenCoordinator"
@@ -6830,9 +6665,6 @@
       "type": "reactor.core.scheduler.SchedulerTask"
     },
     {
-      "type": "reactor.core.scheduler.WorkerTask"
-    },
-    {
       "type": "reactor.netty.channel.ChannelOperations"
     },
     {
@@ -6840,9 +6672,6 @@
     },
     {
       "type": "reactor.netty.channel.FluxReceive"
-    },
-    {
-      "type": "reactor.netty.channel.MonoSendMany$SendManyInner"
     },
     {
       "type": "reactor.netty.contextpropagation.ChannelContextAccessor"
@@ -6879,12 +6708,6 @@
     },
     {
       "type": "reactor.tools.agent.ReactorDebugAgent"
-    },
-    {
-      "type": "reactor.util.concurrent.SpscArrayQueueConsumer"
-    },
-    {
-      "type": "reactor.util.concurrent.SpscArrayQueueProducer"
     },
     {
       "type": "reactor.util.context.ReactorContextAccessor"
@@ -6925,26 +6748,10 @@
         {
           "name": "theUnsafe"
         }
-      ],
-      "methods": [
-        {
-          "name": "invokeCleaner",
-          "parameterTypes": [
-            "java.nio.ByteBuffer"
-          ]
-        }
       ]
     },
     {
-      "type": "sun.nio.ch.SelectorImpl",
-      "fields": [
-        {
-          "name": "publicSelectedKeys"
-        },
-        {
-          "name": "selectedKeys"
-        }
-      ]
+      "type": "sun.nio.ch.SelectorImpl"
     },
     {
       "type": "sun.security.pkcs12.PKCS12KeyStore",
@@ -7127,20 +6934,6 @@
           "parameterTypes": []
         }
       ]
-    },
-    {
-      "type": "sun.security.ssl.SSLContextImpl",
-      "fields": [
-        {
-          "name": "trustManager"
-        }
-      ]
-    },
-    {
-      "type": "sun.security.ssl.SSLContextImpl$AbstractTLSContext"
-    },
-    {
-      "type": "sun.security.ssl.SSLContextImpl$CustomizedTLSContext"
     },
     {
       "type": "sun.security.ssl.SSLContextImpl$DefaultSSLContext",
@@ -7741,9 +7534,6 @@
     },
     {
       "glob": "git.properties"
-    },
-    {
-      "glob": "graphiql/index.html"
     },
     {
       "glob": "graphql"
