@@ -3782,6 +3782,9 @@
       "type": "kotlinx.coroutines.scheduling.WorkQueue"
     },
     {
+      "type": "kotlinx.io.RefCountingCopyTracker"
+    },
+    {
       "type": "kotlinx.serialization.Serializable"
     },
     {
