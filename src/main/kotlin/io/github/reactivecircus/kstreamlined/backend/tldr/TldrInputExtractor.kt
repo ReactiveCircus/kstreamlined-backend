@@ -4,6 +4,8 @@ import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Element
 import com.fleeksoft.ksoup.nodes.Node
 import com.fleeksoft.ksoup.nodes.TextNode
+import java.net.URI
+import java.net.URISyntaxException
 
 object TldrInputExtractor {
     private val headingTags = setOf("h1", "h2", "h3", "h4", "h5", "h6")
@@ -13,9 +15,7 @@ object TldrInputExtractor {
         "main", "header", "footer", "table", "thead", "tbody", "tfoot", "tr", "td", "th",
         "dl", "dt", "dd", "details", "summary", "hr",
     )
-    private val whitespace = Regex("[\\s\\u00a0]+")
     private val horizontalWhitespace = Regex("[ \\t\\u00a0]+")
-    private val backticks = Regex("`+")
     private val codeLanguages = listOf(
         "kotlin",
         "java",
@@ -46,9 +46,14 @@ object TldrInputExtractor {
         return output
     }
 
-    private fun renderNode(node: Node, output: MutableList<Block>, inline: StringBuilder) {
+    private fun renderNode(
+        node: Node,
+        output: MutableList<Block>,
+        inline: StringBuilder,
+        escapeLinkText: Boolean = false,
+    ) {
         when (node) {
-            is TextNode -> inline.append(node.getWholeText().replace(whitespace, " "))
+            is TextNode -> inline.append(renderText(node.getWholeText(), escapeLinkText))
 
             is Element -> when (node.tagName().lowercase()) {
                 in blockTags -> {
@@ -58,12 +63,36 @@ object TldrInputExtractor {
 
                 "code" -> inline.append(renderInlineCode(node))
 
-                "br" -> inline.append('\n')
+                "a" -> renderLink(node, output, inline)
 
-                "img" -> inline.append(node.attr("alt").replace(whitespace, " "))
+                "br" -> inline.append(if (escapeLinkText) ' ' else '\n')
 
-                else -> node.childNodes().forEach { renderNode(it, output, inline) }
+                "img" -> inline.append(renderText(node.attr("alt"), escapeLinkText))
+
+                else -> node.childNodes().forEach { renderNode(it, output, inline, escapeLinkText) }
             }
+        }
+    }
+
+    private fun renderLink(element: Element, output: MutableList<Block>, inline: StringBuilder) {
+        val href = httpLinkDestination(element)
+        if (href == null) {
+            element.childNodes().forEach { renderNode(it, output, inline) }
+            return
+        }
+
+        val destination = href.replace("&", "&amp;")
+        if (element.getAllElements().any { it.tagName().lowercase() in blockTags }) {
+            val blocks = renderChildren(element)
+            if (blocks.isNotEmpty()) {
+                flushInline(output, inline)
+                output.addAll(blocks)
+                output.add(Block("[Link](<$destination>)"))
+            }
+        } else {
+            val label = StringBuilder()
+            element.childNodes().forEach { renderNode(it, output, label, escapeLinkText = true) }
+            inline.append(if (label.isBlank()) label.toString() else "[$label](<$destination>)")
         }
     }
 
@@ -117,10 +146,6 @@ object TldrInputExtractor {
         return "$fence$padding$code$padding$fence"
     }
 
-    private fun backtickDelimiterLength(code: String): Int {
-        return (backticks.findAll(code).maxOfOrNull { it.value.length } ?: 0) + 1
-    }
-
     private fun detectLanguage(element: Element): String {
         val hints = buildString {
             listOfNotNull(element, element.selectFirst("code")).forEach { node ->
@@ -172,6 +197,36 @@ object TldrInputExtractor {
     }
 
     private class Block(val text: String, val isList: Boolean = false)
+}
+
+private val Whitespace = Regex("[\\s\\u00a0]+")
+private val Backticks = Regex("`+")
+private val LinkTextDelimiters = Regex("""[\\`*_\[\]<>!&]""")
+
+private fun renderText(text: String, escapeLinkText: Boolean): String {
+    val normalized = text.replace(Whitespace, " ")
+    return if (escapeLinkText) {
+        normalized.replace(LinkTextDelimiters) { "\\${it.value}" }
+    } else {
+        normalized
+    }
+}
+
+private fun httpLinkDestination(element: Element): String? {
+    val href = element.attr("href").trim()
+    val uri = try {
+        URI(href)
+    } catch (_: URISyntaxException) {
+        return null
+    }
+    return href.takeIf {
+        (uri.scheme.equals("http", ignoreCase = true) || uri.scheme.equals("https", ignoreCase = true)) &&
+            !uri.host.isNullOrEmpty()
+    }
+}
+
+private fun backtickDelimiterLength(code: String): Int {
+    return (Backticks.findAll(code).maxOfOrNull { it.value.length } ?: 0) + 1
 }
 
 private const val NonContentSelector =

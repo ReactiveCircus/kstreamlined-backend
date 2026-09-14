@@ -52,7 +52,7 @@ class TldrGeneratorTest {
         assertEquals("user", messages[1].jsonObject.getValue("role").jsonPrimitive.content)
         assertEquals(
             """
-            Create the TLDR for this article. Decide what deserves emphasis and choose the clearest structure for this content.
+            Create the TLDR for this article in valid markdown. Decide what deserves emphasis and choose the clearest structure for this content.
 
             <UNTRUSTED_ARTICLE>
             Title: Structured Concurrency

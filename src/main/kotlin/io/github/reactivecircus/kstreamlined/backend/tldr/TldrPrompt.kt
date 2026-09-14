@@ -49,5 +49,5 @@ internal object TldrPrompt {
     }
 }
 
-private const val UserPromptIntro = "Create the TLDR for this article in clean, valid markdown. " +
+private const val UserPromptIntro = "Create the TLDR for this article in valid markdown. " +
     "Decide what deserves emphasis and choose the clearest structure for this content."

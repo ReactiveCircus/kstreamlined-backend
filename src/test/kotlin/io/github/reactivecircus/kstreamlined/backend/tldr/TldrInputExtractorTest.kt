@@ -270,4 +270,166 @@ class TldrInputExtractorTest {
 
         assertEquals("Content", TldrInputExtractor.extract(html))
     }
+
+    @Test
+    fun `preserves absolute HTTP links and surrounding inline content`() {
+        val html = """
+            <p>Read <a href="https://kotlinlang.org/docs/flow.html">the docs</a>,
+            then <a href="http://example.com/guide">this guide</a>.</p>
+            <p><a href=" HTTPS://example.com/CaseSensitive ">Uppercase scheme</a></p>
+        """.trimIndent()
+
+        assertEquals(
+            "Read [the docs](<https://kotlinlang.org/docs/flow.html>), " +
+                "then [this guide](<http://example.com/guide>).\n\n" +
+                "[Uppercase scheme](<HTTPS://example.com/CaseSensitive>)",
+            TldrInputExtractor.extract(html),
+        )
+    }
+
+    @Test
+    fun `preserves inline code in link labels without escaping its contents`() {
+        val html = """
+            <p>Use <a href="https://example.com/api"><strong>the <code>List&lt;T&gt;</code> API</strong></a>.</p>
+            <p><a href="https://example.com/code"><code>`[value]`</code></a></p>
+        """.trimIndent()
+
+        assertEquals(
+            "Use [the `List<T>` API](<https://example.com/api>).\n\n" +
+                "[`` `[value]` ``](<https://example.com/code>)",
+            TldrInputExtractor.extract(html),
+        )
+    }
+
+    @Test
+    fun `escapes Markdown in link label text and image alt text`() {
+        val html = """
+            <a href="https://example.com">[value] \ * _ ` &lt;T&gt; &amp;copy; !</a>
+            <p><a href="https://example.com/diagram"><img src="diagram.png" alt="[Flow] &amp; State"></a></p>
+        """.trimIndent()
+
+        assertEquals(
+            """[\[value\] \\ \* \_ \` \<T\> \&copy; \!](<https://example.com>)""" +
+                "\n\n" + """[\[Flow\] \& State](<https://example.com/diagram>)""",
+            TldrInputExtractor.extract(html),
+        )
+    }
+
+    @Test
+    fun `preserves URL query fragments parentheses and literal entities`() {
+        val html = """
+            <a href="https://example.com/api/Map_(type)?a=1&amp;b=2#usage">API</a>
+            <p><a href="https://example.com/?literal=&amp;copy;&amp;encoded=%26">Entities</a></p>
+        """.trimIndent()
+
+        assertEquals(
+            "[API](<https://example.com/api/Map_(type)?a=1&amp;b=2#usage>)\n\n" +
+                "[Entities](<https://example.com/?literal=&amp;copy;&amp;encoded=%26>)",
+            TldrInputExtractor.extract(html),
+        )
+    }
+
+    @Test
+    fun `keeps relative and fragment links as visible text without resolving a base`() {
+        val html = """
+            <base href="https://example.com/article/">
+            <p><a href="#installation">Installation</a></p>
+            <p><a href="/docs">Root</a></p>
+            <p><a href="../guide">Parent</a></p>
+            <p><a href="another-post">Sibling</a></p>
+            <p><a href="?page=2">Query</a></p>
+            <p><a href="//example.com/docs">Scheme-relative</a></p>
+        """.trimIndent()
+
+        assertEquals(
+            "Installation\n\nRoot\n\nParent\n\nSibling\n\nQuery\n\nScheme-relative",
+            TldrInputExtractor.extract(html),
+        )
+    }
+
+    @Test
+    fun `keeps malformed unsupported and missing destinations as visible text`() {
+        val destinations = listOf(
+            "",
+            " ",
+            "mailto:someone@example.com",
+            "javascript:alert(1)",
+            "data:text/html,hello",
+            "ftp://example.com/file",
+            "https://",
+            "https:///path",
+            "https:example.com",
+            "https://example.com/bad%escape",
+            "https://example.com/has space",
+            "https://[broken",
+        )
+
+        destinations.forEach { href ->
+            assertEquals(
+                "Read `Flow` & [details].",
+                TldrInputExtractor.extract("""Read <a href="$href"><code>Flow</code> &amp; [details]</a>."""),
+                "href=$href",
+            )
+        }
+        assertEquals("Named anchor", TldrInputExtractor.extract("""<a id="section">Named anchor</a>"""))
+    }
+
+    @Test
+    fun `preserves block structure within linked content`() {
+        val html = """
+            <div>Before<a href="https://example.com/article">
+                <h2>Article</h2><p>Details with <code>Flow</code>.</p>
+                <ul><li>First</li><li>Second</li></ul>
+            </a>After</div>
+        """.trimIndent()
+
+        assertEquals(
+            "Before\n\n## Article\n\nDetails with `Flow`.\n\n- First\n- Second\n\n" +
+                "[Link](<https://example.com/article>)\n\nAfter",
+            TldrInputExtractor.extract(html),
+        )
+    }
+
+    @Test
+    fun `preserves links inside headings lists and blockquotes`() {
+        val html = """
+            <h2><a href="https://example.com/api">API</a></h2>
+            <ul><li>Use <a href="https://example.com/flow"><code>Flow</code></a></li></ul>
+            <blockquote><p>Read <a href="https://example.com/guide">the guide</a>.</p></blockquote>
+        """.trimIndent()
+
+        assertEquals(
+            "## [API](<https://example.com/api>)\n\n" +
+                "- Use [`Flow`](<https://example.com/flow>)\n\n" +
+                "> Read [the guide](<https://example.com/guide>).",
+            TldrInputExtractor.extract(html),
+        )
+    }
+
+    @Test
+    fun `preserves label spacing and prevents blank lines from breaking links`() {
+        val html = """
+            <p>Before<a href="https://example.com"> label </a>after.</p>
+            <p><a href="https://example.com">First<br><br>Second</a></p>
+        """.trimIndent()
+
+        assertEquals(
+            "Before[ label ](<https://example.com>)after.\n\n[First Second](<https://example.com>)",
+            TldrInputExtractor.extract(html),
+        )
+    }
+
+    @Test
+    fun `omits empty links and links in removed content`() {
+        val html = """
+            <p>A<a href="https://example.com"> </a>B</p>
+            <a href="https://example.com"></a>
+            <a href="https://example.com"><img src="decorative.png" alt=""></a>
+            <a href="https://example.com"><p> </p></a>
+            <a hidden href="https://example.com">Hidden</a>
+            <nav><a href="https://example.com">Navigation</a></nav>
+        """.trimIndent()
+
+        assertEquals("A B", TldrInputExtractor.extract(html))
+    }
 }

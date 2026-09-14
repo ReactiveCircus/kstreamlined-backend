@@ -15,11 +15,11 @@ data class KotlinBlogTldr(
     val content: String,
     val model: String,
     val generatedAt: Instant,
-    val promptTokens: Int,
-    val completionTokens: Int,
-    val totalTokens: Int,
-    val neurons: Double,
-    val requestLatencyMs: Long,
+    val promptTokens: Int?,
+    val completionTokens: Int?,
+    val totalTokens: Int?,
+    val neurons: Double?,
+    val generationDurationMs: Long,
 )
 
 class FirestoreKotlinBlogTldrPersister(
