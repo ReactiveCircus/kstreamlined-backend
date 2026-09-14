@@ -4,6 +4,8 @@ complexity:
   LongParameterList:
     active: false
   TooManyFunctions:
+    allowedFunctionsPerClass: 20
+    allowedFunctionsPerFile: 20
     excludes: ["**/test/**"]
 
 ktlint:

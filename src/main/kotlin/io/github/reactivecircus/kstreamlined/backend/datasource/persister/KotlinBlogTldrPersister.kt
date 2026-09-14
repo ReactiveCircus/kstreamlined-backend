@@ -19,7 +19,7 @@ data class KotlinBlogTldr(
     val completionTokens: Int,
     val totalTokens: Int,
     val neurons: Double,
-    val generationDurationMs: Long,
+    val requestLatencyMs: Long,
 )
 
 class FirestoreKotlinBlogTldrPersister(

@@ -19,6 +19,7 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.persister.Firest
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogTldrPersister
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
+import io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerator
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
 import org.springframework.beans.factory.annotation.Value
@@ -100,6 +101,13 @@ class KSConfiguration {
         return RealKotlinWeeklyIssueDataSource(
             engine = engine,
         )
+    }
+
+    @Bean
+    fun tldrGenerator(
+        cloudflareAiClient: CloudflareAiClient,
+    ): TldrGenerator {
+        return TldrGenerator(cloudflareAiClient = cloudflareAiClient)
     }
 
     @Bean
