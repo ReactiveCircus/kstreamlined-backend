@@ -6,11 +6,11 @@ class FakeKotlinBlogTldrPersister : KotlinBlogTldrPersister {
     val savedKotlinBlogTldrs: Map<String, KotlinBlogTldr>
         get() = kotlinBlogTldrs.toMap()
 
-    override fun loadKotlinBlogTldr(id: String): KotlinBlogTldr? {
+    override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldr? {
         return kotlinBlogTldrs[id.firestoreDocumentId]
     }
 
-    override fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldr) {
+    override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldr) {
         kotlinBlogTldrs[id.firestoreDocumentId] = tldr
     }
 }
