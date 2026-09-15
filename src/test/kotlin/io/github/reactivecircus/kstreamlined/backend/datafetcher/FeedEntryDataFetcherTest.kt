@@ -86,55 +86,55 @@ class FeedEntryDataFetcherTest {
 
         val context = dgsQueryExecutor.executeAndGetDocumentContext(feedEntriesQuery)
 
-        assertEquals(4, context.read<Int>("data.feedEntries.size()"))
+        assertEquals(4, context.read("data.feedEntries.size()"))
 
         val dummyKotlinWeeklyEntry = DummyKotlinWeeklyItem.toKotlinWeeklyEntry()
-        assertEquals(dummyKotlinWeeklyEntry.id, context.read<String>("data.feedEntries[0].id"))
-        assertEquals(dummyKotlinWeeklyEntry.title, context.read<String>("data.feedEntries[0].title"))
+        assertEquals(dummyKotlinWeeklyEntry.id, context.read("data.feedEntries[0].id"))
+        assertEquals(dummyKotlinWeeklyEntry.title, context.read("data.feedEntries[0].title"))
         assertEquals(
             dummyKotlinWeeklyEntry.publishTime,
             context.read<String>("data.feedEntries[0].publishTime").toInstant(),
         )
-        assertEquals(dummyKotlinWeeklyEntry.contentUrl, context.read<String>("data.feedEntries[0].contentUrl"))
-        assertEquals(dummyKotlinWeeklyEntry.issueNumber, context.read<Int>("data.feedEntries[0].issueNumber"))
+        assertEquals(dummyKotlinWeeklyEntry.contentUrl, context.read("data.feedEntries[0].contentUrl"))
+        assertEquals(dummyKotlinWeeklyEntry.issueNumber, context.read("data.feedEntries[0].issueNumber"))
 
         val dummyKotlinBlogEntry = DummyKotlinBlogItem.toKotlinBlogEntry()
-        assertEquals(dummyKotlinBlogEntry.id, context.read<String>("data.feedEntries[1].id"))
-        assertEquals(dummyKotlinBlogEntry.title, context.read<String>("data.feedEntries[1].title"))
+        assertEquals(dummyKotlinBlogEntry.id, context.read("data.feedEntries[1].id"))
+        assertEquals(dummyKotlinBlogEntry.title, context.read("data.feedEntries[1].title"))
         assertEquals(
             dummyKotlinBlogEntry.publishTime,
             context.read<String>("data.feedEntries[1].publishTime").toInstant(),
         )
-        assertEquals(dummyKotlinBlogEntry.contentUrl, context.read<String>("data.feedEntries[1].contentUrl"))
+        assertEquals(dummyKotlinBlogEntry.contentUrl, context.read("data.feedEntries[1].contentUrl"))
         assertEquals(
             dummyKotlinBlogEntry.featuredImageUrl,
-            context.read<String>("data.feedEntries[1].featuredImageUrl"),
+            context.read("data.feedEntries[1].featuredImageUrl"),
         )
-        assertEquals(dummyKotlinBlogEntry.description, context.read<String>("data.feedEntries[1].description"))
+        assertEquals(dummyKotlinBlogEntry.description, context.read("data.feedEntries[1].description"))
 
         val dummyKotlinYouTubeEntry = DummyKotlinYouTubeItem.toKotlinYouTubeEntry()
-        assertEquals(dummyKotlinYouTubeEntry.id, context.read<String>("data.feedEntries[2].id"))
-        assertEquals(dummyKotlinYouTubeEntry.title, context.read<String>("data.feedEntries[2].title"))
+        assertEquals(dummyKotlinYouTubeEntry.id, context.read("data.feedEntries[2].id"))
+        assertEquals(dummyKotlinYouTubeEntry.title, context.read("data.feedEntries[2].title"))
         assertEquals(
             dummyKotlinYouTubeEntry.publishTime,
             context.read<String>("data.feedEntries[2].publishTime").toInstant(),
         )
-        assertEquals(dummyKotlinYouTubeEntry.contentUrl, context.read<String>("data.feedEntries[2].contentUrl"))
-        assertEquals(dummyKotlinYouTubeEntry.thumbnailUrl, context.read<String>("data.feedEntries[2].thumbnailUrl"))
-        assertEquals(dummyKotlinYouTubeEntry.description, context.read<String>("data.feedEntries[2].description"))
+        assertEquals(dummyKotlinYouTubeEntry.contentUrl, context.read("data.feedEntries[2].contentUrl"))
+        assertEquals(dummyKotlinYouTubeEntry.thumbnailUrl, context.read("data.feedEntries[2].thumbnailUrl"))
+        assertEquals(dummyKotlinYouTubeEntry.description, context.read("data.feedEntries[2].description"))
 
         val dummyTalkingKotlinEntry = DummyTalkingKotlinItem.toTalkingKotlinEntry()
-        assertEquals(dummyTalkingKotlinEntry.id, context.read<String>("data.feedEntries[3].id"))
-        assertEquals(dummyTalkingKotlinEntry.title, context.read<String>("data.feedEntries[3].title"))
+        assertEquals(dummyTalkingKotlinEntry.id, context.read("data.feedEntries[3].id"))
+        assertEquals(dummyTalkingKotlinEntry.title, context.read("data.feedEntries[3].title"))
         assertEquals(
             dummyTalkingKotlinEntry.publishTime,
             context.read<String>("data.feedEntries[3].publishTime").toInstant(),
         )
-        assertEquals(dummyTalkingKotlinEntry.contentUrl, context.read<String>("data.feedEntries[3].contentUrl"))
-        assertEquals(dummyTalkingKotlinEntry.audioUrl, context.read<String>("data.feedEntries[3].audioUrl"))
-        assertEquals(dummyTalkingKotlinEntry.thumbnailUrl, context.read<String>("data.feedEntries[3].thumbnailUrl"))
-        assertEquals(dummyTalkingKotlinEntry.summary, context.read<String>("data.feedEntries[3].summary"))
-        assertEquals(dummyTalkingKotlinEntry.duration, context.read<String>("data.feedEntries[3].duration"))
+        assertEquals(dummyTalkingKotlinEntry.contentUrl, context.read("data.feedEntries[3].contentUrl"))
+        assertEquals(dummyTalkingKotlinEntry.audioUrl, context.read("data.feedEntries[3].audioUrl"))
+        assertEquals(dummyTalkingKotlinEntry.thumbnailUrl, context.read("data.feedEntries[3].thumbnailUrl"))
+        assertEquals(dummyTalkingKotlinEntry.summary, context.read("data.feedEntries[3].summary"))
+        assertEquals(dummyTalkingKotlinEntry.duration, context.read("data.feedEntries[3].duration"))
     }
 
     @Test
@@ -177,32 +177,32 @@ class FeedEntryDataFetcherTest {
             mapOf("filters" to listOf(FeedSourceKey.KOTLIN_BLOG, FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL)),
         )
 
-        assertEquals(2, context.read<Int>("data.feedEntries.size()"))
+        assertEquals(2, context.read("data.feedEntries.size()"))
 
         val dummyKotlinBlogEntry = DummyKotlinBlogItem.toKotlinBlogEntry()
-        assertEquals(dummyKotlinBlogEntry.id, context.read<String>("data.feedEntries[0].id"))
-        assertEquals(dummyKotlinBlogEntry.title, context.read<String>("data.feedEntries[0].title"))
+        assertEquals(dummyKotlinBlogEntry.id, context.read("data.feedEntries[0].id"))
+        assertEquals(dummyKotlinBlogEntry.title, context.read("data.feedEntries[0].title"))
         assertEquals(
             dummyKotlinBlogEntry.publishTime,
             context.read<String>("data.feedEntries[0].publishTime").toInstant(),
         )
-        assertEquals(dummyKotlinBlogEntry.contentUrl, context.read<String>("data.feedEntries[0].contentUrl"))
+        assertEquals(dummyKotlinBlogEntry.contentUrl, context.read("data.feedEntries[0].contentUrl"))
         assertEquals(
             dummyKotlinBlogEntry.featuredImageUrl,
-            context.read<String>("data.feedEntries[0].featuredImageUrl"),
+            context.read("data.feedEntries[0].featuredImageUrl"),
         )
-        assertEquals(dummyKotlinBlogEntry.description, context.read<String>("data.feedEntries[0].description"))
+        assertEquals(dummyKotlinBlogEntry.description, context.read("data.feedEntries[0].description"))
 
         val dummyKotlinYouTubeEntry = DummyKotlinYouTubeItem.toKotlinYouTubeEntry()
-        assertEquals(dummyKotlinYouTubeEntry.id, context.read<String>("data.feedEntries[1].id"))
-        assertEquals(dummyKotlinYouTubeEntry.title, context.read<String>("data.feedEntries[1].title"))
+        assertEquals(dummyKotlinYouTubeEntry.id, context.read("data.feedEntries[1].id"))
+        assertEquals(dummyKotlinYouTubeEntry.title, context.read("data.feedEntries[1].title"))
         assertEquals(
             dummyKotlinYouTubeEntry.publishTime,
             context.read<String>("data.feedEntries[1].publishTime").toInstant(),
         )
-        assertEquals(dummyKotlinYouTubeEntry.contentUrl, context.read<String>("data.feedEntries[1].contentUrl"))
-        assertEquals(dummyKotlinYouTubeEntry.thumbnailUrl, context.read<String>("data.feedEntries[1].thumbnailUrl"))
-        assertEquals(dummyKotlinYouTubeEntry.description, context.read<String>("data.feedEntries[1].description"))
+        assertEquals(dummyKotlinYouTubeEntry.contentUrl, context.read("data.feedEntries[1].contentUrl"))
+        assertEquals(dummyKotlinYouTubeEntry.thumbnailUrl, context.read("data.feedEntries[1].thumbnailUrl"))
+        assertEquals(dummyKotlinYouTubeEntry.description, context.read("data.feedEntries[1].description"))
     }
 
     @Test
@@ -222,7 +222,7 @@ class FeedEntryDataFetcherTest {
 
         val context = dgsQueryExecutor.executeAndGetDocumentContext(syncFeedsMutation)
 
-        assertTrue(context.read<Boolean>("data.syncFeeds"))
+        assertTrue(context.read("data.syncFeeds"))
     }
 
     @Test

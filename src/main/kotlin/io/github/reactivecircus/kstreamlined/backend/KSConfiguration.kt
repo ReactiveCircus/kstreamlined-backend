@@ -90,8 +90,14 @@ class KSConfiguration {
     @Bean
     fun kotlinBlogTldrDataSource(
         kotlinBlogContentPersister: KotlinBlogContentPersister,
+        kotlinBlogTldrPersister: KotlinBlogTldrPersister,
+        tldrGenerator: TldrGenerator,
     ): KotlinBlogTldrDataSource {
-        return RealKotlinBlogTldrDataSource(kotlinBlogContentPersister = kotlinBlogContentPersister)
+        return RealKotlinBlogTldrDataSource(
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
+            kotlinBlogTldrPersister = kotlinBlogTldrPersister,
+            tldrGenerator = tldrGenerator,
+        )
     }
 
     @Bean

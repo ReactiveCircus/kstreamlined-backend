@@ -1,6 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.tldr
 
 import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiClient
+import io.github.reactivecircus.kstreamlined.backend.cloudflare.successfulCloudflareAiResponse
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.request.HttpRequestData
@@ -20,6 +21,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.TestTimeSource
 
 class TldrGeneratorTest {
     private val jsonHeaders = headersOf(
@@ -27,15 +32,17 @@ class TldrGeneratorTest {
         ContentType.Application.Json.toString(),
     )
 
+    private val timeSource = TestTimeSource()
+
     @Test
     fun `generate() sends expected prompt and model config via CloudFlareAiClient`() = runBlocking {
         val requests = mutableListOf<HttpRequestData>()
         val generator = createGenerator(
-            response = successfulResponse(
+            response = successfulCloudflareAiResponse(
                 content = "  Generated TLDR.  ",
-                returnedModel = "@cf/openai/gpt-oss-120b-routing-alias",
             ),
             requests = requests,
+            delay = 10.seconds,
         )
 
         val result = generator.generate(
@@ -71,19 +78,19 @@ class TldrGeneratorTest {
         assertEquals("low", body.getValue("reasoning_effort").jsonPrimitive.content)
 
         assertEquals("Generated TLDR.", result.content)
-        assertEquals("gpt-oss-120b", result.model)
+        assertEquals(ModelConfig.GptOss120b.id, result.model)
         assertEquals(1_000, result.promptTokens)
         assertEquals(200, result.completionTokens)
         assertEquals(1_200, result.totalTokens)
         assertEquals(75.5, result.neurons)
-        assertTrue(result.requestLatencyMs >= 0)
+        assertEquals(10_000, result.requestLatencyMs)
     }
 
     @Test
     fun `generate() rejects blank title or article text`() = runBlocking {
         val requests = mutableListOf<HttpRequestData>()
         val generator = createGenerator(
-            response = successfulResponse(),
+            response = successfulCloudflareAiResponse(),
             requests = requests,
         )
 
@@ -101,7 +108,7 @@ class TldrGeneratorTest {
     fun `generate() rejects article text exceeding the maximum length`() = runBlocking {
         val requests = mutableListOf<HttpRequestData>()
         val generator = createGenerator(
-            response = successfulResponse(),
+            response = successfulCloudflareAiResponse(),
             requests = requests,
         )
 
@@ -115,7 +122,7 @@ class TldrGeneratorTest {
     @Test
     fun `generate() rejects response without choice index zero`() = runBlocking {
         val generator = createGenerator(
-            response = successfulResponse(choiceIndex = 1),
+            response = successfulCloudflareAiResponse(choiceIndex = 1),
         )
 
         val exception = assertFailsWith<TldrGenerationException> {
@@ -131,7 +138,7 @@ class TldrGeneratorTest {
     @Test
     fun `generate() rejects incomplete response`() = runBlocking {
         val generator = createGenerator(
-            response = successfulResponse(finishReason = "length"),
+            response = successfulCloudflareAiResponse(finishReason = "length"),
         )
 
         val exception = assertFailsWith<TldrGenerationException> {
@@ -147,7 +154,7 @@ class TldrGeneratorTest {
     @Test
     fun `generate() rejects blank content`() = runBlocking {
         val generator = createGenerator(
-            response = successfulResponse(content = " "),
+            response = successfulCloudflareAiResponse(content = " "),
         )
 
         val exception = assertFailsWith<TldrGenerationException> {
@@ -160,7 +167,7 @@ class TldrGeneratorTest {
     @Test
     fun `generate() returns null usage fields when Cloudflare omits token usage`() = runBlocking {
         val generator = createGenerator(
-            response = successfulResponse(includeUsage = false),
+            response = successfulCloudflareAiResponse(includeUsage = false),
         )
 
         val result = generator.generate(title = "Title", articleText = "Article")
@@ -174,7 +181,7 @@ class TldrGeneratorTest {
     @Test
     fun `generate() returns null neurons when Cloudflare omits neuron usage`() = runBlocking {
         val generator = createGenerator(
-            response = successfulResponse(includeNeurons = false),
+            response = successfulCloudflareAiResponse(includeNeurons = false),
         )
 
         val result = generator.generate(title = "Title", articleText = "Article")
@@ -188,9 +195,11 @@ class TldrGeneratorTest {
     private fun createGenerator(
         response: String,
         requests: MutableList<HttpRequestData> = mutableListOf(),
+        delay: Duration = 0.milliseconds,
     ): TldrGenerator {
         val engine = MockEngine { request ->
             requests += request
+            timeSource += delay
             respond(
                 content = response,
                 headers = jsonHeaders,
@@ -203,51 +212,7 @@ class TldrGeneratorTest {
                 accountId = "account-id",
                 apiToken = "api-token",
             ),
+            timeSource = timeSource,
         )
-    }
-
-    private fun successfulResponse(
-        content: String = "Generated TLDR.",
-        returnedModel: String = "@cf/openai/gpt-oss-120b",
-        choiceIndex: Int = 0,
-        finishReason: String = "stop",
-        includeUsage: Boolean = true,
-        includeNeurons: Boolean = true,
-    ): String {
-        val usage = if (includeUsage) {
-            """
-            ,"usage": {
-              "prompt_tokens": 1000,
-              "completion_tokens": 200,
-              "total_tokens": 1200
-              ${if (includeNeurons) ""","neurons": 75.5""" else ""}
-            }
-            """.trimIndent()
-        } else {
-            ""
-        }
-        return """
-            {
-              "result": {
-                "id": "completion-id",
-                "object": "chat.completion",
-                "created": 1757065600,
-                "model": "$returnedModel",
-                "choices": [
-                  {
-                    "index": $choiceIndex,
-                    "message": {
-                      "role": "assistant",
-                      "content": ${Json.encodeToString(content)}
-                    },
-                    "finish_reason": "$finishReason"
-                  }
-                ]
-                $usage
-              },
-              "success": true,
-              "errors": []
-            }
-        """.trimIndent()
     }
 }

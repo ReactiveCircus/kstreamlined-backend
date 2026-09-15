@@ -3,11 +3,13 @@ package io.github.reactivecircus.kstreamlined.backend.tldr
 import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiClient
 import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiRequest
 import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiResult
+import kotlin.time.TimeSource
 import kotlin.time.measureTimedValue
 
 class TldrGenerator(
     private val cloudflareAiClient: CloudflareAiClient,
     private val modelConfig: ModelConfig = ModelConfig.GptOss120b,
+    private val timeSource: TimeSource = TimeSource.Monotonic,
 ) {
     suspend fun generate(
         title: String,
@@ -19,7 +21,7 @@ class TldrGenerator(
             "Article text must not exceed $MaxArticleTextLength characters (was ${articleText.length})."
         }
 
-        val (result, duration) = measureTimedValue {
+        val (result, duration) = timeSource.measureTimedValue {
             cloudflareAiClient.run(
                 model = modelConfig.providerModel,
                 request = CloudflareAiRequest(

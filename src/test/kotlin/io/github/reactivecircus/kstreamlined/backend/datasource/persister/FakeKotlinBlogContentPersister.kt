@@ -8,7 +8,7 @@ class FakeKotlinBlogContentPersister : KotlinBlogContentPersister {
     val savedKotlinBlogContents: Map<String, KotlinBlogContent>
         get() = kotlinBlogContents.toMap()
 
-    override fun loadKotlinBlogContent(id: String): KotlinBlogContent? {
+    override suspend fun loadKotlinBlogContent(id: String): KotlinBlogContent? {
         return kotlinBlogContents[id.firestoreDocumentId]
     }
 
