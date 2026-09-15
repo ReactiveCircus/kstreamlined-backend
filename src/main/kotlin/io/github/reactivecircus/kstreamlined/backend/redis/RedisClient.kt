@@ -33,7 +33,8 @@ class RedisClient(
             json(DefaultJson)
         }
         install(HttpTimeout) {
-            requestTimeoutMillis = RequestTimeoutMillis
+            requestTimeoutMillis = 5_000L
+            socketTimeoutMillis = 5_000L
         }
     }
 
@@ -81,7 +82,6 @@ class RedisClient(
     }
 
     companion object {
-        private const val RequestTimeoutMillis = 5_000L
         private const val DefaultKeyExpirySeconds = 3600
     }
 }

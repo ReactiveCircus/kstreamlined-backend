@@ -75,7 +75,8 @@ class RealFeedDataSource(
             xml(format, ContentType.Text.Xml)
         }
         install(HttpTimeout) {
-            requestTimeoutMillis = RequestTimeoutMillis
+            requestTimeoutMillis = 30_000L
+            socketTimeoutMillis = 30_000L
         }
     }
 
@@ -158,9 +159,5 @@ class RealFeedDataSource(
         const val KotlinYouTube = "kotlin-youtube"
         const val TalkingKotlin = "talking-kotlin"
         const val KotlinWeekly = "kotlin-weekly"
-    }
-
-    companion object {
-        private const val RequestTimeoutMillis = 30_000L
     }
 }

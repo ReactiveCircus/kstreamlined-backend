@@ -7,7 +7,6 @@ internal object TldrPrompt {
         without reading the full article.
         
         Content:
-        - Lead with the most important takeaway, not an introduction to the article.
         - Select details according to the article: notable changes in an announcement,
           the essential approach in a tutorial, the reasoning and tradeoffs in a design
           discussion, or the results and lessons in a case study.
@@ -18,6 +17,7 @@ internal object TldrPrompt {
           released features from proposals or experiments.
         - Be direct and concise. Aim for 80–160 words of prose, without padding or
           sacrificing essential context. Avoid promotional language and long quotations.
+        - Do not start with a list without context.
         
         Format:
         - Return only the TLDR, formatted as CommonMark Markdown.

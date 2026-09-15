@@ -27,7 +27,8 @@ class CloudflareAiClient(
             json(CloudflareAiJson)
         }
         install(HttpTimeout) {
-            requestTimeoutMillis = RequestTimeoutMillis
+            requestTimeoutMillis = 30_000L
+            socketTimeoutMillis = 30_000L
         }
     }
 
@@ -51,10 +52,6 @@ class CloudflareAiClient(
         }
         return response.result
             ?: throw CloudflareAiException("Cloudflare Workers AI response did not contain a result.")
-    }
-
-    private companion object {
-        const val RequestTimeoutMillis = 60_000L
     }
 }
 
