@@ -1,5 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datasource.persister
 
+import com.google.api.core.ApiFutures
 import com.google.cloud.firestore.FieldMask
 import com.google.cloud.firestore.Firestore
 import io.github.reactivecircus.kstreamlined.backend.NoArg
@@ -8,7 +9,7 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogIt
 interface KotlinBlogContentPersister {
     suspend fun loadKotlinBlogContent(id: String): KotlinBlogContent?
 
-    fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>)
+    suspend fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>)
 }
 
 @NoArg
@@ -37,7 +38,7 @@ class FirestoreKotlinBlogContentPersister(
             .toObject(KotlinBlogContent::class.java)
     }
 
-    override fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>) {
+    override suspend fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>) {
         val contents = items.map { item ->
             item.firestoreDocumentId to KotlinBlogContent.from(item)
         }
@@ -46,23 +47,25 @@ class FirestoreKotlinBlogContentPersister(
         val documentReferences = contents.map { (documentId) ->
             firestore.collection(KotlinBlogContentCollectionPath).document(documentId)
         }
-        firestore.runTransaction { transaction ->
-            val existingDocumentIds = transaction
-                .getAll(
+        firestore.runAsyncTransaction { transaction ->
+            ApiFutures.transform(
+                transaction.getAll(
                     documentReferences.toTypedArray(),
                     FieldMask.of(*emptyArray<String>()),
-                )
-                .get()
-                .filter { it.exists() }
-                .mapTo(mutableSetOf()) { it.id }
+                ),
+                { snapshots ->
+                    val existingDocumentIds = snapshots
+                        .filter { it.exists() }
+                        .mapTo(mutableSetOf()) { it.id }
 
-            contents.zip(documentReferences).forEach { (content, documentReference) ->
-                if (documentReference.id !in existingDocumentIds) {
-                    transaction.create(documentReference, content.second)
-                }
-            }
-            null
-        }.get()
+                    contents.zip(documentReferences).forEach { (content, documentReference) ->
+                        if (documentReference.id !in existingDocumentIds) {
+                            transaction.create(documentReference, content.second)
+                        }
+                    }
+                },
+            ) { it.run() }
+        }.await()
     }
 }
 

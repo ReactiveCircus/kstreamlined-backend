@@ -10,54 +10,54 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 interface FeedPersister {
-    fun loadKotlinBlogItems(): List<KotlinBlogItem>?
+    suspend fun loadKotlinBlogItems(): List<KotlinBlogItem>?
 
-    fun saveKotlinBlogItems(items: List<KotlinBlogItem>)
+    suspend fun saveKotlinBlogItems(items: List<KotlinBlogItem>)
 
-    fun loadKotlinYouTubeItems(): List<KotlinYouTubeItem>?
+    suspend fun loadKotlinYouTubeItems(): List<KotlinYouTubeItem>?
 
-    fun saveKotlinYouTubeItems(items: List<KotlinYouTubeItem>)
+    suspend fun saveKotlinYouTubeItems(items: List<KotlinYouTubeItem>)
 
-    fun loadTalkingKotlinItems(): List<TalkingKotlinItem>?
+    suspend fun loadTalkingKotlinItems(): List<TalkingKotlinItem>?
 
-    fun saveTalkingKotlinItems(items: List<TalkingKotlinItem>)
+    suspend fun saveTalkingKotlinItems(items: List<TalkingKotlinItem>)
 
-    fun loadKotlinWeeklyItems(): List<KotlinWeeklyItem>?
+    suspend fun loadKotlinWeeklyItems(): List<KotlinWeeklyItem>?
 
-    fun saveKotlinWeeklyItems(items: List<KotlinWeeklyItem>)
+    suspend fun saveKotlinWeeklyItems(items: List<KotlinWeeklyItem>)
 }
 
 class FirestoreFeedPersister(
     private val firestore: Firestore,
 ) : FeedPersister {
-    override fun loadKotlinBlogItems(): List<KotlinBlogItem>? {
-        return firestore.collection(FeedCollectionPath.KotlinBlog).get().get().map {
+    override suspend fun loadKotlinBlogItems(): List<KotlinBlogItem>? {
+        return firestore.collection(FeedCollectionPath.KotlinBlog).get().await().map {
             it.toObject(KotlinBlogItem::class.java)
         }.ifEmpty { null }
     }
 
-    override fun saveKotlinBlogItems(items: List<KotlinBlogItem>) {
+    override suspend fun saveKotlinBlogItems(items: List<KotlinBlogItem>) {
         batchWrite(items) { item ->
             firestore.collection(FeedCollectionPath.KotlinBlog)
                 .document(item.firestoreDocumentId)
         }
     }
 
-    override fun loadKotlinYouTubeItems(): List<KotlinYouTubeItem>? {
-        return firestore.collection(FeedCollectionPath.KotlinYouTube).get().get().map {
+    override suspend fun loadKotlinYouTubeItems(): List<KotlinYouTubeItem>? {
+        return firestore.collection(FeedCollectionPath.KotlinYouTube).get().await().map {
             it.toObject(KotlinYouTubeItem::class.java)
         }.ifEmpty { null }
     }
 
-    override fun saveKotlinYouTubeItems(items: List<KotlinYouTubeItem>) {
+    override suspend fun saveKotlinYouTubeItems(items: List<KotlinYouTubeItem>) {
         batchWrite(items) { item ->
             firestore.collection(FeedCollectionPath.KotlinYouTube)
                 .document(item.firestoreDocumentId)
         }
     }
 
-    override fun loadTalkingKotlinItems(): List<TalkingKotlinItem>? {
-        return firestore.collection(FeedCollectionPath.TalkingKotlin).get().get().map {
+    override suspend fun loadTalkingKotlinItems(): List<TalkingKotlinItem>? {
+        return firestore.collection(FeedCollectionPath.TalkingKotlin).get().await().map {
             it.toObject(TalkingKotlinItem::class.java)
         }
             .sortedByDescending {
@@ -67,32 +67,32 @@ class FirestoreFeedPersister(
             .ifEmpty { null }
     }
 
-    override fun saveTalkingKotlinItems(items: List<TalkingKotlinItem>) {
+    override suspend fun saveTalkingKotlinItems(items: List<TalkingKotlinItem>) {
         batchWrite(items) { item ->
             firestore.collection(FeedCollectionPath.TalkingKotlin)
                 .document(item.firestoreDocumentId)
         }
     }
 
-    override fun loadKotlinWeeklyItems(): List<KotlinWeeklyItem>? {
-        return firestore.collection(FeedCollectionPath.KotlinWeekly).get().get().map {
+    override suspend fun loadKotlinWeeklyItems(): List<KotlinWeeklyItem>? {
+        return firestore.collection(FeedCollectionPath.KotlinWeekly).get().await().map {
             it.toObject(KotlinWeeklyItem::class.java)
         }.ifEmpty { null }
     }
 
-    override fun saveKotlinWeeklyItems(items: List<KotlinWeeklyItem>) {
+    override suspend fun saveKotlinWeeklyItems(items: List<KotlinWeeklyItem>) {
         batchWrite(items) { item ->
             firestore.collection(FeedCollectionPath.KotlinWeekly)
                 .document(item.firestoreDocumentId)
         }
     }
 
-    private inline fun <T : Any> batchWrite(items: List<T>, docRef: (T) -> DocumentReference) {
+    private suspend inline fun <T : Any> batchWrite(items: List<T>, docRef: (T) -> DocumentReference) {
         firestore.batch().apply {
             items.forEach { item ->
                 set(docRef(item), item)
             }
-        }.commit().get()
+        }.commit().await()
     }
 }
 

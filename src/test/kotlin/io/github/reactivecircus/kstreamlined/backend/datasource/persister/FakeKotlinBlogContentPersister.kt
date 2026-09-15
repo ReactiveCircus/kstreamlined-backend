@@ -12,7 +12,7 @@ class FakeKotlinBlogContentPersister : KotlinBlogContentPersister {
         return kotlinBlogContents[id.firestoreDocumentId]
     }
 
-    override fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>) {
+    override suspend fun saveMissingKotlinBlogContents(items: List<KotlinBlogItem>) {
         items.forEach { item ->
             kotlinBlogContents.putIfAbsent(
                 item.firestoreDocumentId,
