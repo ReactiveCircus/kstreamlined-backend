@@ -5,13 +5,13 @@ import io.github.reactivecircus.kstreamlined.backend.NoArg
 import java.time.Instant
 
 interface KotlinBlogTldrPersister {
-    suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldr?
+    suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldrSummary?
 
-    suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldr)
+    suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldrSummary)
 }
 
 @NoArg
-data class KotlinBlogTldr(
+data class KotlinBlogTldrSummary(
     val content: String,
     val model: String,
     val generatedAt: Instant,
@@ -25,15 +25,15 @@ data class KotlinBlogTldr(
 class FirestoreKotlinBlogTldrPersister(
     private val firestore: Firestore,
 ) : KotlinBlogTldrPersister {
-    override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldr? {
+    override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldrSummary? {
         return firestore.collection(KotlinBlogTldrCollectionPath)
             .document(id.firestoreDocumentId)
             .get()
             .await()
-            .toObject(KotlinBlogTldr::class.java)
+            .toObject(KotlinBlogTldrSummary::class.java)
     }
 
-    override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldr) {
+    override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldrSummary) {
         firestore.collection(KotlinBlogTldrCollectionPath)
             .document(id.firestoreDocumentId)
             .set(tldr)

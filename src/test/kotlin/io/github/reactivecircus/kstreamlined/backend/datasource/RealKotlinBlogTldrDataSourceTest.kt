@@ -8,8 +8,8 @@ import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FakeKo
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FakeKotlinBlogTldrPersister
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContent
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister
-import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogTldr
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogTldrPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogTldrSummary
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.firestoreDocumentId
 import io.github.reactivecircus.kstreamlined.backend.tldr.ModelConfig
 import io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerationException
@@ -30,6 +30,7 @@ import java.time.ZoneOffset
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration
@@ -79,6 +80,7 @@ class RealKotlinBlogTldrDataSourceTest {
 
         val result = dataSource.loadKotlinBlogTldr(article.guid)
 
+        assertNotNull(result)
         assertEquals(content, result.content)
         assertEquals(ModelConfig.GptOss120b.id, result.model)
         assertEquals(generatedAt, result.generatedAt)
@@ -92,9 +94,9 @@ class RealKotlinBlogTldrDataSourceTest {
 
     @Test
     fun `returns a saved TLDR without loading article content generating or writing`() = runBlocking {
-        val saved = KotlinBlogTldr(
+        val saved = KotlinBlogTldrSummary(
             content = "Previously generated TLDR.",
-            model = "previous-model",
+            model = "gpt-oss-120b",
             generatedAt = generatedAt.minusSeconds(60),
             promptTokens = null,
             completionTokens = null,
@@ -113,7 +115,7 @@ class RealKotlinBlogTldrDataSourceTest {
                 }
             },
             tldrPersister = object : KotlinBlogTldrPersister by tldrPersister {
-                override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldr) {
+                override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldrSummary) {
                     tldrWrites++
                     return tldrPersister.saveKotlinBlogTldr(id, tldr)
                 }
@@ -127,17 +129,13 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `missing article content fails without generation`() = runBlocking {
+    fun `missing article content returns null without generation`() = runBlocking {
         val dataSource = createDataSource(
             contentPersister = contentPersister,
             tldrPersister = tldrPersister,
         )
 
-        val failure = assertFailsWith<KotlinBlogContentNotFoundException> {
-            dataSource.loadKotlinBlogTldr(article.guid)
-        }
-
-        assertEquals("Kotlin Blog content not found for article: ${article.guid}.", failure.message)
+        assertNull(dataSource.loadKotlinBlogTldr(article.guid))
         assertTrue(requests.isEmpty())
         assertTrue(tldrPersister.savedKotlinBlogTldrs.isEmpty())
     }
@@ -147,7 +145,7 @@ class RealKotlinBlogTldrDataSourceTest {
         val dataSource = createDataSource(
             contentPersister = contentPersister,
             tldrPersister = object : KotlinBlogTldrPersister by tldrPersister {
-                override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldr? {
+                override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldrSummary? {
                     throw IOException("Summary read failed")
                 }
             },
@@ -265,6 +263,7 @@ class RealKotlinBlogTldrDataSourceTest {
 
         val result = dataSource.loadKotlinBlogTldr(article.guid)
 
+        assertNotNull(result)
         assertNull(result.promptTokens)
         assertNull(result.completionTokens)
         assertNull(result.totalTokens)
@@ -283,6 +282,7 @@ class RealKotlinBlogTldrDataSourceTest {
 
         val result = dataSource.loadKotlinBlogTldr(article.guid)
 
+        assertNotNull(result)
         assertNull(result.neurons)
         assertEquals(result, tldrPersister.loadKotlinBlogTldr(article.guid))
     }
@@ -293,7 +293,7 @@ class RealKotlinBlogTldrDataSourceTest {
         val dataSource = createDataSource(
             contentPersister = contentPersister,
             tldrPersister = object : KotlinBlogTldrPersister by tldrPersister {
-                override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldr) {
+                override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldrSummary) {
                     throw IOException("Summary save failed")
                 }
             },

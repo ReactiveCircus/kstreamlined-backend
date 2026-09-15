@@ -5,6 +5,11 @@ type Query {
   feedSources: [FeedSource!]!
   "Returns list of entries for a Kotlin Weekly issue."
   kotlinWeeklyIssue(url: String!): [KotlinWeeklyIssueEntry!]!
+  """
+  Returns the saved TLDR for a Kotlin Blog id, generating one when absent. When the raw content for the given id
+  is not available, null is returned.
+  """
+  kotlinBlogTldr(id: ID!): KotlinBlogTldr
 }
 
 type Mutation {
@@ -56,6 +61,17 @@ type KotlinBlog implements FeedEntry {
   featuredImageUrl: String!
   "Description of the blog post."
   description: String!
+}
+
+type KotlinBlogTldr {
+  "Unique id of the Kotlin Blog article."
+  id: ID!
+  "TLDR content in Markdown."
+  content: String!
+  "Model used to generate the TLDR."
+  model: String!
+  "Generation time in ISO 8601."
+  generatedAt: Instant!
 }
 
 type KotlinYouTube implements FeedEntry {

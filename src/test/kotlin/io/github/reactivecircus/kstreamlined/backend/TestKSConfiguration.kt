@@ -1,8 +1,10 @@
 package io.github.reactivecircus.kstreamlined.backend
 
 import io.github.reactivecircus.kstreamlined.backend.datasource.FakeFeedDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.FakeKotlinBlogTldrDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.FakeKotlinWeeklyIssueDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.NoOpRedisClient
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
@@ -19,6 +21,11 @@ class TestKSConfiguration {
     @Bean
     fun kotlinWeeklyIssueDataSource(): KotlinWeeklyIssueDataSource {
         return FakeKotlinWeeklyIssueDataSource
+    }
+
+    @Bean
+    fun kotlinBlogTldrDataSource(): KotlinBlogTldrDataSource {
+        return FakeKotlinBlogTldrDataSource()
     }
 
     @Bean
