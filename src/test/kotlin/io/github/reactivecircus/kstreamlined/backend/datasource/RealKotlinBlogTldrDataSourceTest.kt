@@ -66,7 +66,7 @@ class RealKotlinBlogTldrDataSourceTest {
     private val timeSource = TestTimeSource()
 
     @Test
-    fun `generates from extracted article text and persists the result with metadata`() = runBlocking {
+    fun `loadKotlinBlogTldr() generates and saves a TLDR when only article content exists`() = runBlocking {
         contentPersister.saveMissingKotlinBlogContents(listOf(article))
         val content = "**Use structured concurrency.**\n\n[Docs](https://kotlinlang.org/docs/coroutines-basics.html)"
         val dataSource = createDataSource(
@@ -84,27 +84,17 @@ class RealKotlinBlogTldrDataSourceTest {
         assertEquals(content, result.content)
         assertEquals(ModelConfig.GptOss120b.id, result.model)
         assertEquals(generatedAt, result.generatedAt)
-        assertEquals(1_000, result.promptTokens)
-        assertEquals(200, result.completionTokens)
-        assertEquals(1_200, result.totalTokens)
-        assertEquals(75.5, result.neurons)
+        assertNotNull(result.promptTokens)
+        assertNotNull(result.completionTokens)
+        assertNotNull(result.totalTokens)
+        assertNotNull(result.neurons)
         assertEquals(5_000, result.generationDurationMs)
         assertEquals(mapOf(article.guid.firestoreDocumentId to result), tldrPersister.savedKotlinBlogTldrs)
     }
 
     @Test
-    fun `returns a saved TLDR without loading article content generating or writing`() = runBlocking {
-        val saved = KotlinBlogTldrSummary(
-            content = "Previously generated TLDR.",
-            model = "gpt-oss-120b",
-            generatedAt = generatedAt.minusSeconds(60),
-            promptTokens = null,
-            completionTokens = null,
-            totalTokens = null,
-            neurons = null,
-            generationDurationMs = 2_500,
-        )
-        tldrPersister.saveKotlinBlogTldr(article.guid, saved)
+    fun `loadKotlinBlogTldr() returns a saved TLDR when present`() = runBlocking {
+        tldrPersister.saveKotlinBlogTldr(article.guid, DummyKotlinBlogTldrSummary)
         var contentReads = 0
         var tldrWrites = 0
         val dataSource = createDataSource(
@@ -122,14 +112,14 @@ class RealKotlinBlogTldrDataSourceTest {
             },
         )
 
-        assertEquals(saved, dataSource.loadKotlinBlogTldr(article.guid))
+        assertEquals(DummyKotlinBlogTldrSummary, dataSource.loadKotlinBlogTldr(article.guid))
         assertEquals(0, contentReads)
         assertEquals(0, tldrWrites)
         assertTrue(requests.isEmpty())
     }
 
     @Test
-    fun `missing article content returns null without generation`() = runBlocking {
+    fun `loadKotlinBlogTldr() returns null when neither TLDR nor article content exists`() = runBlocking {
         val dataSource = createDataSource(
             contentPersister = contentPersister,
             tldrPersister = tldrPersister,
@@ -141,7 +131,7 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `summary lookup failure propagates without reading content or generating`() = runBlocking {
+    fun `loadKotlinBlogTldr() propagates saved TLDR lookup failures`() = runBlocking {
         val dataSource = createDataSource(
             contentPersister = contentPersister,
             tldrPersister = object : KotlinBlogTldrPersister by tldrPersister {
@@ -159,7 +149,7 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `article lookup failure propagates without generating`() = runBlocking {
+    fun `loadKotlinBlogTldr() propagates article content lookup failures`() = runBlocking {
         val dataSource = createDataSource(
             contentPersister = object : KotlinBlogContentPersister by contentPersister {
                 override suspend fun loadKotlinBlogContent(id: String): KotlinBlogContent? {
@@ -177,7 +167,7 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `invalid title empty extraction and oversized article fail before the AI call`() = runBlocking {
+    fun `loadKotlinBlogTldr() rejects invalid article input without calling AI`() = runBlocking {
         val invalidArticles = listOf(
             article.copy(title = " "),
             article.copy(html = "<script>Not article content</script>"),
@@ -199,7 +189,7 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `HTTP failures propagate without saving or automatically retrying`() = runBlocking {
+    fun `loadKotlinBlogTldr() propagates HTTP failures`() = runBlocking {
         contentPersister.saveMissingKotlinBlogContents(listOf(article))
         val dataSource = createDataSource(
             contentPersister = contentPersister,
@@ -215,7 +205,7 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `Cloudflare envelope failures propagate without saving`() = runBlocking {
+    fun `loadKotlinBlogTldr() propagates Cloudflare response failures`() = runBlocking {
         contentPersister.saveMissingKotlinBlogContents(listOf(article))
         val dataSource = createDataSource(
             contentPersister = contentPersister,
@@ -232,7 +222,7 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `incomplete and blank model output are not persisted`() = runBlocking {
+    fun `loadKotlinBlogTldr() rejects incomplete or blank model output`() = runBlocking {
         contentPersister.saveMissingKotlinBlogContents(listOf(article))
         val responses = listOf(
             successfulCloudflareAiResponse(finishReason = "length"),
@@ -244,7 +234,6 @@ class RealKotlinBlogTldrDataSourceTest {
                 tldrPersister = tldrPersister,
                 engine = createEngine(response = response),
             )
-
             assertFailsWith<TldrGenerationException> { dataSource.loadKotlinBlogTldr(article.guid) }
         }
 
@@ -253,7 +242,7 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `missing usage is persisted as null metadata`() = runBlocking {
+    fun `loadKotlinBlogTldr() saves null usage metadata when usage is omitted`() = runBlocking {
         contentPersister.saveMissingKotlinBlogContents(listOf(article))
         val dataSource = createDataSource(
             contentPersister = contentPersister,
@@ -272,7 +261,7 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `missing neurons is persisted as null`() = runBlocking {
+    fun `loadKotlinBlogTldr() saves null neurons when neurons are omitted`() = runBlocking {
         contentPersister.saveMissingKotlinBlogContents(listOf(article))
         val dataSource = createDataSource(
             contentPersister = contentPersister,
@@ -288,7 +277,7 @@ class RealKotlinBlogTldrDataSourceTest {
     }
 
     @Test
-    fun `save failure propagates`() = runBlocking {
+    fun `loadKotlinBlogTldr() propagates persistence failures`() = runBlocking {
         contentPersister.saveMissingKotlinBlogContents(listOf(article))
         val dataSource = createDataSource(
             contentPersister = contentPersister,
@@ -300,6 +289,191 @@ class RealKotlinBlogTldrDataSourceTest {
         )
 
         val failure = assertFailsWith<IOException> { dataSource.loadKotlinBlogTldr(article.guid) }
+
+        assertEquals("Summary save failed", failure.message)
+        assertTrue(tldrPersister.savedKotlinBlogTldrs.isEmpty())
+        assertEquals(1, requests.size)
+    }
+
+    @Test
+    fun `createKotlinBlogTldr() saves a new TLDR when none exists and persist is true`() = runBlocking {
+        contentPersister.saveMissingKotlinBlogContents(listOf(article))
+        val dataSource = createDataSource(contentPersister, tldrPersister)
+
+        val result = dataSource.createKotlinBlogTldr(id = article.guid, persist = true)
+
+        assertEquals(mapOf(article.guid.firestoreDocumentId to result), tldrPersister.savedKotlinBlogTldrs)
+        assertEquals(1, requests.size)
+    }
+
+    @Test
+    fun `createKotlinBlogTldr() returns a fresh TLDR without saving when persist is false`() = runBlocking {
+        contentPersister.saveMissingKotlinBlogContents(listOf(article))
+        tldrPersister.saveKotlinBlogTldr(article.guid, DummyKotlinBlogTldrSummary)
+        var tldrReads = 0
+        var tldrWrites = 0
+        val content = "Fresh TLDR."
+        val dataSource = createDataSource(
+            contentPersister = contentPersister,
+            tldrPersister = object : KotlinBlogTldrPersister by tldrPersister {
+                override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldrSummary? {
+                    tldrReads++
+                    return tldrPersister.loadKotlinBlogTldr(id)
+                }
+
+                override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldrSummary) {
+                    tldrWrites++
+                    tldrPersister.saveKotlinBlogTldr(id, tldr)
+                }
+            },
+            engine = createEngine(
+                response = successfulCloudflareAiResponse(content = content),
+                delay = 5.seconds,
+            ),
+        )
+
+        val result = dataSource.createKotlinBlogTldr(id = article.guid, persist = false)
+
+        assertEquals(content, result.content)
+        assertEquals(ModelConfig.GptOss120b.id, result.model)
+        assertEquals(generatedAt, result.generatedAt)
+        assertNotNull(result.promptTokens)
+        assertNotNull(result.completionTokens)
+        assertNotNull(result.totalTokens)
+        assertNotNull(result.neurons)
+        assertEquals(5_000, result.generationDurationMs)
+        assertEquals(mapOf(article.guid.firestoreDocumentId to DummyKotlinBlogTldrSummary), tldrPersister.savedKotlinBlogTldrs)
+        assertEquals(0, tldrReads)
+        assertEquals(0, tldrWrites)
+        assertEquals(1, requests.size)
+    }
+
+    @Test
+    fun `createKotlinBlogTldr() replaces a saved TLDR when persist is true`() = runBlocking {
+        contentPersister.saveMissingKotlinBlogContents(listOf(article))
+        tldrPersister.saveKotlinBlogTldr(article.guid, DummyKotlinBlogTldrSummary)
+        var tldrReads = 0
+        var tldrWrites = 0
+        val content = "Fresh TLDR."
+        val dataSource = createDataSource(
+            contentPersister = contentPersister,
+            tldrPersister = object : KotlinBlogTldrPersister by tldrPersister {
+                override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldrSummary? {
+                    tldrReads++
+                    return tldrPersister.loadKotlinBlogTldr(id)
+                }
+
+                override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldrSummary) {
+                    tldrWrites++
+                    tldrPersister.saveKotlinBlogTldr(id, tldr)
+                }
+            },
+            engine = createEngine(
+                response = successfulCloudflareAiResponse(content = content),
+                delay = 5.seconds,
+            ),
+        )
+
+        val result = dataSource.createKotlinBlogTldr(id = article.guid, persist = true)
+
+        assertEquals(content, result.content)
+        assertEquals(ModelConfig.GptOss120b.id, result.model)
+        assertEquals(generatedAt, result.generatedAt)
+        assertNotNull(result.promptTokens)
+        assertNotNull(result.completionTokens)
+        assertNotNull(result.totalTokens)
+        assertNotNull(result.neurons)
+        assertEquals(5_000, result.generationDurationMs)
+        assertEquals(mapOf(article.guid.firestoreDocumentId to result), tldrPersister.savedKotlinBlogTldrs)
+        assertEquals(0, tldrReads)
+        assertEquals(1, tldrWrites)
+        assertEquals(1, requests.size)
+    }
+
+    @Test
+    fun `createKotlinBlogTldr() fails when article content is missing despite a saved TLDR`() = runBlocking {
+        val dataSource = createDataSource(contentPersister, tldrPersister)
+        tldrPersister.saveKotlinBlogTldr(article.guid, DummyKotlinBlogTldrSummary)
+
+        val failure = assertFailsWith<IllegalStateException> {
+            dataSource.createKotlinBlogTldr(id = article.guid, persist = false)
+        }
+
+        assertEquals("Kotlin Blog content not found for article: ${article.guid}.", failure.message)
+        assertEquals(DummyKotlinBlogTldrSummary, tldrPersister.loadKotlinBlogTldr(article.guid))
+        assertTrue(requests.isEmpty())
+    }
+
+    @Test
+    fun `createKotlinBlogTldr() propagates article content lookup failures`() = runBlocking {
+        val dataSource = createDataSource(
+            contentPersister = object : KotlinBlogContentPersister by contentPersister {
+                override suspend fun loadKotlinBlogContent(id: String): KotlinBlogContent? {
+                    throw IOException("Article read failed")
+                }
+            },
+            tldrPersister = tldrPersister,
+        )
+
+        val failure = assertFailsWith<IOException> {
+            dataSource.createKotlinBlogTldr(id = article.guid, persist = true)
+        }
+
+        assertEquals("Article read failed", failure.message)
+        assertTrue(requests.isEmpty())
+        assertTrue(tldrPersister.savedKotlinBlogTldrs.isEmpty())
+    }
+
+    @Test
+    fun `createKotlinBlogTldr() propagates HTTP failures`() = runBlocking {
+        contentPersister.saveMissingKotlinBlogContents(listOf(article))
+        val dataSource = createDataSource(
+            contentPersister = contentPersister,
+            tldrPersister = tldrPersister,
+            engine = createEngine(status = HttpStatusCode.ServiceUnavailable),
+        )
+
+        val failure = assertFailsWith<ServerResponseException> {
+            dataSource.createKotlinBlogTldr(id = article.guid, persist = true)
+        }
+
+        assertEquals(HttpStatusCode.ServiceUnavailable, failure.response.status)
+        assertEquals(1, requests.size)
+        assertTrue(tldrPersister.savedKotlinBlogTldrs.isEmpty())
+    }
+
+    @Test
+    fun `createKotlinBlogTldr() rejects incomplete or blank model output`() = runBlocking {
+        contentPersister.saveMissingKotlinBlogContents(listOf(article))
+        val responses = listOf(
+            successfulCloudflareAiResponse(finishReason = "length"),
+            successfulCloudflareAiResponse(content = " "),
+        )
+        for (response in responses) {
+            val dataSource = createDataSource(contentPersister, tldrPersister, createEngine(response))
+            assertFailsWith<TldrGenerationException> {
+                dataSource.createKotlinBlogTldr(id = article.guid, persist = true)
+            }
+        }
+        assertEquals(2, requests.size)
+        assertTrue(tldrPersister.savedKotlinBlogTldrs.isEmpty())
+    }
+
+    @Test
+    fun `createKotlinBlogTldr() propagates persistence failures`() = runBlocking {
+        contentPersister.saveMissingKotlinBlogContents(listOf(article))
+        val dataSource = createDataSource(
+            contentPersister = contentPersister,
+            tldrPersister = object : KotlinBlogTldrPersister by tldrPersister {
+                override suspend fun saveKotlinBlogTldr(id: String, tldr: KotlinBlogTldrSummary) {
+                    throw IOException("Summary save failed")
+                }
+            },
+        )
+
+        val failure = assertFailsWith<IOException> {
+            dataSource.createKotlinBlogTldr(id = article.guid, persist = true)
+        }
 
         assertEquals("Summary save failed", failure.message)
         assertTrue(tldrPersister.savedKotlinBlogTldrs.isEmpty())

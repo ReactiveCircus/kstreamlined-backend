@@ -6,7 +6,7 @@ type Query {
   "Returns list of entries for a Kotlin Weekly issue."
   kotlinWeeklyIssue(url: String!): [KotlinWeeklyIssueEntry!]!
   """
-  Returns the saved TLDR for a Kotlin Blog id, generating one when absent. When the raw content for the given id
+  Returns the saved TLDR for a Kotlin Blog content matching the id, generating one when absent. When the raw content for the given id
   is not available, null is returned.
   """
   kotlinBlogTldr(id: ID!): KotlinBlogTldr
@@ -15,6 +15,11 @@ type Query {
 type Mutation {
   "Syncs feeds from all sources."
   syncFeeds: Boolean!
+  """
+  Generates and returns a new TLDR for a Kotlin Blog content matching the id, regardless of whether a saved TLDR exists.
+  The generated TLDR is saved when `persist` is true.
+  """
+  generateKotlinBlogTldr(id: ID!, persist: Boolean! = false): KotlinBlogTldr!
 }
 
 type FeedSource {

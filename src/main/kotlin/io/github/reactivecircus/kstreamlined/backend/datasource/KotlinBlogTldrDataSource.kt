@@ -1,5 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datasource
 
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContent
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogTldrPersister
 import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogTldrSummary
@@ -10,6 +11,8 @@ import java.time.Instant
 
 interface KotlinBlogTldrDataSource {
     suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldrSummary?
+
+    suspend fun createKotlinBlogTldr(id: String, persist: Boolean): KotlinBlogTldrSummary
 }
 
 class RealKotlinBlogTldrDataSource(
@@ -22,22 +25,37 @@ class RealKotlinBlogTldrDataSource(
         kotlinBlogTldrPersister.loadKotlinBlogTldr(id)?.let { return it }
 
         return kotlinBlogContentPersister.loadKotlinBlogContent(id)?.let { article ->
-            val result = tldrGenerator.generate(
-                title = article.title,
-                articleText = TldrInputExtractor.extract(article.html),
-            )
-            val tldr = KotlinBlogTldrSummary(
-                content = result.content,
-                model = result.model,
-                generatedAt = Instant.now(clock),
-                promptTokens = result.promptTokens,
-                completionTokens = result.completionTokens,
-                totalTokens = result.totalTokens,
-                neurons = result.neurons,
-                generationDurationMs = result.requestLatencyMs,
-            )
+            val tldr = generateSummary(article)
             kotlinBlogTldrPersister.saveKotlinBlogTldr(id, tldr)
             tldr
         }
+    }
+
+    override suspend fun createKotlinBlogTldr(id: String, persist: Boolean): KotlinBlogTldrSummary {
+        val article = checkNotNull(kotlinBlogContentPersister.loadKotlinBlogContent(id)) {
+            "Kotlin Blog content not found for article: $id."
+        }
+        val tldr = generateSummary(article)
+        if (persist) {
+            kotlinBlogTldrPersister.saveKotlinBlogTldr(id, tldr)
+        }
+        return tldr
+    }
+
+    private suspend fun generateSummary(article: KotlinBlogContent): KotlinBlogTldrSummary {
+        val result = tldrGenerator.generate(
+            title = article.title,
+            articleText = TldrInputExtractor.extract(article.html),
+        )
+        return KotlinBlogTldrSummary(
+            content = result.content,
+            model = result.model,
+            generatedAt = Instant.now(clock),
+            promptTokens = result.promptTokens,
+            completionTokens = result.completionTokens,
+            totalTokens = result.totalTokens,
+            neurons = result.neurons,
+            generationDurationMs = result.requestLatencyMs,
+        )
     }
 }

@@ -6,8 +6,16 @@ import java.time.Instant
 class FakeKotlinBlogTldrDataSource : KotlinBlogTldrDataSource {
     var nextKotlinBlogTldrResponse: suspend (String) -> KotlinBlogTldrSummary? = { null }
 
+    var nextGenerateKotlinBlogTldrResponse: suspend (String, Boolean) -> KotlinBlogTldrSummary = { _, _ ->
+        error("No Kotlin Blog TLDR generation response configured.")
+    }
+
     override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogTldrSummary? {
         return nextKotlinBlogTldrResponse(id)
+    }
+
+    override suspend fun createKotlinBlogTldr(id: String, persist: Boolean): KotlinBlogTldrSummary {
+        return nextGenerateKotlinBlogTldrResponse(id, persist)
     }
 }
 
@@ -21,5 +29,5 @@ val DummyKotlinBlogTldrSummary = KotlinBlogTldrSummary(
     completionTokens = 200,
     totalTokens = 1_200,
     neurons = 75.5,
-    generationDurationMs = 5_000,
+    generationDurationMs = 10_000,
 )
