@@ -3,15 +3,21 @@ package io.github.reactivecircus.kstreamlined.backend
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.Firestore
 import com.google.cloud.firestore.FirestoreOptions
+import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiClient
 import io.github.reactivecircus.kstreamlined.backend.datasource.DataLoader
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig
-import io.github.reactivecircus.kstreamlined.backend.datasource.FeedPersister
-import io.github.reactivecircus.kstreamlined.backend.datasource.FirestoreFeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.RealFeedDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinBlogTldrDataSource
 import io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeeklyIssueDataSource
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreFeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreKotlinBlogContentPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
+import io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerator
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
 import org.springframework.beans.factory.annotation.Value
@@ -28,6 +34,7 @@ class KSConfiguration {
         dataSourceConfig: FeedDataSourceConfig,
         redisClient: RedisClient,
         feedPersister: FeedPersister,
+        kotlinBlogContentPersister: KotlinBlogContentPersister,
     ): FeedDataSource {
         return RealFeedDataSource(
             engine = engine,
@@ -38,6 +45,7 @@ class KSConfiguration {
             ),
             redisClient = redisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
     }
 
@@ -64,12 +72,37 @@ class KSConfiguration {
     }
 
     @Bean
+    fun kotlinBlogContentPersister(
+        firestore: Firestore,
+    ): KotlinBlogContentPersister {
+        return FirestoreKotlinBlogContentPersister(firestore = firestore)
+    }
+
+    @Bean
+    fun kotlinBlogTldrDataSource(
+        kotlinBlogContentPersister: KotlinBlogContentPersister,
+        tldrGenerator: TldrGenerator,
+    ): KotlinBlogTldrDataSource {
+        return RealKotlinBlogTldrDataSource(
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
+            tldrGenerator = tldrGenerator,
+        )
+    }
+
+    @Bean
     fun kotlinWeeklyIssueDataSource(
         engine: HttpClientEngine
     ): KotlinWeeklyIssueDataSource {
         return RealKotlinWeeklyIssueDataSource(
             engine = engine,
         )
+    }
+
+    @Bean
+    fun tldrGenerator(
+        cloudflareAiClient: CloudflareAiClient,
+    ): TldrGenerator {
+        return TldrGenerator(cloudflareAiClient = cloudflareAiClient)
     }
 
     @Bean
@@ -87,6 +120,21 @@ class KSConfiguration {
             engine = engine,
             url = redisUrl,
             token = redisToken,
+        )
+    }
+
+    @Bean
+    fun cloudflareAiClient(
+        engine: HttpClientEngine,
+        @Value("\${KS_CF_BASE_URL}") baseUrl: String,
+        @Value("\${KS_CF_ACCOUNT_ID}") accountId: String,
+        @Value("\${KS_CF_API_TOKEN}") apiToken: String,
+    ): CloudflareAiClient {
+        return CloudflareAiClient(
+            engine = engine,
+            baseUrl = baseUrl,
+            accountId = accountId,
+            apiToken = apiToken,
         )
     }
 

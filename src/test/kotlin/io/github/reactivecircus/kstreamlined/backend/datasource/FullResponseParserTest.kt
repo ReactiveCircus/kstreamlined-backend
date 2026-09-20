@@ -1,5 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.datasource
 
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FakeFeedPersister
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FakeKotlinBlogContentPersister
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpHeaders
@@ -30,6 +32,8 @@ class FullResponseParserTest {
 
     private val feedPersister = FakeFeedPersister()
 
+    private val kotlinBlogContentPersister = FakeKotlinBlogContentPersister()
+
     @Test
     fun `can parse Kotlin Blog RSS feed`() = runBlocking {
         val mockEngine = MockEngine {
@@ -44,9 +48,11 @@ class FullResponseParserTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         assertEquals(12, feedDataSource.loadKotlinBlogFeed().size)
+        assertEquals(12, kotlinBlogContentPersister.allKotlinBlogContents.size)
     }
 
     @Test
@@ -63,6 +69,7 @@ class FullResponseParserTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         assertEquals(15, feedDataSource.loadKotlinYouTubeFeed().size)
@@ -82,6 +89,7 @@ class FullResponseParserTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         assertEquals(10, feedDataSource.loadTalkingKotlinFeed().size)
@@ -101,6 +109,7 @@ class FullResponseParserTest {
             cacheConfig = cacheConfig,
             redisClient = NoOpRedisClient,
             feedPersister = feedPersister,
+            kotlinBlogContentPersister = kotlinBlogContentPersister,
         )
 
         assertEquals(3, feedDataSource.loadKotlinWeeklyFeed().size)

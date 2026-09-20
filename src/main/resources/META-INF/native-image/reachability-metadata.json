@@ -4,6 +4,9 @@
       "type": "android.app.Application"
     },
     {
+      "type": "android.os.Build"
+    },
+    {
       "type": "apple.security.AppleProvider",
       "methods": [
         {
@@ -1496,12 +1499,22 @@
       "type": "io.github.reactivecircus.kstreamlined.backend.KSConfiguration",
       "methods": [
         {
+          "name": "cloudflareAiClient",
+          "parameterTypes": [
+            "io.ktor.client.engine.HttpClientEngine",
+            "java.lang.String",
+            "java.lang.String",
+            "java.lang.String"
+          ]
+        },
+        {
           "name": "feedDataSource",
           "parameterTypes": [
             "io.ktor.client.engine.HttpClientEngine",
             "io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig",
             "io.github.reactivecircus.kstreamlined.backend.redis.RedisClient",
-            "io.github.reactivecircus.kstreamlined.backend.datasource.FeedPersister"
+            "io.github.reactivecircus.kstreamlined.backend.datasource.persister.FeedPersister",
+            "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister"
           ]
         },
         {
@@ -1530,6 +1543,19 @@
           "parameterTypes": []
         },
         {
+          "name": "kotlinBlogContentPersister",
+          "parameterTypes": [
+            "com.google.cloud.firestore.Firestore"
+          ]
+        },
+        {
+          "name": "kotlinBlogTldrDataSource",
+          "parameterTypes": [
+            "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister",
+            "io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerator"
+          ]
+        },
+        {
           "name": "kotlinWeeklyIssueDataSource",
           "parameterTypes": [
             "io.ktor.client.engine.HttpClientEngine"
@@ -1541,6 +1567,12 @@
             "io.ktor.client.engine.HttpClientEngine",
             "java.lang.String",
             "java.lang.String"
+          ]
+        },
+        {
+          "name": "tldrGenerator",
+          "parameterTypes": [
+            "io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiClient"
           ]
         }
       ]
@@ -1597,6 +1629,43 @@
       "type": "io.github.reactivecircus.kstreamlined.backend.NoArg"
     },
     {
+      "type": "io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiClient"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiRequest",
+      "fields": [
+        {
+          "name": "Companion"
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiRequest$Companion",
+      "methods": [
+        {
+          "name": "serializer",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiResponse",
+      "fields": [
+        {
+          "name": "Companion"
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiResponse$Companion",
+      "methods": [
+        {
+          "name": "serializer",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
       "type": "io.github.reactivecircus.kstreamlined.backend.datafetcher.FeedEntryDataFetcher",
       "methods": [
         {
@@ -1642,6 +1711,38 @@
       ]
     },
     {
+      "type": "io.github.reactivecircus.kstreamlined.backend.datafetcher.KotlinBlogTldrDataFetcher",
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource"
+          ]
+        },
+        {
+          "name": "backfillKotlinBlogTldrs",
+          "parameterTypes": [
+            "kotlin.coroutines.Continuation"
+          ]
+        },
+        {
+          "name": "generateKotlinBlogTldr",
+          "parameterTypes": [
+            "java.lang.String",
+            "boolean",
+            "kotlin.coroutines.Continuation"
+          ]
+        },
+        {
+          "name": "kotlinBlogTldr",
+          "parameterTypes": [
+            "java.lang.String",
+            "kotlin.coroutines.Continuation"
+          ]
+        }
+      ]
+    },
+    {
       "type": "io.github.reactivecircus.kstreamlined.backend.datafetcher.KotlinWeeklyIssueDataFetcher",
       "methods": [
         {
@@ -1675,16 +1776,16 @@
       "type": "io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig"
     },
     {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.FeedPersister"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.FirestoreFeedPersister"
+      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource"
     },
     {
       "type": "io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource"
     },
     {
       "type": "io.github.reactivecircus.kstreamlined.backend.datasource.RealFeedDataSource"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinBlogTldrDataSource"
     },
     {
       "type": "io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeeklyIssueDataSource"
@@ -1700,6 +1801,9 @@
         },
         {
           "name": "guid"
+        },
+        {
+          "name": "html"
         },
         {
           "name": "link"
@@ -1726,6 +1830,10 @@
         },
         {
           "name": "getGuid",
+          "parameterTypes": []
+        },
+        {
+          "name": "getHtml",
           "parameterTypes": []
         },
         {
@@ -2273,7 +2381,122 @@
       ]
     },
     {
+      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.FeedPersister"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreFeedPersister"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreKotlinBlogContentPersister"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContent",
+      "fields": [
+        {
+          "name": "html"
+        },
+        {
+          "name": "id"
+        },
+        {
+          "name": "title"
+        },
+        {
+          "name": "tldr"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContent$Tldr",
+      "fields": [
+        {
+          "name": "completionTokens"
+        },
+        {
+          "name": "generatedAt"
+        },
+        {
+          "name": "generationDurationMs"
+        },
+        {
+          "name": "model"
+        },
+        {
+          "name": "neurons"
+        },
+        {
+          "name": "output"
+        },
+        {
+          "name": "promptTokens"
+        },
+        {
+          "name": "totalTokens"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getCompletionTokens",
+          "parameterTypes": []
+        },
+        {
+          "name": "getGeneratedAt",
+          "parameterTypes": []
+        },
+        {
+          "name": "getGenerationDurationMs",
+          "parameterTypes": []
+        },
+        {
+          "name": "getModel",
+          "parameterTypes": []
+        },
+        {
+          "name": "getNeurons",
+          "parameterTypes": []
+        },
+        {
+          "name": "getOutput",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPromptTokens",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTotalTokens",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister"
+    },
+    {
       "type": "io.github.reactivecircus.kstreamlined.backend.redis.RedisClient"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.schema.generated.types.BackfillKotlinBlogTldrsResult",
+      "methods": [
+        {
+          "name": "getFailedIds",
+          "parameterTypes": []
+        },
+        {
+          "name": "getGeneratedCount",
+          "parameterTypes": []
+        }
+      ]
     },
     {
       "type": "io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry"
@@ -2319,6 +2542,23 @@
         },
         {
           "name": "getTitle",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlogTldr",
+      "methods": [
+        {
+          "name": "getContent",
+          "parameterTypes": []
+        },
+        {
+          "name": "getGeneratedAt",
+          "parameterTypes": []
+        },
+        {
+          "name": "getModel",
           "parameterTypes": []
         }
       ]
@@ -2438,6 +2678,9 @@
           "parameterTypes": []
         }
       ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerator"
     },
     {
       "type": "io.grpc.census.InternalCensusStatsAccessor"
@@ -2959,9 +3202,6 @@
       "type": "io.netty.util.ReferenceCountUtil"
     },
     {
-      "type": "io.netty.util.ResourceLeakDetector$DefaultResourceLeak"
-    },
-    {
       "type": "io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap"
     },
     {
@@ -3158,6 +3398,9 @@
     {
       "type": "java.lang.IllegalArgumentException",
       "jniAccessible": true
+    },
+    {
+      "type": "java.lang.Iterable"
     },
     {
       "type": "java.lang.Module",
@@ -3475,13 +3718,28 @@
       "type": "java.time.Instant"
     },
     {
+      "type": "java.util.AbstractCollection"
+    },
+    {
+      "type": "java.util.AbstractList"
+    },
+    {
       "type": "java.util.AbstractMap"
+    },
+    {
+      "type": "java.util.Collection"
+    },
+    {
+      "type": "java.util.Collections$EmptyList"
     },
     {
       "type": "java.util.List"
     },
     {
       "type": "java.util.Optional"
+    },
+    {
+      "type": "java.util.RandomAccess"
     },
     {
       "type": "java.util.SortedSet"
@@ -3785,6 +4043,15 @@
       "type": "kotlinx.io.RefCountingCopyTracker"
     },
     {
+      "type": "kotlinx.serialization.EncodeDefault"
+    },
+    {
+      "type": "kotlinx.serialization.EncodeDefault$Mode"
+    },
+    {
+      "type": "kotlinx.serialization.SerialName"
+    },
+    {
       "type": "kotlinx.serialization.Serializable"
     },
     {
@@ -3810,6 +4077,9 @@
     },
     {
       "type": "nl.adaptivity.xmlutil.serialization.XmlSerialName"
+    },
+    {
+      "type": "okhttp3.internal.connection.RealCall"
     },
     {
       "type": "org.apache.commons.logging.LogFactory"
@@ -7588,6 +7858,9 @@
     },
     {
       "glob": "io/github/reactivecircus/kstreamlined/backend/datafetcher/FeedSourceDataFetcher.class"
+    },
+    {
+      "glob": "io/github/reactivecircus/kstreamlined/backend/datafetcher/KotlinBlogTldrDataFetcher.class"
     },
     {
       "glob": "io/github/reactivecircus/kstreamlined/backend/datafetcher/KotlinWeeklyIssueDataFetcher.class"
