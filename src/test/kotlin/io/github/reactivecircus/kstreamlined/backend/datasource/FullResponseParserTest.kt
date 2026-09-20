@@ -52,7 +52,7 @@ class FullResponseParserTest {
         )
 
         assertEquals(12, feedDataSource.loadKotlinBlogFeed().size)
-        assertEquals(12, kotlinBlogContentPersister.savedKotlinBlogContents.size)
+        assertEquals(12, kotlinBlogContentPersister.allKotlinBlogContents.size)
     }
 
     @Test

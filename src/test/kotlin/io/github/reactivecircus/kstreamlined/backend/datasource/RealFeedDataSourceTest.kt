@@ -106,19 +106,23 @@ class RealFeedDataSourceTest {
 
         val expected = listOf(
             KotlinBlogContent(
+                id = "https://blog.jetbrains.com/?post_type=kotlin&p=264203",
                 title = "A New Approach to Incremental Compilation in Kotlin",
                 html = "<p>In Kotlin 1.7.0, we&#8217;ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the <a href=\"https://docs.gradle.org/current/userguide/build_cache.html\">Gradle build cache</a>. Support for compilation avoidance has also been improved. All of these advancements decrease the number of necessary full-module and file recompilations, making the overall compilation time faster.</p>",
+                tldr = null,
             ),
             KotlinBlogContent(
+                id = "https://blog.jetbrains.com/?post_type=kotlin&p=265263",
                 title = "Kotlin News: KotlinConf, Build Reports, DataFrame Preview, and More",
                 html = "<h2><strong>Kotlin Developer Survey is Open</strong></h2>",
+                tldr = null,
             ),
         )
 
         feedDataSource.loadKotlinBlogFeed()
 
         assertEquals(true, feedPersister.loadKotlinBlogItems()?.all { it.html == null })
-        assertEquals(expected, kotlinBlogContentPersister.savedKotlinBlogContents.values.toList())
+        assertEquals(expected, kotlinBlogContentPersister.allKotlinBlogContents.values.toList())
     }
 
     @Test

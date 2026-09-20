@@ -7,6 +7,7 @@ import com.netflix.graphql.dgs.InputArgument
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinBlogTldr
 import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.DgsConstants
+import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.BackfillKotlinBlogTldrsResult
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlogTldr
 
 @DgsComponent
@@ -24,5 +25,15 @@ class KotlinBlogTldrDataFetcher(
         @InputArgument persist: Boolean,
     ): KotlinBlogTldr {
         return dataSource.createKotlinBlogTldr(id, persist).toKotlinBlogTldr(id)
+    }
+
+    @DgsMutation(field = DgsConstants.MUTATION.BackfillKotlinBlogTldrs)
+    suspend fun backfillKotlinBlogTldrs(): BackfillKotlinBlogTldrsResult {
+        return dataSource.backfillKotlinBlogTldrs().let {
+            BackfillKotlinBlogTldrsResult(
+                generatedCount = it.generatedCount,
+                failedIds = it.failedIds,
+            )
+        }
     }
 }

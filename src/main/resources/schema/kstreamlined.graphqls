@@ -20,6 +20,10 @@ type Mutation {
   The generated TLDR is saved when `persist` is true.
   """
   generateKotlinBlogTldr(id: ID!, persist: Boolean! = false): KotlinBlogTldr!
+  """
+  Generates and saves missing TLDRs for all persisted Kotlin Blog article content.
+  """
+  backfillKotlinBlogTldrs: BackfillKotlinBlogTldrsResult!
 }
 
 type FeedSource {
@@ -77,6 +81,13 @@ type KotlinBlogTldr {
   model: String!
   "Generation time in ISO 8601."
   generatedAt: Instant!
+}
+
+type BackfillKotlinBlogTldrsResult {
+  "Number of new TLDRs generated."
+  generatedCount: Int!
+  "Kotlin Blog article IDs whose TLDR lookup, generation, or persistence failed."
+  failedIds: [ID!]!
 }
 
 type KotlinYouTube implements FeedEntry {

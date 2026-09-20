@@ -1,6 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogTldrSummary
+import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContent
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlogTldr
 import java.time.Instant
 import kotlin.test.Test
@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 class KotlinBlogTldrMapperTest {
     @Test
-    fun `toKotlinBlogTldr() converts KotlinBlogTldrSummary to KotlinBlogTldr`() {
+    fun `toKotlinBlogTldr() converts KotlinBlogContent#Tldr to KotlinBlogTldr`() {
         val generatedAt = Instant.parse("2026-09-14T12:00:00Z")
         val expected = KotlinBlogTldr(
             id = "12345",
@@ -16,8 +16,8 @@ class KotlinBlogTldrMapperTest {
             model = "gpt-oss-120b",
             generatedAt = generatedAt,
         )
-        val actual = KotlinBlogTldrSummary(
-            content = "Generated TLDR.",
+        val actual = KotlinBlogContent.Tldr(
+            output = "Generated TLDR.",
             model = "gpt-oss-120b",
             generatedAt = generatedAt,
             promptTokens = 100,
