@@ -27,8 +27,8 @@ class CloudflareAiClient(
             json(CloudflareAiJson)
         }
         install(HttpTimeout) {
-            requestTimeoutMillis = 30_000L
-            socketTimeoutMillis = 30_000L
+            requestTimeoutMillis = 60_000L
+            socketTimeoutMillis = 60_000L
         }
     }
 
