@@ -1,31 +1,31 @@
 package io.github.reactivecircus.kstreamlined.backend
 
-import io.github.reactivecircus.kstreamlined.backend.datasource.FakeFeedDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.FakeKotlinBlogTldrDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.FakeKotlinWeeklyIssueDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.NoOpRedisClient
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
+import io.github.reactivecircus.kstreamlined.backend.service.FakeFeedService
+import io.github.reactivecircus.kstreamlined.backend.service.FakeKotlinBlogTldrService
+import io.github.reactivecircus.kstreamlined.backend.service.FakeKotlinWeeklyIssueService
+import io.github.reactivecircus.kstreamlined.backend.service.FeedService
+import io.github.reactivecircus.kstreamlined.backend.service.KotlinBlogTldrService
+import io.github.reactivecircus.kstreamlined.backend.service.KotlinWeeklyIssueService
+import io.github.reactivecircus.kstreamlined.backend.service.NoOpRedisClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class TestKSConfiguration {
     @Bean
-    fun feedDataSource(): FeedDataSource {
-        return FakeFeedDataSource
+    fun feedService(): FeedService {
+        return FakeFeedService
     }
 
     @Bean
-    fun kotlinWeeklyIssueDataSource(): KotlinWeeklyIssueDataSource {
-        return FakeKotlinWeeklyIssueDataSource
+    fun kotlinWeeklyIssueService(): KotlinWeeklyIssueService {
+        return FakeKotlinWeeklyIssueService
     }
 
     @Bean
-    fun kotlinBlogTldrDataSource(): KotlinBlogTldrDataSource {
-        return FakeKotlinBlogTldrDataSource()
+    fun kotlinBlogTldrService(): KotlinBlogTldrService {
+        return FakeKotlinBlogTldrService()
     }
 
     @Bean

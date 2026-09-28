@@ -8,13 +8,13 @@ import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlin
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinYouTubeEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toTalkingKotlinEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.scalar.InstantScalar
-import io.github.reactivecircus.kstreamlined.backend.datasource.DummyKotlinBlogItem
-import io.github.reactivecircus.kstreamlined.backend.datasource.DummyKotlinWeeklyItem
-import io.github.reactivecircus.kstreamlined.backend.datasource.DummyKotlinYouTubeItem
-import io.github.reactivecircus.kstreamlined.backend.datasource.DummyTalkingKotlinItem
-import io.github.reactivecircus.kstreamlined.backend.datasource.FakeFeedDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey
+import io.github.reactivecircus.kstreamlined.backend.service.DummyKotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.service.DummyKotlinWeeklyItem
+import io.github.reactivecircus.kstreamlined.backend.service.DummyKotlinYouTubeItem
+import io.github.reactivecircus.kstreamlined.backend.service.DummyTalkingKotlinItem
+import io.github.reactivecircus.kstreamlined.backend.service.FakeFeedService
+import io.github.reactivecircus.kstreamlined.backend.service.FeedService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
@@ -32,7 +32,7 @@ class FeedEntryDataFetcherTest {
     private lateinit var dgsQueryExecutor: DgsQueryExecutor
 
     @Autowired
-    private lateinit var feedDataSource: FeedDataSource
+    private lateinit var feedService: FeedService
 
     private val feedEntriesQuery = """
         query FeedEntriesQuery(${"$"}filters: [FeedSourceKey!]) {
@@ -71,16 +71,16 @@ class FeedEntryDataFetcherTest {
 
     @Test
     fun `feedEntries() query returns expected feed entries ordered by publish time when operation succeeds`() {
-        (feedDataSource as FakeFeedDataSource).nextKotlinBlogFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinBlogFeedResponse = {
             listOf(DummyKotlinBlogItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinYouTubeFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinYouTubeFeedResponse = {
             listOf(DummyKotlinYouTubeItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextTalkingKotlinFeedResponse = {
+        (feedService as FakeFeedService).nextTalkingKotlinFeedResponse = {
             listOf(DummyTalkingKotlinItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinWeeklyFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinWeeklyFeedResponse = {
             listOf(DummyKotlinWeeklyItem)
         }
 
@@ -139,16 +139,16 @@ class FeedEntryDataFetcherTest {
 
     @Test
     fun `feedEntries() query returns error response when failed to load data from any feed sources`() {
-        (feedDataSource as FakeFeedDataSource).nextKotlinBlogFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinBlogFeedResponse = {
             throw GraphqlErrorException.newErrorException().build()
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinYouTubeFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinYouTubeFeedResponse = {
             listOf(DummyKotlinYouTubeItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextTalkingKotlinFeedResponse = {
+        (feedService as FakeFeedService).nextTalkingKotlinFeedResponse = {
             listOf(DummyTalkingKotlinItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinWeeklyFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinWeeklyFeedResponse = {
             listOf(DummyKotlinWeeklyItem)
         }
 
@@ -159,16 +159,16 @@ class FeedEntryDataFetcherTest {
 
     @Test
     fun `feedEntries(filters) query returns expected feed entries from selected sources when filters are provided`() {
-        (feedDataSource as FakeFeedDataSource).nextKotlinBlogFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinBlogFeedResponse = {
             listOf(DummyKotlinBlogItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinYouTubeFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinYouTubeFeedResponse = {
             listOf(DummyKotlinYouTubeItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextTalkingKotlinFeedResponse = {
+        (feedService as FakeFeedService).nextTalkingKotlinFeedResponse = {
             listOf(DummyTalkingKotlinItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinWeeklyFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinWeeklyFeedResponse = {
             listOf(DummyKotlinWeeklyItem)
         }
 
@@ -207,16 +207,16 @@ class FeedEntryDataFetcherTest {
 
     @Test
     fun `syncFeeds mutation returns true when operation succeeds`() {
-        (feedDataSource as FakeFeedDataSource).nextKotlinBlogFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinBlogFeedResponse = {
             listOf(DummyKotlinBlogItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinYouTubeFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinYouTubeFeedResponse = {
             listOf(DummyKotlinYouTubeItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextTalkingKotlinFeedResponse = {
+        (feedService as FakeFeedService).nextTalkingKotlinFeedResponse = {
             listOf(DummyTalkingKotlinItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinWeeklyFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinWeeklyFeedResponse = {
             listOf(DummyKotlinWeeklyItem)
         }
 
@@ -227,16 +227,16 @@ class FeedEntryDataFetcherTest {
 
     @Test
     fun `syncFeeds mutation returns error response when failed to load data from any feed sources`() {
-        (feedDataSource as FakeFeedDataSource).nextKotlinBlogFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinBlogFeedResponse = {
             throw GraphqlErrorException.newErrorException().build()
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinYouTubeFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinYouTubeFeedResponse = {
             listOf(DummyKotlinYouTubeItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextTalkingKotlinFeedResponse = {
+        (feedService as FakeFeedService).nextTalkingKotlinFeedResponse = {
             listOf(DummyTalkingKotlinItem)
         }
-        (feedDataSource as FakeFeedDataSource).nextKotlinWeeklyFeedResponse = {
+        (feedService as FakeFeedService).nextKotlinWeeklyFeedResponse = {
             listOf(DummyKotlinWeeklyItem)
         }
 

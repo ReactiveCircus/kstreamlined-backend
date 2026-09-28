@@ -1,7 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin
+import io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinItem
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals

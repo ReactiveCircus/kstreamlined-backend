@@ -1,7 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContent
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlogTldr
+import io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContent
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals

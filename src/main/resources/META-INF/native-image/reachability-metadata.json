@@ -86,46 +86,6 @@
       "type": "com.fasterxml.jackson.dataformat.smile.SmileFactory"
     },
     {
-      "type": "com.github.benmanes.caffeine.cache.BLCHeader$DrainStatusRef",
-      "fields": [
-        {
-          "name": "drainStatus"
-        }
-      ]
-    },
-    {
-      "type": "com.github.benmanes.caffeine.cache.BaseMpscLinkedArrayQueueColdProducerFields",
-      "fields": [
-        {
-          "name": "producerLimit"
-        }
-      ]
-    },
-    {
-      "type": "com.github.benmanes.caffeine.cache.BaseMpscLinkedArrayQueueConsumerFields",
-      "fields": [
-        {
-          "name": "consumerIndex"
-        }
-      ]
-    },
-    {
-      "type": "com.github.benmanes.caffeine.cache.BaseMpscLinkedArrayQueueProducerFields",
-      "fields": [
-        {
-          "name": "producerIndex"
-        }
-      ]
-    },
-    {
-      "type": "com.github.benmanes.caffeine.cache.BoundedLocalCache",
-      "fields": [
-        {
-          "name": "refreshes"
-        }
-      ]
-    },
-    {
       "type": "com.github.benmanes.caffeine.cache.Cache"
     },
     {
@@ -192,14 +152,6 @@
         },
         {
           "name": "expiresAfterWriteNanos"
-        }
-      ]
-    },
-    {
-      "type": "com.github.benmanes.caffeine.cache.StripedBuffer",
-      "fields": [
-        {
-          "name": "tableBusy"
         }
       ]
     },
@@ -1508,17 +1460,17 @@
           ]
         },
         {
-          "name": "feedDataSource",
+          "name": "feedService",
           "parameterTypes": [
             "io.ktor.client.engine.HttpClientEngine",
-            "io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig",
+            "io.github.reactivecircus.kstreamlined.backend.service.FeedServiceConfig",
             "io.github.reactivecircus.kstreamlined.backend.redis.RedisClient",
-            "io.github.reactivecircus.kstreamlined.backend.datasource.persister.FeedPersister",
-            "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister"
+            "io.github.reactivecircus.kstreamlined.backend.store.FeedStore",
+            "io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContentStore"
           ]
         },
         {
-          "name": "feedDataSourceConfig",
+          "name": "feedServiceConfig",
           "parameterTypes": [
             "java.lang.String",
             "java.lang.String",
@@ -1527,7 +1479,7 @@
           ]
         },
         {
-          "name": "feedPersister",
+          "name": "feedStore",
           "parameterTypes": [
             "com.google.cloud.firestore.Firestore"
           ]
@@ -1543,20 +1495,20 @@
           "parameterTypes": []
         },
         {
-          "name": "kotlinBlogContentPersister",
+          "name": "kotlinBlogContentStore",
           "parameterTypes": [
             "com.google.cloud.firestore.Firestore"
           ]
         },
         {
-          "name": "kotlinBlogTldrDataSource",
+          "name": "kotlinBlogTldrService",
           "parameterTypes": [
-            "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister",
+            "io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContentStore",
             "io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerator"
           ]
         },
         {
-          "name": "kotlinWeeklyIssueDataSource",
+          "name": "kotlinWeeklyIssueService",
           "parameterTypes": [
             "io.ktor.client.engine.HttpClientEngine"
           ]
@@ -1671,7 +1623,7 @@
         {
           "name": "<init>",
           "parameterTypes": [
-            "io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource"
+            "io.github.reactivecircus.kstreamlined.backend.service.FeedService"
           ]
         },
         {
@@ -1716,7 +1668,7 @@
         {
           "name": "<init>",
           "parameterTypes": [
-            "io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource"
+            "io.github.reactivecircus.kstreamlined.backend.service.KotlinBlogTldrService"
           ]
         },
         {
@@ -1748,7 +1700,7 @@
         {
           "name": "<init>",
           "parameterTypes": [
-            "io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource"
+            "io.github.reactivecircus.kstreamlined.backend.service.KotlinWeeklyIssueService"
           ]
         },
         {
@@ -1768,719 +1720,6 @@
           "parameterTypes": []
         }
       ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.RealFeedDataSource"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinBlogTldrDataSource"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeeklyIssueDataSource"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogItem",
-      "fields": [
-        {
-          "name": "description"
-        },
-        {
-          "name": "featuredImage"
-        },
-        {
-          "name": "guid"
-        },
-        {
-          "name": "html"
-        },
-        {
-          "name": "link"
-        },
-        {
-          "name": "pubDate"
-        },
-        {
-          "name": "title"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDescription",
-          "parameterTypes": []
-        },
-        {
-          "name": "getFeaturedImage",
-          "parameterTypes": []
-        },
-        {
-          "name": "getGuid",
-          "parameterTypes": []
-        },
-        {
-          "name": "getHtml",
-          "parameterTypes": []
-        },
-        {
-          "name": "getLink",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPubDate",
-          "parameterTypes": []
-        },
-        {
-          "name": "getTitle",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogRss",
-      "fields": [
-        {
-          "name": "Companion"
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogRss$Companion",
-      "methods": [
-        {
-          "name": "serializer",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinWeeklyItem",
-      "fields": [
-        {
-          "name": "guid"
-        },
-        {
-          "name": "link"
-        },
-        {
-          "name": "pubDate"
-        },
-        {
-          "name": "title"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getGuid",
-          "parameterTypes": []
-        },
-        {
-          "name": "getLink",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPubDate",
-          "parameterTypes": []
-        },
-        {
-          "name": "getTitle",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinWeeklyRss",
-      "fields": [
-        {
-          "name": "Companion"
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinWeeklyRss$Companion",
-      "methods": [
-        {
-          "name": "serializer",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTubeAuthor",
-      "fields": [
-        {
-          "name": "name"
-        },
-        {
-          "name": "uri"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getName",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUri",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTubeItem",
-      "fields": [
-        {
-          "name": "author"
-        },
-        {
-          "name": "channelId"
-        },
-        {
-          "name": "id"
-        },
-        {
-          "name": "link"
-        },
-        {
-          "name": "mediaGroup"
-        },
-        {
-          "name": "published"
-        },
-        {
-          "name": "title"
-        },
-        {
-          "name": "updated"
-        },
-        {
-          "name": "videoId"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getAuthor",
-          "parameterTypes": []
-        },
-        {
-          "name": "getChannelId",
-          "parameterTypes": []
-        },
-        {
-          "name": "getId",
-          "parameterTypes": []
-        },
-        {
-          "name": "getLink",
-          "parameterTypes": []
-        },
-        {
-          "name": "getMediaGroup",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPublished",
-          "parameterTypes": []
-        },
-        {
-          "name": "getTitle",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUpdated",
-          "parameterTypes": []
-        },
-        {
-          "name": "getVideoId",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.Link",
-      "fields": [
-        {
-          "name": "href"
-        },
-        {
-          "name": "rel"
-        },
-        {
-          "name": "title"
-        },
-        {
-          "name": "type"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getHref",
-          "parameterTypes": []
-        },
-        {
-          "name": "getRel",
-          "parameterTypes": []
-        },
-        {
-          "name": "getTitle",
-          "parameterTypes": []
-        },
-        {
-          "name": "getType",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaCommunity",
-      "fields": [
-        {
-          "name": "starRating"
-        },
-        {
-          "name": "statistics"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getStarRating",
-          "parameterTypes": []
-        },
-        {
-          "name": "getStatistics",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaCommunity$StarRating",
-      "fields": [
-        {
-          "name": "average"
-        },
-        {
-          "name": "count"
-        },
-        {
-          "name": "max"
-        },
-        {
-          "name": "min"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getAverage",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCount",
-          "parameterTypes": []
-        },
-        {
-          "name": "getMax",
-          "parameterTypes": []
-        },
-        {
-          "name": "getMin",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaCommunity$Statistics",
-      "fields": [
-        {
-          "name": "views"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getViews",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaGroup",
-      "fields": [
-        {
-          "name": "community"
-        },
-        {
-          "name": "content"
-        },
-        {
-          "name": "description"
-        },
-        {
-          "name": "thumbnail"
-        },
-        {
-          "name": "title"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCommunity",
-          "parameterTypes": []
-        },
-        {
-          "name": "getContent",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDescription",
-          "parameterTypes": []
-        },
-        {
-          "name": "getThumbnail",
-          "parameterTypes": []
-        },
-        {
-          "name": "getTitle",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaGroup$Content",
-      "fields": [
-        {
-          "name": "height"
-        },
-        {
-          "name": "type"
-        },
-        {
-          "name": "url"
-        },
-        {
-          "name": "width"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getHeight",
-          "parameterTypes": []
-        },
-        {
-          "name": "getType",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUrl",
-          "parameterTypes": []
-        },
-        {
-          "name": "getWidth",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaGroup$Thumbnail",
-      "fields": [
-        {
-          "name": "height"
-        },
-        {
-          "name": "url"
-        },
-        {
-          "name": "width"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getHeight",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUrl",
-          "parameterTypes": []
-        },
-        {
-          "name": "getWidth",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem",
-      "fields": [
-        {
-          "name": "duration"
-        },
-        {
-          "name": "enclosure"
-        },
-        {
-          "name": "guid"
-        },
-        {
-          "name": "image"
-        },
-        {
-          "name": "link"
-        },
-        {
-          "name": "pubDate"
-        },
-        {
-          "name": "summary"
-        },
-        {
-          "name": "title"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getDuration",
-          "parameterTypes": []
-        },
-        {
-          "name": "getEnclosure",
-          "parameterTypes": []
-        },
-        {
-          "name": "getGuid",
-          "parameterTypes": []
-        },
-        {
-          "name": "getImage",
-          "parameterTypes": []
-        },
-        {
-          "name": "getLink",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPubDate",
-          "parameterTypes": []
-        },
-        {
-          "name": "getSummary",
-          "parameterTypes": []
-        },
-        {
-          "name": "getTitle",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem$Enclosure",
-      "fields": [
-        {
-          "name": "url"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getUrl",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinItem$Image",
-      "fields": [
-        {
-          "name": "href"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getHref",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinRss",
-      "fields": [
-        {
-          "name": "Companion"
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.dto.TalkingKotlinRss$Companion",
-      "methods": [
-        {
-          "name": "serializer",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.FeedPersister"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreFeedPersister"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreKotlinBlogContentPersister"
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContent",
-      "fields": [
-        {
-          "name": "html"
-        },
-        {
-          "name": "id"
-        },
-        {
-          "name": "title"
-        },
-        {
-          "name": "tldr"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContent$Tldr",
-      "fields": [
-        {
-          "name": "completionTokens"
-        },
-        {
-          "name": "generatedAt"
-        },
-        {
-          "name": "generationDurationMs"
-        },
-        {
-          "name": "model"
-        },
-        {
-          "name": "neurons"
-        },
-        {
-          "name": "output"
-        },
-        {
-          "name": "promptTokens"
-        },
-        {
-          "name": "totalTokens"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        },
-        {
-          "name": "getCompletionTokens",
-          "parameterTypes": []
-        },
-        {
-          "name": "getGeneratedAt",
-          "parameterTypes": []
-        },
-        {
-          "name": "getGenerationDurationMs",
-          "parameterTypes": []
-        },
-        {
-          "name": "getModel",
-          "parameterTypes": []
-        },
-        {
-          "name": "getNeurons",
-          "parameterTypes": []
-        },
-        {
-          "name": "getOutput",
-          "parameterTypes": []
-        },
-        {
-          "name": "getPromptTokens",
-          "parameterTypes": []
-        },
-        {
-          "name": "getTotalTokens",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister"
     },
     {
       "type": "io.github.reactivecircus.kstreamlined.backend.redis.RedisClient"
@@ -2678,6 +1917,687 @@
           "parameterTypes": []
         }
       ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.FeedService"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.FeedServiceConfig"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.KotlinBlogTldrService"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.KotlinWeeklyIssueService"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.RealFeedService"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.RealKotlinBlogTldrService"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.RealKotlinWeeklyIssueService"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogItem",
+      "fields": [
+        {
+          "name": "description"
+        },
+        {
+          "name": "featuredImage"
+        },
+        {
+          "name": "guid"
+        },
+        {
+          "name": "html"
+        },
+        {
+          "name": "link"
+        },
+        {
+          "name": "pubDate"
+        },
+        {
+          "name": "title"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getDescription",
+          "parameterTypes": []
+        },
+        {
+          "name": "getFeaturedImage",
+          "parameterTypes": []
+        },
+        {
+          "name": "getGuid",
+          "parameterTypes": []
+        },
+        {
+          "name": "getHtml",
+          "parameterTypes": []
+        },
+        {
+          "name": "getLink",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPubDate",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTitle",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogRss",
+      "fields": [
+        {
+          "name": "Companion"
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogRss$Companion",
+      "methods": [
+        {
+          "name": "serializer",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyItem",
+      "fields": [
+        {
+          "name": "guid"
+        },
+        {
+          "name": "link"
+        },
+        {
+          "name": "pubDate"
+        },
+        {
+          "name": "title"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getGuid",
+          "parameterTypes": []
+        },
+        {
+          "name": "getLink",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPubDate",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTitle",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyRss",
+      "fields": [
+        {
+          "name": "Companion"
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyRss$Companion",
+      "methods": [
+        {
+          "name": "serializer",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeAuthor",
+      "fields": [
+        {
+          "name": "name"
+        },
+        {
+          "name": "uri"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getName",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUri",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeItem",
+      "fields": [
+        {
+          "name": "author"
+        },
+        {
+          "name": "channelId"
+        },
+        {
+          "name": "id"
+        },
+        {
+          "name": "link"
+        },
+        {
+          "name": "mediaGroup"
+        },
+        {
+          "name": "published"
+        },
+        {
+          "name": "title"
+        },
+        {
+          "name": "updated"
+        },
+        {
+          "name": "videoId"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getAuthor",
+          "parameterTypes": []
+        },
+        {
+          "name": "getChannelId",
+          "parameterTypes": []
+        },
+        {
+          "name": "getId",
+          "parameterTypes": []
+        },
+        {
+          "name": "getLink",
+          "parameterTypes": []
+        },
+        {
+          "name": "getMediaGroup",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPublished",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTitle",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUpdated",
+          "parameterTypes": []
+        },
+        {
+          "name": "getVideoId",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.Link",
+      "fields": [
+        {
+          "name": "href"
+        },
+        {
+          "name": "rel"
+        },
+        {
+          "name": "title"
+        },
+        {
+          "name": "type"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getHref",
+          "parameterTypes": []
+        },
+        {
+          "name": "getRel",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTitle",
+          "parameterTypes": []
+        },
+        {
+          "name": "getType",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.MediaCommunity",
+      "fields": [
+        {
+          "name": "starRating"
+        },
+        {
+          "name": "statistics"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getStarRating",
+          "parameterTypes": []
+        },
+        {
+          "name": "getStatistics",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.MediaCommunity$StarRating",
+      "fields": [
+        {
+          "name": "average"
+        },
+        {
+          "name": "count"
+        },
+        {
+          "name": "max"
+        },
+        {
+          "name": "min"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getAverage",
+          "parameterTypes": []
+        },
+        {
+          "name": "getCount",
+          "parameterTypes": []
+        },
+        {
+          "name": "getMax",
+          "parameterTypes": []
+        },
+        {
+          "name": "getMin",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.MediaCommunity$Statistics",
+      "fields": [
+        {
+          "name": "views"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getViews",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.MediaGroup",
+      "fields": [
+        {
+          "name": "community"
+        },
+        {
+          "name": "content"
+        },
+        {
+          "name": "description"
+        },
+        {
+          "name": "thumbnail"
+        },
+        {
+          "name": "title"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getCommunity",
+          "parameterTypes": []
+        },
+        {
+          "name": "getContent",
+          "parameterTypes": []
+        },
+        {
+          "name": "getDescription",
+          "parameterTypes": []
+        },
+        {
+          "name": "getThumbnail",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTitle",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.MediaGroup$Content",
+      "fields": [
+        {
+          "name": "height"
+        },
+        {
+          "name": "type"
+        },
+        {
+          "name": "url"
+        },
+        {
+          "name": "width"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getHeight",
+          "parameterTypes": []
+        },
+        {
+          "name": "getType",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUrl",
+          "parameterTypes": []
+        },
+        {
+          "name": "getWidth",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.MediaGroup$Thumbnail",
+      "fields": [
+        {
+          "name": "height"
+        },
+        {
+          "name": "url"
+        },
+        {
+          "name": "width"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getHeight",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUrl",
+          "parameterTypes": []
+        },
+        {
+          "name": "getWidth",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinItem",
+      "fields": [
+        {
+          "name": "duration"
+        },
+        {
+          "name": "enclosure"
+        },
+        {
+          "name": "guid"
+        },
+        {
+          "name": "image"
+        },
+        {
+          "name": "link"
+        },
+        {
+          "name": "pubDate"
+        },
+        {
+          "name": "summary"
+        },
+        {
+          "name": "title"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getDuration",
+          "parameterTypes": []
+        },
+        {
+          "name": "getEnclosure",
+          "parameterTypes": []
+        },
+        {
+          "name": "getGuid",
+          "parameterTypes": []
+        },
+        {
+          "name": "getImage",
+          "parameterTypes": []
+        },
+        {
+          "name": "getLink",
+          "parameterTypes": []
+        },
+        {
+          "name": "getPubDate",
+          "parameterTypes": []
+        },
+        {
+          "name": "getSummary",
+          "parameterTypes": []
+        },
+        {
+          "name": "getTitle",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinItem$Enclosure",
+      "fields": [
+        {
+          "name": "url"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getUrl",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinItem$Image",
+      "fields": [
+        {
+          "name": "href"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        },
+        {
+          "name": "getHref",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinRss",
+      "fields": [
+        {
+          "name": "Companion"
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinRss$Companion",
+      "methods": [
+        {
+          "name": "serializer",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.store.FeedStore"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.store.FirestoreFeedStore"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.store.FirestoreKotlinBlogContentStore"
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContent",
+      "fields": [
+        {
+          "name": "html"
+        },
+        {
+          "name": "id"
+        },
+        {
+          "name": "title"
+        },
+        {
+          "name": "tldr"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContent$Tldr",
+      "fields": [
+        {
+          "name": "completionTokens"
+        },
+        {
+          "name": "generatedAt"
+        },
+        {
+          "name": "generationDurationMs"
+        },
+        {
+          "name": "model"
+        },
+        {
+          "name": "neurons"
+        },
+        {
+          "name": "output"
+        },
+        {
+          "name": "promptTokens"
+        },
+        {
+          "name": "totalTokens"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContentStore"
     },
     {
       "type": "io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerator"
@@ -3200,6 +3120,9 @@
     },
     {
       "type": "io.netty.util.ReferenceCountUtil"
+    },
+    {
+      "type": "io.netty.util.ResourceLeakDetector$DefaultResourceLeak"
     },
     {
       "type": "io.netty.util.concurrent.ConcurrentSkipListIntObjMultimap"

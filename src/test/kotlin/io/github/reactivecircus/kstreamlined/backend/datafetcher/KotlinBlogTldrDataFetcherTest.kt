@@ -4,10 +4,10 @@ import com.netflix.graphql.dgs.DgsQueryExecutor
 import graphql.GraphqlErrorException
 import io.github.reactivecircus.kstreamlined.backend.TestKSConfiguration
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.scalar.InstantScalar
-import io.github.reactivecircus.kstreamlined.backend.datasource.DummyKotlinBlogTldr
-import io.github.reactivecircus.kstreamlined.backend.datasource.FakeKotlinBlogTldrDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrBackfillResult
-import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource
+import io.github.reactivecircus.kstreamlined.backend.service.DummyKotlinBlogTldr
+import io.github.reactivecircus.kstreamlined.backend.service.FakeKotlinBlogTldrService
+import io.github.reactivecircus.kstreamlined.backend.service.KotlinBlogTldrBackfillResult
+import io.github.reactivecircus.kstreamlined.backend.service.KotlinBlogTldrService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
@@ -24,7 +24,7 @@ class KotlinBlogTldrDataFetcherTest {
     private lateinit var dgsQueryExecutor: DgsQueryExecutor
 
     @Autowired
-    private lateinit var kotlinBlogTldrDataSource: KotlinBlogTldrDataSource
+    private lateinit var kotlinBlogTldrService: KotlinBlogTldrService
 
     private val articleId = "https://blog.jetbrains.com/?post_type=kotlin&p=12345"
 
@@ -62,7 +62,7 @@ class KotlinBlogTldrDataFetcherTest {
     @Test
     fun `kotlinBlogTldr(id) query returns expected TLDR when operation succeeds`() {
         var requestedId: String? = null
-        (kotlinBlogTldrDataSource as FakeKotlinBlogTldrDataSource).nextKotlinBlogTldrResponse = { id ->
+        (kotlinBlogTldrService as FakeKotlinBlogTldrService).nextKotlinBlogTldrResponse = { id ->
             requestedId = id
             DummyKotlinBlogTldr
         }
@@ -81,7 +81,7 @@ class KotlinBlogTldrDataFetcherTest {
 
     @Test
     fun `kotlinBlogTldr(id) query returns null when content is unavailable`() {
-        (kotlinBlogTldrDataSource as FakeKotlinBlogTldrDataSource).nextKotlinBlogTldrResponse = { null }
+        (kotlinBlogTldrService as FakeKotlinBlogTldrService).nextKotlinBlogTldrResponse = { null }
 
         val result = dgsQueryExecutor.execute(kotlinBlogTldrQuery, mapOf("id" to articleId))
 
@@ -91,7 +91,7 @@ class KotlinBlogTldrDataFetcherTest {
 
     @Test
     fun `kotlinBlogTldr(id) query returns error response when loading fails`() {
-        (kotlinBlogTldrDataSource as FakeKotlinBlogTldrDataSource).nextKotlinBlogTldrResponse = {
+        (kotlinBlogTldrService as FakeKotlinBlogTldrService).nextKotlinBlogTldrResponse = {
             throw GraphqlErrorException.newErrorException().build()
         }
 
@@ -105,7 +105,7 @@ class KotlinBlogTldrDataFetcherTest {
         for (persist in listOf(false, true)) {
             var requestedId: String? = null
             var requestedPersist: Boolean? = null
-            (kotlinBlogTldrDataSource as FakeKotlinBlogTldrDataSource).nextGenerateKotlinBlogTldrResponse =
+            (kotlinBlogTldrService as FakeKotlinBlogTldrService).nextGenerateKotlinBlogTldrResponse =
                 { id, save ->
                     requestedId = id
                     requestedPersist = save
@@ -131,7 +131,7 @@ class KotlinBlogTldrDataFetcherTest {
 
     @Test
     fun `generateKotlinBlogTldr mutation returns error response when generation fails`() {
-        (kotlinBlogTldrDataSource as FakeKotlinBlogTldrDataSource).nextGenerateKotlinBlogTldrResponse = { _, _ ->
+        (kotlinBlogTldrService as FakeKotlinBlogTldrService).nextGenerateKotlinBlogTldrResponse = { _, _ ->
             throw GraphqlErrorException.newErrorException().build()
         }
 
@@ -142,7 +142,7 @@ class KotlinBlogTldrDataFetcherTest {
 
     @Test
     fun `backfillKotlinBlogTldrs mutation returns expected result when operation succeeds`() {
-        (kotlinBlogTldrDataSource as FakeKotlinBlogTldrDataSource).nextBackfillKotlinBlogTldrsResponse = {
+        (kotlinBlogTldrService as FakeKotlinBlogTldrService).nextBackfillKotlinBlogTldrsResponse = {
             KotlinBlogTldrBackfillResult(2, listOf("id1", "id2"))
         }
 
@@ -154,7 +154,7 @@ class KotlinBlogTldrDataFetcherTest {
 
     @Test
     fun `backfillKotlinBlogTldrs mutation returns error response when operation fails`() {
-        (kotlinBlogTldrDataSource as FakeKotlinBlogTldrDataSource).nextBackfillKotlinBlogTldrsResponse = {
+        (kotlinBlogTldrService as FakeKotlinBlogTldrService).nextBackfillKotlinBlogTldrsResponse = {
             throw GraphqlErrorException.newErrorException().build()
         }
 

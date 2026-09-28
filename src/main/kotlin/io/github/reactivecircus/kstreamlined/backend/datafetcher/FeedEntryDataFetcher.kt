@@ -9,7 +9,6 @@ import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlin
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinWeeklyEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toKotlinYouTubeEntry
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper.toTalkingKotlinEntry
-import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.DgsConstants
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedEntry
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.FeedSourceKey
@@ -17,6 +16,7 @@ import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.Kotl
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.TalkingKotlin
+import io.github.reactivecircus.kstreamlined.backend.service.FeedService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -25,7 +25,7 @@ import kotlinx.coroutines.coroutineScope
 
 @DgsComponent
 class FeedEntryDataFetcher(
-    private val dataSource: FeedDataSource,
+    private val service: FeedService,
 ) {
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 
@@ -37,19 +37,19 @@ class FeedEntryDataFetcher(
             async(coroutineDispatcher) {
                 when (source) {
                     FeedSourceKey.KOTLIN_BLOG -> {
-                        dataSource.loadKotlinBlogFeed().map { it.toKotlinBlogEntry() }
+                        service.loadKotlinBlogFeed().map { it.toKotlinBlogEntry() }
                     }
 
                     FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> {
-                        dataSource.loadKotlinYouTubeFeed().map { it.toKotlinYouTubeEntry() }
+                        service.loadKotlinYouTubeFeed().map { it.toKotlinYouTubeEntry() }
                     }
 
                     FeedSourceKey.TALKING_KOTLIN_PODCAST -> {
-                        dataSource.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry() }
+                        service.loadTalkingKotlinFeed().map { it.toTalkingKotlinEntry() }
                     }
 
                     FeedSourceKey.KOTLIN_WEEKLY -> {
-                        dataSource.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry() }
+                        service.loadKotlinWeeklyFeed().map { it.toKotlinWeeklyEntry() }
                     }
                 }
             }
@@ -67,19 +67,19 @@ class FeedEntryDataFetcher(
             async(coroutineDispatcher) {
                 when (source) {
                     FeedSourceKey.KOTLIN_BLOG -> {
-                        dataSource.loadKotlinBlogFeed(skipCache = true)
+                        service.loadKotlinBlogFeed(skipCache = true)
                     }
 
                     FeedSourceKey.KOTLIN_YOUTUBE_CHANNEL -> {
-                        dataSource.loadKotlinYouTubeFeed(skipCache = true)
+                        service.loadKotlinYouTubeFeed(skipCache = true)
                     }
 
                     FeedSourceKey.TALKING_KOTLIN_PODCAST -> {
-                        dataSource.loadTalkingKotlinFeed(skipCache = true)
+                        service.loadTalkingKotlinFeed(skipCache = true)
                     }
 
                     FeedSourceKey.KOTLIN_WEEKLY -> {
-                        dataSource.loadKotlinWeeklyFeed(skipCache = true)
+                        service.loadKotlinWeeklyFeed(skipCache = true)
                     }
                 }
             }

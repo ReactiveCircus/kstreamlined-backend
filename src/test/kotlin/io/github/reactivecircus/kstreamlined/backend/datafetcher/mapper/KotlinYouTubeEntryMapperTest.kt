@@ -1,11 +1,11 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTubeAuthor
-import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinYouTubeItem
-import io.github.reactivecircus.kstreamlined.backend.datasource.dto.Link
-import io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaCommunity
-import io.github.reactivecircus.kstreamlined.backend.datasource.dto.MediaGroup
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinYouTube
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeAuthor
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeItem
+import io.github.reactivecircus.kstreamlined.backend.service.dto.Link
+import io.github.reactivecircus.kstreamlined.backend.service.dto.MediaCommunity
+import io.github.reactivecircus.kstreamlined.backend.service.dto.MediaGroup
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
