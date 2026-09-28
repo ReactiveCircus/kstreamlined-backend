@@ -1,0 +1,163 @@
+package io.github.reactivecircus.kstreamlined.backend.service
+
+import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogItem
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogRss
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyItem
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyRss
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeItem
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeRss
+import io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinItem
+import io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinRss
+import io.github.reactivecircus.kstreamlined.backend.store.FeedStore
+import io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContentStore
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.serialization.kotlinx.xml.DefaultXml
+import io.ktor.serialization.kotlinx.xml.xml
+import kotlinx.serialization.decodeFromString
+import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
+import nl.adaptivity.xmlutil.serialization.DefaultXmlSerializationPolicy
+import nl.adaptivity.xmlutil.serialization.XmlConfig
+import org.apache.commons.text.StringEscapeUtils
+
+interface FeedService {
+    suspend fun loadKotlinBlogFeed(skipCache: Boolean = false): List<KotlinBlogItem>
+
+    suspend fun loadKotlinYouTubeFeed(skipCache: Boolean = false): List<KotlinYouTubeItem>
+
+    suspend fun loadTalkingKotlinFeed(skipCache: Boolean = false): List<TalkingKotlinItem>
+
+    suspend fun loadKotlinWeeklyFeed(skipCache: Boolean = false): List<KotlinWeeklyItem>
+}
+
+class FeedServiceConfig(
+    val kotlinBlogFeedUrl: String,
+    val kotlinYouTubeFeedUrl: String,
+    val talkingKotlinFeedUrl: String,
+    val kotlinWeeklyFeedUrl: String,
+)
+
+class RealFeedService(
+    engine: HttpClientEngine,
+    private val serviceConfig: FeedServiceConfig,
+    cacheConfig: DataLoader.CacheConfig,
+    redisClient: RedisClient,
+    private val feedStore: FeedStore,
+    private val kotlinBlogContentStore: KotlinBlogContentStore,
+) : FeedService {
+    private val kotlinBlogFeedDataLoader = DataLoader.of(cacheConfig, redisClient, KotlinBlogItem.serializer())
+    private val kotlinYouTubeFeedDataLoader = DataLoader.of(cacheConfig, redisClient, KotlinYouTubeItem.serializer())
+    private val talkingKotlinFeedDataLoader = DataLoader.of(cacheConfig, redisClient, TalkingKotlinItem.serializer())
+    private val kotlinWeeklyFeedDataLoader = DataLoader.of(cacheConfig, redisClient, KotlinWeeklyItem.serializer())
+
+    @OptIn(ExperimentalXmlUtilApi::class)
+    private val httpClient = HttpClient(engine) {
+        expectSuccess = true
+        install(ContentNegotiation) {
+            val format = DefaultXml.copy {
+                policy = DefaultXmlSerializationPolicy(
+                    DefaultXmlSerializationPolicy.Builder().apply {
+                        pedantic = false
+                        unknownChildHandler = XmlConfig.IGNORING_UNKNOWN_CHILD_HANDLER
+                    }.build(),
+                )
+            }
+
+            xml(format, ContentType.Application.Rss)
+            xml(format, ContentType.Application.Xml)
+            xml(format, ContentType.Text.Xml)
+        }
+        install(HttpTimeout) {
+            requestTimeoutMillis = 30_000L
+            socketTimeoutMillis = 30_000L
+        }
+    }
+
+    override suspend fun loadKotlinBlogFeed(skipCache: Boolean): List<KotlinBlogItem> {
+        return kotlinBlogFeedDataLoader.load(CacheKey.KotlinBlog, sotOnly = skipCache) {
+            feedSot(
+                localSource = { feedStore.loadKotlinBlogItems() },
+                persistToLocal = {
+                    feedStore.saveKotlinBlogItems(it)
+                },
+                remoteSource = {
+                    httpClient.get(serviceConfig.kotlinBlogFeedUrl).body<KotlinBlogRss>().channel.items
+                        .also {
+                            kotlinBlogContentStore.saveMissingKotlinBlogContents(it)
+                        }
+                        .map {
+                            it.copy(
+                                description = StringEscapeUtils.unescapeXml(it.description).trim(),
+                                html = null,
+                            )
+                        }
+                },
+            )
+        }
+    }
+
+    override suspend fun loadKotlinYouTubeFeed(skipCache: Boolean): List<KotlinYouTubeItem> {
+        return kotlinYouTubeFeedDataLoader.load(CacheKey.KotlinYouTube, sotOnly = skipCache) {
+            feedSot(
+                localSource = { feedStore.loadKotlinYouTubeItems() },
+                persistToLocal = {
+                    feedStore.saveKotlinYouTubeItems(it)
+                },
+                remoteSource = {
+                    httpClient.get(serviceConfig.kotlinYouTubeFeedUrl).bodyAsText().let {
+                        DefaultXml.decodeFromString<KotlinYouTubeRss>(
+                            it.replace("&(?!.{2,4};)".toRegex(), "&amp;"),
+                        ).entries
+                    }
+                },
+            )
+        }
+    }
+
+    override suspend fun loadTalkingKotlinFeed(skipCache: Boolean): List<TalkingKotlinItem> {
+        return talkingKotlinFeedDataLoader.load(CacheKey.TalkingKotlin, sotOnly = skipCache) {
+            feedSot(
+                localSource = { feedStore.loadTalkingKotlinItems() },
+                persistToLocal = {
+                    feedStore.saveTalkingKotlinItems(it)
+                },
+                remoteSource = {
+                    httpClient.get(serviceConfig.talkingKotlinFeedUrl).body<TalkingKotlinRss>().channel.items
+                        .map {
+                            it.copy(
+                                summary = StringEscapeUtils.unescapeXml(it.summary).trim(),
+                            )
+                        }
+                },
+            )
+        }
+    }
+
+    override suspend fun loadKotlinWeeklyFeed(skipCache: Boolean): List<KotlinWeeklyItem> {
+        return kotlinWeeklyFeedDataLoader.load(CacheKey.KotlinWeekly, sotOnly = skipCache) {
+            feedSot(
+                localSource = { feedStore.loadKotlinWeeklyItems() },
+                persistToLocal = {
+                    feedStore.saveKotlinWeeklyItems(it)
+                },
+                remoteSource = {
+                    httpClient.get(serviceConfig.kotlinWeeklyFeedUrl).body<KotlinWeeklyRss>().channel.items
+                },
+            )
+        }
+    }
+
+    private object CacheKey {
+        const val KotlinBlog = "kotlin-blog"
+        const val KotlinYouTube = "kotlin-youtube"
+        const val TalkingKotlin = "talking-kotlin"
+        const val KotlinWeekly = "kotlin-weekly"
+    }
+}

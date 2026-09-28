@@ -4,19 +4,19 @@ import com.google.auth.oauth2.GoogleCredentials
 import com.google.cloud.firestore.Firestore
 import com.google.cloud.firestore.FirestoreOptions
 import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiClient
-import io.github.reactivecircus.kstreamlined.backend.datasource.DataLoader
-import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.FeedDataSourceConfig
-import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinBlogTldrDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.RealFeedDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinBlogTldrDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.RealKotlinWeeklyIssueDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FeedPersister
-import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreFeedPersister
-import io.github.reactivecircus.kstreamlined.backend.datasource.persister.FirestoreKotlinBlogContentPersister
-import io.github.reactivecircus.kstreamlined.backend.datasource.persister.KotlinBlogContentPersister
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
+import io.github.reactivecircus.kstreamlined.backend.service.DataLoader
+import io.github.reactivecircus.kstreamlined.backend.service.FeedService
+import io.github.reactivecircus.kstreamlined.backend.service.FeedServiceConfig
+import io.github.reactivecircus.kstreamlined.backend.service.KotlinBlogTldrService
+import io.github.reactivecircus.kstreamlined.backend.service.KotlinWeeklyIssueService
+import io.github.reactivecircus.kstreamlined.backend.service.RealFeedService
+import io.github.reactivecircus.kstreamlined.backend.service.RealKotlinBlogTldrService
+import io.github.reactivecircus.kstreamlined.backend.service.RealKotlinWeeklyIssueService
+import io.github.reactivecircus.kstreamlined.backend.store.FeedStore
+import io.github.reactivecircus.kstreamlined.backend.store.FirestoreFeedStore
+import io.github.reactivecircus.kstreamlined.backend.store.FirestoreKotlinBlogContentStore
+import io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContentStore
 import io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerator
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
@@ -29,34 +29,34 @@ import kotlin.time.Duration.Companion.minutes
 @Configuration
 class KSConfiguration {
     @Bean
-    fun feedDataSource(
+    fun feedService(
         engine: HttpClientEngine,
-        dataSourceConfig: FeedDataSourceConfig,
+        serviceConfig: FeedServiceConfig,
         redisClient: RedisClient,
-        feedPersister: FeedPersister,
-        kotlinBlogContentPersister: KotlinBlogContentPersister,
-    ): FeedDataSource {
-        return RealFeedDataSource(
+        feedStore: FeedStore,
+        kotlinBlogContentStore: KotlinBlogContentStore,
+    ): FeedService {
+        return RealFeedService(
             engine = engine,
-            dataSourceConfig = dataSourceConfig,
+            serviceConfig = serviceConfig,
             cacheConfig = DataLoader.CacheConfig(
                 localExpiry = 10.minutes,
                 remoteExpiry = 1.hours,
             ),
             redisClient = redisClient,
-            feedPersister = feedPersister,
-            kotlinBlogContentPersister = kotlinBlogContentPersister,
+            feedStore = feedStore,
+            kotlinBlogContentStore = kotlinBlogContentStore,
         )
     }
 
     @Bean
-    fun feedDataSourceConfig(
+    fun feedServiceConfig(
         @Value("\${ks.kotlin-blog-feed-url}") kotlinBlogFeedUrl: String,
         @Value("\${ks.kotlin-youtube-feed-url}") kotlinYouTubeFeedUrl: String,
         @Value("\${ks.talking-kotlin-feed-url}") talkingKotlinFeedUrl: String,
         @Value("\${ks.kotlin-weekly-feed-url}") kotlinWeeklyFeedUrl: String,
-    ): FeedDataSourceConfig {
-        return FeedDataSourceConfig(
+    ): FeedServiceConfig {
+        return FeedServiceConfig(
             kotlinBlogFeedUrl = kotlinBlogFeedUrl,
             kotlinYouTubeFeedUrl = kotlinYouTubeFeedUrl,
             talkingKotlinFeedUrl = talkingKotlinFeedUrl,
@@ -65,35 +65,35 @@ class KSConfiguration {
     }
 
     @Bean
-    fun feedPersister(
+    fun feedStore(
         firestore: Firestore,
-    ): FeedPersister {
-        return FirestoreFeedPersister(firestore = firestore)
+    ): FeedStore {
+        return FirestoreFeedStore(firestore = firestore)
     }
 
     @Bean
-    fun kotlinBlogContentPersister(
+    fun kotlinBlogContentStore(
         firestore: Firestore,
-    ): KotlinBlogContentPersister {
-        return FirestoreKotlinBlogContentPersister(firestore = firestore)
+    ): KotlinBlogContentStore {
+        return FirestoreKotlinBlogContentStore(firestore = firestore)
     }
 
     @Bean
-    fun kotlinBlogTldrDataSource(
-        kotlinBlogContentPersister: KotlinBlogContentPersister,
+    fun kotlinBlogTldrService(
+        kotlinBlogContentStore: KotlinBlogContentStore,
         tldrGenerator: TldrGenerator,
-    ): KotlinBlogTldrDataSource {
-        return RealKotlinBlogTldrDataSource(
-            kotlinBlogContentPersister = kotlinBlogContentPersister,
+    ): KotlinBlogTldrService {
+        return RealKotlinBlogTldrService(
+            kotlinBlogContentStore = kotlinBlogContentStore,
             tldrGenerator = tldrGenerator,
         )
     }
 
     @Bean
-    fun kotlinWeeklyIssueDataSource(
+    fun kotlinWeeklyIssueService(
         engine: HttpClientEngine
-    ): KotlinWeeklyIssueDataSource {
-        return RealKotlinWeeklyIssueDataSource(
+    ): KotlinWeeklyIssueService {
+        return RealKotlinWeeklyIssueService(
             engine = engine,
         )
     }

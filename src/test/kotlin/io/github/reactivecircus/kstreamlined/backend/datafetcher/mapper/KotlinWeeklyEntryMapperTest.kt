@@ -1,7 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinWeeklyItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinWeekly
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyItem
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals

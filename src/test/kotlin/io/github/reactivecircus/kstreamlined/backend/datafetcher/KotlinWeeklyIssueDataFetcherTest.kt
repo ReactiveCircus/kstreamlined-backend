@@ -3,9 +3,9 @@ package io.github.reactivecircus.kstreamlined.backend.datafetcher
 import com.netflix.graphql.dgs.DgsQueryExecutor
 import io.github.reactivecircus.kstreamlined.backend.TestKSConfiguration
 import io.github.reactivecircus.kstreamlined.backend.datafetcher.scalar.InstantScalar
-import io.github.reactivecircus.kstreamlined.backend.datasource.DummyKotlinWeeklyIssueEntries
-import io.github.reactivecircus.kstreamlined.backend.datasource.FakeKotlinWeeklyIssueDataSource
-import io.github.reactivecircus.kstreamlined.backend.datasource.KotlinWeeklyIssueDataSource
+import io.github.reactivecircus.kstreamlined.backend.service.DummyKotlinWeeklyIssueEntries
+import io.github.reactivecircus.kstreamlined.backend.service.FakeKotlinWeeklyIssueService
+import io.github.reactivecircus.kstreamlined.backend.service.KotlinWeeklyIssueService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
@@ -21,7 +21,7 @@ class KotlinWeeklyIssueDataFetcherTest {
     private lateinit var dgsQueryExecutor: DgsQueryExecutor
 
     @Autowired
-    private lateinit var kotlinWeeklyIssueDataSource: KotlinWeeklyIssueDataSource
+    private lateinit var kotlinWeeklyIssueService: KotlinWeeklyIssueService
 
     private val kotlinWeeklyIssueQuery = """
         query KotlinWeeklyIssue(${"$"}url: String!) {
@@ -37,7 +37,7 @@ class KotlinWeeklyIssueDataFetcherTest {
 
     @Test
     fun `kotlinWeeklyIssue(url) query returns expected kotlin weekly issue entries when operation succeeds`() {
-        (kotlinWeeklyIssueDataSource as FakeKotlinWeeklyIssueDataSource).nextKotlinWeeklyIssueResponse = {
+        (kotlinWeeklyIssueService as FakeKotlinWeeklyIssueService).nextKotlinWeeklyIssueResponse = {
             DummyKotlinWeeklyIssueEntries
         }
 

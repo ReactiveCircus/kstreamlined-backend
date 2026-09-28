@@ -1,7 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.datafetcher.mapper
 
-import io.github.reactivecircus.kstreamlined.backend.datasource.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.schema.generated.types.KotlinBlog
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogItem
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
