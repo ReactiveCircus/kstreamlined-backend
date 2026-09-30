@@ -23,7 +23,7 @@ group = "io.github.reactivecircus.kstreamlined.backend"
 version = "0.0.1-SNAPSHOT"
 
 noArg {
-    annotation("io.github.reactivecircus.kstreamlined.backend.NoArg")
+    annotation("io.github.reactivecircus.kstreamlined.backend.store.FirestoreModel")
 }
 
 dependencyManagement {
@@ -105,6 +105,7 @@ tasks.withType<Test>().configureEach {
 configurations.matching { it.name == "detekt" }.configureEach {
     resolutionStrategy.eachDependency {
         if (requested.group == "org.jetbrains.kotlin") {
+            @Suppress("UnstableApiUsage")
             useVersion(getSupportedKotlinVersion())
         }
     }

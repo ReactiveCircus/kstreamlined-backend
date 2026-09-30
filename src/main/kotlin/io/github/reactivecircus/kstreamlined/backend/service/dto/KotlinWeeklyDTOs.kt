@@ -1,6 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.service.dto
 
-import io.github.reactivecircus.kstreamlined.backend.NoArg
+import io.github.reactivecircus.kstreamlined.backend.store.FirestoreModel
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
@@ -17,7 +17,7 @@ data class KotlinWeeklyChannel(
     val items: List<KotlinWeeklyItem>,
 )
 
-@NoArg
+@FirestoreModel
 @XmlSerialName("item", "", "")
 @Serializable
 data class KotlinWeeklyItem(

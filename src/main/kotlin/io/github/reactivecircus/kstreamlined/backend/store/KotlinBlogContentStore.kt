@@ -2,7 +2,6 @@ package io.github.reactivecircus.kstreamlined.backend.store
 
 import com.google.api.core.ApiFutures
 import com.google.cloud.firestore.Firestore
-import io.github.reactivecircus.kstreamlined.backend.NoArg
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogItem
 import java.time.Instant
 
@@ -16,14 +15,14 @@ interface KotlinBlogContentStore {
     suspend fun saveKotlinBlogTldrs(tldrs: Map<String, KotlinBlogContent.Tldr>)
 }
 
-@NoArg
+@FirestoreModel
 data class KotlinBlogContent(
     val id: String,
     val title: String,
     val html: String,
     val tldr: Tldr?,
 ) {
-    @NoArg
+    @FirestoreModel
     data class Tldr(
         val output: String,
         val model: String,

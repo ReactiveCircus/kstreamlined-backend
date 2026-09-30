@@ -1,7 +1,7 @@
 package io.github.reactivecircus.kstreamlined.backend.service.dto
 
 import com.google.cloud.firestore.annotation.Exclude
-import io.github.reactivecircus.kstreamlined.backend.NoArg
+import io.github.reactivecircus.kstreamlined.backend.store.FirestoreModel
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
@@ -19,7 +19,7 @@ data class KotlinBlogChannel(
     val items: List<KotlinBlogItem>,
 )
 
-@NoArg
+@FirestoreModel
 @XmlSerialName("item", "", "")
 @Serializable
 data class KotlinBlogItem(
