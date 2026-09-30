@@ -1,6 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.service.dto
 
-import io.github.reactivecircus.kstreamlined.backend.NoArg
+import io.github.reactivecircus.kstreamlined.backend.store.FirestoreModel
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
@@ -26,7 +26,7 @@ data class KotlinYouTubeRss(
     val entries: List<KotlinYouTubeItem>,
 )
 
-@NoArg
+@FirestoreModel
 @XmlSerialName("author", Namespace.Atom, "")
 @Serializable
 data class KotlinYouTubeAuthor(
@@ -36,7 +36,7 @@ data class KotlinYouTubeAuthor(
     val uri: String,
 )
 
-@NoArg
+@FirestoreModel
 @XmlSerialName("group", Namespace.Aedia, "")
 @Serializable
 data class MediaGroup(
@@ -50,7 +50,7 @@ data class MediaGroup(
     val description: String,
     val community: MediaCommunity,
 ) {
-    @NoArg
+    @FirestoreModel
     @XmlSerialName("content", Namespace.Aedia, "")
     @Serializable
     data class Content(
@@ -64,7 +64,7 @@ data class MediaGroup(
         val height: String,
     )
 
-    @NoArg
+    @FirestoreModel
     @XmlSerialName("thumbnail", Namespace.Aedia, "")
     @Serializable
     data class Thumbnail(
@@ -77,14 +77,14 @@ data class MediaGroup(
     )
 }
 
-@NoArg
+@FirestoreModel
 @XmlSerialName("community", Namespace.Aedia, "")
 @Serializable
 data class MediaCommunity(
     val starRating: StarRating,
     val statistics: Statistics,
 ) {
-    @NoArg
+    @FirestoreModel
     @XmlSerialName("starRating", Namespace.Aedia, "")
     @Serializable
     data class StarRating(
@@ -98,7 +98,7 @@ data class MediaCommunity(
         val max: String,
     )
 
-    @NoArg
+    @FirestoreModel
     @XmlSerialName("statistics", Namespace.Aedia, "")
     @Serializable
     data class Statistics(
@@ -107,7 +107,7 @@ data class MediaCommunity(
     )
 }
 
-@NoArg
+@FirestoreModel
 @XmlSerialName("entry", Namespace.Atom, "")
 @Serializable
 data class KotlinYouTubeItem(

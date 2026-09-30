@@ -56,7 +56,6 @@ class FeedEntryDataFetcherTest {
                     duration
                 }
                 ... on KotlinWeekly {
-                    __typename
                     issueNumber
                 }
             }
