@@ -5,6 +5,7 @@ import com.github.dockerjava.api.model.PortBinding
 import com.github.dockerjava.api.model.Ports
 import com.google.cloud.firestore.DocumentSnapshot
 import com.google.cloud.firestore.Firestore
+import io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContent
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -31,6 +32,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
 import java.time.Duration
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -201,21 +203,23 @@ class KSIntegrationTest {
     }
 
     @Test
-    fun `kotlinBlogTldr query generates persists and then reads without another AI request`() {
+    fun `kotlinBlogTldr query generates and persists a summary when article content has no summary`() {
         syncFeeds()
+        assertNull(document("264203").get("tldr"))
 
         val generated = graphql.documentName("kotlinBlogTldr").variable("id", BlogId).execute()
         generated.path("kotlinBlogTldr.id").entity<String>().isEqualTo(BlogId)
             .path("kotlinBlogTldr.content").entity<String>().isEqualTo(Summary)
             .path("kotlinBlogTldr.model").entity<String>().isEqualTo("gpt-oss-120b")
-        val generatedAt = generated.path("kotlinBlogTldr.generatedAt").entity<String>().get()
-        Instant.parse(generatedAt)
+        val generatedAt = Instant.parse(generated.path("kotlinBlogTldr.generatedAt").entity<String>().get())
 
-        graphql.documentName("kotlinBlogTldr").variable("id", BlogId).execute()
-            .path("kotlinBlogTldr.content").entity<String>().isEqualTo(Summary)
-            .path("kotlinBlogTldr.generatedAt").entity<String>().isEqualTo(generatedAt)
         val saved = document("264203")
         assertEquals(Summary, saved.getString("tldr.output"))
+        val savedAt = assertNotNull(saved.getTimestamp("tldr.generatedAt"))
+        assertEquals(
+            generatedAt.truncatedTo(ChronoUnit.MICROS),
+            Instant.ofEpochSecond(savedAt.seconds, savedAt.nanos.toLong()),
+        )
         assertEquals(100L, saved.getLong("tldr.promptTokens"))
         assertEquals(20L, saved.getLong("tldr.completionTokens"))
         assertEquals(120L, saved.getLong("tldr.totalTokens"))
@@ -226,6 +230,32 @@ class KSIntegrationTest {
             .jsonObject.getValue("messages").jsonArray
         assertEquals(listOf("system", "user"), messages.map { it.jsonObject.getValue("role").jsonPrimitive.content })
         assertTrue(messages.last().jsonObject.getValue("content").jsonPrimitive.content.contains("Incremental Compilation"))
+    }
+
+    @Test
+    fun `kotlinBlogTldr query returns an existing summary without AI requests`() {
+        syncFeeds()
+        val summary = KotlinBlogContent.Tldr(
+            output = "Previously generated summary.",
+            model = "stored-model",
+            generatedAt = Instant.parse("2026-09-14T12:00:00.123456789Z"),
+            promptTokens = 100,
+            completionTokens = 20,
+            totalTokens = 120,
+            neurons = 1.5,
+            generationDurationMs = 250,
+        )
+        firestore.collection(BlogContent).document("264203").update("tldr", summary).get(1, TimeUnit.SECONDS)
+        val saved = document("264203")
+
+        val response = graphql.documentName("kotlinBlogTldr").variable("id", BlogId).execute()
+        response.path("kotlinBlogTldr.id").entity<String>().isEqualTo(BlogId)
+            .path("kotlinBlogTldr.content").entity<String>().isEqualTo(summary.output)
+            .path("kotlinBlogTldr.model").entity<String>().isEqualTo(summary.model)
+        val generatedAt = Instant.parse(response.path("kotlinBlogTldr.generatedAt").entity<String>().get())
+        assertEquals(summary.generatedAt.truncatedTo(ChronoUnit.MICROS), generatedAt)
+        assertTrue(services.requests("/ai/").isEmpty())
+        assertEquals(saved.updateTime, document("264203").updateTime)
     }
 
     @Test

@@ -1,4 +1,4 @@
-query BlogTldr($id: ID!) {
+query KotlinBlogTldr($id: ID!) {
   kotlinBlogTldr(id: $id) {
     id
     content

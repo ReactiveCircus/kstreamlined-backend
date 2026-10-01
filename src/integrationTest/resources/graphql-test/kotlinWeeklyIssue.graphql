@@ -1,4 +1,4 @@
-query WeeklyIssue($url: String!) {
+query KotlinWeeklyIssue($url: String!) {
   kotlinWeeklyIssue(url: $url) {
     title
     summary
