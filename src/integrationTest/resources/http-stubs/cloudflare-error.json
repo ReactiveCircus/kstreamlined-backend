@@ -1,0 +1,10 @@
+{
+  "success": false,
+  "result": null,
+  "errors": [
+    {
+      "code": 429,
+      "message": "Too Many Requests"
+    }
+  ]
+}

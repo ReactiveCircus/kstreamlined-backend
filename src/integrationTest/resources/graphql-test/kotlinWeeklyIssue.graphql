@@ -1,0 +1,9 @@
+query WeeklyIssue($url: String!) {
+  kotlinWeeklyIssue(url: $url) {
+    title
+    summary
+    url
+    source
+    group
+  }
+}

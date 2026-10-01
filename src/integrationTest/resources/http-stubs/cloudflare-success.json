@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "errors": [],
+  "result": {
+    "id": "integration-completion",
+    "object": "chat.completion",
+    "created": 1757065600,
+    "model": "@cf/openai/gpt-oss-120b",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "Test summary."
+        },
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 100,
+      "completion_tokens": 20,
+      "total_tokens": 120,
+      "neurons": 1.5
+    }
+  }
+}

@@ -1,0 +1,8 @@
+mutation GenerateTldr($id: ID!, $persist: Boolean! = false) {
+  generateKotlinBlogTldr(id: $id, persist: $persist) {
+    id
+    content
+    model
+    generatedAt
+  }
+}

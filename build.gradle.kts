@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import dev.detekt.gradle.Detekt
 import dev.detekt.gradle.plugin.getSupportedKotlinVersion
@@ -102,10 +104,31 @@ tasks.withType<Test>().configureEach {
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
 }
 
+testing {
+    suites {
+        register<JvmTestSuite>("integrationTest") {
+            useJUnitJupiter(dependencyManagement.importedProperties.getValue("junit-jupiter.version"))
+            sources.resources.srcDir("src/test/resources")
+            dependencies {
+                implementation(project())
+                implementation(libs.kotlin.test.junit5)
+                implementation(libs.spring.boot.starter.graphql.test)
+                implementation(libs.mockwebserver)
+                implementation(libs.gcloud.firestore)
+                implementation(libs.kotlinx.serialization.json)
+            }
+            targets.configureEach {
+                testTask.configure {
+                    description = "Runs integration tests against a local Firestore emulator and stubbed external services."
+                }
+            }
+        }
+    }
+}
+
 configurations.matching { it.name == "detekt" }.configureEach {
     resolutionStrategy.eachDependency {
         if (requested.group == "org.jetbrains.kotlin") {
-            @Suppress("UnstableApiUsage")
             useVersion(getSupportedKotlinVersion())
         }
     }
@@ -129,6 +152,9 @@ dependencies.add("detektPlugins", libs.detektKtlintWrapper)
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
 powerAssert {
+    compilationFilter.set {
+        it.name.endsWith("test", ignoreCase = true)
+    }
     functions.set(
         listOf(
             "kotlin.assert",
