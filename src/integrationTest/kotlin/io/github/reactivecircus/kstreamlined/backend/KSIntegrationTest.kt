@@ -335,10 +335,11 @@ class KSIntegrationTest {
         firestore.collection(BlogContent).document(id).get().get(1, TimeUnit.SECONDS)
 
     companion object {
+        private const val FirestoreEmulatorImage = "gcr.io/google.com/cloudsdktool/google-cloud-cli:587.0.0-emulators"
+
         @Container
-        @JvmField
-        val emulator = FirestoreEmulatorContainer(
-            DockerImageName.parse("gcr.io/google.com/cloudsdktool/google-cloud-cli:583.0.0-emulators"),
+        private val emulator = FirestoreEmulatorContainer(
+            DockerImageName.parse(FirestoreEmulatorImage),
         ).withCreateContainerCmdModifier { command ->
             checkNotNull(command.hostConfig).withPortBindings(
                 PortBinding(Ports.Binding.bindIpAndPort("127.0.0.1", 0), ExposedPort.tcp(8080)),

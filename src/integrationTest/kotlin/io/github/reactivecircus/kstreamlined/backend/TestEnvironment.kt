@@ -6,9 +6,7 @@ import com.google.cloud.firestore.FirestoreOptions
 import org.springframework.test.web.reactive.server.WebTestClient
 import java.time.Duration
 
-class TestEnvironment(emulatorEndpoint: String) : AutoCloseable {
-    private val emulatorHost = requireEmulatorHost(emulatorEndpoint)
-
+class TestEnvironment(private val emulatorHost: String) : AutoCloseable {
     val services = ServiceHttpStubs()
 
     private val emulator = WebTestClient.bindToServer()
@@ -52,16 +50,4 @@ class TestEnvironment(emulatorEndpoint: String) : AutoCloseable {
     companion object {
         const val ProjectId = "demo-ks-integration"
     }
-}
-
-internal fun requireEmulatorHost(value: String?): String {
-    val host = requireNotNull(value) {
-        "A local Firestore emulator endpoint is required."
-    }
-    val match = requireNotNull(Regex("""(127\.0\.0\.1|localhost):(\d+)""").matchEntire(host)) {
-        "Integration tests require a loopback Firestore emulator endpoint, not '$host'."
-    }
-    val port = match.groupValues[2].toIntOrNull()
-    require(port != null && port in 1..65535) { "Invalid Firestore emulator port: $host." }
-    return host
 }
