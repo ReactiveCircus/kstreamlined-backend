@@ -14,9 +14,10 @@ indent_size = 2
 [*.graphql]
 indent_size = 2
 
-[*.kts]
-max_line_length = 200
-
-[*.kt]
+[*.{kt,kts}]
 ij_kotlin_name_count_to_use_star_import = 2147483647
 ij_kotlin_name_count_to_use_star_import_for_members = 2147483647
+ij_kotlin_imports_layout = *,java.**,javax.**,kotlin.**,^
+
+[*.kts]
+max_line_length = 200

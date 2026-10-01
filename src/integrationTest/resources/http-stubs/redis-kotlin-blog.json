@@ -1,0 +1,10 @@
+[
+  {
+    "title": "A cached Kotlin article",
+    "link": "https://example.invalid/kotlin/cached",
+    "pubDate": "Mon, 14 Sep 2026 10:00:00 +0000",
+    "featuredImage": "https://example.invalid/image.png",
+    "guid": "https://example.invalid/?p=900001",
+    "description": "Read from the Redis REST stub."
+  }
+]
