@@ -37,19 +37,19 @@ Run `gcloud auth application-default login` to authenticate Firestore.
 
 To compile the project:
 
-```
+```shell
 ./gradlew assemble
 ```
 
 To run all checks (including both unit tests and static analysis):
 
-```
+```shell
 ./gradlew check
 ```
 
 To run the service as a Spring Boot application:
 
-```
+```shell
 ./gradlew bootRun
 ```
 
@@ -61,8 +61,18 @@ http://localhost:8000/graphiql
 
 To assemble an executable jar archive:
 
-```
+```shell
 ./gradlew bootJar
+```
+
+## Integration tests
+
+Integration tests are run against local HTTP stubs and Firebase emulator managed by Testcontainers.
+
+Start Docker Desktop (or a compatible alternative like OrbStack), then run:
+
+```shell
+./gradlew integrationTest
 ```
 
 ## GraalVM Native Image
@@ -71,13 +81,13 @@ Make sure the required version of GraalVM JDK is installed.
 
 To compile a native executable:
 
-```
+```shell
 ./gradlew nativeCompile
 ```
 
 To run the native executable:
 
-```
+```shell
 ./gradlew nativeRun
 ```
 

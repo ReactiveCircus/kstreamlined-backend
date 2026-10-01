@@ -121,7 +121,7 @@ testing {
             }
             targets.configureEach {
                 testTask.configure {
-                    description = "Runs integration tests against a local Firestore emulator and stubbed external services."
+                    description = "Runs integration tests against a local Firestore emulator and local HTTP stubs."
                 }
             }
         }
