@@ -59,6 +59,15 @@ jobs:
 
       - run: ./gradlew integrationTest
 
+      - name: Upload integration test reports
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: integration-test-reports
+          path: |
+            build/reports/tests/integrationTest/
+            build/test-results/integrationTest/
+
   deploy:
     name: Build and push container image to Google Artifact Registry, deploy to Cloud Run
     needs: [ assemble-and-check, integration-tests ]
