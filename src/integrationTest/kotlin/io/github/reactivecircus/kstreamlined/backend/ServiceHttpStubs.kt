@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.integration
+package io.github.reactivecircus.kstreamlined.backend
 
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put

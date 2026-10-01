@@ -1,26 +1,22 @@
-package io.github.reactivecircus.kstreamlined.backend.integration
+package io.github.reactivecircus.kstreamlined.backend
 
 import com.google.cloud.NoCredentials
 import com.google.cloud.firestore.Firestore
 import com.google.cloud.firestore.FirestoreOptions
 import org.springframework.test.web.reactive.server.WebTestClient
 import java.time.Duration
-import java.util.concurrent.CopyOnWriteArrayList
 
-object IntegrationEnvironment : AutoCloseable {
-    const val ProjectId = "demo-ks-integration"
-
-    private val emulatorHost = requireEmulatorHost(System.getenv("FIRESTORE_EMULATOR_HOST"))
+class TestEnvironment(emulatorEndpoint: String) : AutoCloseable {
+    private val emulatorHost = requireEmulatorHost(emulatorEndpoint)
 
     val services = ServiceHttpStubs()
 
-    private val clients = CopyOnWriteArrayList<Firestore>()
     private val emulator = WebTestClient.bindToServer()
         .baseUrl("http://$emulatorHost")
         .responseTimeout(Duration.ofSeconds(1))
         .build()
 
-    fun firestore(): Firestore {
+    private val client = lazy {
         val options = FirestoreOptions.newBuilder()
             .setProjectId(ProjectId)
             .setHost(emulatorHost)
@@ -30,9 +26,10 @@ object IntegrationEnvironment : AutoCloseable {
         check(options.host == emulatorHost && options.emulatorHost == emulatorHost) {
             "Firestore client must target only the local emulator."
         }
-
-        return options.service.also { clients.add(it) }
+        options.service
     }
+
+    fun firestore(): Firestore = client.value
 
     fun reset() {
         emulator.delete()
@@ -46,17 +43,23 @@ object IntegrationEnvironment : AutoCloseable {
         try {
             services.close()
         } finally {
-            clients.forEach { it.close() }
+            if (client.isInitialized()) {
+                client.value.close()
+            }
         }
+    }
+
+    companion object {
+        const val ProjectId = "demo-ks-integration"
     }
 }
 
 internal fun requireEmulatorHost(value: String?): String {
     val host = requireNotNull(value) {
-        "Start a local Firestore emulator and set FIRESTORE_EMULATOR_HOST=127.0.0.1:<port>."
+        "A local Firestore emulator endpoint is required."
     }
     val match = requireNotNull(Regex("""(127\.0\.0\.1|localhost):(\d+)""").matchEntire(host)) {
-        "Integration tests require a loopback FIRESTORE_EMULATOR_HOST, not '$host'."
+        "Integration tests require a loopback Firestore emulator endpoint, not '$host'."
     }
     val port = match.groupValues[2].toIntOrNull()
     require(port != null && port in 1..65535) { "Invalid Firestore emulator port: $host." }

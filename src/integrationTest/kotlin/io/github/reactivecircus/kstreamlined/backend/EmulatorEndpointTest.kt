@@ -1,4 +1,4 @@
-package io.github.reactivecircus.kstreamlined.backend.integration
+package io.github.reactivecircus.kstreamlined.backend
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.NullAndEmptySource

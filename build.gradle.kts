@@ -114,6 +114,8 @@ testing {
                 implementation(libs.kotlin.test.junit5)
                 implementation(libs.spring.boot.starter.graphql.test)
                 implementation(libs.mockwebserver)
+                implementation(libs.testcontainers.gcloud)
+                implementation(libs.testcontainers.junit.jupiter)
                 implementation(libs.gcloud.firestore)
                 implementation(libs.kotlinx.serialization.json)
             }

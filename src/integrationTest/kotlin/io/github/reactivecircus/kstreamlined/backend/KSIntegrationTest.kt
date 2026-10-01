@@ -1,8 +1,10 @@
-package io.github.reactivecircus.kstreamlined.backend.integration
+package io.github.reactivecircus.kstreamlined.backend
 
+import com.github.dockerjava.api.model.ExposedPort
+import com.github.dockerjava.api.model.PortBinding
+import com.github.dockerjava.api.model.Ports
 import com.google.cloud.firestore.DocumentSnapshot
 import com.google.cloud.firestore.Firestore
-import io.github.reactivecircus.kstreamlined.backend.KSBackendApplication
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -23,6 +25,10 @@ import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.context.bean.override.convention.TestBean
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.testcontainers.gcloud.FirestoreEmulatorContainer
+import org.testcontainers.junit.jupiter.Container
+import org.testcontainers.junit.jupiter.Testcontainers
+import org.testcontainers.utility.DockerImageName
 import java.time.Duration
 import java.time.Instant
 import java.util.concurrent.TimeUnit
@@ -38,7 +44,8 @@ import kotlin.test.assertTrue
 @AutoConfigureHttpGraphQlTester
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @TestMethodOrder(MethodOrderer.Random::class)
-internal class KSIntegrationTest {
+@Testcontainers
+class KSIntegrationTest {
     @Autowired
     private lateinit var graphQlTester: HttpGraphQlTester
 
@@ -48,12 +55,12 @@ internal class KSIntegrationTest {
     @TestBean(methodName = "emulatorFirestore", enforceOverride = true)
     private lateinit var firestore: Firestore
 
-    private val services get() = IntegrationEnvironment.services
+    private val services get() = environment.services
     private val graphql get() = graphQlTester.mutate().responseTimeout(Duration.ofSeconds(1)).build()
 
     @BeforeTest
     fun resetExternalState() {
-        IntegrationEnvironment.reset()
+        environment.reset()
     }
 
     @AfterTest
@@ -119,7 +126,7 @@ internal class KSIntegrationTest {
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-    fun `repeated queries use the local cache and populate Redis with raw JSON`() {
+    fun `repeated feedEntries queries use the local cache and populate Redis with raw JSON`() {
         val first = graphql.documentName("feedEntries").execute()
             .path("feedEntries[*].id").entityList<String>().get()
         val second = graphql.documentName("feedEntries").execute()
@@ -328,6 +335,18 @@ internal class KSIntegrationTest {
         firestore.collection(BlogContent).document(id).get().get(1, TimeUnit.SECONDS)
 
     companion object {
+        @Container
+        @JvmField
+        val emulator = FirestoreEmulatorContainer(
+            DockerImageName.parse("gcr.io/google.com/cloudsdktool/google-cloud-cli:583.0.0-emulators"),
+        ).withCreateContainerCmdModifier { command ->
+            checkNotNull(command.hostConfig).withPortBindings(
+                PortBinding(Ports.Binding.bindIpAndPort("127.0.0.1", 0), ExposedPort.tcp(8080)),
+            )
+        }
+
+        private val environment by lazy { TestEnvironment(emulator.emulatorEndpoint) }
+
         private const val BlogFeed = "kotlin_blog_feed"
         private const val BlogContent = "kotlin_blog_content"
         private const val BlogId = "https://blog.jetbrains.com/?post_type=kotlin&p=264203"
@@ -343,7 +362,7 @@ internal class KSIntegrationTest {
         @JvmStatic
         @DynamicPropertySource
         fun externalServiceProperties(registry: DynamicPropertyRegistry) {
-            val url = IntegrationEnvironment.services.baseUrl
+            val url = environment.services.baseUrl
             registry.add("ks.kotlin-blog-feed-url") { "$url/feeds/blog" }
             registry.add("ks.kotlin-youtube-feed-url") { "$url/feeds/youtube" }
             registry.add("ks.talking-kotlin-feed-url") { "$url/feeds/podcast" }
@@ -353,16 +372,16 @@ internal class KSIntegrationTest {
             registry.add("KS_CF_BASE_URL") { "$url/ai" }
             registry.add("KS_CF_ACCOUNT_ID") { "integration" }
             registry.add("KS_CF_API_TOKEN") { "integration-token" }
-            registry.add("KS_GCLOUD_PROJECT_ID") { IntegrationEnvironment.ProjectId }
+            registry.add("KS_GCLOUD_PROJECT_ID") { TestEnvironment.ProjectId }
         }
 
         @JvmStatic
-        fun emulatorFirestore(): Firestore = IntegrationEnvironment.firestore()
+        fun emulatorFirestore(): Firestore = environment.firestore()
 
         @JvmStatic
         @AfterAll
         fun closeTestResources() {
-            IntegrationEnvironment.close()
+            environment.close()
         }
     }
 }
