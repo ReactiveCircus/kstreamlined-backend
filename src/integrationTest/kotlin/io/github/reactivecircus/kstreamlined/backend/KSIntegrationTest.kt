@@ -5,6 +5,7 @@ import com.github.dockerjava.api.model.PortBinding
 import com.github.dockerjava.api.model.Ports
 import com.google.cloud.firestore.DocumentSnapshot
 import com.google.cloud.firestore.Firestore
+import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiRequest.Message.Role
 import io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContent
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
@@ -179,7 +180,7 @@ class KSIntegrationTest {
 
     @Test
     fun `syncFeed failures produce GraphQL errors`() {
-        services.failedFeed = "/feeds/blog"
+        services.stubFeedFailure("/feeds/blog")
         graphql.documentName("syncFeeds").execute().errors().satisfy { errors ->
             assertEquals(1, errors.size)
             assertTrue(assertNotNull(errors.single().message).contains("503"))
@@ -293,15 +294,15 @@ class KSIntegrationTest {
     @ParameterizedTest
     @EnumSource(value = ServiceHttpStubs.AiResponse::class, names = ["Rejected", "HttpFailure"])
     fun `generateKotlinBlogTldr mutation reports AI failures without persisting a summary`(
-        mode: ServiceHttpStubs.AiResponse,
+        failure: ServiceHttpStubs.AiResponse
     ) {
         syncFeeds()
-        services.aiResponse = mode
+        services.stubAiResponse(failure)
 
         graphql.documentName("generateKotlinBlogTldr").variable("id", BlogId).variable("persist", true).execute()
             .errors().satisfy { errors ->
                 assertEquals(1, errors.size)
-                val expected = if (mode == ServiceHttpStubs.AiResponse.Rejected) "Error codes: 429" else "503"
+                val expected = if (failure == ServiceHttpStubs.AiResponse.Rejected) "Error codes: 429" else "503"
                 val message = assertNotNull(errors.single().message)
                 assertTrue(message.contains(expected), message)
             }
@@ -328,7 +329,12 @@ class KSIntegrationTest {
     @Test
     fun `backfillKotlinBlogTldrs mutation reports partial failures and saves successful summaries`() {
         syncFeeds()
-        services.rejectedTitle = "A New Approach to Incremental Compilation in Kotlin"
+        services.stubAiResponse(ServiceHttpStubs.AiResponse.Rejected) { request ->
+            request.messages.any {
+                it.role == Role.User &&
+                    it.content.contains("A New Approach to Incremental Compilation in Kotlin")
+            }
+        }
 
         graphql.documentName("backfillKotlinBlogTldrs").execute()
             .path("backfillKotlinBlogTldrs.generatedCount").entity<Int>().isEqualTo(1)
