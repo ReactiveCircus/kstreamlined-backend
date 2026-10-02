@@ -152,7 +152,7 @@ class ServiceHttpStubs : AutoCloseable {
         .build()
 
     private fun resource(name: String): String =
-        requireNotNull(javaClass.classLoader.getResource(name)) { "Missing integration fixture: $name." }.readText()
+        requireNotNull(javaClass.classLoader.getResource(name)) { "Missing test fixture: $name." }.readText()
 
     private data class AiStub(
         val response: AiResponse,

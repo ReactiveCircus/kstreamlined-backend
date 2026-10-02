@@ -34,6 +34,7 @@ detektKtlintWrapper = { module = "dev.detekt:detekt-rules-ktlint-wrapper", versi
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter-webflux" }
 spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
 spring-boot-starter-graphql-test = { module = "org.springframework.boot:spring-boot-starter-graphql-test" }
+spring-test = { module = "org.springframework:spring-test" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp" }
 testcontainers-gcloud = { module = "org.testcontainers:testcontainers-gcloud" }

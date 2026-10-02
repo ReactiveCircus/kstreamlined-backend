@@ -19,6 +19,7 @@ plugins {
     alias(libs.plugins.dgsCodegen)
     alias(libs.plugins.detekt)
     alias(libs.plugins.graalvmNative)
+    `java-test-fixtures`
 }
 
 group = "io.github.reactivecircus.kstreamlined.backend"
@@ -99,6 +100,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
+sourceSets.testFixtures {
+    resources.srcDir("src/test/resources")
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
@@ -108,15 +113,12 @@ testing {
     suites {
         register<JvmTestSuite>("integrationTest") {
             useJUnitJupiter(dependencyManagement.importedProperties.getValue("junit-jupiter.version"))
-            sources.resources.srcDir("src/test/resources")
             dependencies {
                 implementation(project())
+                implementation(testFixtures(project()))
                 implementation(libs.kotlin.test.junit5)
                 implementation(libs.spring.boot.starter.graphql.test)
-                implementation(libs.mockwebserver)
-                implementation(libs.testcontainers.gcloud)
                 implementation(libs.testcontainers.junit.jupiter)
-                implementation(libs.gcloud.firestore)
                 implementation(libs.kotlinx.serialization.json)
             }
             targets.configureEach {
@@ -180,6 +182,12 @@ dependencies {
     implementation(libs.caffeine)
     implementation(libs.scrapeit)
     implementation(libs.ksoup)
+
+    testFixturesApi(libs.mockwebserver)
+    testFixturesApi(libs.testcontainers.gcloud)
+    testFixturesApi(libs.gcloud.firestore)
+    testFixturesImplementation(libs.spring.test)
+    testFixturesImplementation(libs.kotlinx.serialization.json)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.spring.boot.starter.test)

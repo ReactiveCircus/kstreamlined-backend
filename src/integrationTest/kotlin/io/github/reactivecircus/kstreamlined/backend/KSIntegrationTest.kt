@@ -1,8 +1,5 @@
 package io.github.reactivecircus.kstreamlined.backend
 
-import com.github.dockerjava.api.model.ExposedPort
-import com.github.dockerjava.api.model.PortBinding
-import com.github.dockerjava.api.model.Ports
 import com.google.cloud.firestore.DocumentSnapshot
 import com.google.cloud.firestore.Firestore
 import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiRequest.Message.Role
@@ -27,10 +24,8 @@ import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.context.bean.override.convention.TestBean
 import org.springframework.test.web.reactive.server.WebTestClient
-import org.testcontainers.gcloud.FirestoreEmulatorContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
-import org.testcontainers.utility.DockerImageName
 import java.time.Duration
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -371,18 +366,10 @@ class KSIntegrationTest {
         firestore.collection(BlogContent).document(id).get().get(1, TimeUnit.SECONDS)
 
     companion object {
-        private const val FirestoreEmulatorImage = "gcr.io/google.com/cloudsdktool/google-cloud-cli:587.0.0-emulators"
-
         @Container
-        private val emulator = FirestoreEmulatorContainer(
-            DockerImageName.parse(FirestoreEmulatorImage),
-        ).withCreateContainerCmdModifier { command ->
-            checkNotNull(command.hostConfig).withPortBindings(
-                PortBinding(Ports.Binding.bindIpAndPort("127.0.0.1", 0), ExposedPort.tcp(8080)),
-            )
-        }
+        private val emulator = firestoreEmulator()
 
-        private val environment by lazy { TestEnvironment(emulator.emulatorEndpoint) }
+        private val environment by lazy { TestEnvironment(emulator.emulatorEndpoint, "demo-ks-integration") }
 
         private const val BlogFeed = "kotlin_blog_feed"
         private const val BlogContent = "kotlin_blog_content"
@@ -409,7 +396,7 @@ class KSIntegrationTest {
             registry.add("KS_CF_BASE_URL") { "$url/ai" }
             registry.add("KS_CF_ACCOUNT_ID") { "integration" }
             registry.add("KS_CF_API_TOKEN") { "integration-token" }
-            registry.add("KS_GCLOUD_PROJECT_ID") { TestEnvironment.ProjectId }
+            registry.add("KS_GCLOUD_PROJECT_ID") { environment.projectId }
         }
 
         @JvmStatic
