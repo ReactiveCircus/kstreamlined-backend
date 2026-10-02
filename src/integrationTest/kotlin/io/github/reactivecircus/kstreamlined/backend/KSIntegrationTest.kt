@@ -57,12 +57,12 @@ class KSIntegrationTest {
     private val graphql get() = graphQlTester.mutate().responseTimeout(Duration.ofSeconds(1)).build()
 
     @BeforeTest
-    fun resetExternalState() {
+    fun setUp() {
         environment.reset()
     }
 
     @AfterTest
-    fun rejectUnexpectedHttpRequests() {
+    fun tearDown() {
         assertTrue(services.unexpectedRequests.isEmpty(), "Unexpected stub requests: ${services.unexpectedRequests}")
     }
 
@@ -400,7 +400,7 @@ class KSIntegrationTest {
         }
 
         @JvmStatic
-        fun emulatorFirestore(): Firestore = environment.firestore()
+        fun emulatorFirestore(): Firestore = environment.firestore
 
         @JvmStatic
         @AfterAll

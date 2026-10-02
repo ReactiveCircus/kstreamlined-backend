@@ -1,0 +1,16 @@
+[
+  {
+    "guid": "https://example.invalid/podcast/cached",
+    "title": "A cached Kotlin podcast",
+    "pubDate": "Sat, 12 Sep 2026 10:00:00 +0000",
+    "link": "https://example.invalid/podcast/cached",
+    "duration": "00:42:00",
+    "summary": "Read from the Redis REST stub.",
+    "enclosure": {
+      "url": "https://example.invalid/podcast.mp3"
+    },
+    "image": {
+      "href": "https://example.invalid/podcast.png"
+    }
+  }
+]

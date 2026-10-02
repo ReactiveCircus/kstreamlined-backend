@@ -71,6 +71,7 @@ jobs:
       - uses: graalvm/setup-graalvm@v1
         with:
           distribution: 'graalvm-community'
+          version: '25.4'
           java-version: '25'
           github-token: ${{ secrets.GITHUB_TOKEN }}
 

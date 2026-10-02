@@ -1,16 +1,16 @@
 complexity:
   LongMethod:
-    excludes: ["**/test/**", "**/testFixtures/**", "**/integrationTest/**"]
+    excludes: ["**/test/**", "**/testFixtures/**", "**/integrationTest/**", "**/nativeCompatibilityTest/**"]
   LongParameterList:
     active: false
   TooManyFunctions:
     allowedFunctionsPerClass: 20
     allowedFunctionsPerFile: 20
-    excludes: ["**/test/**", "**/testFixtures/**", "**/integrationTest/**"]
+    excludes: ["**/test/**", "**/testFixtures/**", "**/integrationTest/**", "**/nativeCompatibilityTest/**"]
 
 ktlint:
   ArgumentListWrapping:
-    excludes: [ '**/test/**', '**/testFixtures/**', '**/integrationTest/**' ]
+    excludes: [ '**/test/**', '**/testFixtures/**', '**/integrationTest/**', '**/nativeCompatibilityTest/**' ]
   ChainMethodContinuation:
     active: false
   ClassSignature:
@@ -32,7 +32,7 @@ ktlint:
 
 naming:
   FunctionNaming:
-    excludes: [ '**/test/**', '**/testFixtures/**', '**/integrationTest/**' ]
+    excludes: [ '**/test/**', '**/testFixtures/**', '**/integrationTest/**', '**/nativeCompatibilityTest/**' ]
   TopLevelPropertyNaming:
     constantPattern: '[A-Z][A-Za-z0-9]*'
     propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
@@ -40,8 +40,8 @@ naming:
 
 style:
   MagicNumber:
-    excludes: [ '**/test/**', '**/testFixtures/**', '**/integrationTest/**' ]
+    excludes: [ '**/test/**', '**/testFixtures/**', '**/integrationTest/**', '**/nativeCompatibilityTest/**' ]
   MaxLineLength:
-    excludes: [ '**/test/**', '**/testFixtures/**', '**/integrationTest/**' ]
+    excludes: [ '**/test/**', '**/testFixtures/**', '**/integrationTest/**', '**/nativeCompatibilityTest/**' ]
   UseCheckOrError:
     active: false

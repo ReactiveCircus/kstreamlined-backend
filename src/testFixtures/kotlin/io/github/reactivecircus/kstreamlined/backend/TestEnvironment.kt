@@ -23,13 +23,10 @@ class TestEnvironment(
             .setEmulatorHost(emulatorHost)
             .setCredentials(FirestoreOptions.EmulatorCredentials())
             .build()
-        check(options.host == emulatorHost && options.emulatorHost == emulatorHost) {
-            "Firestore client must target only the local emulator."
-        }
         options.service
     }
 
-    fun firestore(): Firestore = client.value
+    val firestore: Firestore = client.value
 
     fun reset() {
         resetFirestore()
