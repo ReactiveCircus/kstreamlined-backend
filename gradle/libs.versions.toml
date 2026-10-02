@@ -14,6 +14,7 @@ caffeine = "3.3.0"
 okhttp = "5.5.0"
 scrapeit = "1.3.0-alpha.2"
 ksoup = "0.2.6"
+develocity = "4.6.0"
 toolchainsResolver = "1.0.0"
 
 [plugins]
