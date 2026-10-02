@@ -59,9 +59,31 @@ jobs:
 
       - run: ./gradlew integrationTest
 
+  native-compatibility-tests:
+    name: Run native compatibility tests
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          distribution: 'graalvm-community'
+          version: '25.4'
+          java-version: '25'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          build-scan-terms-of-use-url: 'https://gradle.com/terms-of-service'
+          build-scan-terms-of-use-agree: 'yes'
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      - run: ./gradlew nativeCompatibilityTest
+
   deploy:
     name: Build and push container image to Google Artifact Registry, deploy to Cloud Run
-    needs: [ assemble-and-check, integration-tests ]
+    needs: [ assemble-and-check, integration-tests, native-compatibility-tests ]
     if: github.ref == 'refs/heads/main'
     runs-on: blacksmith-4vcpu-ubuntu-2404
 
