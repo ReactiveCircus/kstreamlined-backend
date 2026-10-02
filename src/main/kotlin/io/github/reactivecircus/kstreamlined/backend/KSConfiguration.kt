@@ -142,9 +142,14 @@ class KSConfiguration {
     fun firestore(
         @Value("\${KS_GCLOUD_PROJECT_ID}") projectId: String,
     ): Firestore {
+        val credentials = if (System.getenv("FIRESTORE_EMULATOR_HOST") != null) {
+            FirestoreOptions.EmulatorCredentials()
+        } else {
+            GoogleCredentials.getApplicationDefault()
+        }
         val firestoreOptions = FirestoreOptions.newBuilder()
             .setProjectId(projectId)
-            .setCredentials(GoogleCredentials.getApplicationDefault())
+            .setCredentials(credentials)
             .build()
         return firestoreOptions.service
     }
