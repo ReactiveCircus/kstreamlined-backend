@@ -49,8 +49,12 @@ graalvmNative {
         }
         resources.autodetect()
         buildArgs(
-            "-R:MaxHeapSize=100m",
-            "-J-Xmx12g"
+            buildList {
+                add("-R:MaxHeapSize=512m")
+                if (providers.environmentVariable("CI").orNull == "true") {
+                    add("-J-Xmx12g")
+                }
+            }
         )
     }
 }
