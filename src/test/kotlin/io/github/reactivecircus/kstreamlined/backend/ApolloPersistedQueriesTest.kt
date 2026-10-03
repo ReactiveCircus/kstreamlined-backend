@@ -65,7 +65,7 @@ class ApolloPersistedQueriesTest {
             .expectBody<String>()
             .consumeWith { response ->
                 val body = response.responseBody
-                assertEquals(body?.contains("PersistedQueryNotFound"), true)
+                assertEquals(true, body?.contains("PersistedQueryNotFound"))
             }
     }
 
@@ -95,7 +95,7 @@ class ApolloPersistedQueriesTest {
             .expectBody(String::class.java)
             .consumeWith { response ->
                 val body = response.responseBody
-                assertEquals(body?.contains("feedSources"), true)
+                assertEquals(true, body?.contains("feedSources"))
                 assertNotEquals(body?.contains("errors"), true)
             }
 
@@ -120,7 +120,7 @@ class ApolloPersistedQueriesTest {
             .expectBody<String>()
             .consumeWith { response ->
                 val body = response.responseBody
-                assertEquals(body?.contains("feedSources"), true)
+                assertEquals(true, body?.contains("feedSources"))
                 assertNotEquals(body?.contains("errors"), true)
             }
     }

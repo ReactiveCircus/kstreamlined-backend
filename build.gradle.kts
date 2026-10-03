@@ -3,6 +3,7 @@
 import com.netflix.graphql.dgs.codegen.gradle.GenerateJavaTask
 import dev.detekt.gradle.Detekt
 import dev.detekt.gradle.plugin.getSupportedKotlinVersion
+import org.gradle.process.CommandLineArgumentProvider
 import org.graalvm.buildtools.gradle.tasks.BuildNativeImageTask
 import org.graalvm.buildtools.gradle.tasks.GenerateResourcesConfigFile
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
@@ -19,6 +20,7 @@ plugins {
     alias(libs.plugins.dgsCodegen)
     alias(libs.plugins.detekt)
     alias(libs.plugins.graalvmNative)
+    `java-test-fixtures`
 }
 
 group = "io.github.reactivecircus.kstreamlined.backend"
@@ -47,10 +49,25 @@ graalvmNative {
         }
         resources.autodetect()
         buildArgs(
-            "-R:MaxHeapSize=100m",
-            "-J-Xmx12g"
+            buildList {
+                add("-R:MaxHeapSize=512m")
+                if (providers.environmentVariable("CI").orNull == "true") {
+                    add("-J-Xmx12g")
+                }
+            }
         )
     }
+}
+
+abstract class NativeCompatibilityArguments : CommandLineArgumentProvider {
+    @get:InputFile
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    @get:NormalizeLineEndings
+    abstract val executable: RegularFileProperty
+
+    override fun asArguments(): Iterable<String> = listOf(
+        "-Dks.native.executable=${executable.get().asFile.absolutePath}",
+    )
 }
 
 tasks.withType<BuildNativeImageTask>().configureEach {
@@ -99,6 +116,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
+sourceSets.testFixtures {
+    resources.srcDir("src/test/resources")
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
@@ -108,20 +129,38 @@ testing {
     suites {
         register<JvmTestSuite>("integrationTest") {
             useJUnitJupiter(dependencyManagement.importedProperties.getValue("junit-jupiter.version"))
-            sources.resources.srcDir("src/test/resources")
             dependencies {
                 implementation(project())
+                implementation(testFixtures(project()))
                 implementation(libs.kotlin.test.junit5)
                 implementation(libs.spring.boot.starter.graphql.test)
-                implementation(libs.mockwebserver)
-                implementation(libs.testcontainers.gcloud)
                 implementation(libs.testcontainers.junit.jupiter)
-                implementation(libs.gcloud.firestore)
                 implementation(libs.kotlinx.serialization.json)
             }
             targets.configureEach {
                 testTask.configure {
-                    description = "Runs integration tests against a local Firestore emulator and local HTTP stubs."
+                    description = "Runs integration tests against Firestore emulator and local HTTP stubs."
+                }
+            }
+        }
+        register<JvmTestSuite>("nativeCompatibilityTest") {
+            useJUnitJupiter(dependencyManagement.importedProperties.getValue("junit-jupiter.version"))
+            dependencies {
+                implementation(project())
+                implementation(testFixtures(project()))
+                implementation(libs.kotlin.test.junit5)
+                implementation(libs.spring.boot.starter.graphql.test)
+                implementation(libs.testcontainers.junit.jupiter)
+                implementation(libs.kotlinx.serialization.json)
+            }
+            targets.configureEach {
+                testTask.configure {
+                    description = "Runs native compatibility tests against Firestore emulator and local HTTP stubs."
+                    jvmArgumentProviders.add(
+                        objects.newInstance<NativeCompatibilityArguments>().apply {
+                            executable.set(tasks.named<BuildNativeImageTask>("nativeCompile").flatMap { it.outputFile })
+                        },
+                    )
                 }
             }
         }
@@ -180,6 +219,12 @@ dependencies {
     implementation(libs.caffeine)
     implementation(libs.scrapeit)
     implementation(libs.ksoup)
+
+    testFixturesApi(libs.mockwebserver)
+    testFixturesApi(libs.testcontainers.gcloud)
+    testFixturesApi(libs.gcloud.firestore)
+    testFixturesImplementation(libs.spring.test)
+    testFixturesImplementation(libs.kotlinx.serialization.json)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.spring.boot.starter.test)

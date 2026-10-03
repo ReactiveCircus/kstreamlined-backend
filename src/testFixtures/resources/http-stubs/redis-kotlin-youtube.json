@@ -1,0 +1,44 @@
+[
+  {
+    "id": "yt:video:cached",
+    "videoId": "cached",
+    "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+    "title": "A cached Kotlin video",
+    "link": {
+      "href": "https://example.invalid/watch?v=cached",
+      "rel": "alternate"
+    },
+    "author": {
+      "name": "Kotlin by JetBrains",
+      "uri": "https://example.invalid/channel"
+    },
+    "published": "2026-09-13T10:00:00+00:00",
+    "updated": "2026-09-13T11:00:00+00:00",
+    "mediaGroup": {
+      "title": "A cached Kotlin video",
+      "content": {
+        "url": "https://example.invalid/video",
+        "type": "application/x-shockwave-flash",
+        "width": "640",
+        "height": "390"
+      },
+      "thumbnail": {
+        "url": "https://example.invalid/video.jpg",
+        "width": "480",
+        "height": "360"
+      },
+      "description": "Read from the Redis REST stub.",
+      "community": {
+        "starRating": {
+          "count": "1",
+          "average": "5.00",
+          "min": "1",
+          "max": "5"
+        },
+        "statistics": {
+          "views": "100"
+        }
+      }
+    }
+  }
+]

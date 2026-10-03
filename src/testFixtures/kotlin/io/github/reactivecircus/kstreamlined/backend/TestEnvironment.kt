@@ -1,12 +1,14 @@
 package io.github.reactivecircus.kstreamlined.backend
 
-import com.google.cloud.NoCredentials
 import com.google.cloud.firestore.Firestore
 import com.google.cloud.firestore.FirestoreOptions
 import org.springframework.test.web.reactive.server.WebTestClient
 import java.time.Duration
 
-class TestEnvironment(private val emulatorHost: String) : AutoCloseable {
+class TestEnvironment(
+    val emulatorHost: String,
+    val projectId: String,
+) : AutoCloseable {
     val services = ServiceHttpStubs()
 
     private val emulator = WebTestClient.bindToServer()
@@ -16,25 +18,26 @@ class TestEnvironment(private val emulatorHost: String) : AutoCloseable {
 
     private val client = lazy {
         val options = FirestoreOptions.newBuilder()
-            .setProjectId(ProjectId)
+            .setProjectId(projectId)
             .setHost(emulatorHost)
             .setEmulatorHost(emulatorHost)
-            .setCredentials(NoCredentials.getInstance())
+            .setCredentials(FirestoreOptions.EmulatorCredentials())
             .build()
-        check(options.host == emulatorHost && options.emulatorHost == emulatorHost) {
-            "Firestore client must target only the local emulator."
-        }
         options.service
     }
 
-    fun firestore(): Firestore = client.value
+    val firestore: Firestore = client.value
 
     fun reset() {
+        resetFirestore()
+        services.reset()
+    }
+
+    fun resetFirestore() {
         emulator.delete()
-            .uri("/emulator/v1/projects/$ProjectId/databases/(default)/documents")
+            .uri("/emulator/v1/projects/$projectId/databases/(default)/documents")
             .exchange()
             .expectStatus().isOk
-        services.reset()
     }
 
     override fun close() {
@@ -45,9 +48,5 @@ class TestEnvironment(private val emulatorHost: String) : AutoCloseable {
                 client.value.close()
             }
         }
-    }
-
-    companion object {
-        const val ProjectId = "demo-ks-integration"
     }
 }
