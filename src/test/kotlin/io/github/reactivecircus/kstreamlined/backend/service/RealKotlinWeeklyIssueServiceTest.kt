@@ -115,6 +115,43 @@ class RealKotlinWeeklyIssueServiceTest {
     }
 
     @Test
+    fun `loadKotlinWeeklyIssue(url) ignores unknown groups and underlined links and deduplicates entries`() = runBlocking {
+        val section = """
+            <div style="overflow: hidden;">
+                <div>news</div>
+                <div>
+                    <a href="https://example.com/article?a=1&amp;b=2"><strong style="font-weight:bold">Kotlin &amp; more</strong></a>
+                    <a href="https://example.com/ignored" style="text-decoration:underline"><span style="font-weight:bold">Ignored</span></a>
+                    <span style="font-size:14px">A &amp; B</span>
+                    <a href="example.com">example.com</a>
+                </div>
+            </div>
+        """.trimIndent()
+        val html = """
+            <html><body>
+                <div style="overflow: hidden;"><div>SPONSORS</div></div>
+                $section
+                $section
+            </body></html>
+        """.trimIndent()
+        val mockEngine = MockEngine { respond(content = ByteReadChannel(html)) }
+        val kotlinWeeklyIssueService = RealKotlinWeeklyIssueService(mockEngine)
+
+        assertEquals(
+            listOf(
+                KotlinWeeklyIssueEntry(
+                    title = "Kotlin & more",
+                    summary = "A & B",
+                    url = "https://example.com/article?a=1&b=2",
+                    source = "example.com",
+                    group = KotlinWeeklyIssueEntryGroup.NEWS,
+                ),
+            ),
+            kotlinWeeklyIssueService.loadKotlinWeeklyIssue("url"),
+        )
+    }
+
+    @Test
     fun `loadKotlinWeeklyIssue(url) throws exception when API call fails`(): Unit = runBlocking {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)

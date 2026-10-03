@@ -217,7 +217,7 @@ dependencies {
     implementation(libs.ktor.serialization.xml)
     implementation(libs.gcloud.firestore)
     implementation(libs.caffeine)
-    implementation(libs.scrapeit)
+    implementation(libs.commonsText)
     implementation(libs.ksoup)
 
     testFixturesApi(libs.mockwebserver)

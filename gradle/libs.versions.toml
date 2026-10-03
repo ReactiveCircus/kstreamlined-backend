@@ -12,8 +12,8 @@ detekt = "2.0.0-alpha.6"
 graalvmNative = "1.1.13"
 caffeine = "3.3.0"
 okhttp = "5.5.0"
-scrapeit = "1.3.0-alpha.2"
 ksoup = "0.2.6"
+commonsText = "1.15.0"
 develocity = "4.6.0"
 toolchainsResolver = "1.0.0"
 
@@ -52,5 +52,5 @@ kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bo
 kotlinx-serialization-bom = { module = "org.jetbrains.kotlinx:kotlinx-serialization-bom", version.ref = "kotlinxSerializationBom" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
-scrapeit = { module = "it.skrape:skrapeit", version.ref = "scrapeit" }
 ksoup = { module = "com.fleeksoft.ksoup:ksoup", version.ref = "ksoup" }
+commonsText = { module = "org.apache.commons:commons-text", version.ref = "commonsText" }
