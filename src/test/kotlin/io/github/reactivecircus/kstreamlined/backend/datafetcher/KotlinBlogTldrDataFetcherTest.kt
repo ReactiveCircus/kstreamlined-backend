@@ -28,36 +28,36 @@ class KotlinBlogTldrDataFetcherTest {
 
     private val articleId = "https://blog.jetbrains.com/?post_type=kotlin&p=12345"
 
-    private val kotlinBlogTldrQuery = """
-        query KotlinBlogTldr(${"$"}id: ID!) {
-            kotlinBlogTldr(id: ${"$"}id) {
-                id
-                content
-                model
-                generatedAt
-            }
-        }
-    """.trimIndent()
+    private val kotlinBlogTldrQuery = $$"""
+        |query KotlinBlogTldr($id: ID!) {
+        |  kotlinBlogTldr(id: $id) {
+        |    id
+        |    content
+        |    model
+        |    generatedAt
+        |  }
+        |}
+    """.trimMargin()
 
-    private val generateKotlinBlogTldrMutation = """
-        mutation GenerateKotlinBlogTldr(${"$"}id: ID!, ${"$"}persist: Boolean! = false) {
-            generateKotlinBlogTldr(id: ${"$"}id, persist: ${"$"}persist) {
-                id
-                content
-                model
-                generatedAt
-            }
-        }
-    """.trimIndent()
+    private val generateKotlinBlogTldrMutation = $$"""
+        |mutation GenerateKotlinBlogTldr($id: ID!, $persist: Boolean! = false) {
+        |  generateKotlinBlogTldr(id: $id, persist: $persist) {
+        |    id
+        |    content
+        |    model
+        |    generatedAt
+        |  }
+        |}
+    """.trimMargin()
 
     private val backfillKotlinBlogTldrsMutation = """
-        mutation Backfill {
-            backfillKotlinBlogTldrs {
-                generatedCount
-                failedIds
-            }
-        }
-    """.trimIndent()
+        |mutation Backfill {
+        |  backfillKotlinBlogTldrs {
+        |    generatedCount
+        |    failedIds
+        |  }
+        |}
+    """.trimMargin()
 
     @Test
     fun `kotlinBlogTldr(id) query returns expected TLDR when operation succeeds`() {

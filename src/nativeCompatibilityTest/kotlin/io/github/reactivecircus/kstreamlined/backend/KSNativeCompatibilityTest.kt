@@ -204,11 +204,11 @@ class KSNativeCompatibilityTest {
             id = BlogId,
             title = "A New Approach to Incremental Compilation in Kotlin",
             html = """
-                <h2>Incremental compilation</h2>
-                <p>Kotlin 2.0 makes <a href="https://kotlinlang.org">builds</a> faster.</p>
-                <ul><li>Smaller rebuilds</li><li>Better caching</li></ul>
-                <pre><code class="language-kotlin">fun main() = println("Hello")</code></pre>
-            """.trimIndent(),
+                |<h2>Incremental compilation</h2>
+                |<p>Kotlin 2.0 makes <a href="https://kotlinlang.org">builds</a> faster.</p>
+                |<ul><li>Smaller rebuilds</li><li>Better caching</li></ul>
+                |<pre><code class="language-kotlin">fun main() = println("Hello")</code></pre>
+            """.trimMargin(),
             tldr = tldr,
         )
         firestore.collection(BlogContent).document(BlogDocumentId).set(content).get(5, TimeUnit.SECONDS)

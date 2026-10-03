@@ -19,14 +19,14 @@ class FeedSourceDataFetcherTest {
     private lateinit var dgsQueryExecutor: DgsQueryExecutor
 
     private val feedSourcesQuery = """
-        query FeedSources {
-            feedSources {
-                key
-                title
-                description
-            }
-        }
-    """.trimIndent()
+        |query FeedSources {
+        |  feedSources {
+        |    key
+        |    title
+        |    description
+        |  }
+        |}
+    """.trimMargin()
 
     @Test
     fun `feedSources query returns all available feed sources`() {

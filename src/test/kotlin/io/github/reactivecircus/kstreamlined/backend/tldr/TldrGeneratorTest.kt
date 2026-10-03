@@ -59,16 +59,16 @@ class TldrGeneratorTest {
         assertEquals("user", messages[1].jsonObject.getValue("role").jsonPrimitive.content)
         assertEquals(
             """
-            Create the TLDR for this article in valid markdown. Decide what deserves emphasis and choose the clearest structure for this content.
-
-            <UNTRUSTED_ARTICLE>
-            Title: Structured Concurrency
-
-            ## What changed
-
-            Use `coroutineScope`.
-            </UNTRUSTED_ARTICLE>
-            """.trimIndent(),
+            |Create the TLDR for this article in valid markdown. Decide what deserves emphasis and choose the clearest structure for this content.
+            |
+            |<UNTRUSTED_ARTICLE>
+            |Title: Structured Concurrency
+            |
+            |## What changed
+            |
+            |Use `coroutineScope`.
+            |</UNTRUSTED_ARTICLE>
+            """.trimMargin(),
             messages[1].jsonObject.getValue("content").jsonPrimitive.content,
         )
         assertEquals(0.2, body.getValue("temperature").jsonPrimitive.double)

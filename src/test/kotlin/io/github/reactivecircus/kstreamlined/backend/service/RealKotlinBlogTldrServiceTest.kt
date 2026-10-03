@@ -53,10 +53,10 @@ class RealKotlinBlogTldrServiceTest {
         guid = "https://blog.jetbrains.com/?post_type=kotlin&p=12345",
         description = "An article about structured concurrency.",
         html = """
-            <h2>What changed</h2>
-            <p>Use <a href="https://kotlinlang.org/docs/coroutines-basics.html"><code>coroutineScope</code></a>.</p>
-            <script>tracking()</script>
-        """.trimIndent(),
+            |<h2>What changed</h2>
+            |<p>Use <a href="https://kotlinlang.org/docs/coroutines-basics.html"><code>coroutineScope</code></a>.</p>
+            |<script>tracking()</script>
+        """.trimMargin(),
     )
 
     private val timeSource = TestTimeSource()

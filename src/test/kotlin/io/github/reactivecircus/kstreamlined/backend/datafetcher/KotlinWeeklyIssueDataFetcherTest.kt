@@ -23,17 +23,17 @@ class KotlinWeeklyIssueDataFetcherTest {
     @Autowired
     private lateinit var kotlinWeeklyIssueService: KotlinWeeklyIssueService
 
-    private val kotlinWeeklyIssueQuery = """
-        query KotlinWeeklyIssue(${"$"}url: String!) {
-            kotlinWeeklyIssue(url: ${"$"}url) {
-                title
-                summary
-                url
-                source
-                group
-            }
-        }
-    """.trimIndent()
+    private val kotlinWeeklyIssueQuery = $$"""
+        |query KotlinWeeklyIssue($url: String!) {
+        |  kotlinWeeklyIssue(url: $url) {
+        |    title
+        |    summary
+        |    url
+        |    source
+        |    group
+        |  }
+        |}
+    """.trimMargin()
 
     @Test
     fun `kotlinWeeklyIssue(url) query returns expected kotlin weekly issue entries when operation succeeds`() {

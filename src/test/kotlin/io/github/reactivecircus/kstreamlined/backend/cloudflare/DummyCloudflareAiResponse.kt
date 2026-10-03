@@ -12,37 +12,37 @@ fun successfulCloudflareAiResponse(
 ): String {
     val usage = if (includeUsage) {
         """
-        ,"usage": {
-          "prompt_tokens": 1000,
-          "completion_tokens": 200,
-          "total_tokens": 1200
-          ${if (includeNeurons) ""","neurons": 75.5""" else ""}
-        }
-        """.trimIndent()
+        |,"usage": {
+        |  "prompt_tokens": 1000,
+        |  "completion_tokens": 200,
+        |  "total_tokens": 1200
+        |  ${if (includeNeurons) ""","neurons": 75.5""" else ""}
+        |}
+        """.trimMargin()
     } else {
         ""
     }
     return """
-        {
-          "result": {
-            "id": "completion-id",
-            "object": "chat.completion",
-            "created": 1757065600,
-            "model": "$returnedModel",
-            "choices": [
-              {
-                "index": $choiceIndex,
-                "message": {
-                  "role": "assistant",
-                  "content": ${Json.encodeToString(content)}
-                },
-                "finish_reason": "$finishReason"
-              }
-            ]
-            $usage
-          },
-          "success": true,
-          "errors": []
-        }
-    """.trimIndent()
+        |{
+        |  "result": {
+        |    "id": "completion-id",
+        |    "object": "chat.completion",
+        |    "created": 1757065600,
+        |    "model": "$returnedModel",
+        |    "choices": [
+        |      {
+        |        "index": $choiceIndex,
+        |        "message": {
+        |          "role": "assistant",
+        |          "content": ${Json.encodeToString(content)}
+        |        },
+        |        "finish_reason": "$finishReason"
+        |      }
+        |    ]
+        |    $usage
+        |  },
+        |  "success": true,
+        |  "errors": []
+        |}
+    """.trimMargin()
 }

@@ -27,13 +27,13 @@ class ApolloPersistedQueriesTest {
     private lateinit var webTestClient: WebTestClient
 
     private val feedSourcesQuery = """
-        query FeedSources {
-            feedSources {
-                key
-                title
-            }
-        }
-    """.trimIndent()
+        |query FeedSources {
+        |  feedSources {
+        |      key
+        |      title
+        |  }
+        |}
+    """.trimMargin()
 
     @BeforeTest
     fun setUp() {
@@ -46,15 +46,15 @@ class ApolloPersistedQueriesTest {
     fun `query with persisted query extension returns PersistedQueryNotFound for unknown hash`() {
         val unknownHash = "0".repeat(64)
         val requestBody = """
-            {
-                "extensions": {
-                    "persistedQuery": {
-                        "version": 1,
-                        "sha256Hash": "$unknownHash"
-                    }
-                }
-            }
-        """.trimIndent()
+            |{
+            |  "extensions": {
+            |    "persistedQuery": {
+            |      "version": 1,
+            |      "sha256Hash": "$unknownHash"
+            |    }
+            |  }
+            |}
+        """.trimMargin()
 
         webTestClient.post()
             .uri("/graphql")
@@ -75,16 +75,16 @@ class ApolloPersistedQueriesTest {
 
         // First request: register the query with the hash
         val registerRequestBody = """
-            {
-                "query": ${feedSourcesQuery.toJsonString()},
-                "extensions": {
-                    "persistedQuery": {
-                        "version": 1,
-                        "sha256Hash": "$queryHash"
-                    }
-                }
-            }
-        """.trimIndent()
+            |{
+            |  "query": ${feedSourcesQuery.toJsonString()},
+            |  "extensions": {
+            |    "persistedQuery": {
+            |      "version": 1,
+            |      "sha256Hash": "$queryHash"
+            |    }
+            |  }
+            |}
+        """.trimMargin()
 
         webTestClient.post()
             .uri("/graphql")
@@ -101,15 +101,15 @@ class ApolloPersistedQueriesTest {
 
         // Second request: retrieve by hash only (no query body)
         val retrieveRequestBody = """
-            {
-                "extensions": {
-                    "persistedQuery": {
-                        "version": 1,
-                        "sha256Hash": "$queryHash"
-                    }
-                }
-            }
-        """.trimIndent()
+            |{
+            |  "extensions": {
+            |    "persistedQuery": {
+            |      "version": 1,
+            |      "sha256Hash": "$queryHash"
+            |    }
+            |  }
+            |}
+        """.trimMargin()
 
         webTestClient.post()
             .uri("/graphql")

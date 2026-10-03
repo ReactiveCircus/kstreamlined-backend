@@ -34,39 +34,39 @@ class FeedEntryDataFetcherTest {
     @Autowired
     private lateinit var feedService: FeedService
 
-    private val feedEntriesQuery = """
-        query FeedEntriesQuery(${"$"}filters: [FeedSourceKey!]) {
-            feedEntries(filters: ${"$"}filters) {
-                id
-                title
-                publishTime
-                contentUrl
-                ... on KotlinBlog {
-                    featuredImageUrl
-                    description
-                }
-                ... on KotlinYouTube {
-                    thumbnailUrl
-                    description
-                }
-                ... on TalkingKotlin {
-                    audioUrl
-                    thumbnailUrl
-                    summary
-                    duration
-                }
-                ... on KotlinWeekly {
-                    issueNumber
-                }
-            }
-        }
-    """.trimIndent()
+    private val feedEntriesQuery = $$"""
+        |query FeedEntriesQuery($filters: [FeedSourceKey!]) {
+        |  feedEntries(filters: $filters) {
+        |    id
+        |    title
+        |    publishTime
+        |    contentUrl
+        |    ... on KotlinBlog {
+        |      featuredImageUrl
+        |      description
+        |    }
+        |    ... on KotlinYouTube {
+        |      thumbnailUrl
+        |      description
+        |    }
+        |    ... on TalkingKotlin {
+        |      audioUrl
+        |      thumbnailUrl
+        |      summary
+        |      duration
+        |    }
+        |    ... on KotlinWeekly {
+        |      issueNumber
+        |    }
+        |  }
+        |}
+    """.trimMargin()
 
     private val syncFeedsMutation = """
-        mutation SyncFeeds {
-            syncFeeds
-        }
-    """.trimIndent()
+        |mutation SyncFeeds {
+        |  syncFeeds
+        |}
+    """.trimMargin()
 
     @Test
     fun `feedEntries() query returns expected feed entries ordered by publish time when operation succeeds`() {

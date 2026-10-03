@@ -16,9 +16,9 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves mixed content in document order through wrappers`() {
         val html = """
-            <div>Important <em>caveat</em><p>Details</p>After <span>the paragraph</span></div>
-            <section><span>Before<div>Wrapped block</div>After</span></section>
-        """.trimIndent()
+            |<div>Important <em>caveat</em><p>Details</p>After <span>the paragraph</span></div>
+            |<section><span>Before<div>Wrapped block</div>After</span></section>
+        """.trimMargin()
 
         assertEquals(
             "Important caveat\n\nDetails\n\nAfter the paragraph\n\nBefore\n\nWrapped block\n\nAfter",
@@ -29,8 +29,8 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves wrapped nested lists and following text`() {
         val html = """
-            <ul><li>Parent<div><ul><li>Child</li></ul></div>After child</li></ul>
-        """.trimIndent()
+            |<ul><li>Parent<div><ul><li>Child</li></ul></div>After child</li></ul>
+        """.trimMargin()
 
         assertEquals("- Parent\n  - Child\n\n  After child", TldrInputExtractor.extract(html))
     }
@@ -38,27 +38,27 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves paragraphs code blocks and quotes inside list items`() {
         val html = """
-            <ol><li><p>Run this:</p><pre data-enlighter-language="kotlin">fun main() {
-                println("Hello")
-            }</pre><p>Check the result.</p><blockquote><p>Keep the indentation.</p></blockquote>
-            <ul><li>Then continue.</li></ul></li></ol>
-        """.trimIndent()
+            |<ol><li><p>Run this:</p><pre data-enlighter-language="kotlin">fun main() {
+            |    println("Hello")
+            |}</pre><p>Check the result.</p><blockquote><p>Keep the indentation.</p></blockquote>
+            |<ul><li>Then continue.</li></ul></li></ol>
+        """.trimMargin()
 
         assertEquals(
             """
-            1. Run this:
-
-               ```kotlin
-               fun main() {
-                   println("Hello")
-               }
-               ```
-
-               Check the result.
-
-               > Keep the indentation.
-               - Then continue.
-            """.trimIndent(),
+            |1. Run this:
+            |
+            |   ```kotlin
+            |   fun main() {
+            |       println("Hello")
+            |   }
+            |   ```
+            |
+            |   Check the result.
+            |
+            |   > Keep the indentation.
+            |   - Then continue.
+            """.trimMargin(),
             TldrInputExtractor.extract(html),
         )
     }
@@ -84,10 +84,10 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves line breaks in paragraphs lists and captions`() {
         val html = """
-            <p><br>First<br>Second<br></p>
-            <ul><li>Step<br>Detail</li></ul>
-            <figure><figcaption>Caption<br><em>Source</em></figcaption></figure>
-        """.trimIndent()
+            |<p><br>First<br>Second<br></p>
+            |<ul><li>Step<br>Detail</li></ul>
+            |<figure><figcaption>Caption<br><em>Source</em></figcaption></figure>
+        """.trimMargin()
 
         assertEquals("First\nSecond\n\n- Step\n  Detail\n\nCaption\nSource", TldrInputExtractor.extract(html))
     }
@@ -95,9 +95,9 @@ class TldrInputExtractorTest {
     @Test
     fun `retains descriptive image alt text but ignores decorative images`() {
         val html = """
-            <figure><img src="screenshot.png" alt="AI agent uses the MCP server"><figcaption>Demo</figcaption></figure>
-            <p>Try <img alt="Kotlin &amp; Java"> today.</p><img alt=""><img src="decoration.png">
-        """.trimIndent()
+            |<figure><img src="screenshot.png" alt="AI agent uses the MCP server"><figcaption>Demo</figcaption></figure>
+            |<p>Try <img alt="Kotlin &amp; Java"> today.</p><img alt=""><img src="decoration.png">
+        """.trimMargin()
 
         assertEquals("AI agent uses the MCP server\n\nDemo\n\nTry Kotlin & Java today.", TldrInputExtractor.extract(html))
     }
@@ -105,24 +105,24 @@ class TldrInputExtractorTest {
     @Test
     fun `renders feed Enlighter blocks without inferring language from unrelated attributes`() {
         val html = """
-            <pre class="EnlighterJSRAW" data-enlighter-language="generic" data-enlighter-title="Kotlin publishing">product:
-              type: lib
-              platforms: [jvm, android, iosArm64, iosSimulatorArm64, wasmJs]</pre>
-            <pre class="EnlighterJSRAW EnlighterJSRAW" data-enlighter-language="json">{"enabled": true}</pre>
-        """.trimIndent()
+            |<pre class="EnlighterJSRAW" data-enlighter-language="generic" data-enlighter-title="Kotlin publishing">product:
+            |  type: lib
+            |  platforms: [jvm, android, iosArm64, iosSimulatorArm64, wasmJs]</pre>
+            |<pre class="EnlighterJSRAW EnlighterJSRAW" data-enlighter-language="json">{"enabled": true}</pre>
+        """.trimMargin()
 
         assertEquals(
             """
-            ```
-            product:
-              type: lib
-              platforms: [jvm, android, iosArm64, iosSimulatorArm64, wasmJs]
-            ```
-
-            ```json
-            {"enabled": true}
-            ```
-            """.trimIndent(),
+            |```
+            |product:
+            |  type: lib
+            |  platforms: [jvm, android, iosArm64, iosSimulatorArm64, wasmJs]
+            |```
+            |
+            |```json
+            |{"enabled": true}
+            |```
+            """.trimMargin(),
             TldrInputExtractor.extract(html),
         )
     }
@@ -138,16 +138,16 @@ class TldrInputExtractorTest {
     @Test
     fun `extracts headings paragraphs entities and inline code`() {
         val html = """
-            <h2>Kotlin &amp; Java</h2>
-            <p>Call <code>flow.collect()</code> when x &lt; y.</p>
-        """.trimIndent()
+            |<h2>Kotlin &amp; Java</h2>
+            |<p>Call <code>flow.collect()</code> when x &lt; y.</p>
+        """.trimMargin()
 
         assertEquals(
             """
-            ## Kotlin & Java
-
-            Call `flow.collect()` when x < y.
-            """.trimIndent(),
+            |## Kotlin & Java
+            |
+            |Call `flow.collect()` when x < y.
+            """.trimMargin(),
             TldrInputExtractor.extract(html),
         )
     }
@@ -155,20 +155,20 @@ class TldrInputExtractorTest {
     @Test
     fun `removes non-content and hidden elements`() {
         val html = """
-            <p>Visible introduction.</p>
-            <script>trackArticle()</script>
-            <nav><p>Previous article</p></nav>
-            <div hidden><p>Hidden content</p></div>
-            <div aria-hidden="true"><p>Also hidden</p></div>
-            <p>Visible conclusion.</p>
-        """.trimIndent()
+            |<p>Visible introduction.</p>
+            |<script>trackArticle()</script>
+            |<nav><p>Previous article</p></nav>
+            |<div hidden><p>Hidden content</p></div>
+            |<div aria-hidden="true"><p>Also hidden</p></div>
+            |<p>Visible conclusion.</p>
+        """.trimMargin()
 
         assertEquals(
             """
-            Visible introduction.
-
-            Visible conclusion.
-            """.trimIndent(),
+            |Visible introduction.
+            |
+            |Visible conclusion.
+            """.trimMargin(),
             TldrInputExtractor.extract(html),
         )
     }
@@ -176,25 +176,25 @@ class TldrInputExtractorTest {
     @Test
     fun `renders nested unordered and ordered lists`() {
         val html = """
-            <ul>
-              <li>Coroutines</li>
-              <li>
-                Flows
-                <ol>
-                  <li>Cold streams</li>
-                  <li>Hot streams with <code>StateFlow</code></li>
-                </ol>
-              </li>
-            </ul>
-        """.trimIndent()
+            |<ul>
+            |  <li>Coroutines</li>
+            |  <li>
+            |    Flows
+            |    <ol>
+            |      <li>Cold streams</li>
+            |      <li>Hot streams with <code>StateFlow</code></li>
+            |    </ol>
+            |  </li>
+            |</ul>
+        """.trimMargin()
 
         assertEquals(
             """
-            - Coroutines
-            - Flows
-              1. Cold streams
-              2. Hot streams with `StateFlow`
-            """.trimIndent(),
+            |- Coroutines
+            |- Flows
+            |  1. Cold streams
+            |  2. Hot streams with `StateFlow`
+            """.trimMargin(),
             TldrInputExtractor.extract(html),
         )
     }
@@ -202,19 +202,19 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves code whitespace and detects language hints`() {
         val html = """
-            <pre><code class="language-kotlin">fun main() {
-                println("Hello")
-            }</code></pre>
-        """.trimIndent()
+            |<pre><code class="language-kotlin">fun main() {
+            |    println("Hello")
+            |}</code></pre>
+        """.trimMargin()
 
         assertEquals(
             """
-            ```kotlin
-            fun main() {
-                println("Hello")
-            }
-            ```
-            """.trimIndent(),
+            |```kotlin
+            |fun main() {
+            |    println("Hello")
+            |}
+            |```
+            """.trimMargin(),
             TldrInputExtractor.extract(html),
         )
     }
@@ -222,15 +222,15 @@ class TldrInputExtractorTest {
     @Test
     fun `does not infer a supported language from part of another language name`() {
         val html = """
-            <pre><code class="language-javascript">const greeting = "Hello"</code></pre>
-        """.trimIndent()
+            |<pre><code class="language-javascript">const greeting = "Hello"</code></pre>
+        """.trimMargin()
 
         assertEquals(
             """
-            ```
-            const greeting = "Hello"
-            ```
-            """.trimIndent(),
+            |```
+            |const greeting = "Hello"
+            |```
+            """.trimMargin(),
             TldrInputExtractor.extract(html),
         )
     }
@@ -238,21 +238,21 @@ class TldrInputExtractorTest {
     @Test
     fun `renders blockquotes inside noisy containers`() {
         val html = """
-            <article>
-              <section>
-                <blockquote>
-                  <p>First quoted paragraph.</p>
-                  <p>Second paragraph with <code>inline code</code>.</p>
-                </blockquote>
-              </section>
-            </article>
-        """.trimIndent()
+            |<article>
+            |  <section>
+            |    <blockquote>
+            |      <p>First quoted paragraph.</p>
+            |      <p>Second paragraph with <code>inline code</code>.</p>
+            |    </blockquote>
+            |  </section>
+            |</article>
+        """.trimMargin()
 
         assertEquals(
             """
-            > First quoted paragraph.
-            > Second paragraph with `inline code`.
-            """.trimIndent(),
+            |> First quoted paragraph.
+            |> Second paragraph with `inline code`.
+            """.trimMargin(),
             TldrInputExtractor.extract(html),
         )
     }
@@ -260,13 +260,13 @@ class TldrInputExtractorTest {
     @Test
     fun `omits empty structural elements`() {
         val html = """
-            <h1> </h1>
-            <p></p>
-            <pre> 
-            </pre>
-            <hr>
-            <p>Content</p>
-        """.trimIndent()
+            |<h1> </h1>
+            |<p></p>
+            |<pre> 
+            |</pre>
+            |<hr>
+            |<p>Content</p>
+        """.trimMargin()
 
         assertEquals("Content", TldrInputExtractor.extract(html))
     }
@@ -274,10 +274,10 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves absolute HTTP links and surrounding inline content`() {
         val html = """
-            <p>Read <a href="https://kotlinlang.org/docs/flow.html">the docs</a>,
-            then <a href="http://example.com/guide">this guide</a>.</p>
-            <p><a href=" HTTPS://example.com/CaseSensitive ">Uppercase scheme</a></p>
-        """.trimIndent()
+            |<p>Read <a href="https://kotlinlang.org/docs/flow.html">the docs</a>,
+            |then <a href="http://example.com/guide">this guide</a>.</p>
+            |<p><a href=" HTTPS://example.com/CaseSensitive ">Uppercase scheme</a></p>
+        """.trimMargin()
 
         assertEquals(
             "Read [the docs](<https://kotlinlang.org/docs/flow.html>), " +
@@ -290,9 +290,9 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves inline code in link labels without escaping its contents`() {
         val html = """
-            <p>Use <a href="https://example.com/api"><strong>the <code>List&lt;T&gt;</code> API</strong></a>.</p>
-            <p><a href="https://example.com/code"><code>`[value]`</code></a></p>
-        """.trimIndent()
+            |<p>Use <a href="https://example.com/api"><strong>the <code>List&lt;T&gt;</code> API</strong></a>.</p>
+            |<p><a href="https://example.com/code"><code>`[value]`</code></a></p>
+        """.trimMargin()
 
         assertEquals(
             "Use [the `List<T>` API](<https://example.com/api>).\n\n" +
@@ -304,9 +304,9 @@ class TldrInputExtractorTest {
     @Test
     fun `escapes Markdown in link label text and image alt text`() {
         val html = """
-            <a href="https://example.com">[value] \ * _ ` &lt;T&gt; &amp;copy; !</a>
-            <p><a href="https://example.com/diagram"><img src="diagram.png" alt="[Flow] &amp; State"></a></p>
-        """.trimIndent()
+            |<a href="https://example.com">[value] \ * _ ` &lt;T&gt; &amp;copy; !</a>
+            |<p><a href="https://example.com/diagram"><img src="diagram.png" alt="[Flow] &amp; State"></a></p>
+        """.trimMargin()
 
         assertEquals(
             """[\[value\] \\ \* \_ \` \<T\> \&copy; \!](<https://example.com>)""" +
@@ -318,9 +318,9 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves URL query fragments parentheses and literal entities`() {
         val html = """
-            <a href="https://example.com/api/Map_(type)?a=1&amp;b=2#usage">API</a>
-            <p><a href="https://example.com/?literal=&amp;copy;&amp;encoded=%26">Entities</a></p>
-        """.trimIndent()
+            |<a href="https://example.com/api/Map_(type)?a=1&amp;b=2#usage">API</a>
+            |<p><a href="https://example.com/?literal=&amp;copy;&amp;encoded=%26">Entities</a></p>
+        """.trimMargin()
 
         assertEquals(
             "[API](<https://example.com/api/Map_(type)?a=1&amp;b=2#usage>)\n\n" +
@@ -332,14 +332,14 @@ class TldrInputExtractorTest {
     @Test
     fun `keeps relative and fragment links as visible text without resolving a base`() {
         val html = """
-            <base href="https://example.com/article/">
-            <p><a href="#installation">Installation</a></p>
-            <p><a href="/docs">Root</a></p>
-            <p><a href="../guide">Parent</a></p>
-            <p><a href="another-post">Sibling</a></p>
-            <p><a href="?page=2">Query</a></p>
-            <p><a href="//example.com/docs">Scheme-relative</a></p>
-        """.trimIndent()
+            |<base href="https://example.com/article/">
+            |<p><a href="#installation">Installation</a></p>
+            |<p><a href="/docs">Root</a></p>
+            |<p><a href="../guide">Parent</a></p>
+            |<p><a href="another-post">Sibling</a></p>
+            |<p><a href="?page=2">Query</a></p>
+            |<p><a href="//example.com/docs">Scheme-relative</a></p>
+        """.trimMargin()
 
         assertEquals(
             "Installation\n\nRoot\n\nParent\n\nSibling\n\nQuery\n\nScheme-relative",
@@ -377,11 +377,11 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves block structure within linked content`() {
         val html = """
-            <div>Before<a href="https://example.com/article">
-                <h2>Article</h2><p>Details with <code>Flow</code>.</p>
-                <ul><li>First</li><li>Second</li></ul>
-            </a>After</div>
-        """.trimIndent()
+            |<div>Before<a href="https://example.com/article">
+            |    <h2>Article</h2><p>Details with <code>Flow</code>.</p>
+            |    <ul><li>First</li><li>Second</li></ul>
+            |</a>After</div>
+        """.trimMargin()
 
         assertEquals(
             "Before\n\n## Article\n\nDetails with `Flow`.\n\n- First\n- Second\n\n" +
@@ -393,10 +393,10 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves links inside headings lists and blockquotes`() {
         val html = """
-            <h2><a href="https://example.com/api">API</a></h2>
-            <ul><li>Use <a href="https://example.com/flow"><code>Flow</code></a></li></ul>
-            <blockquote><p>Read <a href="https://example.com/guide">the guide</a>.</p></blockquote>
-        """.trimIndent()
+            |<h2><a href="https://example.com/api">API</a></h2>
+            |<ul><li>Use <a href="https://example.com/flow"><code>Flow</code></a></li></ul>
+            |<blockquote><p>Read <a href="https://example.com/guide">the guide</a>.</p></blockquote>
+        """.trimMargin()
 
         assertEquals(
             "## [API](<https://example.com/api>)\n\n" +
@@ -409,9 +409,9 @@ class TldrInputExtractorTest {
     @Test
     fun `preserves label spacing and prevents blank lines from breaking links`() {
         val html = """
-            <p>Before<a href="https://example.com"> label </a>after.</p>
-            <p><a href="https://example.com">First<br><br>Second</a></p>
-        """.trimIndent()
+            |<p>Before<a href="https://example.com"> label </a>after.</p>
+            |<p><a href="https://example.com">First<br><br>Second</a></p>
+        """.trimMargin()
 
         assertEquals(
             "Before[ label ](<https://example.com>)after.\n\n[First Second](<https://example.com>)",
@@ -422,13 +422,13 @@ class TldrInputExtractorTest {
     @Test
     fun `omits empty links and links in removed content`() {
         val html = """
-            <p>A<a href="https://example.com"> </a>B</p>
-            <a href="https://example.com"></a>
-            <a href="https://example.com"><img src="decorative.png" alt=""></a>
-            <a href="https://example.com"><p> </p></a>
-            <a hidden href="https://example.com">Hidden</a>
-            <nav><a href="https://example.com">Navigation</a></nav>
-        """.trimIndent()
+            |<p>A<a href="https://example.com"> </a>B</p>
+            |<a href="https://example.com"></a>
+            |<a href="https://example.com"><img src="decorative.png" alt=""></a>
+            |<a href="https://example.com"><p> </p></a>
+            |<a hidden href="https://example.com">Hidden</a>
+            |<nav><a href="https://example.com">Navigation</a></nav>
+        """.trimMargin()
 
         assertEquals("A B", TldrInputExtractor.extract(html))
     }

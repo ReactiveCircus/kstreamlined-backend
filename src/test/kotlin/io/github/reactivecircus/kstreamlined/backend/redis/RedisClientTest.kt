@@ -24,14 +24,14 @@ class RedisClientTest {
 
                 "d" -> respond(
                     content = """
-                        { "result": "[\"a\",\"b\",\"c\"]" }
-                    """.trimIndent(),
+                        |{ "result": "[\"a\",\"b\",\"c\"]" }
+                    """.trimMargin(),
                 )
 
                 else -> respond(
                     content = """
-                        { "result": "{\"key\": \"value\"}" }
-                    """.trimIndent(),
+                        |{ "result": "{\"key\": \"value\"}" }
+                    """.trimMargin(),
                 )
             }
         }

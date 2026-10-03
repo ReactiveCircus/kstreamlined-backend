@@ -39,34 +39,34 @@ class CloudflareAiClientTest {
     )
 
     val successfulResponse = """
-        {
-          "result": {
-            "id": "completion-id",
-            "object": "chat.completion",
-            "created": 1757065600,
-            "model": "@cf/openai/gpt-oss-120b",
-            "choices": [
-              {
-                "index": 0,
-                "message": {
-                  "role": "assistant",
-                  "content": "Generated summary"
-                },
-                "finish_reason": "stop"
-              }
-            ],
-            "usage": {
-              "prompt_tokens": 1000,
-              "completion_tokens": 250,
-              "total_tokens": 1250,
-              "neurons": 82.75
-            }
-          },
-          "success": true,
-          "errors": [],
-          "messages": []
-        }
-    """.trimIndent()
+        |{
+        |  "result": {
+        |    "id": "completion-id",
+        |    "object": "chat.completion",
+        |    "created": 1757065600,
+        |    "model": "@cf/openai/gpt-oss-120b",
+        |    "choices": [
+        |      {
+        |        "index": 0,
+        |        "message": {
+        |          "role": "assistant",
+        |          "content": "Generated summary"
+        |        },
+        |        "finish_reason": "stop"
+        |      }
+        |    ],
+        |    "usage": {
+        |      "prompt_tokens": 1000,
+        |      "completion_tokens": 250,
+        |      "total_tokens": 1250,
+        |      "neurons": 82.75
+        |    }
+        |  },
+        |  "success": true,
+        |  "errors": [],
+        |  "messages": []
+        |}
+    """.trimMargin()
 
     @Test
     fun `run() sends the request and returns expected CloudflareAiResult when API call succeeds`() = runBlocking {
@@ -127,17 +127,17 @@ class CloudflareAiClientTest {
             MockEngine {
                 respond(
                     content = """
-                        {
-                          "result": null,
-                          "success": false,
-                          "errors": [
-                            {
-                              "code": 10000,
-                              "message": "Authentication error for account-id"
-                            }
-                          ]
-                        }
-                    """.trimIndent(),
+                        |{
+                        |  "result": null,
+                        |  "success": false,
+                        |  "errors": [
+                        |    {
+                        |      "code": 10000,
+                        |      "message": "Authentication error for account-id"
+                        |    }
+                        |  ]
+                        |}
+                    """.trimMargin(),
                     headers = jsonHeaders,
                 )
             },
@@ -159,12 +159,12 @@ class CloudflareAiClientTest {
             MockEngine {
                 respond(
                     content = """
-                        {
-                          "result": null,
-                          "success": true,
-                          "errors": []
-                        }
-                    """.trimIndent(),
+                        |{
+                        |  "result": null,
+                        |  "success": true,
+                        |  "errors": []
+                        |}
+                    """.trimMargin(),
                     headers = jsonHeaders,
                 )
             },
