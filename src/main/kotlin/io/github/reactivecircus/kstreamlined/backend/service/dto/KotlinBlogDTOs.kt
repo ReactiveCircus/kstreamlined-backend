@@ -35,7 +35,7 @@ data class KotlinBlogItem(
     val guid: String,
     @XmlElement(true)
     val description: String,
-    @Exclude
+    @get:Exclude
     @XmlElement(true)
     @XmlSerialName(
         value = "encoded",

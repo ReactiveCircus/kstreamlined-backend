@@ -34,6 +34,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -88,7 +89,7 @@ class KSIntegrationTest {
         FeedCollections.values.forEach { assertEquals(2, documents(it).size) }
         assertEquals(setOf("264203", "265263"), documents(BlogContent).map { it.id }.toSet())
         documents(BlogContent).forEach { assertNotNull(it.getString("html")) }
-        documents(BlogFeed).forEach { assertNull(it.get("html")) }
+        documents(BlogFeed).forEach { assertFalse(it.contains("html")) }
         response.path("feedEntries[?(@.__typename == 'KotlinBlog')].title").entityList<String>()
             .containsExactly(
                 "A New Approach to Incremental Compilation in Kotlin",
