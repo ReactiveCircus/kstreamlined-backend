@@ -114,12 +114,13 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() returns null when article content does not exist`() = runBlocking {
+    fun `loadKotlinBlogTldr() throws when article content does not exist`() = runBlocking {
         val service = createService(
             contentStore = contentStore,
         )
 
-        assertNull(service.loadKotlinBlogTldr(article.guid))
+        val failure = assertFailsWith<IllegalStateException> { service.loadKotlinBlogTldr(article.guid) }
+        assertTrue(assertNotNull(failure.message).contains("Kotlin Blog content not found"))
         assertTrue(requests.isEmpty())
         assertTrue(contentStore.allKotlinBlogTldrs.isEmpty())
     }

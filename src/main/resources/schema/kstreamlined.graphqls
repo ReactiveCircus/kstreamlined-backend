@@ -6,10 +6,9 @@ type Query {
   "Returns list of entries for a Kotlin Weekly issue."
   kotlinWeeklyIssue(url: String!): [KotlinWeeklyIssueEntry!]!
   """
-  Returns the saved TLDR for a Kotlin Blog content matching the id, generating one when absent. When the raw content for the given id
-  is not available, null is returned.
+  Returns the saved TLDR for a Kotlin Blog content matching the id, generating one when absent.
   """
-  kotlinBlogTldr(id: ID!): KotlinBlogTldr
+  kotlinBlogTldr(id: ID!): KotlinBlogTldr!
 }
 
 type Mutation {

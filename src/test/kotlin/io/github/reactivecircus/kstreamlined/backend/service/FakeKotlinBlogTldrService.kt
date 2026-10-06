@@ -4,7 +4,9 @@ import io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContent
 import java.time.Instant
 
 class FakeKotlinBlogTldrService : KotlinBlogTldrService {
-    var nextKotlinBlogTldrResponse: suspend (String) -> KotlinBlogContent.Tldr? = { null }
+    var nextKotlinBlogTldrResponse: suspend (String) -> KotlinBlogContent.Tldr = {
+        error("No Kotlin Blog TLDR response configured.")
+    }
 
     var nextGenerateKotlinBlogTldrResponse: suspend (String, Boolean) -> KotlinBlogContent.Tldr = { _, _ ->
         error("No Kotlin Blog TLDR generation response configured.")
@@ -14,7 +16,7 @@ class FakeKotlinBlogTldrService : KotlinBlogTldrService {
         error("No Kotlin Blog TLDR backfill response configured.")
     }
 
-    override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogContent.Tldr? {
+    override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogContent.Tldr {
         return nextKotlinBlogTldrResponse(id)
     }
 

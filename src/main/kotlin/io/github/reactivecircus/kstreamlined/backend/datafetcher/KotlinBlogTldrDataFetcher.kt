@@ -15,8 +15,8 @@ class KotlinBlogTldrDataFetcher(
     private val service: KotlinBlogTldrService,
 ) {
     @DgsQuery(field = DgsConstants.QUERY.KotlinBlogTldr)
-    suspend fun kotlinBlogTldr(@InputArgument id: String): KotlinBlogTldr? {
-        return service.loadKotlinBlogTldr(id)?.toKotlinBlogTldr(id)
+    suspend fun kotlinBlogTldr(@InputArgument id: String): KotlinBlogTldr {
+        return service.loadKotlinBlogTldr(id).toKotlinBlogTldr(id)
     }
 
     @DgsMutation(field = DgsConstants.MUTATION.GenerateKotlinBlogTldr)

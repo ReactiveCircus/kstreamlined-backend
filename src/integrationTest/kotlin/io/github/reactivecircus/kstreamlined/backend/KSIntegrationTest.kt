@@ -255,9 +255,12 @@ class KSIntegrationTest {
     }
 
     @Test
-    fun `kotlinBlogTldr query with missing articles returns null without AI requests`() {
+    fun `kotlinBlogTldr query with missing articles reports an error without AI requests`() {
         graphql.documentName("kotlinBlogTldr").variable("id", UnknownId).execute()
-            .path("kotlinBlogTldr").valueIsNull()
+            .errors().satisfy { errors ->
+                assertEquals(1, errors.size)
+                assertTrue(assertNotNull(errors.single().message).contains("Kotlin Blog content not found"))
+            }
         assertTrue(services.requests("/ai/").isEmpty())
     }
 

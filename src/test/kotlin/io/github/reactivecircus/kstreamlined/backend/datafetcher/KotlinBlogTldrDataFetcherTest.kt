@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.assertNull
 
 @SpringBootTest(classes = [KotlinBlogTldrDataFetcher::class, InstantScalar::class])
 @EnableAutoConfiguration
@@ -80,13 +80,16 @@ class KotlinBlogTldrDataFetcherTest {
     }
 
     @Test
-    fun `kotlinBlogTldr(id) query returns null when content is unavailable`() {
-        (kotlinBlogTldrService as FakeKotlinBlogTldrService).nextKotlinBlogTldrResponse = { null }
+    fun `kotlinBlogTldr(id) query returns error response when content is unavailable`() {
+        (kotlinBlogTldrService as FakeKotlinBlogTldrService).nextKotlinBlogTldrResponse = {
+            error("Kotlin Blog content not found for article: $it.")
+        }
 
         val result = dgsQueryExecutor.execute(kotlinBlogTldrQuery, mapOf("id" to articleId))
 
-        assertTrue(result.errors.isEmpty())
-        assertEquals(mapOf("kotlinBlogTldr" to null), result.getData<Map<String, Any?>>())
+        assertEquals(1, result.errors.size)
+        assertEquals("INTERNAL", result.errors[0].extensions["errorType"])
+        assertNull(result.getData<Map<String, Any?>>())
     }
 
     @Test

@@ -17,7 +17,7 @@ import java.time.Clock
 import java.time.Instant
 
 interface KotlinBlogTldrService {
-    suspend fun loadKotlinBlogTldr(id: String): KotlinBlogContent.Tldr?
+    suspend fun loadKotlinBlogTldr(id: String): KotlinBlogContent.Tldr
 
     suspend fun createKotlinBlogTldr(id: String, persist: Boolean): KotlinBlogContent.Tldr
 
@@ -37,13 +37,14 @@ class RealKotlinBlogTldrService(
 ) : KotlinBlogTldrService {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogContent.Tldr? {
-        return kotlinBlogContentStore.loadKotlinBlogContent(id)?.let { content ->
-            content.tldr?.let { return it }
-            val tldr = generateTldr(content)
-            kotlinBlogContentStore.saveKotlinBlogTldrs(mapOf(id to tldr))
-            tldr
+    override suspend fun loadKotlinBlogTldr(id: String): KotlinBlogContent.Tldr {
+        val content = checkNotNull(kotlinBlogContentStore.loadKotlinBlogContent(id)) {
+            "Kotlin Blog content not found for article: $id."
         }
+        content.tldr?.let { return it }
+        val tldr = generateTldr(content)
+        kotlinBlogContentStore.saveKotlinBlogTldrs(mapOf(id to tldr))
+        return tldr
     }
 
     override suspend fun createKotlinBlogTldr(id: String, persist: Boolean): KotlinBlogContent.Tldr {
