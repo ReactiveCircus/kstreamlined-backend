@@ -96,6 +96,7 @@ class RealFeedService(
                             it.copy(
                                 description = StringEscapeUtils.unescapeXml(it.description).trim(),
                                 html = null,
+                                hasRawContent = true,
                             )
                         }
                 },

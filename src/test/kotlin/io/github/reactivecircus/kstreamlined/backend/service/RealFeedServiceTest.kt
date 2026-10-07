@@ -72,6 +72,7 @@ class RealFeedServiceTest {
                 featuredImage = "https://blog.jetbrains.com/wp-content/uploads/2022/07/A-New-Approach-to-Incremental-Compilation-in-Kotlin-EN-2_Twitter-Blog.png",
                 guid = "https://blog.jetbrains.com/?post_type=kotlin&p=264203",
                 description = "In Kotlin 1.7.0, we’ve reworked incremental compilation for project changes in cross-module dependencies. The new approach lifts previous limitations on incremental compilation. It’s now supported when changes are made inside dependent non-Kotlin modules, and it is compatible with the Gradle build cache. Support for compilation avoidance has also been improved. All of these advancements decrease […]",
+                hasRawContent = true,
             ),
             KotlinBlogItem(
                 title = "Kotlin News: KotlinConf, Build Reports, DataFrame Preview, and More",
@@ -80,6 +81,7 @@ class RealFeedServiceTest {
                 featuredImage = "https://blog.jetbrains.com/wp-content/uploads/2022/07/Monthly-digest-4-Summer-2022-01.png",
                 guid = "https://blog.jetbrains.com/?post_type=kotlin&p=265263",
                 description = "Kotlin Developer Survey is Open Share your opinions about the language itself, IDEs, libraries, build tools, and subsystems. Your answers will help the Kotlin team make the language and tools even better and more convenient. Give your feedback KotlinConf is Back! KotlinConf is making a glorious comeback! It will take place in Amsterdam on April […]",
+                hasRawContent = true,
             ),
         )
 

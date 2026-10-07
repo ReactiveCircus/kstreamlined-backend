@@ -16,6 +16,7 @@ class KotlinBlogEntryMapperTest {
             contentUrl = "url",
             featuredImageUrl = "image-url",
             description = "description",
+            hasTldrSummary = true,
         )
         val actual = KotlinBlogItem(
             title = "Blog title",
@@ -24,6 +25,7 @@ class KotlinBlogEntryMapperTest {
             featuredImage = "image-url",
             guid = "id",
             description = "description",
+            hasRawContent = true,
         ).toKotlinBlogEntry()
 
         assertEquals(expected, actual)
@@ -38,6 +40,7 @@ class KotlinBlogEntryMapperTest {
             contentUrl = "url",
             featuredImageUrl = FallbackFeatureImageUrl,
             description = "description",
+            hasTldrSummary = false,
         )
         val actual = KotlinBlogItem(
             title = "Blog title",

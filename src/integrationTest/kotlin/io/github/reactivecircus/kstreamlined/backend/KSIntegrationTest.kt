@@ -90,6 +90,9 @@ class KSIntegrationTest {
         assertEquals(setOf("264203", "265263"), documents(BlogContent).map { it.id }.toSet())
         documents(BlogContent).forEach { assertNotNull(it.getString("html")) }
         documents(BlogFeed).forEach { assertFalse(it.contains("html")) }
+        documents(BlogFeed).forEach { assertEquals(true, it.getBoolean("hasRawContent")) }
+        response.path("feedEntries[?(@.__typename == 'KotlinBlog')].hasTldrSummary").entityList<Boolean>()
+            .containsExactly(true, true)
         response.path("feedEntries[?(@.__typename == 'KotlinBlog')].title").entityList<String>()
             .containsExactly(
                 "A New Approach to Incremental Compilation in Kotlin",
@@ -114,6 +117,31 @@ class KSIntegrationTest {
         assertEquals(2, services.requests("/feeds/").size)
         assertTrue(documents("kotlin_youtube_feed").isEmpty())
         assertTrue(documents("talking_kotlin_feed").isEmpty())
+    }
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    fun `feedEntries query resolves hasTldrSummary as false for Kotlin Blog documents without hasRawContent`() {
+        firestore.collection(BlogFeed).document("900002").set(
+            mapOf(
+                "title" to "A legacy Kotlin article",
+                "link" to "https://example.invalid/kotlin/legacy",
+                "pubDate" to "Mon, 01 Jan 2018 10:00:00 +0000",
+                "featuredImage" to null,
+                "guid" to "https://example.invalid/?p=900002",
+                "description" to "Persisted before hasRawContent existed.",
+            ),
+        ).get(15, TimeUnit.SECONDS)
+
+        val response = graphql.documentName("feedEntries").variable("filters", listOf("KOTLIN_BLOG")).execute()
+
+        response.path("feedEntries[*].id").entityList<String>().containsExactly(
+            "https://blog.jetbrains.com/?post_type=kotlin&p=264203",
+            "https://blog.jetbrains.com/?post_type=kotlin&p=265263",
+            "https://example.invalid/?p=900002",
+        )
+            .path("feedEntries[*].hasTldrSummary").entityList<Boolean>().containsExactly(true, true, false)
+        assertFalse(document(BlogFeed, "900002").contains("hasRawContent"))
     }
 
     @Test
@@ -151,6 +179,7 @@ class KSIntegrationTest {
             .path("feedEntries[0].id").entity<String>().isEqualTo("https://example.invalid/?p=900001")
             .path("feedEntries[0].featuredImageUrl").entity<String>()
             .isEqualTo("https://example.invalid/image.png")
+            .path("feedEntries[0].hasTldrSummary").entity<Boolean>().isEqualTo(true)
         assertEquals(1, services.requests("/redis/get/kotlin-blog").size)
         assertTrue(services.requests("/feeds/").isEmpty())
         assertTrue(services.requests("/redis/set/").isEmpty())
@@ -366,8 +395,10 @@ class KSIntegrationTest {
     private fun documents(collection: String): List<DocumentSnapshot> =
         firestore.collection(collection).get().get(1, TimeUnit.SECONDS).documents
 
-    private fun document(id: String): DocumentSnapshot =
-        firestore.collection(BlogContent).document(id).get().get(1, TimeUnit.SECONDS)
+    private fun document(id: String): DocumentSnapshot = document(BlogContent, id)
+
+    private fun document(collection: String, id: String): DocumentSnapshot =
+        firestore.collection(collection).document(id).get().get(1, TimeUnit.SECONDS)
 
     companion object {
         @Container
