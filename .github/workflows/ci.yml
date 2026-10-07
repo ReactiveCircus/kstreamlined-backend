@@ -81,6 +81,14 @@ jobs:
 
       - run: ./gradlew nativeCompatibilityTest
 
+      - name: Upload tested native executable
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v7
+        with:
+          name: native-executable
+          path: build/native/nativeCompile/kstreamlined-backend
+          if-no-files-found: error
+
   deploy:
     name: Build and push container image to Google Artifact Registry, deploy to Cloud Run
     needs: [ assemble-and-check, integration-tests, native-compatibility-tests ]
@@ -90,20 +98,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: graalvm/setup-graalvm@v1
+      - name: Download tested native executable
+        uses: actions/download-artifact@v8
         with:
-          distribution: 'graalvm-community'
-          version: '25.4'
-          java-version: '25'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          name: native-executable
+          path: build/native/nativeCompile
 
-      - uses: gradle/actions/setup-gradle@v6
-        with:
-          build-scan-terms-of-use-url: 'https://gradle.com/terms-of-service'
-          build-scan-terms-of-use-agree: 'yes'
-
-      - name: Build GraalVM native executable
-        run: ./gradlew nativeCompile
+      - name: Restore executable permission
+        run: chmod +x build/native/nativeCompile/kstreamlined-backend
 
       - uses: docker/login-action@v4
         with:
