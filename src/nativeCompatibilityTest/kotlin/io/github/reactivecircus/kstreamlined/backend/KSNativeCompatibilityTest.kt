@@ -63,6 +63,9 @@ class KSNativeCompatibilityTest {
         FeedCollections.values.forEach { assertEquals(2, documents(it).size, it) }
         documents(BlogContent).forEach { assertNotNull(it.getString("html")) }
         documents(FeedCollections.getValue("KotlinBlog")).forEach { assertFalse(it.contains("html"), it.id) }
+        documents(FeedCollections.getValue("KotlinBlog")).forEach {
+            assertEquals(true, it.getBoolean("hasRawContent"), it.id)
+        }
         assertEquals(4, services.requests("/feeds/").size)
         assertEquals(4, services.requests("/redis/set/").size)
     }

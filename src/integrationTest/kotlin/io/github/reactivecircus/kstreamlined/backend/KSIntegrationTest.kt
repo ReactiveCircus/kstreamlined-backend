@@ -90,6 +90,9 @@ class KSIntegrationTest {
         assertEquals(setOf("264203", "265263"), documents(BlogContent).map { it.id }.toSet())
         documents(BlogContent).forEach { assertNotNull(it.getString("html")) }
         documents(BlogFeed).forEach { assertFalse(it.contains("html")) }
+        documents(BlogFeed).forEach { assertEquals(true, it.getBoolean("hasRawContent")) }
+        response.path("feedEntries[?(@.__typename == 'KotlinBlog')].hasTldrSummary").entityList<Boolean>()
+            .containsExactly(true, true)
         response.path("feedEntries[?(@.__typename == 'KotlinBlog')].title").entityList<String>()
             .containsExactly(
                 "A New Approach to Incremental Compilation in Kotlin",
@@ -151,6 +154,7 @@ class KSIntegrationTest {
             .path("feedEntries[0].id").entity<String>().isEqualTo("https://example.invalid/?p=900001")
             .path("feedEntries[0].featuredImageUrl").entity<String>()
             .isEqualTo("https://example.invalid/image.png")
+            .path("feedEntries[0].hasTldrSummary").entity<Boolean>().isEqualTo(true)
         assertEquals(1, services.requests("/redis/get/kotlin-blog").size)
         assertTrue(services.requests("/feeds/").isEmpty())
         assertTrue(services.requests("/redis/set/").isEmpty())

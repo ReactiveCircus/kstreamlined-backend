@@ -44,4 +44,5 @@ data class KotlinBlogItem(
     )
     @EncodeDefault(EncodeDefault.Mode.NEVER)
     val html: String? = null,
+    val hasRawContent: Boolean = false,
 )
