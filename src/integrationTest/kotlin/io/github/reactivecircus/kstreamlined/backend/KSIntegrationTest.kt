@@ -120,6 +120,31 @@ class KSIntegrationTest {
     }
 
     @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
+    fun `feedEntries query resolves hasTldrSummary as false for Kotlin Blog documents without hasRawContent`() {
+        firestore.collection(BlogFeed).document("900002").set(
+            mapOf(
+                "title" to "A legacy Kotlin article",
+                "link" to "https://example.invalid/kotlin/legacy",
+                "pubDate" to "Mon, 01 Jan 2018 10:00:00 +0000",
+                "featuredImage" to null,
+                "guid" to "https://example.invalid/?p=900002",
+                "description" to "Persisted before hasRawContent existed.",
+            ),
+        ).get(15, TimeUnit.SECONDS)
+
+        val response = graphql.documentName("feedEntries").variable("filters", listOf("KOTLIN_BLOG")).execute()
+
+        response.path("feedEntries[*].id").entityList<String>().containsExactly(
+            "https://blog.jetbrains.com/?post_type=kotlin&p=264203",
+            "https://blog.jetbrains.com/?post_type=kotlin&p=265263",
+            "https://example.invalid/?p=900002",
+        )
+            .path("feedEntries[*].hasTldrSummary").entityList<Boolean>().containsExactly(true, true, false)
+        assertFalse(document(BlogFeed, "900002").contains("hasRawContent"))
+    }
+
+    @Test
     fun `feedEntries query with empty source filters returns no entries without fetching feeds`() {
         graphql.documentName("feedEntries").variable("filters", emptyList<String>()).execute()
             .path("feedEntries").entityList<String>().hasSize(0)
@@ -370,8 +395,10 @@ class KSIntegrationTest {
     private fun documents(collection: String): List<DocumentSnapshot> =
         firestore.collection(collection).get().get(1, TimeUnit.SECONDS).documents
 
-    private fun document(id: String): DocumentSnapshot =
-        firestore.collection(BlogContent).document(id).get().get(1, TimeUnit.SECONDS)
+    private fun document(id: String): DocumentSnapshot = document(BlogContent, id)
+
+    private fun document(collection: String, id: String): DocumentSnapshot =
+        firestore.collection(collection).document(id).get().get(1, TimeUnit.SECONDS)
 
     companion object {
         @Container
