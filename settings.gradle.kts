@@ -1,12 +1,12 @@
 rootProject.name = "kstreamlined-backend"
 
+@Suppress("UnstableApiUsage")
 pluginManagement {
     repositories {
         gradlePluginPortal {
             content {
-                includeGroupByRegex("com.gradle.*")
-                includeGroupByRegex("org.gradle.*")
-                includeGroupByRegex("com.google.cloud.tools.*")
+                includeGroupAndSubgroups("com.gradle")
+                includeGroupAndSubgroups("org.gradle")
                 includeGroup("com.netflix.dgs.codegen")
             }
         }
@@ -30,7 +30,6 @@ pluginManagement {
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-        google()
     }
 }
 
