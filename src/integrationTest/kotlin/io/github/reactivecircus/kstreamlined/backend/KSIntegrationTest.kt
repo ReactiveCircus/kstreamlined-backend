@@ -91,7 +91,7 @@ class KSIntegrationTest {
         documents(BlogContent).forEach { assertNotNull(it.getString("html")) }
         documents(BlogFeed).forEach { assertFalse(it.contains("html")) }
         documents(BlogFeed).forEach { assertEquals(true, it.getBoolean("hasRawContent")) }
-        response.path("feedEntries[?(@.__typename == 'KotlinBlog')].hasTldrSummary").entityList<Boolean>()
+        response.path("feedEntries[?(@.__typename == 'KotlinBlog')].supportsTldr").entityList<Boolean>()
             .containsExactly(true, true)
         response.path("feedEntries[?(@.__typename == 'KotlinBlog')].title").entityList<String>()
             .containsExactly(
@@ -121,7 +121,7 @@ class KSIntegrationTest {
 
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
-    fun `feedEntries query resolves hasTldrSummary as false for Kotlin Blog documents without hasRawContent`() {
+    fun `feedEntries query resolves supportsTldr as false for Kotlin Blog documents without hasRawContent`() {
         firestore.collection(BlogFeed).document("900002").set(
             mapOf(
                 "title" to "A legacy Kotlin article",
@@ -140,7 +140,7 @@ class KSIntegrationTest {
             "https://blog.jetbrains.com/?post_type=kotlin&p=265263",
             "https://example.invalid/?p=900002",
         )
-            .path("feedEntries[*].hasTldrSummary").entityList<Boolean>().containsExactly(true, true, false)
+            .path("feedEntries[*].supportsTldr").entityList<Boolean>().containsExactly(true, true, false)
         assertFalse(document(BlogFeed, "900002").contains("hasRawContent"))
     }
 
@@ -179,7 +179,7 @@ class KSIntegrationTest {
             .path("feedEntries[0].id").entity<String>().isEqualTo("https://example.invalid/?p=900001")
             .path("feedEntries[0].featuredImageUrl").entity<String>()
             .isEqualTo("https://example.invalid/image.png")
-            .path("feedEntries[0].hasTldrSummary").entity<Boolean>().isEqualTo(true)
+            .path("feedEntries[0].supportsTldr").entity<Boolean>().isEqualTo(true)
         assertEquals(1, services.requests("/redis/get/kotlin-blog").size)
         assertTrue(services.requests("/feeds/").isEmpty())
         assertTrue(services.requests("/redis/set/").isEmpty())

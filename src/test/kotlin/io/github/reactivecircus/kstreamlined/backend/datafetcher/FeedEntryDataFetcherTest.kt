@@ -43,7 +43,7 @@ class FeedEntryDataFetcherTest {
         |    contentUrl
         |    ... on KotlinBlog {
         |      featuredImageUrl
-        |      hasTldrSummary
+        |      supportsTldr
         |      description
         |    }
         |    ... on KotlinYouTube {
@@ -111,7 +111,7 @@ class FeedEntryDataFetcherTest {
             context.read("data.feedEntries[1].featuredImageUrl"),
         )
         assertEquals(dummyKotlinBlogEntry.description, context.read("data.feedEntries[1].description"))
-        assertEquals(true, context.read("data.feedEntries[1].hasTldrSummary"))
+        assertEquals(true, context.read("data.feedEntries[1].supportsTldr"))
 
         val dummyKotlinYouTubeEntry = DummyKotlinYouTubeItem.toKotlinYouTubeEntry()
         assertEquals(dummyKotlinYouTubeEntry.id, context.read("data.feedEntries[2].id"))
@@ -193,7 +193,7 @@ class FeedEntryDataFetcherTest {
             context.read("data.feedEntries[0].featuredImageUrl"),
         )
         assertEquals(dummyKotlinBlogEntry.description, context.read("data.feedEntries[0].description"))
-        assertEquals(true, context.read("data.feedEntries[0].hasTldrSummary"))
+        assertEquals(true, context.read("data.feedEntries[0].supportsTldr"))
 
         val dummyKotlinYouTubeEntry = DummyKotlinYouTubeItem.toKotlinYouTubeEntry()
         assertEquals(dummyKotlinYouTubeEntry.id, context.read("data.feedEntries[1].id"))

@@ -69,8 +69,8 @@ type KotlinBlog implements FeedEntry {
   featuredImageUrl: String!
   "Description of the blog post."
   description: String!
-  "Whether a TLDR summary is available."
-  hasTldrSummary: Boolean!
+  "Whether TLDR is supported for the blog post."
+  supportsTldr: Boolean!
 }
 
 type KotlinBlogTldr {

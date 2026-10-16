@@ -8,7 +8,7 @@ query FeedEntries($filters: [FeedSourceKey!]) {
     ... on KotlinBlog {
       featuredImageUrl
       description
-      hasTldrSummary
+      supportsTldr
     }
     ... on KotlinYouTube {
       thumbnailUrl

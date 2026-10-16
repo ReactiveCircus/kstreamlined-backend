@@ -15,7 +15,7 @@ fun KotlinBlogItem.toKotlinBlogEntry(): KotlinBlog {
         contentUrl = link,
         featuredImageUrl = featuredImage ?: FallbackFeatureImageUrl,
         description = description,
-        hasTldrSummary = hasRawContent,
+        supportsTldr = hasRawContent,
     )
 }
 

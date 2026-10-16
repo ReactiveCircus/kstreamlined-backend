@@ -16,7 +16,7 @@ class KotlinBlogEntryMapperTest {
             contentUrl = "url",
             featuredImageUrl = "image-url",
             description = "description",
-            hasTldrSummary = true,
+            supportsTldr = true,
         )
         val actual = KotlinBlogItem(
             title = "Blog title",
@@ -40,7 +40,7 @@ class KotlinBlogEntryMapperTest {
             contentUrl = "url",
             featuredImageUrl = FallbackFeatureImageUrl,
             description = "description",
-            hasTldrSummary = false,
+            supportsTldr = false,
         )
         val actual = KotlinBlogItem(
             title = "Blog title",
