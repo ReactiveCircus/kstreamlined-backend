@@ -160,6 +160,10 @@ enum KotlinWeeklyIssueEntryGroup {
   ARTICLES
   "Android."
   ANDROID
+  "Multiplatform."
+  MULTIPLATFORM
+  "Conferences."
+  CONFERENCES
   "Videos."
   VIDEOS
   "Libraries."
