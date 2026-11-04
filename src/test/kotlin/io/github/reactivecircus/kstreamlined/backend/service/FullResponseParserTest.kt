@@ -16,8 +16,8 @@ class FullResponseParserTest {
     private val mockKotlinBlogRssResponse =
         javaClass.classLoader.getResource("kotlin_blog_rss_response_full.xml")?.readText()!!
 
-    private val mockKotlinYouTubeRssResponse =
-        javaClass.classLoader.getResource("kotlin_youtube_rss_response_full.xml")?.readText()!!
+    private val mockKotlinYouTubeApiResponse =
+        javaClass.classLoader.getResource("kotlin_youtube_api_response_full.json")?.readText()!!
 
     private val mockTalkingKotlinRssResponse =
         javaClass.classLoader.getResource("talking_kotlin_rss_response_full.xml")?.readText()!!
@@ -56,11 +56,11 @@ class FullResponseParserTest {
     }
 
     @Test
-    fun `can parse Kotlin YouTube RSS feed`() = runBlocking {
+    fun `can parse Kotlin YouTube Data API response`() = runBlocking {
         val mockEngine = MockEngine {
             respond(
-                content = ByteReadChannel(mockKotlinYouTubeRssResponse),
-                headers = headersOf(HttpHeaders.ContentType, "application/rss+xml"),
+                content = ByteReadChannel(mockKotlinYouTubeApiResponse),
+                headers = headersOf(HttpHeaders.ContentType, "application/json; charset=UTF-8"),
             )
         }
         val feedService = RealFeedService(
@@ -72,7 +72,7 @@ class FullResponseParserTest {
             kotlinBlogContentStore = kotlinBlogContentStore,
         )
 
-        assertEquals(15, feedService.loadKotlinYouTubeFeed().size)
+        assertEquals(20, feedService.loadKotlinYouTubeFeed().size)
     }
 
     @Test

@@ -14,7 +14,7 @@ caffeine = "3.3.1"
 okhttp = "5.5.1"
 ksoup = "0.2.6"
 commonsText = "1.15.0"
-develocity = "4.6.0"
+develocity = "4.6.1"
 toolchainsResolver = "1.0.0"
 
 [plugins]

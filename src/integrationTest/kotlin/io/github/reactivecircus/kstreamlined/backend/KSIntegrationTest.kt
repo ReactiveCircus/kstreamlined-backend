@@ -432,6 +432,7 @@ class KSIntegrationTest {
             registry.add("KS_CF_ACCOUNT_ID") { "integration" }
             registry.add("KS_CF_API_TOKEN") { "integration-token" }
             registry.add("KS_GCLOUD_PROJECT_ID") { environment.projectId }
+            registry.add("KS_YOUTUBE_API_KEY") { ServiceHttpStubs.YouTubeApiKey }
         }
 
         @JvmStatic

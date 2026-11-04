@@ -1,0 +1,153 @@
+{
+  "kind": "youtube#playlistItemListResponse",
+  "etag": "sample-etag",
+  "nextPageToken": "EAAaBlBUOkNESQ",
+  "items": [
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "etag-ihMhu3hvCCE",
+      "id": "playlist-item-ihMhu3hvCCE",
+      "snippet": {
+        "publishedAt": "2022-07-06T13:39:46Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Kotlin and Java Interoperability in Spring Projects",
+        "description": "We have configured the Kotlin compiler in a Java/Spring project - now what? Let's talk about important details you need to know about calling Java from Kotlin code and vice versa. Links: Adding Kotlin to Spring/Maven project: https://youtu.be/4-qOxvjjF8g Calling Java from Kotlin: https://kotlinlang.org/docs/java-interop.html Calling Kotlin from Java: https://kotlinlang.org/docs/java-to-kotlin-interop.html Kotlin Spring compiler plugin: https://kotlinlang.org/docs/all-open-plugin.html#spring-support Just starting with Kotlin? Learn Kotlin by creating real-world applications with JetBrains Academy Build simple games, a chat bot, a coffee machine simulator, and other interactive projects step by step in a hands-on learning environment. Get started: https://hyperskill.org/join/fromyoutubetoJetSalesStat?redirect=true&next=/tracks/18 #springboot #springframework #kotlin #interoperability",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/ihMhu3hvCCE/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/ihMhu3hvCCE/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/ihMhu3hvCCE/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 0,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "ihMhu3hvCCE"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "ihMhu3hvCCE",
+        "videoPublishedAt": "2022-07-06T13:39:46Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "etag-privateVid1",
+      "id": "playlist-item-privateVid1",
+      "snippet": {
+        "publishedAt": "2022-07-01T10:00:00Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Private video",
+        "description": "This video is private.",
+        "thumbnails": {},
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 1,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "privateVid1"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "privateVid1"
+      },
+      "status": {
+        "privacyStatus": "private"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "etag-tX4nLqcW2JA",
+      "id": "playlist-item-tX4nLqcW2JA",
+      "snippet": {
+        "publishedAt": "2022-06-28T15:00:15Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Turbocharging Kotlin: Arrow Analysis, Optics & Meta | Talking Kotlin",
+        "description": "We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language. Arrow - https://arrow-kt.io/ Arrow Analysis - https://arrow-kt.io/docs/meta/analysis/ 47 Degrees - https://www.47deg.com/ 47 Degrees jobs - https://www.47deg.com/company/ Arrow twitter - @arrow_kt #Arrow #Kotlin #Programming #arrow-kt",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/tX4nLqcW2JA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/tX4nLqcW2JA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/tX4nLqcW2JA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 2,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "tX4nLqcW2JA"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "tX4nLqcW2JA",
+        "videoPublishedAt": "2022-06-28T15:00:15Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "etag-deletedVid1",
+      "id": "playlist-item-deletedVid1",
+      "snippet": {
+        "publishedAt": "2022-06-20T10:00:00Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Deleted video",
+        "description": "This video is unavailable.",
+        "thumbnails": {},
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 3,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "deletedVid1"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "deletedVid1"
+      },
+      "status": {
+        "privacyStatus": "privacyStatusUnspecified"
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 4,
+    "resultsPerPage": 50
+  }
+}

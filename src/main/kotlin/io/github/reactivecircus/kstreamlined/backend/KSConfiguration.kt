@@ -51,14 +51,16 @@ class KSConfiguration {
 
     @Bean
     fun feedServiceConfig(
-        @Value("\${ks.kotlin-blog-feed-url}") kotlinBlogFeedUrl: String,
-        @Value("\${ks.kotlin-youtube-feed-url}") kotlinYouTubeFeedUrl: String,
-        @Value("\${ks.talking-kotlin-feed-url}") talkingKotlinFeedUrl: String,
-        @Value("\${ks.kotlin-weekly-feed-url}") kotlinWeeklyFeedUrl: String,
+        @Value($$"${ks.kotlin-blog-feed-url}") kotlinBlogFeedUrl: String,
+        @Value($$"${ks.kotlin-youtube-feed-url}") kotlinYouTubeFeedUrl: String,
+        @Value($$"${KS_YOUTUBE_API_KEY}") kotlinYouTubeApiKey: String,
+        @Value($$"${ks.talking-kotlin-feed-url}") talkingKotlinFeedUrl: String,
+        @Value($$"${ks.kotlin-weekly-feed-url}") kotlinWeeklyFeedUrl: String,
     ): FeedServiceConfig {
         return FeedServiceConfig(
             kotlinBlogFeedUrl = kotlinBlogFeedUrl,
             kotlinYouTubeFeedUrl = kotlinYouTubeFeedUrl,
+            kotlinYouTubeApiKey = kotlinYouTubeApiKey,
             talkingKotlinFeedUrl = talkingKotlinFeedUrl,
             kotlinWeeklyFeedUrl = kotlinWeeklyFeedUrl,
         )
@@ -113,8 +115,8 @@ class KSConfiguration {
     @Bean
     fun redisClient(
         engine: HttpClientEngine,
-        @Value("\${KS_REDIS_REST_URL}") redisUrl: String,
-        @Value("\${KS_REDIS_REST_TOKEN}") redisToken: String,
+        @Value($$"${KS_REDIS_REST_URL}") redisUrl: String,
+        @Value($$"${KS_REDIS_REST_TOKEN}") redisToken: String,
     ): RedisClient {
         return RedisClient(
             engine = engine,
@@ -126,9 +128,9 @@ class KSConfiguration {
     @Bean
     fun cloudflareAiClient(
         engine: HttpClientEngine,
-        @Value("\${KS_CF_BASE_URL}") baseUrl: String,
-        @Value("\${KS_CF_ACCOUNT_ID}") accountId: String,
-        @Value("\${KS_CF_API_TOKEN}") apiToken: String,
+        @Value($$"${KS_CF_BASE_URL}") baseUrl: String,
+        @Value($$"${KS_CF_ACCOUNT_ID}") accountId: String,
+        @Value($$"${KS_CF_API_TOKEN}") apiToken: String,
     ): CloudflareAiClient {
         return CloudflareAiClient(
             engine = engine,
@@ -140,7 +142,7 @@ class KSConfiguration {
 
     @Bean
     fun firestore(
-        @Value("\${KS_GCLOUD_PROJECT_ID}") projectId: String,
+        @Value($$"${KS_GCLOUD_PROJECT_ID}") projectId: String,
     ): Firestore {
         val credentials = if (System.getenv("FIRESTORE_EMULATOR_HOST") != null) {
             FirestoreOptions.EmulatorCredentials()

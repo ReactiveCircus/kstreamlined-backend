@@ -2,11 +2,12 @@ package io.github.reactivecircus.kstreamlined.backend.service
 
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyItem
-import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeAuthor
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeContentDetails
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeItem
-import io.github.reactivecircus.kstreamlined.backend.service.dto.Link
-import io.github.reactivecircus.kstreamlined.backend.service.dto.MediaCommunity
-import io.github.reactivecircus.kstreamlined.backend.service.dto.MediaGroup
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeSnippet
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeStatus
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeThumbnail
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeThumbnails
 import io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinItem
 
 object FakeFeedService : FeedService {
@@ -54,44 +55,19 @@ val DummyKotlinBlogItem = KotlinBlogItem(
 )
 
 val DummyKotlinYouTubeItem = KotlinYouTubeItem(
-    id = "yt:video:ihMhu3hvCCE",
-    videoId = "ihMhu3hvCCE",
-    channelId = "UCP7uiEZIqci43m22KDl0sNw",
-    title = "Kotlin and Java Interoperability in Spring Projects",
-    link = Link(
-        href = "https://www.youtube.com/watch?v=ihMhu3hvCCE",
-        rel = "alternate",
-    ),
-    author = KotlinYouTubeAuthor(
-        name = "Kotlin by JetBrains",
-        uri = "https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw",
-    ),
-    published = "2022-07-06T13:39:46+00:00",
-    updated = "2022-07-11T13:45:53+00:00",
-    mediaGroup = MediaGroup(
+    snippet = KotlinYouTubeSnippet(
+        publishedAt = "2022-07-06T13:39:46Z",
         title = "Kotlin and Java Interoperability in Spring Projects",
-        content = MediaGroup.Content(
-            url = "https://www.youtube.com/v/ihMhu3hvCCE?version=3",
-            type = "application/x-shockwave-flash",
-            width = "640",
-            height = "390",
-        ),
-        thumbnail = MediaGroup.Thumbnail(
-            url = "https://i2.ytimg.com/vi/ihMhu3hvCCE/hqdefault.jpg",
-            width = "480",
-            height = "360",
-        ),
         description = "We have configured the Kotlin compiler in a Java/Spring project - now what? Let's talk about important details you need to know about calling Java from Kotlin code and vice versa. Links: Adding Kotlin to Spring/Maven project: https://youtu.be/4-qOxvjjF8g Calling Java from Kotlin: https://kotlinlang.org/docs/java-interop.html Calling Kotlin from Java: https://kotlinlang.org/docs/java-to-kotlin-interop.html Kotlin Spring compiler plugin: https://kotlinlang.org/docs/all-open-plugin.html#spring-support Just starting with Kotlin? Learn Kotlin by creating real-world applications with JetBrains Academy Build simple games, a chat bot, a coffee machine simulator, and other interactive projects step by step in a hands-on learning environment. Get started: https://hyperskill.org/join/fromyoutubetoJetSalesStat?redirect=true&next=/tracks/18 #springboot #springframework #kotlin #interoperability",
-        community = MediaCommunity(
-            starRating = MediaCommunity.StarRating(
-                count = "188",
-                average = "5.00",
-                min = "1",
-                max = "5",
-            ),
-            statistics = MediaCommunity.Statistics(views = "4397"),
+        thumbnails = KotlinYouTubeThumbnails(
+            high = KotlinYouTubeThumbnail(url = "https://i.ytimg.com/vi/ihMhu3hvCCE/hqdefault.jpg"),
         ),
     ),
+    contentDetails = KotlinYouTubeContentDetails(
+        videoId = "ihMhu3hvCCE",
+        videoPublishedAt = "2022-07-06T13:39:46Z",
+    ),
+    status = KotlinYouTubeStatus(privacyStatus = "public"),
 )
 
 val DummyTalkingKotlinItem = TalkingKotlinItem(
