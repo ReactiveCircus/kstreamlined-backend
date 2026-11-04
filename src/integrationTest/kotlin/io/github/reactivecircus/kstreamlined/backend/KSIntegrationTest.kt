@@ -87,6 +87,10 @@ class KSIntegrationTest {
         assertEquals(FeedCollections.keys.associateWith { 2 }, types.groupingBy { it }.eachCount())
         assertEquals(times.sortedDescending(), times)
         FeedCollections.values.forEach { assertEquals(2, documents(it).size) }
+        assertEquals(setOf(YouTubeId1, YouTubeId2), documents(YouTubeFeed).map { it.id }.toSet())
+        documents(YouTubeFeed).forEach { assertFalse(it.contains("id")) }
+        response.path("feedEntries[?(@.__typename == 'KotlinYouTube')].id").entityList<String>()
+            .containsExactly(YouTubeId1, YouTubeId2)
         assertEquals(setOf("264203", "265263"), documents(BlogContent).map { it.id }.toSet())
         documents(BlogContent).forEach { assertNotNull(it.getString("html")) }
         documents(BlogFeed).forEach { assertFalse(it.contains("html")) }
@@ -115,7 +119,7 @@ class KSIntegrationTest {
             .path("feedEntries[*].__typename").entityList<String>()
             .containsExactly("KotlinWeekly", "KotlinWeekly", "KotlinBlog", "KotlinBlog")
         assertEquals(2, services.requests("/feeds/").size)
-        assertTrue(documents("kotlin_youtube_feed").isEmpty())
+        assertTrue(documents(YouTubeFeed).isEmpty())
         assertTrue(documents("talking_kotlin_feed").isEmpty())
     }
 
@@ -408,14 +412,19 @@ class KSIntegrationTest {
 
         private const val BlogFeed = "kotlin_blog_feed"
         private const val BlogContent = "kotlin_blog_content"
+        private const val YouTubeFeed = "kotlin_youtube_feed"
+        private const val TalkingKotlinFeed = "talking_kotlin_feed"
+        private const val KotlinWeeklyFeed = "kotlin_weekly_feed"
+        private const val YouTubeId1 = "yt:video:ihMhu3hvCCE"
+        private const val YouTubeId2 = "yt:video:tX4nLqcW2JA"
         private const val BlogId = "https://blog.jetbrains.com/?post_type=kotlin&p=264203"
         private const val UnknownId = "https://blog.jetbrains.com/?post_type=kotlin&p=0"
         private const val Summary = "Test summary."
         private val FeedCollections = mapOf(
             "KotlinBlog" to BlogFeed,
-            "KotlinYouTube" to "kotlin_youtube_feed",
-            "TalkingKotlin" to "talking_kotlin_feed",
-            "KotlinWeekly" to "kotlin_weekly_feed",
+            "KotlinYouTube" to YouTubeFeed,
+            "TalkingKotlin" to TalkingKotlinFeed,
+            "KotlinWeekly" to KotlinWeeklyFeed,
         )
 
         @JvmStatic

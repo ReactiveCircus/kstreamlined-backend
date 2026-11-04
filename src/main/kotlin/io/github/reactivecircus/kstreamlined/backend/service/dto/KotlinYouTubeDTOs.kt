@@ -1,5 +1,6 @@
 package io.github.reactivecircus.kstreamlined.backend.service.dto
 
+import com.google.cloud.firestore.annotation.Exclude
 import io.github.reactivecircus.kstreamlined.backend.store.FirestoreModel
 import kotlinx.serialization.Serializable
 
@@ -15,7 +16,9 @@ data class KotlinYouTubeItem(
     val contentDetails: KotlinYouTubeContentDetails,
     val status: KotlinYouTubeStatus,
 ) {
-    val id: String = "yt:video:${contentDetails.videoId}"
+    @get:Exclude
+    val id: String
+        get() = "yt:video:${contentDetails.videoId}"
 }
 
 @FirestoreModel
