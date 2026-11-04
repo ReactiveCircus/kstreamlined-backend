@@ -6,7 +6,7 @@ import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogRss
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyItem
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyRss
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeItem
-import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeRss
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubePlaylistItems
 import io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinItem
 import io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinRss
 import io.github.reactivecircus.kstreamlined.backend.store.FeedStore
@@ -17,11 +17,12 @@ import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
-import io.ktor.client.statement.bodyAsText
+import io.ktor.client.request.header
 import io.ktor.http.ContentType
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.serialization.kotlinx.xml.DefaultXml
 import io.ktor.serialization.kotlinx.xml.xml
-import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
 import nl.adaptivity.xmlutil.serialization.DefaultXmlSerializationPolicy
 import nl.adaptivity.xmlutil.serialization.XmlConfig
@@ -40,6 +41,7 @@ interface FeedService {
 class FeedServiceConfig(
     val kotlinBlogFeedUrl: String,
     val kotlinYouTubeFeedUrl: String,
+    val kotlinYouTubeApiKey: String,
     val talkingKotlinFeedUrl: String,
     val kotlinWeeklyFeedUrl: String,
 )
@@ -73,6 +75,7 @@ class RealFeedService(
             xml(format, ContentType.Application.Rss)
             xml(format, ContentType.Application.Xml)
             xml(format, ContentType.Text.Xml)
+            json(Json { ignoreUnknownKeys = true })
         }
         install(HttpTimeout) {
             requestTimeoutMillis = 30_000L
@@ -112,11 +115,10 @@ class RealFeedService(
                     feedStore.saveKotlinYouTubeItems(it)
                 },
                 remoteSource = {
-                    httpClient.get(serviceConfig.kotlinYouTubeFeedUrl).bodyAsText().let {
-                        DefaultXml.decodeFromString<KotlinYouTubeRss>(
-                            it.replace("&(?!.{2,4};)".toRegex(), "&amp;"),
-                        ).entries
-                    }
+                    httpClient.get(serviceConfig.kotlinYouTubeFeedUrl) {
+                        header("X-Goog-Api-Key", serviceConfig.kotlinYouTubeApiKey)
+                    }.body<KotlinYouTubePlaylistItems>().items
+                        .filter { it.status.privacyStatus == "public" }
                 },
             )
         }

@@ -7,7 +7,7 @@ The API combines multiple Kotlin-related RSS feeds into a single list of `FeedEn
 Currently supported feed sources:
 
 1. [Kotlin Blog](https://blog.jetbrains.com/kotlin/feed/) - Latest news from the official Kotlin Blog
-2. [Kotlin YouTube Channel](https://www.youtube.com/feeds/videos.xml?channel_id=UCP7uiEZIqci43m22KDl0sNw) - Videos from the official Kotlin YouTube channel
+2. [Kotlin YouTube Channel](https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw) - Videos from the official Kotlin YouTube channel
 3. [Talking Kotlin](https://talkingkotlin.com/feed) - Podcast on Kotlin and more by JetBrains
 4. [Kotlin Weekly](https://rss.app/feeds/QKefltG2nWU9PWuu.xml) - Weekly community Kotlin newsletter
 
@@ -26,6 +26,7 @@ Setup the required environment variables:
 KS_REDIS_REST_URL
 KS_REDIS_REST_TOKEN
 KS_GCLOUD_PROJECT_ID
+KS_YOUTUBE_API_KEY
 KS_CF_BASE_URL
 KS_CF_ACCOUNT_ID
 KS_CF_API_TOKEN

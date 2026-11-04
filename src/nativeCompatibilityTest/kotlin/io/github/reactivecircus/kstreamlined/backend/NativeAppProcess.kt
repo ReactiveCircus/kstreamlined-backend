@@ -146,6 +146,7 @@ class NativeAppProcess private constructor(
                         "KS_CF_BASE_URL" to "$url/ai",
                         "KS_CF_ACCOUNT_ID" to "integration",
                         "KS_CF_API_TOKEN" to "native-test-token",
+                        "KS_YOUTUBE_API_KEY" to ServiceHttpStubs.YouTubeApiKey,
                     ),
                 )
             }

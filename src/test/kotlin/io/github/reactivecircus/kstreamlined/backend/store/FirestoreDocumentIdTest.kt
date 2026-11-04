@@ -22,7 +22,9 @@ class FirestoreDocumentIdTest {
 
     @Test
     fun `KotlinYouTubeItem has expected firestoreDocumentId`() {
-        val kotlinYouTubeItem = DummyKotlinYouTubeItem.copy(id = "yt:video:abcde12345")
+        val kotlinYouTubeItem = DummyKotlinYouTubeItem.copy(
+            contentDetails = DummyKotlinYouTubeItem.contentDetails.copy(videoId = "abcde12345"),
+        )
         assertEquals("yt:video:abcde12345", kotlinYouTubeItem.firestoreDocumentId)
     }
 

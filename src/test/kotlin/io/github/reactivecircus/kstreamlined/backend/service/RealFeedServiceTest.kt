@@ -2,11 +2,12 @@ package io.github.reactivecircus.kstreamlined.backend.service
 
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinBlogItem
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinWeeklyItem
-import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeAuthor
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeContentDetails
 import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeItem
-import io.github.reactivecircus.kstreamlined.backend.service.dto.Link
-import io.github.reactivecircus.kstreamlined.backend.service.dto.MediaCommunity
-import io.github.reactivecircus.kstreamlined.backend.service.dto.MediaGroup
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeSnippet
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeStatus
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeThumbnail
+import io.github.reactivecircus.kstreamlined.backend.service.dto.KotlinYouTubeThumbnails
 import io.github.reactivecircus.kstreamlined.backend.service.dto.TalkingKotlinItem
 import io.github.reactivecircus.kstreamlined.backend.store.FakeFeedStore
 import io.github.reactivecircus.kstreamlined.backend.store.FakeKotlinBlogContentStore
@@ -29,8 +30,8 @@ class RealFeedServiceTest {
     private val mockKotlinBlogRssResponse =
         javaClass.classLoader.getResource("kotlin_blog_rss_response_sample.xml")?.readText()!!
 
-    private val mockKotlinYouTubeRssResponse =
-        javaClass.classLoader.getResource("kotlin_youtube_rss_response_sample.xml")?.readText()!!
+    private val mockKotlinYouTubeApiResponse =
+        javaClass.classLoader.getResource("kotlin_youtube_api_response_sample.json")?.readText()!!
 
     private val mockTalkingKotlinRssResponse =
         javaClass.classLoader.getResource("talking_kotlin_rss_response_sample.xml")?.readText()!!
@@ -147,11 +148,11 @@ class RealFeedServiceTest {
     }
 
     @Test
-    fun `loadKotlinYouTubeFeed() returns KotlinYouTubeItems when API call succeeds`() = runBlocking {
+    fun `loadKotlinYouTubeFeed() returns public KotlinYouTubeItems when API call succeeds`() = runBlocking {
         val mockEngine = MockEngine {
             respond(
-                content = ByteReadChannel(mockKotlinYouTubeRssResponse),
-                headers = headersOf(HttpHeaders.ContentType, "application/xml"),
+                content = ByteReadChannel(mockKotlinYouTubeApiResponse),
+                headers = headersOf(HttpHeaders.ContentType, "application/json; charset=UTF-8"),
             )
         }
         val feedService = RealFeedService(
@@ -165,89 +166,41 @@ class RealFeedServiceTest {
 
         val expected = listOf(
             KotlinYouTubeItem(
-                id = "yt:video:ihMhu3hvCCE",
-                videoId = "ihMhu3hvCCE",
-                channelId = "UCP7uiEZIqci43m22KDl0sNw",
-                title = "Kotlin and Java Interoperability in Spring Projects",
-                link = Link(
-                    href = "https://www.youtube.com/watch?v=ihMhu3hvCCE",
-                    rel = "alternate",
-                ),
-                author = KotlinYouTubeAuthor(
-                    name = "Kotlin by JetBrains",
-                    uri = "https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw",
-                ),
-                published = "2022-07-06T13:39:46+00:00",
-                updated = "2022-07-11T13:45:53+00:00",
-                mediaGroup = MediaGroup(
+                snippet = KotlinYouTubeSnippet(
+                    publishedAt = "2022-07-06T13:39:46Z",
                     title = "Kotlin and Java Interoperability in Spring Projects",
-                    content = MediaGroup.Content(
-                        url = "https://www.youtube.com/v/ihMhu3hvCCE?version=3",
-                        type = "application/x-shockwave-flash",
-                        width = "640",
-                        height = "390",
-                    ),
-                    thumbnail = MediaGroup.Thumbnail(
-                        url = "https://i2.ytimg.com/vi/ihMhu3hvCCE/hqdefault.jpg",
-                        width = "480",
-                        height = "360",
-                    ),
                     description = "We have configured the Kotlin compiler in a Java/Spring project - now what? Let's talk about important details you need to know about calling Java from Kotlin code and vice versa. Links: Adding Kotlin to Spring/Maven project: https://youtu.be/4-qOxvjjF8g Calling Java from Kotlin: https://kotlinlang.org/docs/java-interop.html Calling Kotlin from Java: https://kotlinlang.org/docs/java-to-kotlin-interop.html Kotlin Spring compiler plugin: https://kotlinlang.org/docs/all-open-plugin.html#spring-support Just starting with Kotlin? Learn Kotlin by creating real-world applications with JetBrains Academy Build simple games, a chat bot, a coffee machine simulator, and other interactive projects step by step in a hands-on learning environment. Get started: https://hyperskill.org/join/fromyoutubetoJetSalesStat?redirect=true&next=/tracks/18 #springboot #springframework #kotlin #interoperability",
-                    community = MediaCommunity(
-                        starRating = MediaCommunity.StarRating(
-                            count = "188",
-                            average = "5.00",
-                            min = "1",
-                            max = "5",
-                        ),
-                        statistics = MediaCommunity.Statistics(views = "4397"),
+                    thumbnails = KotlinYouTubeThumbnails(
+                        high = KotlinYouTubeThumbnail(url = "https://i.ytimg.com/vi/ihMhu3hvCCE/hqdefault.jpg"),
                     ),
                 ),
+                contentDetails = KotlinYouTubeContentDetails(
+                    videoId = "ihMhu3hvCCE",
+                    videoPublishedAt = "2022-07-06T13:39:46Z",
+                ),
+                status = KotlinYouTubeStatus(privacyStatus = "public"),
             ),
             KotlinYouTubeItem(
-                id = "yt:video:tX4nLqcW2JA",
-                videoId = "tX4nLqcW2JA",
-                channelId = "UCP7uiEZIqci43m22KDl0sNw",
-                title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta | Talking Kotlin",
-                link = Link(
-                    href = "https://www.youtube.com/watch?v=tX4nLqcW2JA",
-                    rel = "alternate",
-                ),
-                author = KotlinYouTubeAuthor(
-                    name = "Kotlin by JetBrains",
-                    uri = "https://www.youtube.com/channel/UCP7uiEZIqci43m22KDl0sNw",
-                ),
-                published = "2022-06-28T15:00:15+00:00",
-                updated = "2022-07-05T08:29:07+00:00",
-                mediaGroup = MediaGroup(
+                snippet = KotlinYouTubeSnippet(
+                    publishedAt = "2022-06-28T15:00:15Z",
                     title = "Turbocharging Kotlin: Arrow Analysis, Optics & Meta | Talking Kotlin",
-                    content = MediaGroup.Content(
-                        url = "https://www.youtube.com/v/tX4nLqcW2JA?version=3",
-                        type = "application/x-shockwave-flash",
-                        width = "640",
-                        height = "390",
-                    ),
-                    thumbnail = MediaGroup.Thumbnail(
-                        url = "https://i1.ytimg.com/vi/tX4nLqcW2JA/hqdefault.jpg",
-                        width = "480",
-                        height = "360",
-                    ),
                     description = "We chat with Raul, Simon, and Alejandro to learn how Arrow adds functional paradigms and safety to Kotlin, and how it aims to influence the future of the language. Arrow - https://arrow-kt.io/ Arrow Analysis - https://arrow-kt.io/docs/meta/analysis/ 47 Degrees - https://www.47deg.com/ 47 Degrees jobs - https://www.47deg.com/company/ Arrow twitter - @arrow_kt #Arrow #Kotlin #Programming #arrow-kt",
-                    community = MediaCommunity(
-                        starRating = MediaCommunity.StarRating(
-                            count = "124",
-                            average = "5.00",
-                            min = "1",
-                            max = "5",
-                        ),
-                        statistics = MediaCommunity.Statistics(views = "3287"),
+                    thumbnails = KotlinYouTubeThumbnails(
+                        high = KotlinYouTubeThumbnail(url = "https://i.ytimg.com/vi/tX4nLqcW2JA/hqdefault.jpg"),
                     ),
                 ),
+                contentDetails = KotlinYouTubeContentDetails(
+                    videoId = "tX4nLqcW2JA",
+                    videoPublishedAt = "2022-06-28T15:00:15Z",
+                ),
+                status = KotlinYouTubeStatus(privacyStatus = "public"),
             ),
         )
 
         assertEquals(expected, feedService.loadKotlinYouTubeFeed())
         assertEquals(expected, feedStore.loadKotlinYouTubeItems())
+
+        assertEquals("api-key", mockEngine.requestHistory.single().headers["X-Goog-Api-Key"])
     }
 
     @Test

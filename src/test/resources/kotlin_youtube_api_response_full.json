@@ -1,0 +1,1106 @@
+{
+  "kind": "youtube#playlistItemListResponse",
+  "etag": "NqNO-m7J4S1dhNqMZPIVLW40ZdM",
+  "nextPageToken": "EAAaHlBUOkNCUWlFREV4T1VNeE5UWTVNamcwTXpjMVFrTQ",
+  "items": [
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "2qTE7wwTLjVaSxyUFEmqpK0MEe4",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053Lm9iSWlKZ016eFI4",
+      "snippet": {
+        "publishedAt": "2026-11-03T15:00:25Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Suspend function types in TypeScript",
+        "description": "New features from Kotlin 2.4.20",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/obIiJgMzxR8/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/obIiJgMzxR8/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/obIiJgMzxR8/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/obIiJgMzxR8/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/obIiJgMzxR8/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 0,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "obIiJgMzxR8"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "obIiJgMzxR8",
+        "videoPublishedAt": "2026-11-03T15:00:25Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "u8pLkVonBo7il35aQ_VxzFetMB4",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053Lm1RcXdBbVFCa3Nz",
+      "snippet": {
+        "publishedAt": "2026-10-29T14:55:44Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Inside Kotlin's Language Design | KotlinConfersations",
+        "description": "Save 24% on KotlinConf 2027 tickets before December 10! Kraków, Poland · April 22–23: https://kotl.in/vum6t5\n\nRoss shares his journey from contributing to Kotlin’s foundations back in 2011 to collaborating with the core team today on long-term language design, type architecture, and future compiler capabilities.\n\n#Kotlin #KotlinConf #ProgrammingLanguages #SoftwareArchitecture",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/mQqwAmQBkss/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/mQqwAmQBkss/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/mQqwAmQBkss/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/mQqwAmQBkss/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/mQqwAmQBkss/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          },
+          "qhd": {
+            "url": "https://i.ytimg.com/vi/mQqwAmQBkss/qhddefault.jpg",
+            "width": 2560,
+            "height": 1440
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 1,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "mQqwAmQBkss"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "mQqwAmQBkss",
+        "videoPublishedAt": "2026-10-29T14:55:44Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "j-hfCSrQsLMpREpfjY3K65UQ7jA",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LjQ3b3daS19INlpZ",
+      "snippet": {
+        "publishedAt": "2026-10-28T14:15:17Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Exhaustive sealed types in Swift",
+        "description": "New features from Kotlin 2.4.20",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/47owZK_H6ZY/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/47owZK_H6ZY/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/47owZK_H6ZY/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/47owZK_H6ZY/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/47owZK_H6ZY/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 2,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "47owZK_H6ZY"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "47owZK_H6ZY",
+        "videoPublishedAt": "2026-10-28T14:15:17Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "Mod-_8yuEIWUfYkid9dqVixvifQ",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LjFLQzVNRU0yLVU0",
+      "snippet": {
+        "publishedAt": "2026-10-27T14:45:43Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Can Kotlin Handle Low-Latency Audio? | Phil Burk",
+        "description": "Save 24% on KotlinConf 2027 tickets! Join us in Kraków, Poland, April 22–23 → https://kotl.in/vum6t5\n\nExperimental music software developer Phil Burk joins us to discuss the complexities of building low-latency, real-time audio applications across platforms. We dive into the architecture of modern audio pipelines, the challenges of cross-platform sound processing, and how Kotlin fits into the audio development ecosystem.\n\nhttps://softsynth.com\n\nDeveloping Music Creation Apps for Web, Desktop and Android | Phil Burk – https://www.youtube.com/watch?v=WbKUf1CC-fg\n\n#Kotlin #KotlinConf #AudioDevelopment",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/1KC5MEM2-U4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/1KC5MEM2-U4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/1KC5MEM2-U4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/1KC5MEM2-U4/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/1KC5MEM2-U4/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 3,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "1KC5MEM2-U4"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "1KC5MEM2-U4",
+        "videoPublishedAt": "2026-10-27T14:45:43Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "p57Y2A9k1F_roUATdYUjZXV11lM",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LjBXbXRiU19aZ0dn",
+      "snippet": {
+        "publishedAt": "2026-10-26T14:30:38Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Swift implements Kotlin interfaces",
+        "description": "New features from Kotlin 2.4.20",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/0WmtbS_ZgGg/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/0WmtbS_ZgGg/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/0WmtbS_ZgGg/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/0WmtbS_ZgGg/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/0WmtbS_ZgGg/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 4,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "0WmtbS_ZgGg"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "0WmtbS_ZgGg",
+        "videoPublishedAt": "2026-10-26T14:30:38Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "F4lV8mVLI1US6rAn35cK9_g2KcM",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LjQ1ZlZVdUQ5b3dV",
+      "snippet": {
+        "publishedAt": "2026-10-23T12:00:20Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Lazy assertion messages",
+        "description": "New features from Kotlin 2.4.20",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/45fVUuD9owU/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/45fVUuD9owU/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/45fVUuD9owU/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/45fVUuD9owU/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/45fVUuD9owU/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 5,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "45fVUuD9owU"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "45fVUuD9owU",
+        "videoPublishedAt": "2026-10-23T12:00:20Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "RlQRRRwOEz-AHMZhUCitwQ5EcG8",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LmxSbmVTM1h5VlRv",
+      "snippet": {
+        "publishedAt": "2026-10-21T15:15:25Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "allEqual and allDistinct",
+        "description": "New features from Kotlin 2.4.20",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/lRneS3XyVTo/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/lRneS3XyVTo/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/lRneS3XyVTo/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/lRneS3XyVTo/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/lRneS3XyVTo/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 6,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "lRneS3XyVTo"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "lRneS3XyVTo",
+        "videoPublishedAt": "2026-10-21T15:15:25Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "z75_9v_TMp9xAwQSef6wFdawkFQ",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LmpYcEdGSXQ3QWdR",
+      "snippet": {
+        "publishedAt": "2026-10-20T11:00:20Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Inside Airbnb's UI Motion Architecture | KotlinConfersations",
+        "description": "How does Airbnb build fluid, high-performance UI animations while preserving battery life and strong brand personality? \n\nIn this episode of Kotlin Conversations at KotlinConf, host Wenda sits down with Airbnb software engineers Tunji (TJ) Dahunsi and Rahul Behara. They dive deep into the engineering hurdles behind rich UI motion, animating complex text glyphs, handling image sequences, and navigating the delicate balance between platform SDK guidelines and bespoke company design systems.\n\nConnect with Kotlin & JetBrains:\n• Website: https://kotlinlang.org\n• Kotlin on X (Twitter): https://twitter.com/kotlin\n• KotlinConf: https://kotlinconf.com\n\n#Kotlin #KotlinConf #JetpackCompose #AndroidDev #Airbnb #SoftwareEngineering",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/jXpGFIt7AgQ/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/jXpGFIt7AgQ/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/jXpGFIt7AgQ/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/jXpGFIt7AgQ/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/jXpGFIt7AgQ/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 7,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "jXpGFIt7AgQ"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "jXpGFIt7AgQ",
+        "videoPublishedAt": "2026-10-20T11:00:20Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "hDUXEIn1_656M7Y6tGg7MJ2_fjo",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053Lk45b1JKajc1MTZN",
+      "snippet": {
+        "publishedAt": "2026-10-12T13:00:27Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "KMP Contest Winners | KotlinConfersations 2026",
+        "description": "Meet two of the winners of the Kotlin Multiplatform (KMP) Contest! Live from KotlinConf 2026, we sit down with Adrien and Javier to explore the apps they built, the technical hurdles they overcame, and how they brought their ideas to life using Kotlin Multiplatform and AI.\n\nIn this interview: \n\nJavier presents Clarity, a cognitive training and well-being app designed to track habits and support mental health through interactive games and AI coaching. \n\nAdrien shares Hunted, a real-time multiplayer scavenger game utilizing Gemini models for visual object verification and prompt-driven gameplay.\n\nThe new Kotlin Multiplatform Contest is live!\n\nStudents and recent graduates: Turn your idea into a cross-platform project with Kotlin Multiplatform and compete for one of three trips to KotlinConf 2027 in Kraków!\n\n Submit by December 7\n https://kotlinconf.com/contest/\n\nTickets to KotlinConf 2027: https://kotlinconf.com",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/N9oRJj7516M/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/N9oRJj7516M/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/N9oRJj7516M/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/N9oRJj7516M/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/N9oRJj7516M/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 8,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "N9oRJj7516M"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "N9oRJj7516M",
+        "videoPublishedAt": "2026-10-12T13:00:27Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "qAy0MlJxmXZ97bZD1hl2PLvB9M4",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LjhCMDl5M3NJSGNB",
+      "snippet": {
+        "publishedAt": "2026-09-30T11:03:52Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Stop making destructuring bugs with Kotlin's NEW name based destructuring feature",
+        "description": "Kotlin’s name-based destructuring feature has been released under an experimental flag. This feature will become stable in Kotlin 2.5.0, which will be released near the end of 2026. \n\nBefore this feature, Kotlin only had position-based destructuring of data classes, but this way of mapping data class members to new variables lacked clarity and caused subtle bugs. Using name-based destructuring will eliminate whole categories of these bugs.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/8B09y3sIHcA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/8B09y3sIHcA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/8B09y3sIHcA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/8B09y3sIHcA/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/8B09y3sIHcA/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 9,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "8B09y3sIHcA"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "8B09y3sIHcA",
+        "videoPublishedAt": "2026-09-30T11:03:52Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "a5a5icOgkyP-eC_lJ-LZmukQUq4",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LmdIeHZDV0E1bXRZ",
+      "snippet": {
+        "publishedAt": "2026-09-24T12:30:00Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Swift Export: Where We Stand |  Pamela Hill-Galloway",
+        "description": "Recording brought to you by American Express. https://americanexpress.io/kotlin-jobs\n\nSwift Export, the much-anticipated project from the JetBrains team, has been in progress for some time. The project’s goal is to make calling shared Kotlin code from Swift more intuitive and idiomatic for Swift developers (and dare I say, even fun?).\n\nIn this talk, we will see exactly what the current state of Swift Export is, with some code examples demonstrating how to go from the old “Objective-C bridge” way to the new “Swift Export” way. We will discuss the currently supported features and any subtleties we encountered while mapping Kotlin to Swift. We will also discuss what still needs further work and refinement, and how the community can get involved.\n\nBy the end of the session, you’ll be able to assess for yourself whether Swift Export is ready to adopt for your team and use case, based on some guidelines from the Swift Export team. More idiomatic Swift, happier team!",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/gHxvCWA5mtY/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/gHxvCWA5mtY/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/gHxvCWA5mtY/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/gHxvCWA5mtY/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/gHxvCWA5mtY/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 10,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "gHxvCWA5mtY"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "gHxvCWA5mtY",
+        "videoPublishedAt": "2026-09-24T12:30:00Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "aeuATQBr_FtT9FhXadPHIM4pC14",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LlFxVGRHZzJ3WXhZ",
+      "snippet": {
+        "publishedAt": "2026-09-23T14:31:51Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Building AI‑Powered Web Apps in Kotlin/Wasm | Zalim Bashorov",
+        "description": "Recording brought to you by American Express. https://americanexpress.io/kotlin-jobs\n\nModern browsers are starting to ship native AI capabilities as standardized Web APIs, enabling fully client‑side AI‑powered web apps without any server infrastructure.\r Using built-in Web AI allows sensitive data to be processed locally, improves the responsiveness of AI-driven features, and enables offline usage. At the same time, these new APIs come with limitations that may affect performance, availability, and real-world applicability.\n\nIn this talk, we take a look at the current state of Web AI: what capabilities are already available, how these APIs work, and where they fall short. We discuss the practical advantages and trade-offs of adopting browser-native AI to help you make informed decisions.\nTo make this more concrete, we'll walk through some examples demonstrating how to invoke Web AI APIs to build features such as real-time text summarization, translation, and other AI-powered functionalities. All run directly in the user's browser.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/QqTdGg2wYxY/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/QqTdGg2wYxY/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/QqTdGg2wYxY/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/QqTdGg2wYxY/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/QqTdGg2wYxY/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 11,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "QqTdGg2wYxY"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "QqTdGg2wYxY",
+        "videoPublishedAt": "2026-09-23T14:31:51Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "B_F0v4KDjrc7pYVaSAeo-LPh3J8",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LkhlOEozNEtIRVk0",
+      "snippet": {
+        "publishedAt": "2026-09-21T13:00:05Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Kotlin's Name-Based Destructuring",
+        "description": "Kotlin’s name-based destructuring feature has been released under an experimental flag. This feature will become stable in Kotlin 2.5.0, which will be released near the end of 2026. \n\nBefore this feature, Kotlin only had position-based destructuring of data classes, but this way of mapping data class members to new variables lacked clarity and caused subtle bugs. Using name-based destructuring will eliminate whole categories of these bugs.\n\nChapters:\n0:00 Introduction\n1:38 Bytecode sidequest\n2:33 The problem with position-based destructuring\n4:19 Name-based destructuring has entered the chat\n7:04 New position-based destructuring syntax\n8:09 Three compiler flag options (in experimental)\n9:32 Migration plan\n11:10 Closing\n\n#kotlin",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/He8J34KHEY4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/He8J34KHEY4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/He8J34KHEY4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/He8J34KHEY4/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/He8J34KHEY4/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 12,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "He8J34KHEY4"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "He8J34KHEY4",
+        "videoPublishedAt": "2026-09-21T13:00:05Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "yCvm1RYAHcoqKD5y6xo8kSfd7cI",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LlVoUmZON2Z4NXJz",
+      "snippet": {
+        "publishedAt": "2026-09-14T13:12:00Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "What's New in Kotlin 2.4.20",
+        "description": "Read the full release notes: https://kotlinlang.org/docs/whatsnew2420.html\n\nKotlin 2.4.20 is out! This release includes some exciting new additions in the standard library, updates to the iOS development experience, and improvements to both the Wasm and JS targets as well.\n\nChapters:\n0:00 Intro\n0:29 New collection functions\n2:30 kotlin.test assertion improvements\n3:57 Coroutine stacktrace recovery\n5:14 Swift Export improvements\n6:39 Package.swift generation\n7:02 Incremental klib compilation\n7:18 Wasm multi-module modes\n8:13 Wasmtime\n8:34 Wasm optimizations\n8:51 JS tests on Playwright\n9:22 JS export suspending function types\n10:02 kotlinr renaming\n10:31 Native image compiler\n10:54 Conclusion",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/UhRfN7fx5rs/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/UhRfN7fx5rs/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/UhRfN7fx5rs/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/UhRfN7fx5rs/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/UhRfN7fx5rs/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          },
+          "fhd": {
+            "url": "https://i.ytimg.com/vi/UhRfN7fx5rs/fhddefault.jpg",
+            "width": 1920,
+            "height": 1080
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 13,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "UhRfN7fx5rs"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "UhRfN7fx5rs",
+        "videoPublishedAt": "2026-09-14T13:12:00Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "FNmKe5epd107LxJd5afoi3Rnunk",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LktoVDFqWU1wa1JV",
+      "snippet": {
+        "publishedAt": "2026-09-11T10:03:34Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Powering Up Your Assertions | Brian Norman",
+        "description": "Recording brought to you by American Express. https://americanexpress.io/kotlin-jobs\n\nBig changes to Power-Assert are headed your way with Kotlin 2.4! We’ve heard your complaints about complex Gradle configuration, confusing message diagrams, and poor library integration. We’re hoping to address all of these areas, and I’ll show you how!\n\nBut the good news doesn’t stop there. If you’re an assertion library author, you may be interested in how you can add first-party support for Power-Assert to your library. We want every assertion library to have the same great, out-of-the-box experience!\n\nAnd we might even take a brief look at what we’ll be working on next!",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/KhT1jYMpkRU/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/KhT1jYMpkRU/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/KhT1jYMpkRU/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/KhT1jYMpkRU/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/KhT1jYMpkRU/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 14,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "KhT1jYMpkRU"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "KhT1jYMpkRU",
+        "videoPublishedAt": "2026-09-11T10:03:34Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "L7E_aDXohQy-seuIz07-so9t9go",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LnFCTDVXTUVTVjAw",
+      "snippet": {
+        "publishedAt": "2026-09-10T09:36:27Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Your Life on a Map: Private Geospatial Analytics with Kotlin DataFrame and Kandy | Aleksei Zinovev",
+        "description": "Recording brought to you by American Express. https://americanexpress.io/kotlin-jobs\n\nIn the age of fitness trackers, smartwatches, cycling computers, and travel apps, each of us generates a huge amount of personal geographical data - daily steps, running routes, bike rides, hikes, city walks, and road trips. But how do we turn this raw stream of GPX, GeoJSON, KML, or TCX files into meaningful insights, clean datasets, and reliable analytics?\n\nThese datasets are rich and deeply personal - and not everyone wants to upload them to cloud platforms or rely on whatever limited dashboards a mobile app provides. Sometimes the analytics you want simply aren’t there, and sometimes privacy matters more than convenience.\n\nIn this talk, I’ll show how Kotlin DataFrame and Kandy can help you process and analyze personal GPS data entirely on your own machine. We’ll parse and clean tracks collected by everyday mobile apps, handle common anomalies and sensor glitches, enrich the data with useful metrics, and create just enough visualization to understand mobility patterns - without promising a full-blown GIS system.\n\nThis session demonstrates a practical Kotlin-native workflow for anyone who wants deeper insights into their own movement data while keeping full control and privacy.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/qBL5WMESV00/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/qBL5WMESV00/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/qBL5WMESV00/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/qBL5WMESV00/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/qBL5WMESV00/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 15,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "qBL5WMESV00"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "qBL5WMESV00",
+        "videoPublishedAt": "2026-09-10T09:36:27Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "KIEb-Y0NtIWf3MrgxK5ESfKuFTw",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LjBCcXYtdTc4TXFv",
+      "snippet": {
+        "publishedAt": "2026-09-09T12:49:41Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Bringing Native iOS Feel to Compose Multiplatform Apps | Mohamed Ben Rejeb",
+        "description": "Recording brought to you by American Express. https://americanexpress.io/kotlin-jobs\nSave 24% on KotlinConf 2027 tickets! Join us in Kraków, Poland, April 22–23 → https://kotl.in/vum6t5\n\nEver built a Compose Multiplatform app and wished it looked at home on every platform? This lightning talk introduces Calf (Compose Adaptive Look & Feel) an open-source library that makes your Compose UI adapt to each platform’s native design. We’ll start with a typical Material3 styled Android app and ask: can it feel native on iOS without a complete rewrite?\n\nWe’ll gradually replace Material components with Calf’s adaptive UI components (dialogs, bottom sheets, pickers, etc.). With just a few swaps, watch the app instantly adopt iOS’s familiar look while using the same codebase for both Android and iOS. You’ll see how Calf maps components to their native counterparts, Material on Android and Cupertino on iOS, so the UI truly feels native to each platform.\n\nThis talk is light, fast-paced, and inspirational. If you’re an Android developer curious about Kotlin Multiplatform, come see how a single Compose codebase can deliver beautiful, platform-native UIs with minimal effort.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/0Bqv-u78Mqo/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/0Bqv-u78Mqo/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/0Bqv-u78Mqo/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/0Bqv-u78Mqo/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/0Bqv-u78Mqo/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 16,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "0Bqv-u78Mqo"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "0Bqv-u78Mqo",
+        "videoPublishedAt": "2026-09-09T12:49:41Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "JYlN1cSnwQwaWRyJ7hvRlWKLtgo",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LlhyUHF2dFduaXVr",
+      "snippet": {
+        "publishedAt": "2026-09-08T14:32:30Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Automate upgrading to Kotlin 2 with OpenRewrite | Rooz SF and Jonathan Schneider",
+        "description": "Recording brought to you by American Express. https://americanexpress.io/kotlin-jobs\n\nOpenRewrite Kotlin 2 support is here! OpenRewrite can automate Kotlin updates by using its open-source refactoring engine to apply pre-built or custom recipes that modify your codebase at scale. These recipes handle dependency upgrades, API changes, and stylistic consistency, reducing manual effort. In this talk we will share how the Moderne and OpenRewrite engineering team's built and enhanced Kotlin2 support and walk you through the new capabilities. \n\nOpenRewrite works by applying \"recipes\" to the Lossless Semantic Trees (LSTs) that represent your source code. The LSTs capture full type attribution and formatting, allowing for accurate, automated refactoring that respects the original coding style.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/XrPqvtWniuk/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/XrPqvtWniuk/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/XrPqvtWniuk/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/XrPqvtWniuk/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/XrPqvtWniuk/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 17,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "XrPqvtWniuk"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "XrPqvtWniuk",
+        "videoPublishedAt": "2026-09-08T14:32:30Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "CZkL1q_9ss-ZRu-adhGLU2MOE0g",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LjZrcU5mSnVFTHln",
+      "snippet": {
+        "publishedAt": "2026-09-07T11:07:35Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "Engineering High Performance Multiplatform Graphic Rendering with Jetpack Compose | Rahul and Tunji",
+        "description": "Recording brought to you by American Express. https://americanexpress.io/kotlin-jobs\nSave 24% on KotlinConf 2027 tickets! Join us in Kraków, Poland, April 22–23 → https://kotl.in/vum6t5\n\nStandard animation libraries often force a compromise. GIFs consume bandwidth, Lottie struggles with complex rasters, and video formats lack frame-perfect alpha transparency. Furthermore, replicating complex text effects using these vector or raster formats is inefficient and bloated and can result in glyph shaping issues in different languages.\n\nTo drive user engagement and measurable business impact, we need tools that are easy to deploy and cost effective to maintain. In this talk, we'll cover two explorations: a custom high-fidelity animated image sequence engine for complex visuals, and TextWave—a specialized engine for animating glyphs that offers superior efficiency and control over binary size compared to standard alternatives.\n\nCoordinating these components to run at high FPS across 3 platforms is a massive engineering challenge. Does each platform implement it natively, or is there room for a multiplatform implementation?\n\nIn this session, we will share the architecture of building these advanced rendering engines in both native and multiplatform scenarios. We will move beyond basic UI to discuss:\n* Rendering the custom graphics on each platform natively. \n* Rendering the custom graphics on each platform with Compose multiplatform with Skia including working with the Kotlin Native memory model and hardware bitmaps including before-and-after profiler analysis. \n* The Rendering Pipeline: How we architected a decoding pipeline that manages byte[] ownership to prevent copies and massive memory pressure—specifically addressing the \"heap growth\" challenges in Kotlin Native when loading compressed assets.\n* Coordinating text animations with raster sequences, and the measurable impact this performance boost had on bookings.\n* Interesting nuances of byte array management accross JS,  Java, and Native environments.\n\nJoin us for a deep technical dive into the state of cross-platform graphics, featuring real-world benchmarks, profiler screenshots, and the lessons learned from rendering pixels at scale.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/6kqNfJuELyg/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/6kqNfJuELyg/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/6kqNfJuELyg/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/6kqNfJuELyg/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/6kqNfJuELyg/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 18,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "6kqNfJuELyg"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "6kqNfJuELyg",
+        "videoPublishedAt": "2026-09-07T11:07:35Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    },
+    {
+      "kind": "youtube#playlistItem",
+      "etag": "aklQFtuHThuVsgizCCULA1sbBYQ",
+      "id": "VVVQN3VpRVpJcWNpNDNtMjJLRGwwc053LjJiZVhOTVFKeTlJ",
+      "snippet": {
+        "publishedAt": "2026-09-06T11:20:18Z",
+        "channelId": "UCP7uiEZIqci43m22KDl0sNw",
+        "title": "RemoteCompose: Building for remote surfaces with Compose | Yuri Schimke",
+        "description": "Recording brought to you by American Express. https://americanexpress.io/kotlin-jobs\nSave 24% on KotlinConf 2027 tickets! Join us in Kraków, Poland, April 22–23 → https://kotl.in/vum6t5\n\nAn introduction to RemoteCompose.\n\nFocusing on the Compose & Kotlin frontend for the RemoteCompose technology. A guided walk through State, Expressions, Actions and Components.\n\nBuilding up to examples of typical use cases and how to implement amazing UIs reaching to different remote surfaces. And the many possible meanings of Remote on Android platforms and otherwise.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/2beXNMQJy9I/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/2beXNMQJy9I/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/2beXNMQJy9I/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/2beXNMQJy9I/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/2beXNMQJy9I/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          },
+          "fhd": {
+            "url": "https://i.ytimg.com/vi/2beXNMQJy9I/fhddefault.jpg",
+            "width": 1920,
+            "height": 1080
+          }
+        },
+        "channelTitle": "Kotlin by JetBrains",
+        "playlistId": "UUP7uiEZIqci43m22KDl0sNw",
+        "position": 19,
+        "resourceId": {
+          "kind": "youtube#video",
+          "videoId": "2beXNMQJy9I"
+        },
+        "videoOwnerChannelTitle": "Kotlin by JetBrains",
+        "videoOwnerChannelId": "UCP7uiEZIqci43m22KDl0sNw"
+      },
+      "contentDetails": {
+        "videoId": "2beXNMQJy9I",
+        "videoPublishedAt": "2026-09-06T11:20:18Z"
+      },
+      "status": {
+        "privacyStatus": "public"
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 775,
+    "resultsPerPage": 20
+  }
+}

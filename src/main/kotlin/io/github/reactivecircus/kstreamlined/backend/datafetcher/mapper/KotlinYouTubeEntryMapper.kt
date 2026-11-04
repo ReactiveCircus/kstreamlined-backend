@@ -6,14 +6,15 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 fun KotlinYouTubeItem.toKotlinYouTubeEntry(): KotlinYouTube {
+    val videoId = contentDetails.videoId
     return KotlinYouTube(
         id = id,
-        title = title,
+        title = snippet.title,
         publishTime = ZonedDateTime
-            .parse(published, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+            .parse(contentDetails.videoPublishedAt ?: snippet.publishedAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
             .toInstant(),
-        contentUrl = link.href,
-        thumbnailUrl = mediaGroup.thumbnail.url,
-        description = mediaGroup.description,
+        contentUrl = "https://www.youtube.com/watch?v=$videoId",
+        thumbnailUrl = snippet.thumbnails.high?.url ?: "https://i.ytimg.com/vi/$videoId/hqdefault.jpg",
+        description = snippet.description,
     )
 }

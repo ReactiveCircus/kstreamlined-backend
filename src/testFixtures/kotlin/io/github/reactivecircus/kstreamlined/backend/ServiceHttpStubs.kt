@@ -24,7 +24,7 @@ class ServiceHttpStubs : AutoCloseable {
     private val aiResponses = AtomicReference(AiResponses())
     private val fixtures = mapOf(
         "/feeds/blog" to ("kotlin_blog_rss_response_sample.xml" to "application/rss+xml"),
-        "/feeds/youtube" to ("kotlin_youtube_rss_response_sample.xml" to "application/xml"),
+        "/feeds/youtube" to ("kotlin_youtube_api_response_sample.json" to "application/json"),
         "/feeds/podcast" to ("talking_kotlin_rss_response_sample.xml" to "application/rss+xml"),
         "/feeds/weekly" to ("kotlin_weekly_rss_response_sample.xml" to "application/rss+xml"),
         "/weekly-issue" to ("kotlin_weekly_issue_sample.html" to "text/html"),
@@ -83,6 +83,10 @@ class ServiceHttpStubs : AutoCloseable {
     private fun respond(request: RecordedRequest): MockResponse {
         val path = request.url.encodedPath
         return when {
+            path == "/feeds/youtube" && request.headers[YouTubeApiKeyHeader] != YouTubeApiKey -> {
+                unexpectedRequest(request, 403, "Missing or invalid YouTube API key.")
+            }
+
             fixtures.containsKey(path) && request.method == "GET" -> {
                 val status = feedFailures[path]
                 if (status != null) {
@@ -153,6 +157,11 @@ class ServiceHttpStubs : AutoCloseable {
 
     private fun resource(name: String): String =
         requireNotNull(javaClass.classLoader.getResource(name)) { "Missing test fixture: $name." }.readText()
+
+    companion object {
+        const val YouTubeApiKey = "test-youtube-api-key"
+        private const val YouTubeApiKeyHeader = "X-Goog-Api-Key"
+    }
 
     private data class AiStub(
         val response: AiResponse,
