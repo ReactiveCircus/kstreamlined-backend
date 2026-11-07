@@ -141,7 +141,7 @@ class KSConfiguration {
     @Bean
     fun cloudflareAiClient(
         engine: HttpClientEngine,
-        @Value($$"${KS_CF_BASE_URL}") baseUrl: String,
+        @Value($$"${ks.cf-base-url}") baseUrl: String,
         @Value($$"${KS_CF_ACCOUNT_ID}") accountId: String,
         @Value($$"${KS_CF_API_TOKEN}") apiToken: String,
     ): CloudflareAiClient {
