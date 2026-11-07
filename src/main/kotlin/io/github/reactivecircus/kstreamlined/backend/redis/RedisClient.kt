@@ -68,14 +68,14 @@ class RedisClient(
      * logged and ignored.
      */
     suspend fun setIfChanged(key: String, value: String, expiry: Duration) {
-        val checksumKey = "$key$ChecksumKeySuffix"
+        val checksumKey = "$key:checksum"
         val checksum = value.sha256()
         val expirySeconds = expiry.inWholeSeconds.toString()
         val unchanged = executeWithErrorHandling(operation = "EVAL", key = key) {
             val command = buildJsonArray {
                 add("EVAL")
-                add(RefreshExpiryIfUnchangedScript)
-                add("2")
+                add(refreshExpiryIfUnchangedScript)
+                add("2") // number of keys
                 add(key)
                 add(checksumKey)
                 add(checksum)
@@ -129,6 +129,17 @@ class RedisClient(
         }
     }
 
+    private val refreshExpiryIfUnchangedScript = """
+        |local key, checksumKey = KEYS[1], KEYS[2]
+        |local checksum, expirySeconds = ARGV[1], ARGV[2]
+        |if redis.call('GET', checksumKey) == checksum and redis.call('EXISTS', key) == 1 then
+        |    redis.call('EXPIRE', key, expirySeconds)
+        |    redis.call('EXPIRE', checksumKey, expirySeconds)
+        |    return 1
+        |end
+        |return 0
+    """.trimMargin()
+
     private suspend fun <T> executeWithErrorHandling(
         operation: String,
         key: String,
@@ -152,16 +163,6 @@ class RedisClient(
             logger.error("Malformed response during Redis $operation operation for key: $key", e)
             null
         }
-    }
-
-    companion object {
-        private const val ChecksumKeySuffix = ":checksum"
-
-        // Returns 1 and refreshes the expiry of both keys if the stored checksum (KEYS[2]) matches ARGV[1]
-        // and the value (KEYS[1]) still exists, otherwise returns 0.
-        private const val RefreshExpiryIfUnchangedScript =
-            "if redis.call('GET', KEYS[2]) == ARGV[1] and redis.call('EXPIRE', KEYS[1], ARGV[2]) == 1 then " +
-                "redis.call('EXPIRE', KEYS[2], ARGV[2]) return 1 end return 0"
     }
 }
 
