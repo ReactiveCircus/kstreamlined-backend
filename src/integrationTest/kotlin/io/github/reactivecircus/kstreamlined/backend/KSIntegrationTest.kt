@@ -168,7 +168,7 @@ class KSIntegrationTest {
         assertEquals(4, services.requests("/redis/get/").size)
         services.requests("/redis/set/").forEach { request ->
             assertEquals("Bearer integration-token", request.headers["Authorization"])
-            assertEquals("3600", request.url.queryParameter("EX"))
+            assertEquals("86400", request.url.queryParameter("EX"))
             assertEquals(2, Json.parseToJsonElement(checkNotNull(request.body).utf8()).jsonArray.size)
         }
     }
