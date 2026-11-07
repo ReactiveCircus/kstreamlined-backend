@@ -8,6 +8,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import mockwebserver3.RecordedRequest
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.TestMethodOrder
@@ -107,7 +108,7 @@ class KSIntegrationTest {
             .path("feedEntries[?(@.__typename == 'TalkingKotlin')].duration").entityList(String::class.java)
             .containsExactly("57min.", "51min.")
         assertEquals(4, services.requests("/feeds/").size)
-        assertEquals(4, services.requests("/redis/set/").size)
+        assertEquals(4, services.requests("/redis/multi-exec").size)
     }
 
     @Test
@@ -166,10 +167,14 @@ class KSIntegrationTest {
         assertEquals(first, second)
         assertEquals(4, services.requests("/feeds/").size)
         assertEquals(4, services.requests("/redis/get/").size)
-        services.requests("/redis/set/").forEach { request ->
+        val writes = services.requests("/redis/multi-exec")
+        assertEquals(4, writes.size)
+        writes.forEach { request ->
             assertEquals("Bearer integration-token", request.headers["Authorization"])
-            assertEquals("86400", request.url.queryParameter("EX"))
-            assertEquals(2, Json.parseToJsonElement(checkNotNull(request.body).utf8()).jsonArray.size)
+            val (setValue, setChecksum) = redisCommands(request)
+            assertEquals(listOf("SET", "EX", "86400"), listOf(setValue[0], setValue[3], setValue[4]))
+            assertEquals(2, Json.parseToJsonElement(setValue[2]).jsonArray.size)
+            assertEquals(listOf("SET", "${setValue[1]}:checksum"), setChecksum.take(2))
         }
     }
 
@@ -186,7 +191,7 @@ class KSIntegrationTest {
             .path("feedEntries[0].supportsTldr").entity<Boolean>().isEqualTo(true)
         assertEquals(1, services.requests("/redis/get/kotlin-blog").size)
         assertTrue(services.requests("/feeds/").isEmpty())
-        assertTrue(services.requests("/redis/set/").isEmpty())
+        assertTrue(services.requests("/redis/multi-exec").isEmpty())
         assertTrue(documents(BlogFeed).isEmpty())
         assertTrue(documents(BlogContent).isEmpty())
     }
@@ -205,6 +210,17 @@ class KSIntegrationTest {
         assertNull(document("265263").get("tldr"))
         assertEquals(Summary, document("264203").getString("tldr.output"))
         assertEquals(8, services.requests("/feeds/").size)
+    }
+
+    @Test
+    fun `syncFeeds mutation does not rewrite unchanged feeds to Redis`() {
+        syncFeeds()
+        assertEquals(4, services.requests("/redis/multi-exec").size)
+
+        syncFeeds()
+
+        assertEquals(4, services.requests("/redis/multi-exec").size)
+        assertEquals(8, services.requests("/redis").count { it.url.encodedPath == "/redis" })
     }
 
     @Test
@@ -379,6 +395,12 @@ class KSIntegrationTest {
     fun `backfillKotlinBlogTldrs mutation with no missing summaries succeeds without AI requests`() {
         assertBackfill(generatedCount = 0)
         assertTrue(services.requests("/ai/").isEmpty())
+    }
+
+    private fun redisCommands(request: RecordedRequest): List<List<String>> {
+        return Json.parseToJsonElement(checkNotNull(request.body).utf8()).jsonArray.map { command ->
+            command.jsonArray.map { it.jsonPrimitive.content }
+        }
     }
 
     private fun syncFeeds() {

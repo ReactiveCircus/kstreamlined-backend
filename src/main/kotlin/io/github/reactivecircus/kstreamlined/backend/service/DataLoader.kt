@@ -59,10 +59,10 @@ class DataLoader<T : Any> private constructor(
     private suspend fun loadFromSot(key: String, sot: suspend () -> List<T>): List<T> {
         val sotValue = sot()
         localCache.put(key, sotValue)
-        redisClient.set(
+        redisClient.setIfChanged(
             key = key,
             value = DefaultJson.encodeToString(listSerializer, sotValue),
-            keyExpirySeconds = remoteCacheExpiry.inWholeSeconds.toInt(),
+            expiry = remoteCacheExpiry,
         )
         return sotValue
     }
