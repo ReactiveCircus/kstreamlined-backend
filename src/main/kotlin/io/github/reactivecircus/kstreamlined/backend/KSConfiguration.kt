@@ -20,11 +20,9 @@ import io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContentStor
 import io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerator
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.okhttp.OkHttp
-import okhttp3.ConnectionPool
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
@@ -111,18 +109,7 @@ class KSConfiguration {
 
     @Bean
     fun httpClientEngine(): HttpClientEngine {
-        return OkHttp.create {
-            config {
-                // keep idle connections alive for longer than the local cache expiry
-                connectionPool(
-                    ConnectionPool(
-                        maxIdleConnections = 5,
-                        keepAliveDuration = 15,
-                        timeUnit = TimeUnit.MINUTES,
-                    ),
-                )
-            }
-        }
+        return OkHttp.create()
     }
 
     @Bean
