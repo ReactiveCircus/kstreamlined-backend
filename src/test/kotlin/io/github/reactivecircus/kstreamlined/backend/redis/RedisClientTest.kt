@@ -3,13 +3,19 @@ package io.github.reactivecircus.kstreamlined.backend.redis
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondError
+import io.ktor.client.request.HttpRequestData
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.TextContent
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonPrimitive
 import java.io.IOException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
+import kotlin.time.Duration.Companion.seconds
 
 class RedisClientTest {
     @Test
@@ -67,50 +73,111 @@ class RedisClientTest {
     }
 
     @Test
-    fun `set(key, value) calls API with expected key, value, and expiry parameter`() = runBlocking {
+    fun `setIfChanged(key, value) only refreshes expiry when stored checksum matches`() = runBlocking {
         val mockEngine = MockEngine {
-            respond(content = "{ \"result\": \"OK\" }")
+            respond(content = "{ \"result\": 1 }")
         }
         val redisClient = createRedisClient(mockEngine)
 
-        redisClient.set("a", "3", keyExpirySeconds = 10)
+        redisClient.setIfChanged("a", "3", expiry = 10.seconds)
 
-        assertEquals("a", mockEngine.requestHistory[0].url.rawSegments.last())
-        assertEquals("EX=10", mockEngine.requestHistory[0].url.encodedQuery)
-        assertEquals("TextContent[application/json] \"3\"", mockEngine.requestHistory[0].body.toString())
-        assertEquals(HttpStatusCode.OK, mockEngine.responseHistory[0].statusCode)
+        assertEquals(1, mockEngine.requestHistory.size)
+        val command = mockEngine.requestHistory[0].jsonBody().jsonArray.map { it.jsonPrimitive.content }
+        assertEquals("EVAL", command[0])
+        assertEquals(listOf("2", "a", "a:checksum", Sha256Of3, "10"), command.drop(2))
     }
 
     @Test
-    fun `set(key, value) does not throw when API call fails`() = runBlocking {
+    fun `setIfChanged(key, value) writes value and checksum atomically when stored checksum does not match`() =
+        runBlocking {
+            val mockEngine = MockEngine {
+                if (it.url.encodedPath.endsWith("/multi-exec")) {
+                    respond(content = "[{ \"result\": \"OK\" }, { \"result\": \"OK\" }]")
+                } else {
+                    respond(content = "{ \"result\": 0 }")
+                }
+            }
+            val redisClient = createRedisClient(mockEngine)
+
+            redisClient.setIfChanged("a", "3", expiry = 10.seconds)
+
+            assertEquals(2, mockEngine.requestHistory.size)
+            assertEquals("/multi-exec", mockEngine.requestHistory[1].url.encodedPath)
+            val commands = mockEngine.requestHistory[1].jsonBody().jsonArray.map { command ->
+                command.jsonArray.map { it.jsonPrimitive.content }
+            }
+            assertEquals(
+                listOf(
+                    listOf("SET", "a", "3", "EX", "10"),
+                    listOf("SET", "a:checksum", Sha256Of3, "EX", "10"),
+                ),
+                commands,
+            )
+        }
+
+    @Test
+    fun `setIfChanged(key, value) writes value when checksum check fails`() = runBlocking {
         val mockEngine = MockEngine {
-            respondError(HttpStatusCode.InternalServerError)
+            if (it.url.encodedPath.endsWith("/multi-exec")) {
+                respond(content = "[{ \"result\": \"OK\" }, { \"result\": \"OK\" }]")
+            } else {
+                respondError(HttpStatusCode.InternalServerError)
+            }
         }
         val redisClient = createRedisClient(mockEngine)
 
-        redisClient.set("a", "3")
+        redisClient.setIfChanged("a", "3", expiry = 10.seconds)
 
-        assertEquals("a", mockEngine.requestHistory[0].url.rawSegments.last())
-        assertEquals("EX=3600", mockEngine.requestHistory[0].url.encodedQuery)
-        assertEquals("TextContent[application/json] \"3\"", mockEngine.requestHistory[0].body.toString())
-        assertEquals(HttpStatusCode.InternalServerError, mockEngine.responseHistory[0].statusCode)
+        assertEquals(2, mockEngine.requestHistory.size)
+        assertEquals("/multi-exec", mockEngine.requestHistory[1].url.encodedPath)
+        assertEquals(HttpStatusCode.OK, mockEngine.responseHistory[1].statusCode)
     }
 
     @Test
-    fun `set(key, value) throws any unknown exceptions`(): Unit = runBlocking {
+    fun `setIfChanged(key, value) does not throw when write fails`() = runBlocking {
+        val responses = listOf(
+            "{ \"error\": \"EXECABORT Transaction discarded\" }",
+            "[{ \"error\": \"ERR\" }, { \"result\": \"OK\" }]",
+            "not json",
+        )
+        responses.forEach { response ->
+            val mockEngine = MockEngine {
+                if (it.url.encodedPath.endsWith("/multi-exec")) {
+                    respond(content = response)
+                } else {
+                    respond(content = "{ \"result\": 0 }")
+                }
+            }
+            createRedisClient(mockEngine).setIfChanged("a", "3", expiry = 10.seconds)
+            assertEquals(2, mockEngine.requestHistory.size)
+        }
+
+        val failingEngine = MockEngine { respondError(HttpStatusCode.InternalServerError) }
+        createRedisClient(failingEngine).setIfChanged("a", "3", expiry = 10.seconds)
+        assertEquals(2, failingEngine.requestHistory.size)
+    }
+
+    @Test
+    fun `setIfChanged(key, value) throws any unknown exceptions`(): Unit = runBlocking {
         val mockEngine = MockEngine {
             throw IOException("Unknown exception")
         }
         val redisClient = createRedisClient(mockEngine)
 
         assertFailsWith<IOException> {
-            redisClient.set("a", "3")
+            redisClient.setIfChanged("a", "3", expiry = 10.seconds)
         }
     }
+
+    private fun HttpRequestData.jsonBody() = Json.parseToJsonElement((body as TextContent).text)
 
     private fun createRedisClient(mockEngine: MockEngine) = RedisClient(
         engine = mockEngine,
         url = "",
         token = "",
     )
+
+    companion object {
+        private const val Sha256Of3 = "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+    }
 }

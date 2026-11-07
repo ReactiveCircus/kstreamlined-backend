@@ -67,7 +67,7 @@ class KSNativeCompatibilityTest {
             assertEquals(true, it.getBoolean("hasRawContent"), it.id)
         }
         assertEquals(4, services.requests("/feeds/").size)
-        assertEquals(4, services.requests("/redis/set/").size)
+        assertEquals(4, services.requests("/redis/multi-exec").size)
     }
 
     @Test
@@ -86,7 +86,7 @@ class KSNativeCompatibilityTest {
         }
         assertEquals(4, services.requests("/redis/get/").size)
         assertTrue(services.requests("/feeds/").isEmpty())
-        assertTrue(services.requests("/redis/set/").isEmpty())
+        assertTrue(services.requests("/redis/multi-exec").isEmpty())
         (FeedCollections.values + BlogContent).forEach { assertTrue(documents(it).isEmpty(), it) }
     }
 

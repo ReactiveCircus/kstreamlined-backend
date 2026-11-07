@@ -4,6 +4,8 @@ import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiRequ
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import mockwebserver3.Dispatcher
 import mockwebserver3.MockResponse
@@ -96,7 +98,7 @@ class ServiceHttpStubs : AutoCloseable {
                 }
             }
 
-            path.startsWith("/redis/") -> redisResponse(request)
+            path == "/redis" || path.startsWith("/redis/") -> redisResponse(request)
 
             path == "/ai/accounts/integration/ai/run/@cf/openai/gpt-oss-120b" && request.method == "POST" -> aiResponse(request)
 
@@ -105,19 +107,38 @@ class ServiceHttpStubs : AutoCloseable {
     }
 
     private fun redisResponse(request: RecordedRequest): MockResponse {
-        val segments = request.url.pathSegments
-        val key = segments.last()
-        val result = when {
-            segments.getOrNull(1) == "get" && request.method == "GET" -> redis[key]
-
-            segments.getOrNull(1) == "set" && request.method == "POST" -> {
-                redis[key] = checkNotNull(request.body).utf8()
-                "OK"
+        val segments = request.url.pathSegments.filter { it.isNotEmpty() }
+        return when {
+            segments.getOrNull(1) == "get" && request.method == "GET" -> {
+                response(200, "application/json", buildJsonObject { put("result", redis[segments.last()]) }.toString())
             }
 
-            else -> return unexpectedRequest(request)
+            segments.size == 1 && request.method == "POST" -> redisEvalResponse(request)
+
+            segments.getOrNull(1) == "multi-exec" && request.method == "POST" -> redisMultiExecResponse(request)
+
+            else -> unexpectedRequest(request)
         }
-        return response(200, "application/json", buildJsonObject { put("result", result) }.toString())
+    }
+
+    /**
+     * Stubs the script sent by `RedisClient.setIfChanged`:
+     * `EVAL <script> 2 <key> <checksumKey> <checksum> <expiry>` returns 1 if `<key>` exists and its checksum matches.
+     */
+    private fun redisEvalResponse(request: RecordedRequest): MockResponse {
+        val command = Json.parseToJsonElement(checkNotNull(request.body).utf8()).jsonArray
+        val (key, checksumKey, checksum) = command.subList(3, 6).map { it.jsonPrimitive.content }
+        val matches = redis.containsKey(key) && redis[checksumKey] == checksum
+        return response(200, "application/json", """{"result":${if (matches) 1 else 0}}""")
+    }
+
+    private fun redisMultiExecResponse(request: RecordedRequest): MockResponse {
+        val commands = Json.parseToJsonElement(checkNotNull(request.body).utf8()).jsonArray.map { command ->
+            command.jsonArray.map { it.jsonPrimitive.content }
+        }
+        // SET <key> <value> EX <expiry>
+        commands.forEach { (_, key, value) -> redis[key] = value }
+        return response(200, "application/json", commands.joinToString(",", "[", "]") { """{"result":"OK"}""" })
     }
 
     private fun unexpectedRequest(

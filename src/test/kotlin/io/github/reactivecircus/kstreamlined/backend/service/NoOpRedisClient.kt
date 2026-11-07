@@ -6,10 +6,10 @@ import io.ktor.client.engine.mock.respond
 
 val NoOpRedisClient = RedisClient(
     engine = MockEngine { request ->
-        if (request.url.encodedPath.contains("get")) {
-            respond(content = "{ \"result\": null }")
-        } else {
-            respond(content = "{ \"result\": \"OK\" }")
+        when {
+            request.url.encodedPath.contains("/get/") -> respond(content = "{ \"result\": null }")
+            request.url.encodedPath.endsWith("/multi-exec") -> respond(content = "[{ \"result\": \"OK\" }, { \"result\": \"OK\" }]")
+            else -> respond(content = "{ \"result\": 0 }")
         }
     },
     url = "",
