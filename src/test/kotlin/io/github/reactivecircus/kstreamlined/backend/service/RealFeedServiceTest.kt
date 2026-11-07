@@ -20,7 +20,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.ktor.utils.io.ByteReadChannel
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -49,7 +49,7 @@ class RealFeedServiceTest {
     private val kotlinBlogContentStore = FakeKotlinBlogContentStore()
 
     @Test
-    fun `loadKotlinBlogFeed() returns KotlinBlogItems when API call succeeds`() = runBlocking {
+    fun `loadKotlinBlogFeed() returns KotlinBlogItems when API call succeeds`() = runTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinBlogRssResponse),
@@ -91,7 +91,7 @@ class RealFeedServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogFeed() persists html contents when API call succeeds`() = runBlocking {
+    fun `loadKotlinBlogFeed() persists html contents when API call succeeds`() = runTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinBlogRssResponse),
@@ -129,7 +129,7 @@ class RealFeedServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogFeed() throws exception when API call fails`(): Unit = runBlocking {
+    fun `loadKotlinBlogFeed() throws exception when API call fails`(): Unit = runTest {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }
@@ -148,7 +148,7 @@ class RealFeedServiceTest {
     }
 
     @Test
-    fun `loadKotlinYouTubeFeed() returns public KotlinYouTubeItems when API call succeeds`() = runBlocking {
+    fun `loadKotlinYouTubeFeed() returns public KotlinYouTubeItems when API call succeeds`() = runTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinYouTubeApiResponse),
@@ -204,7 +204,7 @@ class RealFeedServiceTest {
     }
 
     @Test
-    fun `loadKotlinYouTubeFeed() throws exception when API call fails`(): Unit = runBlocking {
+    fun `loadKotlinYouTubeFeed() throws exception when API call fails`(): Unit = runTest {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }
@@ -223,7 +223,7 @@ class RealFeedServiceTest {
     }
 
     @Test
-    fun `loadTalkingKotlinFeed() returns TalkingKotlinItems when API call succeeds`() = runBlocking {
+    fun `loadTalkingKotlinFeed() returns TalkingKotlinItems when API call succeeds`() = runTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockTalkingKotlinRssResponse),
@@ -267,7 +267,7 @@ class RealFeedServiceTest {
     }
 
     @Test
-    fun `loadTalkingKotlinFeed() throws exception when API call fails`(): Unit = runBlocking {
+    fun `loadTalkingKotlinFeed() throws exception when API call fails`(): Unit = runTest {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }
@@ -286,7 +286,7 @@ class RealFeedServiceTest {
     }
 
     @Test
-    fun `loadKotlinWeeklyFeed() returns KotlinWeeklyItems when API call succeeds`() = runBlocking {
+    fun `loadKotlinWeeklyFeed() returns KotlinWeeklyItems when API call succeeds`() = runTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinWeeklyRssResponse),
@@ -322,7 +322,7 @@ class RealFeedServiceTest {
     }
 
     @Test
-    fun `loadKotlinWeeklyFeed() throws exception when API call fails`(): Unit = runBlocking {
+    fun `loadKotlinWeeklyFeed() throws exception when API call fails`(): Unit = runTest {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }

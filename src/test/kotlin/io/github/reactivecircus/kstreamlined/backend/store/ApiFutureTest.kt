@@ -7,8 +7,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.test.runTest
 import java.io.IOException
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -19,17 +19,17 @@ import kotlin.test.assertTrue
 
 class ApiFutureTest {
     @Test
-    fun `returns an already completed result`() = runBlocking {
+    fun `returns an already completed result`() = runTest {
         assertEquals("Result", ApiFutures.immediateFuture("Result").await())
     }
 
     @Test
-    fun `supports nullable results`() = runBlocking {
+    fun `supports nullable results`() = runTest {
         assertNull(ApiFutures.immediateFuture<String?>(null).await())
     }
 
     @Test
-    fun `suspends without blocking until the future completes`() = runBlocking {
+    fun `suspends without blocking until the future completes`() = runTest {
         val future = SettableApiFuture.create<String>()
         val result = async(start = CoroutineStart.UNDISPATCHED) { future.await() }
 
@@ -41,7 +41,7 @@ class ApiFutureTest {
     }
 
     @Test
-    fun `propagates an already failed future without an ExecutionException wrapper`() = runBlocking {
+    fun `propagates an already failed future without an ExecutionException wrapper`() = runTest {
         val failure = IOException("Firestore unavailable")
 
         val thrown = assertFailsWith<IOException> {
@@ -52,7 +52,7 @@ class ApiFutureTest {
     }
 
     @Test
-    fun `propagates failure after suspending`() = runBlocking {
+    fun `propagates failure after suspending`() = runTest {
         supervisorScope {
             val future = SettableApiFuture.create<String>()
             val failure = IOException("Firestore unavailable")
@@ -67,14 +67,14 @@ class ApiFutureTest {
     }
 
     @Test
-    fun `propagates an already cancelled future`(): Unit = runBlocking {
+    fun `propagates an already cancelled future`(): Unit = runTest {
         assertFailsWith<CancellationException> {
             ApiFutures.immediateCancelledFuture<String>().await()
         }
     }
 
     @Test
-    fun `cancelling the future cancels the suspended awaiter`() = runBlocking {
+    fun `cancelling the future cancels the suspended awaiter`() = runTest {
         val future = SettableApiFuture.create<String>()
         val result = async(start = CoroutineStart.UNDISPATCHED) { future.await() }
 
@@ -85,7 +85,7 @@ class ApiFutureTest {
     }
 
     @Test
-    fun `cancelling the coroutine cancels the future without interrupting`() = runBlocking {
+    fun `cancelling the coroutine cancels the future without interrupting`() = runTest {
         val delegate = SettableApiFuture.create<String>()
         var interruptRequested: Boolean? = null
         val future = object : ApiFuture<String> by delegate {
@@ -103,7 +103,7 @@ class ApiFutureTest {
     }
 
     @Test
-    fun `cancellation wins when completion is awaiting coroutine dispatch`() = runBlocking {
+    fun `cancellation wins when completion is awaiting coroutine dispatch`() = runTest {
         val future = SettableApiFuture.create<String>()
         val result = async(start = CoroutineStart.UNDISPATCHED) { future.await() }
 
@@ -116,7 +116,7 @@ class ApiFutureTest {
     }
 
     @Test
-    fun `stops waiting even when the future refuses cancellation`() = runBlocking {
+    fun `stops waiting even when the future refuses cancellation`() = runTest {
         val delegate = SettableApiFuture.create<String>()
         val future = object : ApiFuture<String> by delegate {
             override fun cancel(mayInterruptIfRunning: Boolean): Boolean = false

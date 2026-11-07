@@ -7,7 +7,7 @@ import io.ktor.client.engine.mock.respond
 import io.ktor.http.HttpHeaders
 import io.ktor.http.headersOf
 import io.ktor.utils.io.ByteReadChannel
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.seconds
@@ -35,7 +35,7 @@ class FullResponseParserTest {
     private val kotlinBlogContentStore = FakeKotlinBlogContentStore()
 
     @Test
-    fun `can parse Kotlin Blog RSS feed`() = runBlocking {
+    fun `can parse Kotlin Blog RSS feed`() = runTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinBlogRssResponse),
@@ -56,7 +56,7 @@ class FullResponseParserTest {
     }
 
     @Test
-    fun `can parse Kotlin YouTube Data API response`() = runBlocking {
+    fun `can parse Kotlin YouTube Data API response`() = runTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinYouTubeApiResponse),
@@ -76,7 +76,7 @@ class FullResponseParserTest {
     }
 
     @Test
-    fun `can parse Talking Kotlin RSS feed`() = runBlocking {
+    fun `can parse Talking Kotlin RSS feed`() = runTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockTalkingKotlinRssResponse),
@@ -96,7 +96,7 @@ class FullResponseParserTest {
     }
 
     @Test
-    fun `can parse Kotlin Weekly RSS feed`() = runBlocking {
+    fun `can parse Kotlin Weekly RSS feed`() = runTest {
         val mockEngine = MockEngine {
             respond(
                 content = ByteReadChannel(mockKotlinWeeklyRssResponse),

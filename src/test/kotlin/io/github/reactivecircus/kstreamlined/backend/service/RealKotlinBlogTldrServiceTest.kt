@@ -12,6 +12,8 @@ import io.github.reactivecircus.kstreamlined.backend.tldr.ModelConfig
 import io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerationException
 import io.github.reactivecircus.kstreamlined.backend.tldr.TldrGenerator
 import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.MockEngineConfig
+import io.ktor.client.engine.mock.MockRequestHandler
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.HttpRequestData
@@ -20,7 +22,10 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runTest
 import java.io.IOException
 import java.time.Clock
 import java.time.Instant
@@ -34,7 +39,6 @@ import kotlin.test.assertTrue
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.TestTimeSource
 
 class RealKotlinBlogTldrServiceTest {
     private val contentStore = FakeKotlinBlogContentStore()
@@ -59,17 +63,15 @@ class RealKotlinBlogTldrServiceTest {
         """.trimMargin(),
     )
 
-    private val timeSource = TestTimeSource()
-
     @Test
-    fun `loadKotlinBlogTldr() generates and saves a TLDR when only article content exists`() = runBlocking {
+    fun `loadKotlinBlogTldr() generates and saves a TLDR when only article content exists`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val content = "**Use structured concurrency.**\n\n[Docs](https://kotlinlang.org/docs/coroutines-basics.html)"
         val service = createService(
             contentStore = contentStore,
             engine = createEngine(
                 response = successfulCloudflareAiResponse(content = content),
-                delay = 5.seconds,
+                latency = 5.seconds,
             ),
         )
 
@@ -88,7 +90,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() returns a saved TLDR when present`() = runBlocking {
+    fun `loadKotlinBlogTldr() returns a saved TLDR when present`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         contentStore.saveKotlinBlogTldrs(mapOf(article.guid to DummyKotlinBlogTldr))
         var contentReads = 0
@@ -114,7 +116,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() throws when article content does not exist`() = runBlocking {
+    fun `loadKotlinBlogTldr() throws when article content does not exist`() = runTest {
         val service = createService(
             contentStore = contentStore,
         )
@@ -126,7 +128,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() propagates article content lookup failures`() = runBlocking {
+    fun `loadKotlinBlogTldr() propagates article content lookup failures`() = runTest {
         val service = createService(
             contentStore = object : KotlinBlogContentStore by contentStore {
                 override suspend fun loadKotlinBlogContent(id: String): KotlinBlogContent? {
@@ -143,7 +145,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() rejects invalid article input without calling AI`() = runBlocking {
+    fun `loadKotlinBlogTldr() rejects invalid article input without calling AI`() = runTest {
         val invalidArticles = listOf(
             article.copy(title = " "),
             article.copy(html = "<script>Not article content</script>"),
@@ -164,7 +166,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() propagates HTTP failures`() = runBlocking {
+    fun `loadKotlinBlogTldr() propagates HTTP failures`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val service = createService(
             contentStore = contentStore,
@@ -179,7 +181,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() propagates Cloudflare response failures`() = runBlocking {
+    fun `loadKotlinBlogTldr() propagates Cloudflare response failures`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val service = createService(
             contentStore = contentStore,
@@ -195,7 +197,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() rejects incomplete or blank model output`() = runBlocking {
+    fun `loadKotlinBlogTldr() rejects incomplete or blank model output`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val responses = listOf(
             successfulCloudflareAiResponse(finishReason = "length"),
@@ -214,7 +216,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() saves null usage metadata when usage is omitted`() = runBlocking {
+    fun `loadKotlinBlogTldr() saves null usage metadata when usage is omitted`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val service = createService(
             contentStore = contentStore,
@@ -232,7 +234,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() saves null neurons when neurons are omitted`() = runBlocking {
+    fun `loadKotlinBlogTldr() saves null neurons when neurons are omitted`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val service = createService(
             contentStore = contentStore,
@@ -247,7 +249,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `loadKotlinBlogTldr() propagates persistence failures`() = runBlocking {
+    fun `loadKotlinBlogTldr() propagates persistence failures`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val service = createService(
             contentStore = object : KotlinBlogContentStore by contentStore {
@@ -265,7 +267,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `createKotlinBlogTldr() saves a new TLDR when none exists and persist is true`() = runBlocking {
+    fun `createKotlinBlogTldr() saves a new TLDR when none exists and persist is true`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val service = createService(contentStore)
 
@@ -276,7 +278,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `createKotlinBlogTldr() returns a fresh TLDR without saving when persist is false`() = runBlocking {
+    fun `createKotlinBlogTldr() returns a fresh TLDR without saving when persist is false`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         contentStore.saveKotlinBlogTldrs(mapOf(article.guid to DummyKotlinBlogTldr))
         var tldrWrites = 0
@@ -290,7 +292,7 @@ class RealKotlinBlogTldrServiceTest {
             },
             engine = createEngine(
                 response = successfulCloudflareAiResponse(content = content),
-                delay = 5.seconds,
+                latency = 5.seconds,
             ),
         )
 
@@ -310,7 +312,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `createKotlinBlogTldr() replaces a saved TLDR when persist is true`() = runBlocking {
+    fun `createKotlinBlogTldr() replaces a saved TLDR when persist is true`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         contentStore.saveKotlinBlogTldrs(mapOf(article.guid to DummyKotlinBlogTldr))
         var tldrWrites = 0
@@ -324,7 +326,7 @@ class RealKotlinBlogTldrServiceTest {
             },
             engine = createEngine(
                 response = successfulCloudflareAiResponse(content = content),
-                delay = 5.seconds,
+                latency = 5.seconds,
             ),
         )
 
@@ -344,7 +346,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `createKotlinBlogTldr() propagates article content lookup failures`() = runBlocking {
+    fun `createKotlinBlogTldr() propagates article content lookup failures`() = runTest {
         val service = createService(
             contentStore = object : KotlinBlogContentStore by contentStore {
                 override suspend fun loadKotlinBlogContent(id: String): KotlinBlogContent? {
@@ -363,7 +365,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `createKotlinBlogTldr() propagates HTTP failures`() = runBlocking {
+    fun `createKotlinBlogTldr() propagates HTTP failures`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val service = createService(
             contentStore = contentStore,
@@ -380,7 +382,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `createKotlinBlogTldr() rejects incomplete or blank model output`() = runBlocking {
+    fun `createKotlinBlogTldr() rejects incomplete or blank model output`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val responses = listOf(
             successfulCloudflareAiResponse(finishReason = "length"),
@@ -397,7 +399,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `createKotlinBlogTldr() propagates persistence failures`() = runBlocking {
+    fun `createKotlinBlogTldr() propagates persistence failures`() = runTest {
         contentStore.saveMissingKotlinBlogContents(listOf(article))
         val service = createService(
             contentStore = object : KotlinBlogContentStore by contentStore {
@@ -417,7 +419,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `backfillKotlinBlogTldrs() skips generation when no article content exists`() = runBlocking {
+    fun `backfillKotlinBlogTldrs() skips generation when no article content exists`() = runTest {
         val service = createService(contentStore = contentStore)
         val result = service.backfillKotlinBlogTldrs()
 
@@ -427,7 +429,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `backfillKotlinBlogTldrs() generates TLDRs for article contents without existing TLDR`() = runBlocking {
+    fun `backfillKotlinBlogTldrs() generates TLDRs for article contents without existing TLDR`() = runTest {
         val articles = (1..3).map { index ->
             article.copy(
                 guid = "https://blog.jetbrains.com/?post_type=kotlin&p=1234$index",
@@ -446,7 +448,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `backfillKotlinBlogTldrs() propagates article contents lookup failures`() = runBlocking {
+    fun `backfillKotlinBlogTldrs() propagates article contents lookup failures`() = runTest {
         val service = createService(
             contentStore = object : KotlinBlogContentStore by contentStore {
                 override suspend fun loadKotlinBlogContentsWithoutTldr(): List<KotlinBlogContent> {
@@ -463,7 +465,7 @@ class RealKotlinBlogTldrServiceTest {
     }
 
     @Test
-    fun `backfillKotlinBlogTldrs() reports per-article generation failures and saves generated TLDRs`() = runBlocking {
+    fun `backfillKotlinBlogTldrs() reports per-article generation failures and saves generated TLDRs`() = runTest {
         val articles = (1..3).map { index ->
             article.copy(
                 guid = "https://blog.jetbrains.com/?post_type=kotlin&p=article$index",
@@ -498,7 +500,7 @@ class RealKotlinBlogTldrServiceTest {
         assertEquals(1, contentStore.allKotlinBlogTldrs.size)
     }
 
-    private fun createService(
+    private fun TestScope.createService(
         contentStore: KotlinBlogContentStore,
         engine: MockEngine = createEngine(),
     ) = RealKotlinBlogTldrService(
@@ -510,27 +512,31 @@ class RealKotlinBlogTldrServiceTest {
                 accountId = "account-id",
                 apiToken = "api-token",
             ),
-            timeSource = timeSource,
+            timeSource = testScheduler.timeSource,
         ),
         clock = Clock.fixed(generatedAt, ZoneOffset.UTC),
+        dispatcher = StandardTestDispatcher(testScheduler),
     )
 
-    private fun createEngine(
+    private fun TestScope.createEngine(
         response: String = successfulCloudflareAiResponse(),
         status: HttpStatusCode = HttpStatusCode.OK,
-        delay: Duration = 0.milliseconds,
-    ) = MockEngine { request ->
-        requests += request
-        timeSource += delay
-        respond(content = response, status = status, headers = jsonHeaders)
-    }
+        latency: Duration = 0.milliseconds,
+    ) = createEngine(latency) { respond(content = response, status = status, headers = jsonHeaders) }
 
-    private fun createEngine(
+    private fun TestScope.createEngine(
         response: (HttpRequestData) -> String,
-        delay: Duration = 0.milliseconds,
-    ) = MockEngine { request ->
-        requests += request
-        timeSource += delay
-        respond(content = response(request), headers = jsonHeaders)
-    }
+        latency: Duration = 0.milliseconds,
+    ) = createEngine(latency) { request -> respond(content = response(request), headers = jsonHeaders) }
+
+    private fun TestScope.createEngine(latency: Duration, handler: MockRequestHandler) = MockEngine(
+        MockEngineConfig().apply {
+            dispatcher = StandardTestDispatcher(testScheduler)
+            addHandler { request ->
+                requests += request
+                delay(latency)
+                handler(request)
+            }
+        },
+    )
 }

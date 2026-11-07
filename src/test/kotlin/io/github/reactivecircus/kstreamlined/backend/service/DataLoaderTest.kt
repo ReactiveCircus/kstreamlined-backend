@@ -8,8 +8,8 @@ import io.ktor.client.engine.mock.respond
 import io.ktor.client.request.HttpRequestData
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.TextContent
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
@@ -27,7 +27,7 @@ class DataLoaderTest {
     private val localCache = Caffeine.newBuilder().build<String, List<Int>>()
 
     @Test
-    fun `returns data from local cache if present`() = runBlocking {
+    fun `returns data from local cache if present`() = runTest {
         localCache.put("key", listOf(1, 2, 3))
 
         val dataLoader = createDataLoader(localCache = localCache)
@@ -40,7 +40,7 @@ class DataLoaderTest {
     }
 
     @Test
-    fun `returns data from remote cache if local cache is absent and remote cache is present`() = runBlocking {
+    fun `returns data from remote cache if local cache is absent and remote cache is present`() = runTest {
         val dataLoader = createDataLoader(
             localCache = localCache,
             redisMockEngine = MockEngine { respond(content = "{ \"result\": \"[1, 2, 3]\" }") },
@@ -54,7 +54,7 @@ class DataLoaderTest {
     }
 
     @Test
-    fun `returns data from sot when both local and remote caches are absent and sot request succeeds`() = runBlocking {
+    fun `returns data from sot when both local and remote caches are absent and sot request succeeds`() = runTest {
         val dataLoader = createDataLoader(
             localCache = localCache,
             redisMockEngine = MockEngine { respond(content = "{ \"result\": null }") },
@@ -68,7 +68,7 @@ class DataLoaderTest {
     }
 
     @Test
-    fun `returns data from sot and overwrites remote cache when remote cache value cannot be decoded`() = runBlocking {
+    fun `returns data from sot and overwrites remote cache when remote cache value cannot be decoded`() = runTest {
         val redisMockEngine = redisMockEngine(getResult = "\"[{\\\"legacy\\\": 1}]\"")
         val dataLoader = createDataLoader(
             localCache = localCache,
@@ -85,7 +85,7 @@ class DataLoaderTest {
     }
 
     @Test
-    fun `propagates exception when remote cache throws`(): Unit = runBlocking {
+    fun `propagates exception when remote cache throws`(): Unit = runTest {
         val dataLoader = createDataLoader(
             localCache = localCache,
             redisMockEngine = MockEngine { throw IOException("Unknown exception") },
@@ -99,7 +99,7 @@ class DataLoaderTest {
     }
 
     @Test
-    fun `throws exception when sot request fails`(): Unit = runBlocking {
+    fun `throws exception when sot request fails`(): Unit = runTest {
         val dataLoader = createDataLoader(
             localCache = localCache,
             redisMockEngine = MockEngine { respond(content = "{ \"result\": null }") },
@@ -113,7 +113,7 @@ class DataLoaderTest {
     }
 
     @Test
-    fun `updates local cache after loading data from remote cache`() = runBlocking {
+    fun `updates local cache after loading data from remote cache`() = runTest {
         val dataLoader = createDataLoader(
             localCache = localCache,
             redisMockEngine = MockEngine { respond(content = "{ \"result\": \"[1, 2, 3]\" }") },
@@ -127,7 +127,7 @@ class DataLoaderTest {
     }
 
     @Test
-    fun `updates both local and remote caches after loading data from sot`() = runBlocking {
+    fun `updates both local and remote caches after loading data from sot`() = runTest {
         val redisMockEngine = redisMockEngine()
         val dataLoader = createDataLoader(
             localCache = localCache,
@@ -144,7 +144,7 @@ class DataLoaderTest {
     }
 
     @Test
-    fun `only refreshes remote cache expiry when value from sot is unchanged`() = runBlocking {
+    fun `only refreshes remote cache expiry when value from sot is unchanged`() = runTest {
         val redisMockEngine = redisMockEngine(remoteChecksumMatches = true)
         val dataLoader = createDataLoader(
             localCache = localCache,
@@ -162,7 +162,7 @@ class DataLoaderTest {
     }
 
     @Test
-    fun `skips both local and remote caches when loading with sotOnly = true`() = runBlocking {
+    fun `skips both local and remote caches when loading with sotOnly = true`() = runTest {
         localCache.put("key", listOf(1, 2))
 
         val redisMockEngine = redisMockEngine(getResult = "\"[1, 2, 3]\"")

@@ -229,4 +229,5 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.ktor.client.mock)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

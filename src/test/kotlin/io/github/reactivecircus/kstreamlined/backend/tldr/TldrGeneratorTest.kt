@@ -3,13 +3,17 @@ package io.github.reactivecircus.kstreamlined.backend.tldr
 import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiClient
 import io.github.reactivecircus.kstreamlined.backend.cloudflare.successfulCloudflareAiResponse
 import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.MockEngineConfig
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.request.HttpRequestData
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.content.TextContent
 import io.ktor.http.headersOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.double
 import kotlinx.serialization.json.int
@@ -24,7 +28,6 @@ import kotlin.test.assertTrue
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.TestTimeSource
 
 class TldrGeneratorTest {
     private val jsonHeaders = headersOf(
@@ -32,17 +35,15 @@ class TldrGeneratorTest {
         ContentType.Application.Json.toString(),
     )
 
-    private val timeSource = TestTimeSource()
-
     @Test
-    fun `generate() sends expected prompt and model config via CloudFlareAiClient`() = runBlocking {
+    fun `generate() sends expected prompt and model config via CloudFlareAiClient`() = runTest {
         val requests = mutableListOf<HttpRequestData>()
         val generator = createGenerator(
             response = successfulCloudflareAiResponse(
                 content = "  Generated TLDR.  ",
             ),
             requests = requests,
-            delay = 10.seconds,
+            latency = 10.seconds,
         )
 
         val result = generator.generate(
@@ -87,7 +88,7 @@ class TldrGeneratorTest {
     }
 
     @Test
-    fun `generate() rejects blank title or article text`() = runBlocking {
+    fun `generate() rejects blank title or article text`() = runTest {
         val requests = mutableListOf<HttpRequestData>()
         val generator = createGenerator(
             response = successfulCloudflareAiResponse(),
@@ -105,7 +106,7 @@ class TldrGeneratorTest {
     }
 
     @Test
-    fun `generate() rejects article text exceeding the maximum length`() = runBlocking {
+    fun `generate() rejects article text exceeding the maximum length`() = runTest {
         val requests = mutableListOf<HttpRequestData>()
         val generator = createGenerator(
             response = successfulCloudflareAiResponse(),
@@ -120,7 +121,7 @@ class TldrGeneratorTest {
     }
 
     @Test
-    fun `generate() rejects response without choice index zero`() = runBlocking {
+    fun `generate() rejects response without choice index zero`() = runTest {
         val generator = createGenerator(
             response = successfulCloudflareAiResponse(choiceIndex = 1),
         )
@@ -136,7 +137,7 @@ class TldrGeneratorTest {
     }
 
     @Test
-    fun `generate() rejects incomplete response`() = runBlocking {
+    fun `generate() rejects incomplete response`() = runTest {
         val generator = createGenerator(
             response = successfulCloudflareAiResponse(finishReason = "length"),
         )
@@ -152,7 +153,7 @@ class TldrGeneratorTest {
     }
 
     @Test
-    fun `generate() rejects blank content`() = runBlocking {
+    fun `generate() rejects blank content`() = runTest {
         val generator = createGenerator(
             response = successfulCloudflareAiResponse(content = " "),
         )
@@ -165,7 +166,7 @@ class TldrGeneratorTest {
     }
 
     @Test
-    fun `generate() returns null usage fields when Cloudflare omits token usage`() = runBlocking {
+    fun `generate() returns null usage fields when Cloudflare omits token usage`() = runTest {
         val generator = createGenerator(
             response = successfulCloudflareAiResponse(includeUsage = false),
         )
@@ -179,7 +180,7 @@ class TldrGeneratorTest {
     }
 
     @Test
-    fun `generate() returns null neurons when Cloudflare omits neuron usage`() = runBlocking {
+    fun `generate() returns null neurons when Cloudflare omits neuron usage`() = runTest {
         val generator = createGenerator(
             response = successfulCloudflareAiResponse(includeNeurons = false),
         )
@@ -192,19 +193,24 @@ class TldrGeneratorTest {
         assertNull(result.neurons)
     }
 
-    private fun createGenerator(
+    private fun TestScope.createGenerator(
         response: String,
         requests: MutableList<HttpRequestData> = mutableListOf(),
-        delay: Duration = 0.milliseconds,
+        latency: Duration = 0.milliseconds,
     ): TldrGenerator {
-        val engine = MockEngine { request ->
-            requests += request
-            timeSource += delay
-            respond(
-                content = response,
-                headers = jsonHeaders,
-            )
-        }
+        val engine = MockEngine(
+            MockEngineConfig().apply {
+                dispatcher = StandardTestDispatcher(testScheduler)
+                addHandler { request ->
+                    requests += request
+                    delay(latency)
+                    respond(
+                        content = response,
+                        headers = jsonHeaders,
+                    )
+                }
+            },
+        )
         return TldrGenerator(
             cloudflareAiClient = CloudflareAiClient(
                 engine = engine,
@@ -212,7 +218,7 @@ class TldrGeneratorTest {
                 accountId = "account-id",
                 apiToken = "api-token",
             ),
-            timeSource = timeSource,
+            timeSource = testScheduler.timeSource,
         )
     }
 }

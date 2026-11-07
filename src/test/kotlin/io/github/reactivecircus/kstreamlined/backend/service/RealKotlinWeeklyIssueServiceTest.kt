@@ -8,7 +8,7 @@ import io.ktor.client.engine.mock.respondError
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.HttpStatusCode
 import io.ktor.utils.io.ByteReadChannel
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -18,7 +18,7 @@ class RealKotlinWeeklyIssueServiceTest {
         javaClass.classLoader.getResource("kotlin_weekly_issue_sample.html")?.readText()!!
 
     @Test
-    fun `loadKotlinWeeklyIssue(url) returns KotlinWeeklyIssueEntry when API call succeeds`() = runBlocking {
+    fun `loadKotlinWeeklyIssue(url) returns KotlinWeeklyIssueEntry when API call succeeds`() = runTest {
         val mockEngine = MockEngine {
             respond(content = ByteReadChannel(mockKotlinWeeklyIssueResponse))
         }
@@ -115,7 +115,7 @@ class RealKotlinWeeklyIssueServiceTest {
     }
 
     @Test
-    fun `loadKotlinWeeklyIssue(url) ignores unknown groups and underlined links and deduplicates entries`() = runBlocking {
+    fun `loadKotlinWeeklyIssue(url) ignores unknown groups and underlined links and deduplicates entries`() = runTest {
         val section = """
             |<div style="overflow: hidden;">
             |    <div>news</div>
@@ -152,7 +152,7 @@ class RealKotlinWeeklyIssueServiceTest {
     }
 
     @Test
-    fun `loadKotlinWeeklyIssue(url) throws exception when API call fails`(): Unit = runBlocking {
+    fun `loadKotlinWeeklyIssue(url) throws exception when API call fails`(): Unit = runTest {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }

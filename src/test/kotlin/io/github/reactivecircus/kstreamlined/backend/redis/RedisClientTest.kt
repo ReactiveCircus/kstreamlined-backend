@@ -6,7 +6,7 @@ import io.ktor.client.engine.mock.respondError
 import io.ktor.client.request.HttpRequestData
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.TextContent
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
@@ -19,7 +19,7 @@ import kotlin.time.Duration.Companion.seconds
 
 class RedisClientTest {
     @Test
-    fun `get(key) returns result when API call succeeds`() = runBlocking {
+    fun `get(key) returns result when API call succeeds`() = runTest {
         val mockEngine = MockEngine { request ->
             when (request.url.rawSegments.last()) {
                 "a" -> respond(content = "{ \"result\": null }")
@@ -51,7 +51,7 @@ class RedisClientTest {
     }
 
     @Test
-    fun `get(key) returns null when API call fails`() = runBlocking {
+    fun `get(key) returns null when API call fails`() = runTest {
         val mockEngine = MockEngine {
             respondError(HttpStatusCode.RequestTimeout)
         }
@@ -61,7 +61,7 @@ class RedisClientTest {
     }
 
     @Test
-    fun `get(key) throws any unknown exceptions`(): Unit = runBlocking {
+    fun `get(key) throws any unknown exceptions`(): Unit = runTest {
         val mockEngine = MockEngine {
             throw IOException("Unknown exception")
         }
@@ -73,7 +73,7 @@ class RedisClientTest {
     }
 
     @Test
-    fun `setIfChanged(key, value) only refreshes expiry when stored checksum matches`() = runBlocking {
+    fun `setIfChanged(key, value) only refreshes expiry when stored checksum matches`() = runTest {
         val mockEngine = MockEngine {
             respond(content = "{ \"result\": 1 }")
         }
@@ -89,7 +89,7 @@ class RedisClientTest {
 
     @Test
     fun `setIfChanged(key, value) writes value and checksum atomically when stored checksum does not match`() =
-        runBlocking {
+        runTest {
             val mockEngine = MockEngine {
                 if (it.url.encodedPath.endsWith("/multi-exec")) {
                     respond(content = "[{ \"result\": \"OK\" }, { \"result\": \"OK\" }]")
@@ -116,7 +116,7 @@ class RedisClientTest {
         }
 
     @Test
-    fun `setIfChanged(key, value) writes value when checksum check fails`() = runBlocking {
+    fun `setIfChanged(key, value) writes value when checksum check fails`() = runTest {
         val mockEngine = MockEngine {
             if (it.url.encodedPath.endsWith("/multi-exec")) {
                 respond(content = "[{ \"result\": \"OK\" }, { \"result\": \"OK\" }]")
@@ -134,7 +134,7 @@ class RedisClientTest {
     }
 
     @Test
-    fun `setIfChanged(key, value) does not throw when write fails`() = runBlocking {
+    fun `setIfChanged(key, value) does not throw when write fails`() = runTest {
         val responses = listOf(
             "{ \"error\": \"EXECABORT Transaction discarded\" }",
             "[{ \"error\": \"ERR\" }, { \"result\": \"OK\" }]",
@@ -158,7 +158,7 @@ class RedisClientTest {
     }
 
     @Test
-    fun `setIfChanged(key, value) throws any unknown exceptions`(): Unit = runBlocking {
+    fun `setIfChanged(key, value) throws any unknown exceptions`(): Unit = runTest {
         val mockEngine = MockEngine {
             throw IOException("Unknown exception")
         }

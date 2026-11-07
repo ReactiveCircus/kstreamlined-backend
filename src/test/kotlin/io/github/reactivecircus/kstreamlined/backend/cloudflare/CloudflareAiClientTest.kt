@@ -10,7 +10,7 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.TextContent
 import io.ktor.http.headersOf
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.double
 import kotlinx.serialization.json.int
@@ -69,7 +69,7 @@ class CloudflareAiClientTest {
     """.trimMargin()
 
     @Test
-    fun `run() sends the request and returns expected CloudflareAiResult when API call succeeds`() = runBlocking {
+    fun `run() sends the request and returns expected CloudflareAiResult when API call succeeds`() = runTest {
         val recordedRequestData = mutableListOf<HttpRequestData>()
         val mockEngine = MockEngine { request ->
             recordedRequestData.add(request)
@@ -107,7 +107,7 @@ class CloudflareAiClientTest {
     }
 
     @Test
-    fun `run() propagates HTTP failures`() = runBlocking {
+    fun `run() propagates HTTP failures`() = runTest {
         val client = createClient(
             MockEngine {
                 respondError(HttpStatusCode.ServiceUnavailable)
@@ -122,7 +122,7 @@ class CloudflareAiClientTest {
     }
 
     @Test
-    fun `run() throws CloudflareAiException when response contains errors`() = runBlocking {
+    fun `run() throws CloudflareAiException when response contains errors`() = runTest {
         val client = createClient(
             MockEngine {
                 respond(
@@ -154,7 +154,7 @@ class CloudflareAiClientTest {
     }
 
     @Test
-    fun `run() throws CloudflareAiException when successful response has no result`() = runBlocking {
+    fun `run() throws CloudflareAiException when successful response has no result`() = runTest {
         val client = createClient(
             MockEngine {
                 respond(

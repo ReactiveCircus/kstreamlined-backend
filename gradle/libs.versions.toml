@@ -49,6 +49,7 @@ dgs-bom = { module = "com.netflix.graphql.dgs:graphql-dgs-platform-dependencies"
 dgs-starter = { module = "com.netflix.graphql.dgs:dgs-starter"}
 gcloud-firestore = { module = "com.google.cloud:google-cloud-firestore", version.ref = "gcloud-firestore" }
 kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
 kotlinx-serialization-bom = { module = "org.jetbrains.kotlinx:kotlinx-serialization-bom", version.ref = "kotlinxSerializationBom" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
