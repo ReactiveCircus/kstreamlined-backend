@@ -5,7 +5,9 @@ import com.github.benmanes.caffeine.cache.Caffeine
 import io.github.reactivecircus.kstreamlined.backend.redis.RedisClient
 import io.ktor.serialization.kotlinx.json.DefaultJson
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.builtins.ListSerializer
+import org.slf4j.LoggerFactory
 import kotlin.time.Duration
 import kotlin.time.toJavaDuration
 
@@ -15,6 +17,8 @@ class DataLoader<T : Any> private constructor(
     private val remoteCacheExpiry: Duration,
     private val listSerializer: KSerializer<List<T>>,
 ) {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     class CacheConfig(
         val localExpiry: Duration,
         val remoteExpiry: Duration,
@@ -35,11 +39,17 @@ class DataLoader<T : Any> private constructor(
         }
 
         // L2 cache - remote (Redis)
-        val l2Value = redisClient.get(key)
+        val l2Value = redisClient.get(key)?.let {
+            try {
+                DefaultJson.decodeFromString(listSerializer, it)
+            } catch (e: SerializationException) {
+                logger.warn("Failed to decode remote cache value for key: $key", e)
+                null
+            }
+        }
         if (l2Value != null) {
-            val value = DefaultJson.decodeFromString(listSerializer, l2Value)
-            localCache.put(key, value)
-            return value
+            localCache.put(key, l2Value)
+            return l2Value
         }
 
         // Source of truth

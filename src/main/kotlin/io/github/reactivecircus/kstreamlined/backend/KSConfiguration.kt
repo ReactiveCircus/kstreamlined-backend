@@ -41,7 +41,7 @@ class KSConfiguration {
             serviceConfig = serviceConfig,
             cacheConfig = DataLoader.CacheConfig(
                 localExpiry = 10.minutes,
-                remoteExpiry = 1.hours,
+                remoteExpiry = 24.hours,
             ),
             redisClient = redisClient,
             feedStore = feedStore,
