@@ -62,6 +62,30 @@ class DataLoaderTest {
     }
 
     @Test
+    fun `returns data from sot and overwrites remote cache when remote cache value cannot be decoded`() = runBlocking {
+        val redisMockEngine = MockEngine {
+            if (it.url.encodedPath.contains("get")) {
+                respond(content = "{ \"result\": \"[{\\\"legacy\\\": 1}]\" }")
+            } else {
+                respond(content = "{ \"result\": \"OK\" }")
+            }
+        }
+        val dataLoader = createDataLoader(
+            localCache = localCache,
+            redisMockEngine = redisMockEngine,
+        )
+
+        val result = dataLoader.load("key") {
+            listOf(1, 2, 3)
+        }
+
+        assertEquals(listOf(1, 2, 3), result)
+        assertEquals(listOf(1, 2, 3), localCache.getIfPresent("key"))
+        assertEquals("set", redisMockEngine.requestHistory.last().url.segments.first())
+        assertEquals("TextContent[application/json] \"[1,2,3]\"", redisMockEngine.requestHistory.last().body.toString())
+    }
+
+    @Test
     fun `propagates exception when remote cache throws`(): Unit = runBlocking {
         val dataLoader = createDataLoader(
             localCache = localCache,
