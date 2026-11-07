@@ -130,6 +130,7 @@ class NativeAppProcess private constructor(
                 "--ks.kotlin-youtube-feed-url=$url/feeds/youtube",
                 "--ks.talking-kotlin-feed-url=$url/feeds/podcast",
                 "--ks.kotlin-weekly-feed-url=$url/feeds/weekly",
+                "--ks.cf-base-url=$url/ai",
             )
             val inherited = builder.environment().toMap()
             builder.environment().apply {
@@ -143,7 +144,6 @@ class NativeAppProcess private constructor(
                         "KS_GCLOUD_PROJECT_ID" to environment.projectId,
                         "KS_REDIS_REST_URL" to "$url/redis",
                         "KS_REDIS_REST_TOKEN" to "native-test-token",
-                        "KS_CF_BASE_URL" to "$url/ai",
                         "KS_CF_ACCOUNT_ID" to "integration",
                         "KS_CF_API_TOKEN" to "native-test-token",
                         "KS_YOUTUBE_API_KEY" to ServiceHttpStubs.YouTubeApiKey,

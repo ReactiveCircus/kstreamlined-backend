@@ -437,7 +437,7 @@ class KSIntegrationTest {
             registry.add("ks.kotlin-weekly-feed-url") { "$url/feeds/weekly" }
             registry.add("KS_REDIS_REST_URL") { "$url/redis" }
             registry.add("KS_REDIS_REST_TOKEN") { "integration-token" }
-            registry.add("KS_CF_BASE_URL") { "$url/ai" }
+            registry.add("ks.cf-base-url") { "$url/ai" }
             registry.add("KS_CF_ACCOUNT_ID") { "integration" }
             registry.add("KS_CF_API_TOKEN") { "integration-token" }
             registry.add("KS_GCLOUD_PROJECT_ID") { environment.projectId }
