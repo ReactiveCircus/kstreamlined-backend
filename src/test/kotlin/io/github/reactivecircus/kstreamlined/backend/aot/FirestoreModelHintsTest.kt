@@ -13,17 +13,23 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 class FirestoreModelHintsTest {
-    @Test
-    fun `Firestore models and nested types are annotated and registered for reflection`() {
-        val models = findFirestoreModels().flatMap { it.withNestedAppTypes() }.toSet()
-        assertTrue(models.isNotEmpty())
+    private val models = findFirestoreModels().flatMap { it.withNestedAppTypes() }.toSet()
 
+    @Test
+    fun `nested app types of Firestore models are also annotated with @FirestoreModel`() {
+        assertTrue(models.isNotEmpty())
+        models.forEach { type ->
+            assertTrue(type.isAnnotationPresent(FirestoreModel::class.java), type.name)
+        }
+    }
+
+    @Test
+    fun `registers constructors, getters and fields of Firestore models for reflection`() {
+        assertTrue(models.isNotEmpty())
         val hints = RuntimeHints()
         ReflectiveRuntimeHintsRegistrar().registerRuntimeHints(hints, *models.toTypedArray())
         val reflection = RuntimeHintsPredicates.reflection()
-
         models.forEach { type ->
-            assertTrue(type.isAnnotationPresent(FirestoreModel::class.java), type.name)
             assertTrue(reflection.onConstructorInvocation(type.getDeclaredConstructor()).test(hints), type.name)
             type.getters().forEach {
                 assertTrue(reflection.onMethodInvocation(it).test(hints), it.toString())
