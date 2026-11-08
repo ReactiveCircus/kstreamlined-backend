@@ -5,21 +5,27 @@ import com.google.cloud.firestore.Firestore
 import io.github.reactivecircus.kstreamlined.backend.cloudflare.CloudflareAiRequest.Message.Role
 import io.github.reactivecircus.kstreamlined.backend.store.KotlinBlogContent
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
 import mockwebserver3.RecordedRequest
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.TestMethodOrder
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
+import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.graphql.test.autoconfigure.tester.AutoConfigureHttpGraphQlTester
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.graphql.test.tester.HttpGraphQlTester
 import org.springframework.graphql.test.tester.entity
 import org.springframework.graphql.test.tester.entityList
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
@@ -27,10 +33,15 @@ import org.springframework.test.context.bean.override.convention.TestBean
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.time.Duration
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import java.util.concurrent.TimeUnit
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -52,6 +63,9 @@ class KSIntegrationTest {
     @Autowired
     private lateinit var webTestClient: WebTestClient
 
+    @LocalServerPort
+    private var port: Int = 0
+
     @TestBean(methodName = "emulatorFirestore", enforceOverride = true)
     private lateinit var firestore: Firestore
 
@@ -66,6 +80,24 @@ class KSIntegrationTest {
     @AfterTest
     fun tearDown() {
         assertTrue(services.unexpectedRequests.isEmpty(), "Unexpected stub requests: ${services.unexpectedRequests}")
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["application/json", "application/graphql-response+json"])
+    fun `GraphQL responses are gzip compressed`(mediaType: String) {
+        val query = checkNotNull(javaClass.classLoader.getResource("graphql-test/feedEntries.graphql")).readText()
+        val request = HttpRequest.newBuilder(URI.create("http://localhost:$port/graphql"))
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .header(HttpHeaders.ACCEPT, mediaType)
+            .header(HttpHeaders.ACCEPT_ENCODING, "gzip")
+            .POST(HttpRequest.BodyPublishers.ofString(buildJsonObject { put("query", query) }.toString()))
+            .build()
+
+        val response = HttpClient.newHttpClient().use { it.send(request, HttpResponse.BodyHandlers.discarding()) }
+
+        assertEquals(200, response.statusCode())
+        assertEquals(mediaType, response.headers().firstValue(HttpHeaders.CONTENT_TYPE).getOrNull())
+        assertEquals("gzip", response.headers().firstValue(HttpHeaders.CONTENT_ENCODING).getOrNull())
     }
 
     @Test
