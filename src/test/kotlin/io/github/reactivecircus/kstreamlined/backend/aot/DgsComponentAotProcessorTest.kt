@@ -23,10 +23,34 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class DgsComponentAotProcessorTest {
+    private val hints = processAheadOfTime(FeedSourceDataFetcher::class.java, DgsFactoryMethodConfig::class.java)
+    private val reflection = RuntimeHintsPredicates.reflection()
+
     @Test
-    fun `registers component and factory-produced component methods for invocation`() {
-        AnnotationConfigApplicationContext().use { context ->
-            context.register(FeedSourceDataFetcher::class.java, DgsFactoryMethodConfig::class.java)
+    fun `registers methods of @DgsComponent classes for invocation`() {
+        assertTrue(reflection.onMethodInvocation(FeedSourceDataFetcher::class.java, "feedSources").test(hints))
+    }
+
+    @Test
+    fun `registers methods of DGS components returned from @Bean methods for invocation`() {
+        val bridge = DgsSpringGraphQLAutoConfiguration.DgsTypeDefinitionConfigurerBridge::class.java
+        val dgsMethods = bridge.declaredMethods.filter {
+            it.isAnnotationPresent(DgsTypeDefinitionRegistry::class.java)
+        }
+        assertTrue(dgsMethods.isNotEmpty())
+        dgsMethods.forEach {
+            assertTrue(reflection.onMethodInvocation(it).test(hints), it.toString())
+        }
+    }
+
+    @Test
+    fun `does not register configuration classes declaring DGS component @Bean methods`() {
+        assertNull(hints.reflection().getTypeHint<DgsFactoryMethodConfig>())
+    }
+
+    private fun processAheadOfTime(vararg componentClasses: Class<*>): RuntimeHints {
+        return AnnotationConfigApplicationContext().use { context ->
+            context.register(*componentClasses)
             context.refreshForAotProcessing(RuntimeHints())
             val generationContext = DefaultGenerationContext(
                 ClassNameGenerator(ClassName.get(javaClass.packageName, "Test")),
@@ -36,19 +60,7 @@ class DgsComponentAotProcessorTest {
                 DgsComponentAotProcessor().processAheadOfTime(RegisteredBean.of(context.beanFactory, name))
                     ?.applyTo(generationContext, UnusedBeanRegistrationCode)
             }
-            val hints = generationContext.runtimeHints
-            val reflection = RuntimeHintsPredicates.reflection()
-
-            assertTrue(reflection.onMethodInvocation(FeedSourceDataFetcher::class.java, "feedSources").test(hints))
-            val bridge = DgsSpringGraphQLAutoConfiguration.DgsTypeDefinitionConfigurerBridge::class.java
-            val dgsMethods = bridge.declaredMethods.filter {
-                it.isAnnotationPresent(DgsTypeDefinitionRegistry::class.java)
-            }
-            assertTrue(dgsMethods.isNotEmpty())
-            dgsMethods.forEach {
-                assertTrue(reflection.onMethodInvocation(it).test(hints), it.toString())
-            }
-            assertNull(hints.reflection().getTypeHint<DgsFactoryMethodConfig>())
+            generationContext.runtimeHints
         }
     }
 
