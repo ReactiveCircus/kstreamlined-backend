@@ -35,6 +35,7 @@ class KotlinYouTubeEntryMapperTest {
             title = "Video title",
             publishTime = Instant.parse("2022-07-06T13:39:46Z"),
             contentUrl = "https://www.youtube.com/watch?v=videoId",
+            videoId = "videoId",
             thumbnailUrl = "image-url",
             description = "description",
         )

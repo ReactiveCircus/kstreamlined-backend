@@ -47,6 +47,7 @@ class FeedEntryDataFetcherTest {
         |      description
         |    }
         |    ... on KotlinYouTube {
+        |      videoId
         |      thumbnailUrl
         |      description
         |    }
@@ -121,6 +122,7 @@ class FeedEntryDataFetcherTest {
             context.read<String>("data.feedEntries[2].publishTime").toInstant(),
         )
         assertEquals(dummyKotlinYouTubeEntry.contentUrl, context.read("data.feedEntries[2].contentUrl"))
+        assertEquals(dummyKotlinYouTubeEntry.videoId, context.read("data.feedEntries[2].videoId"))
         assertEquals(dummyKotlinYouTubeEntry.thumbnailUrl, context.read("data.feedEntries[2].thumbnailUrl"))
         assertEquals(dummyKotlinYouTubeEntry.description, context.read("data.feedEntries[2].description"))
 
@@ -203,6 +205,7 @@ class FeedEntryDataFetcherTest {
             context.read<String>("data.feedEntries[1].publishTime").toInstant(),
         )
         assertEquals(dummyKotlinYouTubeEntry.contentUrl, context.read("data.feedEntries[1].contentUrl"))
+        assertEquals(dummyKotlinYouTubeEntry.videoId, context.read("data.feedEntries[1].videoId"))
         assertEquals(dummyKotlinYouTubeEntry.thumbnailUrl, context.read("data.feedEntries[1].thumbnailUrl"))
         assertEquals(dummyKotlinYouTubeEntry.description, context.read("data.feedEntries[1].description"))
     }
