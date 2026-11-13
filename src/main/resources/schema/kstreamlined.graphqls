@@ -100,6 +100,8 @@ type KotlinYouTube implements FeedEntry {
   publishTime: Instant!
   "Url of the content."
   contentUrl: String!
+  "Unique id of the video."
+  videoId: String!
   "Url of the video thumbnail."
   thumbnailUrl: String!
   "Description of the video."

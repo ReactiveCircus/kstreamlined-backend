@@ -124,6 +124,8 @@ class KSIntegrationTest {
         documents(YouTubeFeed).forEach { assertFalse(it.contains("id")) }
         response.path("feedEntries[?(@.__typename == 'KotlinYouTube')].id").entityList<String>()
             .containsExactly(YouTubeId1, YouTubeId2)
+            .path("feedEntries[?(@.__typename == 'KotlinYouTube')].videoId").entityList<String>()
+            .containsExactly("ihMhu3hvCCE", "tX4nLqcW2JA")
         assertEquals(setOf("264203", "265263"), documents(BlogContent).map { it.id }.toSet())
         documents(BlogContent).forEach { assertNotNull(it.getString("html")) }
         documents(BlogFeed).forEach { assertFalse(it.contains("html")) }

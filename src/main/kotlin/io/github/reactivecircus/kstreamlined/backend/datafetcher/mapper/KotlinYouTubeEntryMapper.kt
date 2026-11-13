@@ -14,6 +14,7 @@ fun KotlinYouTubeItem.toKotlinYouTubeEntry(): KotlinYouTube {
             .parse(contentDetails.videoPublishedAt ?: snippet.publishedAt, DateTimeFormatter.ISO_OFFSET_DATE_TIME)
             .toInstant(),
         contentUrl = "https://www.youtube.com/watch?v=$videoId",
+        videoId = videoId,
         thumbnailUrl = snippet.thumbnails.high?.url ?: "https://i.ytimg.com/vi/$videoId/hqdefault.jpg",
         description = snippet.description,
     )

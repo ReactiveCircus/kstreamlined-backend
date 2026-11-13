@@ -11,6 +11,7 @@ query FeedEntries($filters: [FeedSourceKey!]) {
       supportsTldr
     }
     ... on KotlinYouTube {
+      videoId
       thumbnailUrl
       description
     }
