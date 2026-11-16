@@ -69,7 +69,7 @@ jobs:
       - uses: graalvm/setup-graalvm@v1
         with:
           distribution: 'graalvm-community'
-          version: '25.4'
+          version: '25.5'
           java-version: '25'
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -80,6 +80,13 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       - run: ./gradlew nativeCompatibilityTest
+
+      - name: Upload native compatibility test reports
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: native-compatibility-test-reports
+          path: build/reports/tests/nativeCompatibilityTest
 
       - name: Upload tested native executable
         if: github.ref == 'refs/heads/main'
